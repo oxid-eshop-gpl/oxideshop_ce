@@ -27,7 +27,6 @@ When checking out this repository or downloading the zip file from this place, c
 4. `$ composer install --no-dev`
 5. `$ cp source/config.inc.php.dist source/config.inc.php`
 
-
 ### Useful links
 
 * Project home page - http://www.oxid-esales.com
