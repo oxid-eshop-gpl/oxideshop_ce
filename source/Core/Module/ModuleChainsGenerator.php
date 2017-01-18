@@ -154,56 +154,23 @@ class ModuleChainsGenerator
      *
      * @return array
      */
-    public function cleanModuleFromClassChain($moduleId, $classChain)
+    public function cleanModuleFromClassChain($moduleId, array $classChain)
     {
-        //WIP, need to also handle aModuleExtensions
+        $variablesLocator = $this->getModuleVariablesLocator();
+        $registeredExtensions = $variablesLocator->getModuleVariable('aModuleExtensions');
 
-        $cleanedClassChain = $this->cleanModuleFromClassChainByPath($moduleId, $classChain);
-        return $cleanedClassChain;
-    }
+        $toBeRemovedFromChain = array();
+        if (isset($registeredExtensions[$moduleId])) {
+            $toBeRemovedFromChain = array_combine($registeredExtensions[$moduleId], $registeredExtensions[$moduleId]);
+        }
 
-    /**
-     * Clean classes from chain for given module id.
-     * This function removes all classes from class chain for classes inside a deactivated module's directory.
-     *
-     * @param string $moduleId
-     * @param array  $classChain
-     *
-     * @return array
-     */
-    public function cleanModuleFromClassChainByPath($moduleId, $classChain)
-    {
         foreach ($classChain as $key => $moduleClass) {
-            $moduleDirectory = $this->getModuleDirectoryByModuleId($moduleId);
-            if ($this->modulePathMatch($moduleClass, $moduleDirectory)) {
+            if (isset($toBeRemovedFromChain[$moduleClass])) {
                 unset($classChain[$key]);
             }
         }
 
         return $classChain;
-    }
-
-    /**
-     * Check if given class is connected to given module directory.
-     * NOTE: for old style modules, the shop config variable 'aModules' contains the path to the module file
-     *       relative to shop/modules directory.
-     *
-     * @param string $moduleClass
-     * @param string $moduleDirectory
-     *
-     * @return bool
-     */
-    protected function modulePathMatch($moduleClass, $moduleDirectory)
-    {
-        $match = false;
-        if (strpos($moduleClass, $moduleDirectory . "/") === 0) {
-            $match = true;
-        } elseif (strpos($moduleDirectory, ".") && (strpos($moduleDirectory, strtolower($moduleClass)) === 0)) {
-            // If module consists of one file without own dir (getting module.php as id, instead of module)
-            $match = true;
-        }
-
-        return $match;
     }
 
     /**
@@ -385,6 +352,8 @@ class ModuleChainsGenerator
     }
 
     /**
+     * Getter for ModuleVariablesLocator.
+     *
      * @return \OxidEsales\Eshop\Core\Module\ModuleVariablesLocator
      */
     public function getModuleVariablesLocator()
@@ -393,6 +362,8 @@ class ModuleChainsGenerator
     }
 
     /**
+     * Getter for module array.
+     *
      * @param \OxidEsales\Eshop\Core\Module\ModuleVariablesLocator $variablesLocator
      *
      * @return array
