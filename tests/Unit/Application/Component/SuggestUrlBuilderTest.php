@@ -35,7 +35,14 @@ class SuggestUrlBuilderTest extends \OxidEsales\TestingLibrary\UnitTestCase
     {
         return array(
             array(
+                'requestParams' => array(),
                 'expectedResult' => ''
+            ),
+            array(
+                'requestParams' => array(
+                    'searchparam' => true
+                ),
+                'expectedResult' => '&searchparam=true'
             )
         );
     }
@@ -45,8 +52,12 @@ class SuggestUrlBuilderTest extends \OxidEsales\TestingLibrary\UnitTestCase
      *
      * @dataProvider dataProviderTestBuildUrl
      */
-    public function testBuildUrl($expectedResult)
+    public function testBuildUrl($requestParams, $expectedResult)
     {
+        foreach ($requestParams as $requestKey => $requestValue) {
+            $this->setRequestParameter($requestKey, $requestValue);
+        }
+
         $suggestUrlBuilder = oxNew(\OxidEsales\Eshop\Application\Component\SuggestUrlBuilder::class);
 
         $this->assertEquals($expectedResult, $suggestUrlBuilder->buildUrl());
