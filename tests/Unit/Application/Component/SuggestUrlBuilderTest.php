@@ -70,6 +70,12 @@ class SuggestUrlBuilderTest extends \OxidEsales\TestingLibrary\UnitTestCase
                     'searchvendor' => 'VENDOR'
                 ),
                 'expectedResult' => '&searchvendor=VENDOR'
+            ),
+            array(
+                'requestParams' => array(
+                    'searchmanufacturer' => 'MANUFATURER'
+                ),
+                'expectedResult' => '&searchmanufacturer=MANUFATURER'
             )
         );
     }
