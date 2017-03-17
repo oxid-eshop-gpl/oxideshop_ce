@@ -25,8 +25,11 @@ namespace OxidEsales\EshopCommunity\Core\Autoload;
 /**
  * This file holds the mapping of classes from the virtual namespace to the concrete classes of each edition.
  * Each edition has its own map file. The map files will be merged like this: CE <- PE <- EE
- * So the mapping to a concrete class of the OXID eShop communitiy edition will be overwritten, if this class exists the
+ * So the mapping to a concrete class of the OXID eShop community edition will be overwritten, if this class exists the
  * PE or EE edition.
+ *
+ * @internal Do not make a module extension for this class.
+ * @see      http://oxidforge.org/en/core-oxid-eshop-classes-must-not-be-extended.html
  */
 class VirtualNameSpaceClassMap
 {
@@ -46,6 +49,7 @@ class VirtualNameSpaceClassMap
             'OxidEsales\Eshop\Application\Component\Locator' => \OxidEsales\EshopCommunity\Application\Component\Locator::class,
             'OxidEsales\Eshop\Application\Component\NewsComponent' => \OxidEsales\EshopCommunity\Application\Component\NewsComponent::class,
             'OxidEsales\Eshop\Application\Component\ShopComponent' => \OxidEsales\EshopCommunity\Application\Component\ShopComponent::class,
+            'OxidEsales\Eshop\Application\Component\SuggestUrlBuilder' => \OxidEsales\EshopCommunity\Application\Component\SuggestUrlBuilder::class,
             'OxidEsales\Eshop\Application\Component\UserComponent' => \OxidEsales\EshopCommunity\Application\Component\UserComponent::class,
             'OxidEsales\Eshop\Application\Component\UtilsComponent' => \OxidEsales\EshopCommunity\Application\Component\UtilsComponent::class,
             'OxidEsales\Eshop\Application\Component\Widget\Actions' => \OxidEsales\EshopCommunity\Application\Component\Widget\Actions::class,
@@ -599,7 +603,7 @@ class VirtualNameSpaceClassMap
             'OxidEsales\Eshop\Core\WidgetControl' => \OxidEsales\EshopCommunity\Core\WidgetControl::class,
         ];
 
-
+        
 
         return $classMap;
     }
