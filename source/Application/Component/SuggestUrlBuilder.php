@@ -19,13 +19,49 @@
  * @copyright (C) OXID eSales AG 2003-2017
  * @version   OXID eShop CE
  */
-
 namespace OxidEsales\EshopCommunity\Application\Component;
 
+use OxidEsales\Eshop\Core\Registry;
+
 /**
- *
+ * Builder for the URL of the suggest controller.
  */
 class SuggestUrlBuilder
 {
+    /**
+     * Build the URL for the method send.
+     *
+     * @return string The URL.
+     */
+    public function buildUrl()
+    {
+        $sReturn = "";
 
+        // #1834M - specialchar search
+        $sSearchParamForLink = rawurlencode(Registry::getConfig()->getRequestParameter('searchparam', true));
+        if ($sSearchParamForLink) {
+            $sReturn .= "&searchparam=$sSearchParamForLink";
+        }
+
+        $sSearchCatId = Registry::getConfig()->getRequestParameter('searchcnid');
+        if ($sSearchCatId) {
+            $sReturn .= "&searchcnid=$sSearchCatId";
+        }
+
+        $sSearchVendor = Registry::getConfig()->getRequestParameter('searchvendor');
+        if ($sSearchVendor) {
+            $sReturn .= "&searchvendor=$sSearchVendor";
+        }
+
+        if (($sSearchManufacturer = Registry::getConfig()->getRequestParameter('searchmanufacturer'))) {
+            $sReturn .= "&searchmanufacturer=$sSearchManufacturer";
+        }
+
+        $sListType = Registry::getConfig()->getRequestParameter('listtype');
+        if ($sListType) {
+            $sReturn .= "&listtype=$sListType";
+        }
+
+        return $sReturn;
+    }
 }

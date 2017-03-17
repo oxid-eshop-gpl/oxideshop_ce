@@ -78,6 +78,13 @@ class SuggestController extends \OxidEsales\Eshop\Application\Controller\Fronten
     protected $_aSuggestData = null;
 
     /**
+     * The URL builder.
+     *
+     * @var \OxidEsales\Eshop\Application\Component\SuggestUrlBuilder
+     */
+    protected $suggestUrlBuilder = null;
+
+    /**
      * Sends product suggestion mail and returns a URL according to
      * URL formatting rules.
      *
@@ -115,7 +122,7 @@ class SuggestController extends \OxidEsales\Eshop\Application\Controller\Fronten
             return;
         }
 
-        $sReturn = $this->buildUrl();
+        $sReturn = $this->getSuggestUrlBuilder()->buildUrl();
 
         // sending suggest email
         $oEmail = oxNew('oxemail');
@@ -268,39 +275,16 @@ class SuggestController extends \OxidEsales\Eshop\Application\Controller\Fronten
     }
 
     /**
-     * Build the URL for the method send.
+     * Getter for the suggest URL builder.
      *
-     * @return string The URL.
+     * @return |OxidEsales\Eshop\Application\Component\SuggestUrlBuilder The URL builder.
      */
-    protected function buildUrl()
+    protected function getSuggestUrlBuilder()
     {
-        $sReturn = "";
-
-        // #1834M - specialchar search
-        $sSearchParamForLink = rawurlencode(oxRegistry::getConfig()->getRequestParameter('searchparam', true));
-        if ($sSearchParamForLink) {
-            $sReturn .= "&searchparam=$sSearchParamForLink";
+        if (is_null($this->suggestUrlBuilder)) {
+            $this->suggestUrlBuilder = oxNew(\OxidEsales\Eshop\Application\Component\SuggestUrlBuilder::class);
         }
 
-        $sSearchCatId = oxRegistry::getConfig()->getRequestParameter('searchcnid');
-        if ($sSearchCatId) {
-            $sReturn .= "&searchcnid=$sSearchCatId";
-        }
-
-        $sSearchVendor = oxRegistry::getConfig()->getRequestParameter('searchvendor');
-        if ($sSearchVendor) {
-            $sReturn .= "&searchvendor=$sSearchVendor";
-        }
-
-        if (($sSearchManufacturer = oxRegistry::getConfig()->getRequestParameter('searchmanufacturer'))) {
-            $sReturn .= "&searchmanufacturer=$sSearchManufacturer";
-        }
-
-        $sListType = oxRegistry::getConfig()->getRequestParameter('listtype');
-        if ($sListType) {
-            $sReturn .= "&listtype=$sListType";
-        }
-
-        return $sReturn;
+        return $this->suggestUrlBuilder;
     }
 }
