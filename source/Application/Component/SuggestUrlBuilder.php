@@ -25,6 +25,9 @@ use OxidEsales\Eshop\Core\Registry;
 
 /**
  * Builder for the URL of the suggest controller.
+ *
+ * @internal Do not make a module extension for this class.
+ * @see      http://oxidforge.org/en/core-oxid-eshop-classes-must-not-be-extended.html
  */
 class SuggestUrlBuilder
 {
@@ -35,6 +38,7 @@ class SuggestUrlBuilder
      */
     public function buildUrl()
     {
+        // @todo: use UtilsUrl::appendUrl for this logic
         $sReturn = "";
 
         // #1834M - specialchar search
