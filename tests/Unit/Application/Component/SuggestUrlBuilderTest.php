@@ -42,7 +42,7 @@ class SuggestUrlBuilderTest extends \OxidEsales\TestingLibrary\UnitTestCase
                 'requestParams' => array(
                     'searchparam' => true
                 ),
-                'expectedResult' => '&searchparam=true'
+                'expectedResult' => '&searchparam=1'
             )
         );
     }
