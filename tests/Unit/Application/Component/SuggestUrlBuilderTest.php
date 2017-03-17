@@ -49,6 +49,13 @@ class SuggestUrlBuilderTest extends \OxidEsales\TestingLibrary\UnitTestCase
                     'searchcnid' => 'CNID'
                 ),
                 'expectedResult' => '&searchcnid=CNID'
+            ),
+            array(
+                'requestParams' => array(
+                    'searchparam' => true,
+                    'searchcnid' => 'CNID'
+                ),
+                'expectedResult' => '&searchparam=1&searchcnid=CNID'
             )
         );
     }
