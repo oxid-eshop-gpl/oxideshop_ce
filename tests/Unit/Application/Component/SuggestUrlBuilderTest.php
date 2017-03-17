@@ -64,6 +64,12 @@ class SuggestUrlBuilderTest extends \OxidEsales\TestingLibrary\UnitTestCase
                 ),
                 'expectedResult' => '&searchparam=1&searchcnid=CNID',
                 'description' => 'Check, that the order of setting the request parameters does not changes the behaviour'
+            ),
+            array(
+                'requestParams' => array(
+                    'searchvendor' => 'VENDOR'
+                ),
+                'expectedResult' => '&searchvendor=VENDOR'
             )
         );
     }
