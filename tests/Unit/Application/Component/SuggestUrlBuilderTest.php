@@ -27,10 +27,28 @@ namespace Unit\Application\Component\Widget;
 class SuggestUrlBuilderTest extends \OxidEsales\TestingLibrary\UnitTestCase
 {
     /**
-     * Test, that the method buildUrl works as expected
+     * The data provider for the test testBuildUrl.
+     *
+     * @return array The test cases.
      */
-    public function testbuildUrl()
+    public function dataProviderTestBuildUrl()
+    {
+        return array(
+            array(
+                'expectedResult' => ''
+            )
+        );
+    }
+
+    /**
+     * Test, that the method buildUrl works as expected
+     *
+     * @dataProvider dataProviderTestBuildUrl
+     */
+    public function testBuildUrl($expectedResult)
     {
         $suggestUrlBuilder = oxNew(\OxidEsales\Eshop\Application\Component\SuggestUrlBuilder::class);
+
+        $this->assertEquals($expectedResult, $suggestUrlBuilder->buildUrl());
     }
 }
