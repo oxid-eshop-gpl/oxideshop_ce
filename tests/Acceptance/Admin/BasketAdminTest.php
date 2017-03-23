@@ -28,6 +28,20 @@ use OxidEsales\EshopCommunity\Tests\Acceptance\AdminTestCase;
 class BasketAdminTest extends AdminTestCase
 {
     /**
+     * Delays because some test might need time before automatic shut down.
+     * Fails a test with the given message.
+     *
+     * @param string $message
+     *
+     * @throws PHPUnit_Framework_AssertionFailedError
+     */
+    public static function fail($message = '')
+    {
+        sleep(3);
+        static::fail($message);
+    }
+
+    /**
      * PersParam functionality in frontend
      * PersParam functionality in admin
      * testing option 'Product can be customized' from Administer products -> Extend tab
@@ -94,11 +108,13 @@ class BasketAdminTest extends AdminTestCase
         $this->clickAndWait("//input[@value='Update']");
 
         //Looks like sometimes orderUpdate does not succeed. In that case try again.
+        $this->openTab("Products");
         if (3 != $this->getValue("//tr[@id='art.{$counter}']/td[1]/input")) {
             $this->type("//tr[@id='art.{$counter}']/td[1]/input", "3");
             $this->clickAndWait("//input[@value='Update']");
         }
 
+        $this->openTab("Products");
         $this->assertEquals("Label: test label šÄßüл 1", $this->getText("//tr[@id='art.{$counter}']/td[5]"));
         $this->assertEquals("45,00 EUR", $this->getText("//tr[@id='art.{$counter}']/td[7]"));
         $this->assertEquals("135,00 EUR", $this->getText("//tr[@id='art.{$counter}']/td[8]"));
