@@ -283,7 +283,8 @@ class ModuleTest extends ModuleBaseTest
         $this->assertTextPresent("About Us + info6");
 
         // vendor file name is change from myinfo6 to myinfo6test
-        $aModules = array('content' => 'oxid/test6/view/myinfo6test');
+        $aModules = Registry::getUtilsObject()->getModuleVar('aModules');
+        $aModules['content'] = 'oxid/test6/view/myinfo6test';
         Registry::getConfig()->saveShopConfVar("aarr", "aModules", $aModules);
 
         $this->clearCache();
@@ -318,7 +319,8 @@ class ModuleTest extends ModuleBaseTest
         $this->assertTextNotPresent("About Us + info6");
 
         //file name is reset to the original
-        $aModules = array('content' => 'oxid/test6/view/myinfo6');
+        $aModules = Registry::getUtilsObject()->getModuleVar('aModules');
+        $aModules['content'] = 'oxid/test6/view/myinfo6';
         Registry::getConfig()->saveShopConfVar("aarr", "aModules", $aModules);
         $this->loginAdmin("Extensions", "Modules");
         $this->clickAndWait("link=Test module #6 (in vendor dir)");
@@ -358,7 +360,8 @@ class ModuleTest extends ModuleBaseTest
         $this->assertTextPresent("About Us + info6");
 
         //vendor dir name is changed from test6 to test6test
-        $aModules = array('content' => 'oxid/test6test/view/myinfo6');
+        $aModules = Registry::getUtilsObject()->getModuleVar('aModules');
+        $aModules['content'] = 'oxid/test6test/view/myinfo6';
         Registry::getConfig()->saveShopConfVar("aarr", "aModules", $aModules);
         $this->clearCache();
         $this->openShop();
