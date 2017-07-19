@@ -540,8 +540,10 @@ class Session extends \OxidEsales\Eshop\Core\Base
 
             // init oxbasket through oxNew and not oxAutoload, Mantis-Bug #0004262
             $oEmptyBasket = oxNew(\OxidEsales\Eshop\Application\Model\Basket::class);
+            $classOfEmptyBasket = get_class($oEmptyBasket);
+            $okToProceed = strpos($sBasket, '"' . $classOfEmptyBasket . '"') !== false;
 
-            $oBasket = ($sBasket && ($oBasket = unserialize($sBasket))) ? $oBasket : null;
+            $oBasket = ($okToProceed && ($sBasket && ($oBasket = unserialize($sBasket)))) ? $oBasket : null;
 
             if (!$oBasket || (get_class($oBasket) !== get_class($oEmptyBasket))) {
                 $oBasket = $oEmptyBasket;
