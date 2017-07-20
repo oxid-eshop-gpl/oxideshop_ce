@@ -26,6 +26,8 @@ use oxField;
 use OxidEsales\TestingLibrary\UnitTestCase;
 use oxRegistry;
 use oxUser;
+use \OxidEsales\Eshop\Application\Model\Basket;
+use \OxidEsales\Eshop\Core\Registry;
 
 class SessionTest extends UnitTestCase
 {
@@ -115,6 +117,117 @@ class SessionTest extends UnitTestCase
         $basket->onUpdate();
         $articles = $basket->getBasketSummary()->aArticles;
         $this->assertSame(0, count($articles));
+    }
+
+    public function testReturnsEmptyBasketIfNoBasketHasBeenSerializedInSession()
+    {
+        $this->assertSessionBasketIsEmpty();
+    }
+
+    public function testReturnsSerializedBasketFromSessionOfAnonymousUser()
+    {
+        $this->storeSerializedBasketToSession(
+            $this->getSerializedBasketWithArticle(self::FIRST_ARTICLE_ID)
+        );
+
+        $this->assertArticleInSessionBasket(self::FIRST_ARTICLE_ID);
+    }
+
+    public function testReturnsEmptyBasketIfAnonymousUserHasSerializedBasketOfDeactivatedModuleClass()
+    {
+        $this->storeSerializedBasketToSession(
+            $this->changeSerializedBasketClass(
+                $this->getSerializedBasketWithArticle(self::FIRST_ARTICLE_ID),
+                "DummyDeactivatedModuleClassName"
+            )
+        );
+
+        $this->assertSessionBasketIsEmpty();
+    }
+
+    public function testReturnsEmptyBasketIfAnonymousUserHasSerializedBasketOfDeactivatedAndNamespacedModuleClass()
+    {
+        $deactivatedModuleClassFqn = "OxidEsales\\DummySpace\\DeactivatedModuleClassName";
+        $this->registerFakeNamespacedDeactivatedModuleClass($deactivatedModuleClassFqn);
+
+        $this->storeSerializedBasketToSession(
+            $this->changeSerializedBasketClass(
+                $this->getSerializedBasketWithArticle(self::FIRST_ARTICLE_ID),
+                $deactivatedModuleClassFqn
+            )
+        );
+
+        $this->assertSessionBasketIsEmpty();
+    }
+
+    /**
+     * @param string $serializedBasket
+     */
+    private function storeSerializedBasketToSession($serializedBasket)
+    {
+        Registry::getSession()->delBasket();
+        $shopId = $this->getShopId();
+        $this->setSessionParam("{$shopId}_basket", $serializedBasket);
+    }
+
+    /**
+     * @param string $serializedBasket
+     * @param string $newClassName
+     *
+     * @return string
+     */
+    private function changeSerializedBasketClass($serializedBasket, $newClassName)
+    {
+        $referenceBasketClassName = get_class(oxNew(Basket::class));
+
+        $replaceFrom = sprintf('O:%d:"%s"', strlen($referenceBasketClassName), $referenceBasketClassName);
+        $replaceTo = sprintf('O:%d:"%s"', strlen($newClassName), $newClassName);
+
+        return str_replace($replaceFrom, $replaceTo, $serializedBasket);
+    }
+
+    /**
+     * @param string $fqn Fully Qualified Name of namespaced class
+     */
+    private function registerFakeNamespacedDeactivatedModuleClass($fqn)
+    {
+        $fqnElements = explode("\\", $fqn);
+        $className = array_pop($fqnElements);
+        $namespace = implode("\\", $fqnElements);
+
+        spl_autoload_register(function ($classToAutoload) use ($namespace, $className, $fqn) {
+            if ($classToAutoload === $fqn) {
+                eval("namespace $namespace;\n\nclass $className extends {$className}_parent {};");
+            }
+        });
+    }
+
+    private function assertSessionBasketIsEmpty()
+    {
+        $articles = Registry::getSession()->getBasket()->getBasketSummary()->aArticles;
+        $this->assertSame(0, count($articles));
+    }
+
+    /**
+     * @param string $articleId
+     */
+    private function assertArticleInSessionBasket($articleId)
+    {
+        $articles = Registry::getSession()->getBasket()->getBasketSummary()->aArticles;
+        $this->assertGreaterThan(0, (int)$articles[$articleId]);
+    }
+
+    /**
+     * @param string $articleId
+     *
+     * @return string
+     */
+    private function getSerializedBasketWithArticle($articleId)
+    {
+        $basket = oxNew(Basket::class);
+        $basket->addToBasket($articleId, 1);
+
+        return serialize($basket);
     }
 
     /**
