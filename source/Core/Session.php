@@ -558,19 +558,23 @@ class Session extends \OxidEsales\Eshop\Core\Base
     }
 
     /**
-     * True if given serialized object is constructed with a basket class which is equal to constructed one via oxNew.
+     * True if given serialized object is constructed with compatible classes.
      *
      * @param string $serializedBasket
      * @return bool
      */
     private function isSerializedBasketValid($serializedBasket)
     {
-        $basketClassName = get_class(oxNew(Basket::class));
-        $basketItemClassName = get_class(oxNew(BasketItem::class));
+        $basketClass = get_class(oxNew(Basket::class));
+        $basketItemClass = get_class(oxNew(BasketItem::class));
+        $priceClass = get_class(oxNew(\OxidEsales\Eshop\Core\Price::class));
+        $priceListClass = get_class(oxNew(\OxidEsales\Eshop\Core\PriceList::class));
 
         return $serializedBasket &&
-            $this->isClassInSerializedObject($serializedBasket, $basketClassName) &&
-            $this->isClassInSerializedObject($serializedBasket, $basketItemClassName);
+            $this->isClassInSerializedObject($serializedBasket, $basketClass) &&
+            $this->isClassInSerializedObject($serializedBasket, $basketItemClass) &&
+            $this->isClassOrNullInSerializedObjectAfterField($serializedBasket, "oPrice", $priceClass) &&
+            $this->isClassOrNullInSerializedObjectAfterField($serializedBasket, "oProductsPriceList", $priceListClass);
     }
 
     /**
@@ -578,6 +582,7 @@ class Session extends \OxidEsales\Eshop\Core\Base
      *
      * @param string $serializedObject
      * @param string $className
+     *
      * @return bool
      */
     private function isClassInSerializedObject($serializedObject, $className)
@@ -585,6 +590,23 @@ class Session extends \OxidEsales\Eshop\Core\Base
         $quotedClassName = sprintf('"%s"', $className);
 
         return strpos($serializedObject, $quotedClassName) !== false;
+    }
+
+    /**
+     * True if given class or null value is found after given field in serialized object.
+     *
+     * @param string $serializedObject
+     * @param string $fieldName
+     * @param string $className
+     *
+     * @return bool
+     */
+    private function isClassOrNullInSerializedObjectAfterField($serializedObject, $fieldName, $className)
+    {
+        $fieldAndClassPattern = '/'. preg_quote($fieldName, '/') . '";((?P<null>N);|O:\d+:"(?P<class>[\w\\\\]+)":)/';
+        $matchFound = preg_match($fieldAndClassPattern, $serializedObject, $matches) === 1;
+
+        return $matchFound && ($matches['class'] === $className || $matches['null'] === 'N');
     }
 
     /**
