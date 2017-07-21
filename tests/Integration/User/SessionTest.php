@@ -258,7 +258,8 @@ class SessionTest extends UnitTestCase
     private function assertSessionBasketIsEmpty()
     {
         $articles = Registry::getSession()->getBasket()->getBasketSummary()->aArticles;
-        $this->assertSame(0, count($articles));
+        $count = count($articles);
+        $this->assertSame(0, $count, "Failed asserting that basket is empty. Given count of items: $count.");
     }
 
     /**
@@ -267,7 +268,9 @@ class SessionTest extends UnitTestCase
     private function assertArticleInSessionBasket($articleId)
     {
         $articles = Registry::getSession()->getBasket()->getBasketSummary()->aArticles;
-        $this->assertGreaterThan(0, (int)$articles[$articleId]);
+        $this->assertGreaterThanOrEqual(
+            1, (int)$articles[$articleId], "Failed asserting that there is at least one article '$articleId' in basket."
+        );
     }
 
     /**
