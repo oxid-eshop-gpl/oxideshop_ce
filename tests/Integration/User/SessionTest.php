@@ -27,6 +27,7 @@ use OxidEsales\TestingLibrary\UnitTestCase;
 use oxRegistry;
 use oxUser;
 use \OxidEsales\Eshop\Application\Model\Basket;
+use \OxidEsales\Eshop\Application\Model\BasketItem;
 use \OxidEsales\Eshop\Core\Registry;
 
 class SessionTest extends UnitTestCase
@@ -160,6 +161,33 @@ class SessionTest extends UnitTestCase
         $this->assertSessionBasketIsEmpty();
     }
 
+    public function testReturnsEmptyBasketIfAnonymousUserHasSerializedBasketItemOfDeactivatedModuleClass()
+    {
+        $this->storeSerializedBasketToSession(
+            $this->changeSerializedBasketItemClass(
+                $this->getSerializedBasketWithArticle(self::FIRST_ARTICLE_ID),
+                "DummyDeactivatedModuleClassName"
+            )
+        );
+
+        $this->assertSessionBasketIsEmpty();
+    }
+
+    public function testReturnsEmptyBasketIfAnonymousUserHasSerializedBasketItemOfDeactivatedAndNamespacedModuleClass()
+    {
+        $deactivatedModuleClassFqn = "OxidEsales\\DummySpace\\DeactivatedModuleClassName";
+        $this->registerFakeNamespacedDeactivatedModuleClass($deactivatedModuleClassFqn);
+
+        $this->storeSerializedBasketToSession(
+            $this->changeSerializedBasketItemClass(
+                $this->getSerializedBasketWithArticle(self::FIRST_ARTICLE_ID),
+                $deactivatedModuleClassFqn
+            )
+        );
+
+        $this->assertSessionBasketIsEmpty();
+    }
+
     /**
      * @param string $serializedBasket
      */
@@ -172,6 +200,21 @@ class SessionTest extends UnitTestCase
 
     /**
      * @param string $serializedBasket
+     * @param string $oldClassName
+     * @param string $newClassName
+     *
+     * @return string
+     */
+    private function changeSerializedClass($serializedBasket, $oldClassName, $newClassName)
+    {
+        $replaceFrom = sprintf('O:%d:"%s"', strlen($oldClassName), $oldClassName);
+        $replaceTo = sprintf('O:%d:"%s"', strlen($newClassName), $newClassName);
+
+        return str_replace($replaceFrom, $replaceTo, $serializedBasket);
+    }
+
+    /**
+     * @param string $serializedBasket
      * @param string $newClassName
      *
      * @return string
@@ -180,10 +223,20 @@ class SessionTest extends UnitTestCase
     {
         $referenceBasketClassName = get_class(oxNew(Basket::class));
 
-        $replaceFrom = sprintf('O:%d:"%s"', strlen($referenceBasketClassName), $referenceBasketClassName);
-        $replaceTo = sprintf('O:%d:"%s"', strlen($newClassName), $newClassName);
+        return $this->changeSerializedClass($serializedBasket, $referenceBasketClassName, $newClassName);
+    }
 
-        return str_replace($replaceFrom, $replaceTo, $serializedBasket);
+    /**
+     * @param string $serializedBasket
+     * @param string $newClassName
+     *
+     * @return string
+     */
+    private function changeSerializedBasketItemClass($serializedBasket, $newClassName)
+    {
+        $referenceBasketClassName = get_class(oxNew(BasketItem::class));
+
+        return $this->changeSerializedClass($serializedBasket, $referenceBasketClassName, $newClassName);
     }
 
     /**

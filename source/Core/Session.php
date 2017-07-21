@@ -545,7 +545,7 @@ class Session extends \OxidEsales\Eshop\Core\Base
             $emptyBasket = oxNew(Basket::class);
 
             $basket =
-                $this->isSerializedBasketClassValid($serializedBasket) &&
+                $this->isSerializedBasketValid($serializedBasket) &&
                 ($unserializedBasket = unserialize($serializedBasket)) &&
                 $this->isUnserializedBasketValid($unserializedBasket, $emptyBasket) ?
                     $unserializedBasket : $emptyBasket;
@@ -563,12 +563,28 @@ class Session extends \OxidEsales\Eshop\Core\Base
      * @param string $serializedBasket
      * @return bool
      */
-    private function isSerializedBasketClassValid($serializedBasket)
+    private function isSerializedBasketValid($serializedBasket)
     {
-        $classNameToFind = get_class(oxNew(Basket::class));
-        $quotedClassNameToFind = sprintf('"%s"', $classNameToFind);
+        $basketClassName = get_class(oxNew(Basket::class));
+        $basketItemClassName = get_class(oxNew(BasketItem::class));
 
-        return $serializedBasket && strpos($serializedBasket, $quotedClassNameToFind) !== false;
+        return $serializedBasket &&
+            $this->isClassInSerializedObject($serializedBasket, $basketClassName) &&
+            $this->isClassInSerializedObject($serializedBasket, $basketItemClassName);
+    }
+
+    /**
+     * True if given class is found within serialized object.
+     *
+     * @param string $serializedObject
+     * @param string $className
+     * @return bool
+     */
+    private function isClassInSerializedObject($serializedObject, $className)
+    {
+        $quotedClassName = sprintf('"%s"', $className);
+
+        return strpos($serializedObject, $quotedClassName) !== false;
     }
 
     /**
