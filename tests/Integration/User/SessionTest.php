@@ -27,6 +27,7 @@ use OxidEsales\TestingLibrary\UnitTestCase;
 use oxRegistry;
 use oxUser;
 use \OxidEsales\Eshop\Application\Model\Basket;
+use \OxidEsales\Eshop\Application\Model\User;
 use \OxidEsales\Eshop\Application\Model\BasketItem;
 use \OxidEsales\Eshop\Core\Price;
 use \OxidEsales\Eshop\Core\PriceList;
@@ -152,8 +153,8 @@ class SessionTest extends UnitTestCase
     public function testReturnsEmptyBasketIfAnonymousUserHasSerializedBasketWithDeactivatedModuleClass($className)
     {
         $this->storeSerializedBasketToSession(
-            $this->getSerializedBasketWithArticleAndChangedClass(
-                self::FIRST_ARTICLE_ID,
+            $this->changeSerializedClass(
+                $this->getSerializedBasketWithArticle(self::FIRST_ARTICLE_ID),
                 get_class(oxNew($className)),
                 "DummyDeactivatedModuleClassName"
             )
@@ -171,9 +172,38 @@ class SessionTest extends UnitTestCase
         $this->registerFakeNamespacedDeactivatedModuleClass($deactivatedModuleClassFqn);
 
         $this->storeSerializedBasketToSession(
-            $this->getSerializedBasketWithArticleAndChangedClass(
-                self::FIRST_ARTICLE_ID,
+            $this->changeSerializedClass(
+                $this->getSerializedBasketWithArticle(self::FIRST_ARTICLE_ID),
                 get_class(oxNew($className)),
+                $deactivatedModuleClassFqn
+            )
+        );
+
+        $this->assertSessionBasketIsEmpty();
+    }
+
+    public function testReturnsEmptyBasketIfRegisteredUserHasSerializedBasketWithDeactivatedModuleUserClass()
+    {
+        $this->storeSerializedBasketToSession(
+            $this->changeSerializedClass(
+                $this->getSerializedBasketWithArticle(self::FIRST_ARTICLE_ID, true, true),
+                get_class(oxNew(User::class)),
+                "DummyDeactivatedModuleClassName"
+            )
+        );
+
+        $this->assertSessionBasketIsEmpty();
+    }
+
+    public function testReturnsEmptyBasketIfRegisteredUserHasSerializedBasketWithDeactivatedModuleAndNamespacedUserClass()
+    {
+        $deactivatedModuleClassFqn = "OxidEsales\\DummySpace\\DeactivatedModuleClassName";
+        $this->registerFakeNamespacedDeactivatedModuleClass($deactivatedModuleClassFqn);
+
+        $this->storeSerializedBasketToSession(
+            $this->changeSerializedClass(
+                $this->getSerializedBasketWithArticle(self::FIRST_ARTICLE_ID, true, true),
+                get_class(oxNew(User::class)),
                 $deactivatedModuleClassFqn
             )
         );
@@ -258,29 +288,23 @@ class SessionTest extends UnitTestCase
     /**
      * @param string $articleId
      * @param bool   $enableBasketCalculation
+     * @param bool   $addUser
      *
      * @return string
      */
-    private function getSerializedBasketWithArticle($articleId, $enableBasketCalculation = true)
+    private function getSerializedBasketWithArticle($articleId, $enableBasketCalculation = true, $addUser = false)
     {
         $basket = oxNew(Basket::class);
         $basket->addToBasket($articleId, 1);
+
+        if ($addUser) {
+            $user = oxNew(User::class);
+            $user->load('firstuser@oxideshop.dev');
+            $basket->setBasketUser($user);
+        }
+
         $enableBasketCalculation && $basket->calculateBasket(true);
         return serialize($basket);
-    }
-
-    /**
-     * @param string $articleId
-     * @param string $oldClassName
-     * @param string $newClassName
-     *
-     * @return string
-     */
-    private function getSerializedBasketWithArticleAndChangedClass($articleId, $oldClassName, $newClassName)
-    {
-        $serializedBasket = $this->getSerializedBasketWithArticle($articleId);
-
-        return $this->changeSerializedClass($serializedBasket, $oldClassName, $newClassName);
     }
 
     /**

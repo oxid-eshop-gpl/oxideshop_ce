@@ -27,6 +27,7 @@ use oxBasket;
 
 use \OxidEsales\Eshop\Application\Model\Basket;
 use \OxidEsales\Eshop\Application\Model\BasketItem;
+use \OxidEsales\Eshop\Application\Model\User;
 
 /**
  * Session manager.
@@ -569,12 +570,14 @@ class Session extends \OxidEsales\Eshop\Core\Base
         $basketItemClass = get_class(oxNew(BasketItem::class));
         $priceClass = get_class(oxNew(\OxidEsales\Eshop\Core\Price::class));
         $priceListClass = get_class(oxNew(\OxidEsales\Eshop\Core\PriceList::class));
+        $userClass = get_class(oxNew(User::class));
 
         return $serializedBasket &&
             $this->isClassInSerializedObject($serializedBasket, $basketClass) &&
             $this->isClassInSerializedObject($serializedBasket, $basketItemClass) &&
             $this->isClassOrNullInSerializedObjectAfterField($serializedBasket, "oPrice", $priceClass) &&
-            $this->isClassOrNullInSerializedObjectAfterField($serializedBasket, "oProductsPriceList", $priceListClass);
+            $this->isClassOrNullInSerializedObjectAfterField($serializedBasket, "oProductsPriceList", $priceListClass) &&
+            $this->isClassOrNullInSerializedObjectAfterField($serializedBasket, "oUser", $userClass);
     }
 
     /**
