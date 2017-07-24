@@ -34,6 +34,12 @@ use stdClass;
  */
 class BasketItem extends \OxidEsales\Eshop\Core\Base
 {
+    /**
+     * Do not serialize these items on purpose.
+     *
+     * @var array
+     */
+    protected $skipSerialize = ['_oArticle'];
 
     /**
      * Product ID

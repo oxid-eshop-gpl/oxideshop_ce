@@ -32,7 +32,9 @@
     },
     "autoload": {
         "psr-4": {
-            "OxidEsales\\EshopCommunity\\": "./source"
+            "OxidEsales\\EshopCommunity\\": "./source",
+            "OxidEsales\\PayPalModule\\": "./source/modules/oe/oepaypal",
+            "OxidEsales\\EshopStressTesting\\": "./source/modules/oxidesales/eshopstresstest"
         }
     },
     "autoload-dev": {

@@ -28,7 +28,7 @@ use oxPrice;
 /**
  * Price calculation class. Responsible for simple price calculations. Basically contains Brutto, Netto prices and VAT values.
  */
-class Price
+class Price extends \OxidEsales\Eshop\Core\SerializableObject
 {
 
     /**

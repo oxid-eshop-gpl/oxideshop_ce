@@ -410,7 +410,8 @@ class Session extends \OxidEsales\Eshop\Core\Base
     public function freeze()
     {
         // storing basket ..
-        $this->setVariable($this->_getBasketName(), serialize($this->getBasket()));
+        $basket = $this->getBasket();
+        $this->setVariable($this->_getBasketName(), $basket->serialize());
 
         session_write_close();
     }
@@ -532,7 +533,7 @@ class Session extends \OxidEsales\Eshop\Core\Base
     public function getBasket()
     {
         if ($this->_oBasket === null) {
-            $sBasket = $this->getVariable($this->_getBasketName());
+            $serializedBasketData = $this->getVariable($this->_getBasketName());
 
             //init oxbasketitem class first
             //#1746
@@ -541,7 +542,17 @@ class Session extends \OxidEsales\Eshop\Core\Base
             // init oxbasket through oxNew and not oxAutoload, Mantis-Bug #0004262
             $oEmptyBasket = oxNew(\OxidEsales\Eshop\Application\Model\Basket::class);
 
-            $oBasket = ($sBasket && ($oBasket = unserialize($sBasket))) ? $oBasket : null;
+            try {
+                $oBasket = null;
+                if ($serializedBasketData) {
+                    $data = unserialize($serializedBasketData);
+                    $toBeUnserialized = \OxidEsales\Eshop\Application\Model\Basket::getSerializedObject($data['unc_class'], $data['objectvars']);
+                    $oBasket = unserialize($toBeUnserialized);
+                }
+            } catch (\Exception $exception) {
+                writeToLog($exception->getMessage());
+                $oBasket = null;
+            }
 
             if (!$oBasket || (get_class($oBasket) !== get_class($oEmptyBasket))) {
                 $oBasket = $oEmptyBasket;

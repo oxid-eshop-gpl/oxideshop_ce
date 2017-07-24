@@ -32,7 +32,7 @@ use oxUser;
  * Basic class which is used as parent class by other OXID eShop classes.
  * It provides access to some basic objects and some basic functionality.
  */
-class Base
+class Base extends \OxidEsales\Eshop\Core\SerializableObject
 {
     /**
      * oxconfig instance

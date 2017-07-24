@@ -2626,6 +2626,11 @@ return [
         'isAbstract'       => false,
         'isInterface'      => false
     ],
+    'OxidEsales\Eshop\Core\SerializableObject'                                   => [
+        'editionClassName' => \OxidEsales\EshopCommunity\Core\SerializableObject::class,
+        'isAbstract'       => false,
+        'isInterface'      => false
+    ],
     'OxidEsales\Eshop\Core\ServerChecker'                                        => [
         'editionClassName' => \OxidEsales\EshopCommunity\Core\ServerChecker::class,
         'isAbstract'       => false,

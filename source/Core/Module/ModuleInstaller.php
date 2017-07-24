@@ -154,12 +154,38 @@ class ModuleInstaller extends \OxidEsales\Eshop\Core\Base
             $this->_deleteModuleVersions($moduleId);
             $this->deleteModuleControllers($moduleId);
 
+            //SPIKE
+            $this->cleanupSmartyCompileDirectory();
+
             $this->resetCache();
 
             $result = true;
         }
 
         return $result;
+    }
+
+    /**
+     * SPIKE
+     */
+    public function cleanupSmartyCompileDirectory()
+    {
+        $smartyCompileDir = \OxidEsales\Eshop\Core\Registry::getConfig()->getConfigParam('sCompileDir') . DIRECTORY_SEPARATOR . 'smarty';
+
+        $directoryIterator = new \RecursiveDirectoryIterator($smartyCompileDir, \RecursiveDirectoryIterator::SKIP_DOTS);
+        /** Items, which must not be deleted have to be skipped during the directory iteration */
+        $filterCallback = function (\SplFileInfo $current) {
+            $skipItem = false === strpos($current->getFilename(), '.htaccess') ? true : false;
+            return $skipItem;
+        };
+        $filteredDirectoryIterator = new \RecursiveCallbackFilterIterator($directoryIterator, $filterCallback);
+        $items = new \RecursiveIteratorIterator(
+            $filteredDirectoryIterator,
+            \RecursiveIteratorIterator::CHILD_FIRST
+        );
+
+        $fileSystem = new \Symfony\Component\Filesystem\Filesystem();
+        $fileSystem->remove($items);
     }
 
     /**

@@ -82,6 +82,8 @@ class UnifiedNameSpaceClassMapTest extends BaseModuleTestCase
                     'OxidEsales\EshopCommunity\Core\Controller\BaseController',
                     'OxidEsales\Eshop\Core\Base',
                     'OxidEsales\EshopCommunity\Core\Base',
+                    'OxidEsales\Eshop\Core\SerializableObject',
+                    'OxidEsales\EshopCommunity\Core\SerializableObject',
                 ),
                 'expectedInheritanceChainPE' => array(
                     'Test1ContentController',
@@ -95,7 +97,8 @@ class UnifiedNameSpaceClassMapTest extends BaseModuleTestCase
                     'OxidEsales\EshopCommunity\Core\Controller\BaseController',
                     'OxidEsales\Eshop\Core\Base',
                     'OxidEsales\EshopProfessional\Core\Base',
-                    'OxidEsales\EshopCommunity\Core\Base',
+                    'OxidEsales\Eshop\Core\SerializableObject',
+                    'OxidEsales\EshopCommunity\Core\SerializableObject',
                 ),
                 'expectedInheritanceChainEE' => array(
                     'Test1ContentController',
@@ -112,7 +115,9 @@ class UnifiedNameSpaceClassMapTest extends BaseModuleTestCase
                     'OxidEsales\Eshop\Core\Base',
                     'OxidEsales\EshopEnterprise\Core\Base',
                     'OxidEsales\EshopProfessional\Core\Base',
-                    'OxidEsales\EshopCommunity\Core\Base'
+                    'OxidEsales\EshopCommunity\Core\Base',
+                    'OxidEsales\Eshop\Core\SerializableObject',
+                    'OxidEsales\EshopCommunity\Core\SerializableObject',
                 )
                 ,
                 'expectedTitle'              => 'Impressum - Module_1_Controller - Module_1_Model'
@@ -130,6 +135,8 @@ class UnifiedNameSpaceClassMapTest extends BaseModuleTestCase
                     'OxidEsales\EshopCommunity\Core\Controller\BaseController',
                     'OxidEsales\Eshop\Core\Base',
                     'OxidEsales\EshopCommunity\Core\Base',
+                    'OxidEsales\Eshop\Core\SerializableObject',
+                    'OxidEsales\EshopCommunity\Core\SerializableObject'
                 ),
                 'expectedInheritanceChainPE' => array(
                     'Test2ContentController',
@@ -145,6 +152,8 @@ class UnifiedNameSpaceClassMapTest extends BaseModuleTestCase
                     'OxidEsales\Eshop\Core\Base',
                     'OxidEsales\EshopProfessional\Core\Base',
                     'OxidEsales\EshopCommunity\Core\Base',
+                    'OxidEsales\Eshop\Core\SerializableObject',
+                    'OxidEsales\EshopCommunity\Core\SerializableObject'
                 ),
                 'expectedInheritanceChainEE' => array(
                     'Test2ContentController',
@@ -162,7 +171,9 @@ class UnifiedNameSpaceClassMapTest extends BaseModuleTestCase
                     'OxidEsales\Eshop\Core\Base',
                     'OxidEsales\EshopEnterprise\Core\Base',
                     'OxidEsales\EshopProfessional\Core\Base',
-                    'OxidEsales\EshopCommunity\Core\Base'
+                    'OxidEsales\EshopCommunity\Core\Base',
+                    'OxidEsales\Eshop\Core\SerializableObject',
+                    'OxidEsales\EshopCommunity\Core\SerializableObject'
                 ),
                 'expectedTitle'              => 'Impressum - Module_1_Controller - Module_1_Model - Module_2_Controller'
             ),
@@ -179,6 +190,8 @@ class UnifiedNameSpaceClassMapTest extends BaseModuleTestCase
                     'OxidEsales\EshopCommunity\Core\Controller\BaseController',
                     'OxidEsales\Eshop\Core\Base',
                     'OxidEsales\EshopCommunity\Core\Base',
+                    'OxidEsales\Eshop\Core\SerializableObject',
+                    'OxidEsales\EshopCommunity\Core\SerializableObject'
                 ),
                 'expectedInheritanceChainPE' => array(
                     'Test2ContentController',
@@ -194,6 +207,8 @@ class UnifiedNameSpaceClassMapTest extends BaseModuleTestCase
                     'OxidEsales\Eshop\Core\Base',
                     'OxidEsales\EshopProfessional\Core\Base',
                     'OxidEsales\EshopCommunity\Core\Base',
+                    'OxidEsales\Eshop\Core\SerializableObject',
+                    'OxidEsales\EshopCommunity\Core\SerializableObject'
                 ),
                 'expectedInheritanceChainEE' => array(
                     'Test2ContentController',
@@ -211,7 +226,9 @@ class UnifiedNameSpaceClassMapTest extends BaseModuleTestCase
                     'OxidEsales\Eshop\Core\Base',
                     'OxidEsales\EshopEnterprise\Core\Base',
                     'OxidEsales\EshopProfessional\Core\Base',
-                    'OxidEsales\EshopCommunity\Core\Base'
+                    'OxidEsales\EshopCommunity\Core\Base',
+                    'OxidEsales\Eshop\Core\SerializableObject',
+                    'OxidEsales\EshopCommunity\Core\SerializableObject'
                 ),
                 'expectedTitle'              => 'Impressum - Module_1_Controller - Module_3_Model - Module_2_Controller'
             )

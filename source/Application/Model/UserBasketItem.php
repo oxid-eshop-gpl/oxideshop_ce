@@ -31,6 +31,12 @@ use oxField;
  */
 class UserBasketItem extends \OxidEsales\Eshop\Core\Model\BaseModel
 {
+    /**
+     * Do not serialize these items on purpose.
+     *
+     * @var array
+     */
+    protected $skipSerialize = ['_oArticle'];
 
     /**
      * Current class name
