@@ -29,6 +29,7 @@ use OxidEsales\Eshop\Core\Edition\EditionPathProvider;
 use OxidEsales\Eshop\Core\Edition\EditionSelector;
 use OxidEsales\EshopCommunity\Setup\Exception\CommandExecutionFailedException;
 use OxidEsales\DoctrineMigrationWrapper\Migrations;
+use OxidEsales\DoctrineMigrationWrapper\MigrationsBuilder;
 
 /**
  * Setup utilities class
@@ -468,8 +469,15 @@ class Utilities extends Core
      */
     public function executeExternalDatabaseMigrationCommand()
     {
-        $databaseMigrateCommand = $this->formCommandToVendor(self::DATABASE_MIGRATION_BINARY_FILENAME) . ' ' . Migrations::MIGRATE_COMMAND;
-        $this->executeShellCommand($databaseMigrateCommand);
+        $migrationsBuilder = new MigrationsBuilder();
+        $migrations = $migrationsBuilder->build();
+
+        $editionSelector = new EditionSelector();
+
+        $command = Migrations::MIGRATE_COMMAND;
+        $edition = $editionSelector->getEdition();
+
+        $migrations->execute($command, $edition);
     }
 
     /**
