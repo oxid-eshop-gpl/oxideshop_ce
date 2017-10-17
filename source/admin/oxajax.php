@@ -56,9 +56,11 @@ if ($blAjaxCall) {
         $sContainer = trim(strtolower(basename($sContainer)));
 
         try {
-            $oAjaxComponent = oxNew($sContainer . '_ajax');
+            //resolve possible controller key to class
+            $containerClass = \OxidEsales\Eshop\Core\Registry::getControllerClassNameResolver()->getClassNameById($sContainer . '_ajax');
+            $oAjaxComponent = oxNew($containerClass);
         } catch (\OxidEsales\Eshop\Core\Exception\SystemComponentException $oCe) {
-            $oEx = new FileException();
+            $oEx = new \OxidEsales\Eshop\Core\Exception\FileException();
             $oEx->setMessage('EXCEPTION_FILENOTFOUND' . ' ' . $sContainer . '_ajax.php');
             $oEx->debugOut();
             throw $oEx;
