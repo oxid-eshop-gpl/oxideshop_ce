@@ -18,8 +18,4 @@ NOTE: we use the following abbreveations here:
 * The Test11AjaxController is reponsible for rendering the popup template.
 * The ajax call to admin/oxajax.php is triggered by javascript when the popup gets displayed.
 * For simplicity the result is rendered through a config value without implementing drag and drop features.
-  Due to this decision a popup should be opened twice in order to see the result from an ajax call.
-  
-* NOTE: We did not implement any container/drag and drop for the popup but chose a simpler way to 
-  verify that the ajax call was indeed processed.
-  
+  Due to this decision the popup should be opened twice in order to see the result from an ajax call.
