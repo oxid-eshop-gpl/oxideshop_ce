@@ -38,9 +38,8 @@ class UserCheckoutTest extends FrontendTestCase
      *
      * @var string
      */
-    protected $_blDefaultMinkDriver = 'selenium';
-    #protected $_blDefaultMinkDriver = 'selenium2';
-    #protected $_blDefaultMinkDriver = 'goutte';
+    #protected $_blDefaultMinkDriver = 'selenium';
+    protected $_blDefaultMinkDriver = 'selenium2';
 
     /**
      * Name of theme to use.
@@ -146,7 +145,7 @@ class UserCheckoutTest extends FrontendTestCase
      */
     public function openBasketForLoggedInUser()
     {
-        $this->click("//button[@class='btn dropdown-toggle']");
+        $this->click("//div[@class='btn-group minibasket-menu']//button[@class='btn dropdown-toggle']");
 
         $checkoutText = \OxidEsales\Eshop\Core\Registry::getLang()->translateString('CHECKOUT');
         $this->waitForElement("//a[contains(text(),'{$checkoutText}')]");
