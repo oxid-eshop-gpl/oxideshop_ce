@@ -83,7 +83,6 @@ class UserCheckoutTest extends FrontendTestCase
      */
     public function loginInFrontend($userName, $userPass, $waitForLogin = true)
     {
-        $this->selectWindow(null);
         $loginText = \OxidEsales\Eshop\Core\Registry::getLang()->translateString('LOGIN');
         $this->click("//button[contains(text(),'{$loginText}')]");
 
@@ -111,8 +110,6 @@ class UserCheckoutTest extends FrontendTestCase
      */
     public function logoutFrontend()
     {
-        $this->selectWindow(null);
-
         $accountText = \OxidEsales\Eshop\Core\Registry::getLang()->translateString('MY_ACCOUNT');
         $logoutText = \OxidEsales\Eshop\Core\Registry::getLang()->translateString('LOGOUT');
         $this->waitForElement("//button[contains(text(),'{$accountText}')]");
@@ -129,7 +126,6 @@ class UserCheckoutTest extends FrontendTestCase
     public function addToCart()
     {
         $this->openShop();
-        $this->selectWindow(null);
 
         $toCartText = \OxidEsales\Eshop\Core\Registry::getLang()->translateString('TO_CART');
         $this->assertElementPresent("//button[@data-original-title='{$toCartText}']");
