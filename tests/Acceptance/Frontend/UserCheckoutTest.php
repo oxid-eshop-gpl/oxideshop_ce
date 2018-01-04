@@ -33,13 +33,16 @@ class UserCheckoutTest extends FrontendTestCase
 {
     protected $retryTimes = 0;
 
+    protected $startTime = null;
+    protected $currentTest = null;
+
     /**
      * Name of driver to use
      *
      * @var string
      */
-    #protected $_blDefaultMinkDriver = 'selenium';
-    protected $_blDefaultMinkDriver = 'selenium2';
+    protected $_blDefaultMinkDriver = 'selenium';
+    #protected $_blDefaultMinkDriver = 'selenium2';
 
     /**
      * Name of theme to use.
@@ -56,21 +59,55 @@ class UserCheckoutTest extends FrontendTestCase
         parent::setUp();
 
         $this->activateTheme($this->themeName);
+        $this->startTime = microtime(true);
     }
+
     /**
-     * Test user checkout
+     * Tear down fixture.
+     */
+    protected function tearDown()
+    {
+        $duration = microtime(true) - $this->startTime;
+        writeToLog(__CLASS__ . ' ' . $this->currentTest . ' duration: ' . $duration);
+
+        parent::tearDown();
+    }
+
+    public function testUserCheckout1()
+    {
+        $this->doUserCheckout();
+    }
+
+    public function testUserCheckout2()
+    {
+        $this->doUserCheckout();
+    }
+
+    public function testUserCheckout3()
+    {
+        $this->doUserCheckout();
+    }
+
+    public function testUserCheckout4()
+    {
+        $this->doUserCheckout();
+    }
+
+    /**
+     * Test user checkout.
      *
      * @group flow
      */
-    public function testUserCheckout()
+    public function doUserCheckout()
     {
+        $this->currentTest = __FUNCTION__;
+
         $this->openShop();
         $this->loginInFrontend('example_test@oxid-esales.dev', 'useruser');
         $this->addToCart();
         $this->addToCart();
         $this->openBasketForLoggedInUser();
         $this->proceedWithCheckout();
-
         $this->logoutFrontend();
     }
 
@@ -86,12 +123,7 @@ class UserCheckoutTest extends FrontendTestCase
         $loginText = \OxidEsales\Eshop\Core\Registry::getLang()->translateString('LOGIN');
         $this->click("//button[contains(text(),'{$loginText}')]");
 
-        try {
-            $this->waitForItemAppear("loginBox", 2);
-        } catch (\Exception $e) {
-            $this->click("//ul[@id='topMenu']/li[1]/a");
-            $this->waitForItemAppear("loginBox", 2);
-        }
+        $this->waitForSomething('findById', ['loginBox']);
         $this->type("//div[@id='loginBox']//input[@name='lgn_usr']", $userName);
         $this->type("//div[@id='loginBox']//input[@name='lgn_pwd']", $userPass);
 
@@ -99,9 +131,9 @@ class UserCheckoutTest extends FrontendTestCase
         if ($waitForLogin) {
             $accountText = \OxidEsales\Eshop\Core\Registry::getLang()->translateString('MY_ACCOUNT');
             $logoutText = \OxidEsales\Eshop\Core\Registry::getLang()->translateString('LOGOUT');
-            $this->waitForElement("//button[contains(text(),'{$accountText}')]");
+            $this->waitForSomething('find', ['xpath', "//button[contains(text(),'{$accountText}')]"]);
             $this->click("//button[contains(text(),'{$accountText}')]");
-            $this->waitForElement("//a[@title='{$logoutText}']");
+            $this->waitForSomething('hasLink', [$logoutText]);
         }
     }
 
@@ -112,7 +144,7 @@ class UserCheckoutTest extends FrontendTestCase
     {
         $accountText = \OxidEsales\Eshop\Core\Registry::getLang()->translateString('MY_ACCOUNT');
         $logoutText = \OxidEsales\Eshop\Core\Registry::getLang()->translateString('LOGOUT');
-        $this->waitForElement("//button[contains(text(),'{$accountText}')]");
+        $this->waitForSomething('find', ['xpath', "//button[contains(text(),'{$accountText}')]"]);
         $this->click("//button[contains(text(),'{$accountText}')]");
         $this->click("//a[@title='{$logoutText}']");
 
@@ -128,11 +160,11 @@ class UserCheckoutTest extends FrontendTestCase
         $this->openShop();
 
         $toCartText = \OxidEsales\Eshop\Core\Registry::getLang()->translateString('TO_CART');
-        $this->assertElementPresent("//button[@data-original-title='{$toCartText}']");
+        $this->waitForSomething('find', ['xpath', "//button[@data-original-title='{$toCartText}']"]);
         $this->click("//button[@data-original-title='{$toCartText}']");
 
         $continueShoppingText = \OxidEsales\Eshop\Core\Registry::getLang()->translateString('DD_MINIBASKET_CONTINUE_SHOPPING');
-        $this->waitForElement("//button[contains(text(),'{$continueShoppingText}')]");
+        $this->waitForSomething('find', ['xpath', "//button[contains(text(),'{$continueShoppingText}')]"]);
         $this->click("//button[contains(text(),'{$continueShoppingText}')]");
     }
 
@@ -144,7 +176,7 @@ class UserCheckoutTest extends FrontendTestCase
         $this->click("//div[@class='btn-group minibasket-menu']//button[@class='btn dropdown-toggle']");
 
         $checkoutText = \OxidEsales\Eshop\Core\Registry::getLang()->translateString('CHECKOUT');
-        $this->waitForElement("//a[contains(text(),'{$checkoutText}')]");
+        $this->waitForSomething('find', ['xpath', "//a[contains(text(),'{$checkoutText}')]"]);
         $this->click("//a[contains(text(),'{$checkoutText}')]");
     }
 
@@ -153,15 +185,78 @@ class UserCheckoutTest extends FrontendTestCase
      */
     public function proceedWithCheckout()
     {
-        $this->waitForElement("//button[@name='userform']");
+        $this->waitForSomething('hasButton', ['userform']);
         $this->click("//button[@name='userform']");
 
         $orderNowText = \OxidEsales\Eshop\Core\Registry::getLang()->translateString('SUBMIT_ORDER');
         $this->click("id=checkAgbTop");
-        $this->waitForElement("//button[contains(.,'{$orderNowText}')]");
+        $this->waitForSomething('find', ['xpath', "//button[contains(.,'{$orderNowText}')]"]);
         $this->click("//button[contains(.,'{$orderNowText}')]");
 
         $thankYouText = \OxidEsales\Eshop\Core\Registry::getLang()->translateString('THANK_YOU');;
         $this->assertTextPresent($thankYouText);
+    }
+
+    /**
+     * Get page object from mink session.
+     *
+     * @return \Behat\Mink\Element\DocumentElement
+     */
+    protected function getPage()
+    {
+        $minkSession = $this->getMinkSession();
+        $page = $minkSession->getPage();
+        return $page;
+    }
+
+    /**
+     * Waits for specified method with given arguments to return true.
+     *
+     * @param string $method       Method.
+     * @param string $arguments    Arguments.
+     * @param int    $timeToWait   How much time to wait for element.
+     * @param bool   $ignoreResult Whether not to fail if element will not appear in given time.
+     */
+    protected function waitForSomething($method, $arguments, $timeToWait = 10, $ignoreResult = false)
+    {
+        $parameters = is_array($arguments) ? $arguments : array($arguments);
+        $startTime = microtime(true);
+        $timeNow = $startTime;
+        $timeToWait = $timeToWait * $this->_iWaitTimeMultiplier;
+
+        while ($timeToWait > ($timeNow - $startTime)) {
+            if ($this->callOnPage($method, $parameters)) {
+                return;
+            }
+            usleep(300000);
+            $timeNow = microtime(true);
+        }
+
+        //we got here only if element was not found.
+        if (!$ignoreResult) {
+            $this->timeOutWaitingFor($parameters);
+        }
+    }
+
+    /**
+     * Trigger retrying test with waiting timeout
+     *
+     * @param $data
+     */
+    protected function timeOutWaitingFor($data)
+    {
+        $message = "Timeout waiting for '" . implode(' | ', $data) . "'.";
+        $this->retryTest($message);
+    }
+
+    /**
+     * @param string $method    Method to call.
+     * @param array  $arguments Arguments.
+     * @return bool
+     */
+    protected function callOnPage($method, $arguments)
+    {
+        $page = $this->getPage();
+        return $page->$method(...$arguments);
     }
 }
