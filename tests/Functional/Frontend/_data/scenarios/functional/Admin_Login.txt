@@ -1,0 +1,12 @@
+I WANT TO LOGIN TO SHOP ADMIN
+
+I am on page '/admin' 
+I submit form '#login'," ['usr' => 'admin'," 'pwd' => 'admin']" 
+I fill field 'usr','admin' 
+I fill field 'pwd','qwerty' 
+I submit form '#login' 
+I see 'Welcome to the OXID eShop Admin' 
+I click 'Sign Up' 
+I see email sent 'miles@davis.com'," 'Thank you for registration' 
+I see in database 'users'," ['email' => 'miles@davis.com']"
+

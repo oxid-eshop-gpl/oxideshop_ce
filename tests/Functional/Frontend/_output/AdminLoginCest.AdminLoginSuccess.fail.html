@@ -1,0 +1,60 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+    <title>OXID eShop Login</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="ROBOTS" content="NOINDEX, NOFOLLOW">
+    <link rel="shortcut icon" href="http://oxideshop.dev/out/admin/img/favicon.ico">
+    <link rel="stylesheet" href="http://oxideshop.dev/out/admin/src/login.css">
+    <link rel="stylesheet" href="http://oxideshop.dev/out/admin/src/colors_ce.css">
+</head>
+  <!-- OXID eShop Community Edition, Version 6, Shopping Cart System (c) OXID eSales AG 2003 - 2018 - http://www.oxid-esales.com -->
+<body>
+
+
+<div class="admin-login-box">
+
+    <div id="shopLogo"><img src="http://oxideshop.dev/out/admin/img/logo_dark.svg" /></div>
+
+    <form action="http://oxideshop.dev/admin/index.php?editlanguage=1&amp;force_admin_sid=sv1kkmr49st8ilt9p94qch0c47&amp;stoken=A66BC9FE&amp;" target="_top" method="post" name="login" id="login">
+
+        
+            <input type="hidden" name="stoken" value="A66BC9FE" /><input type="hidden" name="force_admin_sid" value="sv1kkmr49st8ilt9p94qch0c47" />
+
+            <input type="hidden" name="fnc" value="checklogin">
+            <input type="hidden" name="cl" value="login">
+
+                            
+        <div class="errorbox">
+                    <p>Error! Your browser does not support cookies!</p>
+            </div>
+                
+            <label for="usr">User</label>
+            <input type="text" name="user" id="usr" value="admin@myoxideshop.com" size="49" autofocus><br>
+
+            <label for="pwd">Password</label>
+            <input type="password" name="pwd" id="pwd" value="admin0303" size="49"><br>
+
+            <label for="lng">Language</label>
+            <select name="chlanguage" id="lng">
+                                <option value="0" >Deutsch</option>
+                                <option value="1" >English</option>
+                            </select><br>
+
+                        <label for="prf">Profile</label>
+            <select name="profile" id="prf">
+                                   <option value="0" >Standard</option>
+                                   <option value="1" >1024x768</option>
+                                   <option value="2" >1280x1024</option>
+                                   <option value="3" >1600x1200</option>
+                            </select><br>
+                    
+
+        <input type="submit" value="Start OXID eShop Admin" class="btn"><br>
+    </form>
+</div>
+
+<script type="text/javascript">if (window != window.top) top.location.href = document.location.href;</script>
+
+</body>
+</html>
