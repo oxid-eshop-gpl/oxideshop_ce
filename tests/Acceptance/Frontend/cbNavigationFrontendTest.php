@@ -31,6 +31,8 @@ use OxidEsales\TestingLibrary\oxComponents\Domain\Article\ArticlesList;
 /** Selenium tests for new layout. */
 class cbNavigationFrontendTest extends FrontendTestCase
 {
+    protected $retryTimes = null;
+
     protected $_blStartMinkSession = false;
 
     protected $currentMinkDriver = 'selenium2';
@@ -52,7 +54,7 @@ class cbNavigationFrontendTest extends FrontendTestCase
      * @group main
      */
     public function testFrontendCurrencies3()
-    {die();
+    {
         $page = $this->openShop();
 
         //currency checking
