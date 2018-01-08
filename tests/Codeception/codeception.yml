@@ -1,9 +1,15 @@
+#paths:
+#    tests: Frontend
+#    log: Frontend/_output
+#    data: Frontend/_data
+#    support: Frontend/_support
+#    envs: Frontend/_envs
 paths:
-    tests: Frontend
-    log: Frontend/_output
-    data: Frontend/_data
-    support: Frontend/_support
-    envs: Frontend/_envs
+    tests: Login
+    log: Login/_output
+    data: Login/_data
+    support: Login/_support
+    envs: Login/_envs
 settings:
     bootstrap: _bootstrap.php
     colors: true
