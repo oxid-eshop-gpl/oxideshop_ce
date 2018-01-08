@@ -1,11 +1,25 @@
 <?php
 
-use OxidEsales\TestingLibrary\CodeceptionTestCase;
+namespace OxidEsales\EshopCommunity\Tests\Acceptance\Codeception\Frontend\WebDriver;
 
+use OxidEsales\TestingLibrary\CodeceptionTestCase;
+use WebDriverAcceptanceTester as AcceptanceTester;
+
+/**
+ * Class UserCheckoutCest: written for selenium/firefox.
+ */
 class UserCheckoutCest
 {
     protected $startTime = null;
     protected $currentTest = null;
+
+    /**
+     * Set to false if you want to directly compare with related PhpBrowser test.
+     * AGB checkbox requires javascript which is not supported by PhpBrowser.
+     *
+     * @var bool
+     */
+    protected $testWithAGBCheckbox = true;
 
     /**
      * Maximum waiting time for elements.
@@ -38,6 +52,12 @@ class UserCheckoutCest
         $case = new CodeceptionTestCase;
         $case->setUp($path);
         $case->activateTheme($this->themeName);
+
+        //Disable the confirm agb checkbox if test is configured to do so.
+        if (!$this->testWithAGBCheckbox) {
+            $case->callShopSC('oxConfig', null, null,
+                ['blConfirmAGB' => ['type' => 'bool', 'value' => false]]);
+        }
 
         $this->acceptanceTester = $I;
         $this->startTime = microtime(true);
@@ -133,7 +153,7 @@ class UserCheckoutCest
 
         $I->waitForElementVisible("//a[@title='{$logoutText}']", $this->maxWaitForSeconds);
         $I->click("//a[@title='{$logoutText}']");
-        $I->waitForElementNotVisible("//button[contains(text(),'{$accountText}')]");
+        $I->waitForElementNotVisible("//button[contains(text(),'{$accountText}')]", $this->maxWaitForSeconds);
     }
 
     /**
@@ -152,7 +172,7 @@ class UserCheckoutCest
         $I->waitForElementVisible("//button[contains(text(),'{$continueShoppingText}')]", $this->maxWaitForSeconds);
         $I->click("//button[contains(text(),'{$continueShoppingText}')]");
 
-        $I->waitForElementNotVisible("//button[contains(text(),'{$continueShoppingText}')]");
+        $I->waitForElementNotVisible("//button[contains(text(),'{$continueShoppingText}')]", $this->maxWaitForSeconds);
     }
 
     /**
@@ -179,9 +199,14 @@ class UserCheckoutCest
         $I->click("//button[@name='userform']");
 
         $orderNowText = \OxidEsales\Eshop\Core\Registry::getLang()->translateString('SUBMIT_ORDER');
-        $I->checkOption("//input[@id='checkAgbTop']");
         $I->waitForElement("//button[contains(.,'{$orderNowText}')]", $this->maxWaitForSeconds);
-        $I->click("//button[contains(.,'{$orderNowText}')]");
+
+        if ($this->testWithAGBCheckbox) {
+            $I->checkOption("//input[@id='checkAgbTop']");
+            $I->seeCheckboxIsChecked("//input[@id='checkAgbTop']");
+        }
+
+        $I->submitForm("//form[@id='orderConfirmAgbTop']", []);
 
         $thankYouText = \OxidEsales\Eshop\Core\Registry::getLang()->translateString('THANK_YOU');;
         $I->see($thankYouText);
