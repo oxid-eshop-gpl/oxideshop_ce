@@ -1,0 +1,7 @@
+#Codeception/Frontend
+/Codeception/Frontend/_data
+!/Codeception/Frontend/_data/.gitkeep
+/Codeception/Frontend/_output
+!/Codeception/Frontend/_output/.gitkeep
+/Codeception/Frontend/_support
+!/Codeception/Frontend/_support/.gitkeep
