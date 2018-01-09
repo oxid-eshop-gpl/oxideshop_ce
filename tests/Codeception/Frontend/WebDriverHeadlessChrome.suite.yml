@@ -1,0 +1,30 @@
+# Codeception Test Suite Configuration
+#
+# Suite for acceptance tests.
+# Perform tests in browser using the WebDriver or PhpBrowser.
+# If you need both WebDriver and PHPBrowser tests - create a separate suite.
+#
+# you need to run  chromedriver --url-base=/wd/hub
+
+actor: WebDriverAcceptanceTester
+modules:
+    enabled:
+        - WebDriver:
+            url: 'http://oxideshop.local/'
+            browser: chrome # 'chrome' or 'firefox'
+            port: 9515
+            window_size: maximize
+            pageload_timeout: 5
+            capabilities:
+                javascriptEnabled: true
+                nativeEvents: true
+                handlesAlerts: true
+                chromeOptions:
+                    args: ["--headless", "--disable-gpu", "--disable-extensions"]
+                    #binary: "/usr/lib/chromium-browser/chromium-browser"
+                    binary: "/usr/bin/google-chrome"
+        - \Helper\WebDriverAcceptance
+extensions:
+    enabled:
+        - Codeception\Extension\RunProcess:
+            - chromedriver --url-base=/wd/hub --ignore-certificate-errors --allow-running-insecure-content --allow-insecure-localhost  # --verbose
