@@ -1,17 +1,32 @@
 <?php
 
-namespace OxidEsales\EshopCommunity\Tests\Acceptance\Codeception\Frontend\PhpBrowser;
+namespace OxidEsales\EshopCommunity\Tests\Acceptance\Codeception\Frontend\WebDriverChrome;
 
 use OxidEsales\TestingLibrary\CodeceptionTestCase;
-use PhpBrowserAcceptanceTester as AcceptanceTester;
+use WebDriverAcceptanceTester as AcceptanceTester;
 
 /**
- * Class UserCheckoutCest: written for php browser
+ * Class UserCheckoutCest: written for selenium/firefox.
  */
 class UserCheckoutCest
 {
     protected $startTime = null;
     protected $currentTest = null;
+
+    /**
+     * Set to false if you want to directly compare with related PhpBrowser test.
+     * AGB checkbox requires javascript which is not supported by PhpBrowser.
+     *
+     * @var bool
+     */
+    protected $testWithAGBCheckbox = true;
+
+    /**
+     * Maximum waiting time for elements.
+     *
+     * @var int
+     */
+    protected $maxWaitForSeconds = 3;
 
     /**
      * Name of theme to use.
@@ -38,9 +53,11 @@ class UserCheckoutCest
         $case->setUp($path);
         $case->activateTheme($this->themeName);
 
-        //PhpBrowser cannot handle the Agb checkbox as it sits outside a form and requires javascript.
-        $case->callShopSC('oxConfig', null, null,
-            ['blConfirmAGB' => ['type' => 'bool', 'value' => false]]);
+        //Disable the confirm agb checkbox if test is configured to do so.
+        if (!$this->testWithAGBCheckbox) {
+            $case->callShopSC('oxConfig', null, null,
+                ['blConfirmAGB' => ['type' => 'bool', 'value' => false]]);
+        }
 
         $this->acceptanceTester = $I;
         $this->startTime = microtime(true);
@@ -101,22 +118,19 @@ class UserCheckoutCest
 
         $loginText = \OxidEsales\Eshop\Core\Registry::getLang()->translateString('LOGIN');
         $I->click("//button[contains(text(),'{$loginText}')]");
-        $I->seeElement("//div[@id='loginBox']");
+        $I->waitForElementVisible("//div[@id='loginBox']", $this->maxWaitForSeconds);
 
         //Short way to submit a form
-        $I->submitForm("//div[@id='loginBox']//button[@type='submit']", ['lgn_usr' => $userName, 'lgn_pwd' => $userPass]);
-
-        //Same as $I->submitForm only with more lines of code.
-        //$I->fillField("//div[@id='loginBox']//input[@name='lgn_usr']", $userName);
-        //$I->fillField("//div[@id='loginBox']//input[@name='lgn_pwd']", $userPass);
-        //$I->click("//div[@id='loginBox']//button[@type='submit']");
+        $I->submitForm("//div[@id='loginBox']", ['lgn_usr' => $userName, 'lgn_pwd' => $userPass]);
 
         if ($waitForLogin) {
             $accountText = \OxidEsales\Eshop\Core\Registry::getLang()->translateString('MY_ACCOUNT');
             $logoutText = \OxidEsales\Eshop\Core\Registry::getLang()->translateString('LOGOUT');
-            $I->seeElement("//button[contains(text(),'{$accountText}')]");
+            $I->waitForElementVisible("//button[contains(text(),'{$accountText}')]", $this->maxWaitForSeconds);
             $I->click("//button[contains(text(),'{$accountText}')]");
             $I->see($logoutText);
+            $I->click("//button[contains(text(),'{$accountText}')]");
+            $I->dontSee($logoutText);
         }
     }
 
@@ -132,9 +146,9 @@ class UserCheckoutCest
         $I->seeElement("//button[contains(text(),'{$accountText}')]");
         $I->click("//button[contains(text(),'{$accountText}')]");
 
-        $I->seeElement("//a[@title='{$logoutText}']");
+        $I->waitForElementVisible("//a[@title='{$logoutText}']", $this->maxWaitForSeconds);
         $I->click("//a[@title='{$logoutText}']");
-        $I->dontSeeElement("//button[contains(text(),'{$accountText}')]");
+        $I->waitForElementNotVisible("//button[contains(text(),'{$accountText}')]", $this->maxWaitForSeconds);
     }
 
     /**
@@ -146,12 +160,14 @@ class UserCheckoutCest
         $I = $this->acceptanceTester;
 
         $toCartText = \OxidEsales\Eshop\Core\Registry::getLang()->translateString('TO_CART');
-        $I->seeElement("//button[@title='{$toCartText}']");
-        $I->click("//button[@title='{$toCartText}']");
+        $I->seeElement("//button[@title='{$toCartText}' or @data-original-title='{$toCartText}']");
+        $I->click("//button[@title='{$toCartText}' or @data-original-title='{$toCartText}']");
 
         $continueShoppingText = \OxidEsales\Eshop\Core\Registry::getLang()->translateString('DD_MINIBASKET_CONTINUE_SHOPPING');
-        $I->seeElement("//button[contains(text(),'{$continueShoppingText}')]");
+        $I->waitForElementVisible("//button[contains(text(),'{$continueShoppingText}')]", $this->maxWaitForSeconds);
         $I->click("//button[contains(text(),'{$continueShoppingText}')]");
+
+        $I->waitForElementNotVisible("//button[contains(text(),'{$continueShoppingText}')]", $this->maxWaitForSeconds);
     }
 
     /**
@@ -163,7 +179,7 @@ class UserCheckoutCest
         $I->click("//div[@class='btn-group minibasket-menu']//button[@class='btn dropdown-toggle']");
 
         $checkoutText = \OxidEsales\Eshop\Core\Registry::getLang()->translateString('CHECKOUT');
-        $I->seeElement("//a[contains(text(),'{$checkoutText}')]");
+        $I->waitForElementVisible("//a[contains(text(),'{$checkoutText}')]", $this->maxWaitForSeconds);
         $I->click("//a[contains(text(),'{$checkoutText}')]");
     }
 
@@ -178,10 +194,17 @@ class UserCheckoutCest
         $I->click("//button[@name='userform']");
 
         $orderNowText = \OxidEsales\Eshop\Core\Registry::getLang()->translateString('SUBMIT_ORDER');
-        $I->dontSeeElement("//input[@id='checkAgbTop']");
+        $I->waitForElement("//button[contains(.,'{$orderNowText}')]", $this->maxWaitForSeconds);
 
-        $I->seeElement("//button[contains(.,'{$orderNowText}')]");
-        $I->click("//button[contains(.,'{$orderNowText}')]");
+        if ($this->testWithAGBCheckbox) {
+            $I->checkOption("//input[@id='checkAgbTop']");
+            $I->seeCheckboxIsChecked("//input[@id='checkAgbTop']");
+        }
+
+        //NOTE: in flow, we have two forms for submitting an order, 'orderConfirmAgbTop' and 'orderConfirmAgbBottom'.
+        // Seems like the javascript method that should set the ord_agb hidden input value does only set it in
+        // orderConfirmAgbTop for chrome but not for orderConfirmAgbBottom.
+        $I->submitForm("//form[@id='orderConfirmAgbTop']", []);
 
         $thankYouText = \OxidEsales\Eshop\Core\Registry::getLang()->translateString('THANK_YOU');;
         $I->see($thankYouText);

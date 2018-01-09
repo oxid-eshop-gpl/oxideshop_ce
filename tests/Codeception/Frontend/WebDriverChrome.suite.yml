@@ -1,0 +1,21 @@
+# Codeception Test Suite Configuration
+#
+# Suite for acceptance tests.
+# Perform tests in browser using the WebDriver or PhpBrowser.
+# If you need both WebDriver and PHPBrowser tests - create a separate suite.
+
+actor: WebDriverAcceptanceTester
+modules:
+    enabled:
+        - WebDriver:
+            url: 'http://www.oxideshop.dev'
+            browser: chrome # 'chrome' or 'firefox'
+            window_size: false # disabled in ChromeDriver
+            capabilities:
+                javascriptEnabled: true
+                nativeEvents: true
+                handlesAlerts: true
+                chromeOptions:
+                    args: ["--start-maximized"]
+                    binary: "/usr/bin/google-chrome"
+        - \Helper\WebDriverAcceptance

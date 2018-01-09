@@ -96,6 +96,7 @@ class UserCheckoutCest
     {
         $I->amOnPage('/');
         $I->maximizeWindow();
+        $I->see('OXID Online Shop');
 
         $this->loginInFrontend('example_test@oxid-esales.dev', 'useruser');
         $this->addToCart();
