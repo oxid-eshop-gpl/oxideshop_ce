@@ -17,13 +17,13 @@ settings:
 extensions:
     enabled:
         - Codeception\Extension\RunFailed
-modules:
-    config:
-        Db:
-            dsn: 'mysql:host=localhost;dbname=oxid'
-            user: 'oxid'
-            password: 'oxid'
-            dump: Frontend/_data/dump.sql
-            populate: false
-            cleanup: false
-            reconnect: true
+#modules:
+#    config:
+#        Db:
+#            dsn: 'mysql:host=localhost;dbname=oxid'
+#            user: 'oxid'
+#            password: 'oxid'
+#            dump: Frontend/_data/dump.sql
+#            populate: false
+#            cleanup: false
+#            reconnect: true

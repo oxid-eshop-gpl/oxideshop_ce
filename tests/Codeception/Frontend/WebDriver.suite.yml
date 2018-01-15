@@ -11,3 +11,21 @@ modules:
             url: 'http://www.oxideshop.dev'
             browser: firefox # 'chrome' or 'firefox'
         - \Helper\WebDriverAcceptance
+        - Db:
+           dsn: 'mysql:host=localhost;dbname=oxid'
+           database: 'oxid'
+           host: 'localhost'
+           user: 'oxid'
+           password: 'oxid'
+           populate: true
+           cleanup: true
+           reconnect: true
+           #use this without populator
+           #dump: 'Frontend/_data/database_with_testdata_CE.sql'
+           #-----------
+           #use this with the populator mysql ...
+           #dump: '/var/www/oxideshop/tests/Codeception/Frontend/_data/database_with_testdata_CE.sql'
+           #populator: 'mysql -u$user -p$password -h$host $database < $dump'
+           #----
+           populator: '/var/www/oxideshop/tests/Codeception/Frontend/databasePopulator.sh'
+
