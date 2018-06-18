@@ -3,6 +3,10 @@ language: php
 notifications:
   email: false
 
+matrix:
+  include:
+    - php: 5.3
+      dist: precise
 php:
   - "5.3"
   - "5.4"
