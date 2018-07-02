@@ -7,12 +7,12 @@ matrix:
   include:
     - php: 5.3
       dist: precise
-#    - php: 5.4
-#      dist: precise
-#    - php: 5.5
-#      dist: precise
-#    - php: 5.6
-#      dist: precise
+    - php: 5.4
+      dist: precise
+    - php: 5.5
+      dist: precise
+    - php: 5.6
+      dist: precise
 
 # TRAVIS_ERROR_LEVEL = E_ALL & ~E_DEPRECATED & ~E_NOTICE & ~E_STRICT
 env: TRAVIS_ERROR_LEVEL=22519 oxINSTALLSHOP=0 oxSKIPSHOPSETUP=1 OXID_VERSION=CE OXID_EDITION=CE oxPATH="$TRAVIS_BUILD_DIR/source/"
@@ -33,8 +33,6 @@ before_script:
   - echo "cgi.fix_pathinfo = 1" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
   - ~/.phpenv/versions/$(phpenv version-name)/sbin/php-fpm
   # configure apache virtual host
-  - sudo ls /etc/apache2
-  - sudo ls /etc/apache2/sites-available
   - echo "$(curl -fsSL https://gist.githubusercontent.com/adriankirchner/197e3d13ccfb680f8942/raw/5b36cd3740cc05adb1c9d5c0568c851dd7700dcc/gistfile1.apacheconf)" | sudo tee /etc/apache2/sites-available/default > /dev/null
   - sudo sed -e "s|%TRAVIS_BUILD_DIR%|$(pwd)/source|g" --in-place /etc/apache2/sites-available/default
   - sudo service apache2 restart
