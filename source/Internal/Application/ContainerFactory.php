@@ -13,6 +13,7 @@ use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Dumper\PhpDumper;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
+use Symfony\Component\EventDispatcher\DependencyInjection\RegisterListenersPass;
 
 /**
   *
@@ -82,6 +83,11 @@ class ContainerFactory
     private function createAndCompileSymfonyContainer()
     {
         $this->symfonyContainer = new ContainerBuilder();
+        // This is hackish - but the only way to use the ContainerAwareEventDispatcher that
+        // is expected by the RegisterListenersPass - so you need to create some cyclical
+        // dependency. The factory method for the event dispatcher used *in* the container
+        // provides exactly this instance created before building up the container.
+        $this->symfonyContainer->addCompilerPass(new RegisterListenersPass());
         $loader = new YamlFileLoader($this->symfonyContainer, new FileLocator(__DIR__));
         $loader->load('services.yaml');
         $this->symfonyContainer->compile();
