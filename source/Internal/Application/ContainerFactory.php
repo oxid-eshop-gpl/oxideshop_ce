@@ -7,6 +7,7 @@
 namespace OxidEsales\EshopCommunity\Internal\Application;
 
 use OxidEsales\Eshop\Core\Registry;
+use OxidEsales\EshopCommunity\Internal\Application\Events\ShopAwareEventDispatcher;
 use OxidEsales\EshopCommunity\Internal\Application\PSR11Compliance\ContainerWrapper;
 use Psr\Container\ContainerInterface;
 use Symfony\Component\Config\FileLocator;
@@ -90,6 +91,12 @@ class ContainerFactory
         $this->symfonyContainer->addCompilerPass(new RegisterListenersPass());
         $loader = new YamlFileLoader($this->symfonyContainer, new FileLocator(__DIR__));
         $loader->load('services.yaml');
+        try {
+            $loader = new YamlFileLoader($this->symfonyContainer, new FileLocator($this->getShopSourcePath()));
+            $loader->load('project.yaml');
+        } catch (\Exception $e) {
+            // pass
+        }
         $this->symfonyContainer->compile();
     }
 
@@ -117,6 +124,14 @@ class ContainerFactory
     }
 
     /**
+     * @return string
+     */
+    private function getShopSourcePath()
+    {
+        return Registry::getConfig()->getConfigParam('sShopDir');
+    }
+
+    /**
      * @return ContainerFactory
      */
     public static function getInstance()
@@ -126,4 +141,5 @@ class ContainerFactory
         }
         return self::$instance;
     }
+
 }
