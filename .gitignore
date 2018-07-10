@@ -39,3 +39,6 @@
 
 # DI cache
 /source/Internal/Application/containercache.php
+
+# Test project.yaml file
+/tests/Unit/Internal/Application/Service/SourceDir/project.yaml
