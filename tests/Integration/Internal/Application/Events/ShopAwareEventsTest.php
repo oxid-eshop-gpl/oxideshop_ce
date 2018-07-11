@@ -9,6 +9,7 @@
 namespace OxidEsales\EshopCommunity\Tests\Integration\Internal\Application\Events;
 
 
+use OxidEsales\Eshop\Core\Config;
 use OxidEsales\EshopCommunity\Core\Registry;
 use OxidEsales\EshopCommunity\Internal\Application\ContainerFactory;
 use OxidEsales\EshopCommunity\Internal\Application\PSR11Compliance\ContainerWrapper;
@@ -28,27 +29,25 @@ class ShopAwareEventsTest extends \PHPUnit_Framework_TestCase
      */
     private $dispatcher;
 
+    /** @var Config originalConfig */
+    private $originalConfig;
 
     public function setUp()
     {
-        $this->removeCache();
-        Registry::set(\OxidEsales\Eshop\Core\Config::class, new TestConfig());
+        $this->originalConfig = Registry::get(\OxidEsales\Eshop\Core\Config::class);
+        Registry::set(\OxidEsales\Eshop\Core\Config::class, new TestConfig($this->originalConfig));
 
-        $this->container = ContainerFactory::getInstance()->getContainer();
+        $factory = ContainerFactory::getInstance();
+        $factory->resetContainer();
+
+        $this->container = $factory->getContainer();
         $this->dispatcher = $this->container->get('event_dispatcher');
     }
 
     public function tearDown()
     {
-        $this->removeCache();
-    }
-
-    private function removeCache()
-    {
-        if (file_exists(__DIR__ . DIRECTORY_SEPARATOR . 'containercache.php'))
-        {
-            unlink(__DIR__ . DIRECTORY_SEPARATOR . 'containercache.php');
-        }
+        Registry::set(\OxidEsales\Eshop\Core\Config::class, $this->originalConfig);
+        ContainerFactory::getInstance()->resetContainer();
     }
 
     /**
