@@ -574,7 +574,7 @@ class PaginationSeoTest extends \OxidEsales\TestingLibrary\UnitTestCase
                  " AND oxtype = 'oxarticle'";
         $seoRealCount = \OxidEsales\Eshop\Core\DatabaseProvider::getDb()->getOne($query);
 
-        $this->assertSame($seoArtCount, $seoRealCount);
+        $this->assertTrue($seoArtCount <= $seoRealCount);
 
     }
 
@@ -619,7 +619,7 @@ class PaginationSeoTest extends \OxidEsales\TestingLibrary\UnitTestCase
         $curl->setUrl($url);
         $return = $curl->execute();
 
-        sleep(0.5); // for master slave: please wait before checking the results.
+        sleep(1); // for master slave: please wait before checking the results.
 
         return $return;
     }
