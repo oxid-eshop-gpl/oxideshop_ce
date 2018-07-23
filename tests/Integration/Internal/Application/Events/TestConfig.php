@@ -8,25 +8,22 @@
 
 namespace OxidEsales\EshopCommunity\Tests\Integration\Internal\Application\Events;
 
-
 use OxidEsales\Eshop\Core\Config;
 
-class TestConfig
+class TestConfig extends Config
 {
-    private $originalConfig;
-
-    public function __construct(Config $originalConfig)
+    public function __construct()
     {
-        $this->originalConfig = $originalConfig;
+        $this->init();
     }
 
-    public function getConfigParam($key)
+    public function getConfigParam($key, $default = null)
     {
         if ($key == 'sShopDir') {
             return __DIR__;
         }
         else {
-            return $this->originalConfig->getConfigParam($key);
+            return parent::getConfigParam($key);
         }
 
     }

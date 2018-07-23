@@ -3,7 +3,7 @@ services:
   SomeModule\Events\TestEventSubscriber:
     class: SomeModule\Events\TestEventSubscriber
     arguments:
-      $someService: @SomeModule\Service\SomeOtherService
+      $someService: '@SomeModule\Service\SomeOtherService'
     tags:
       - { name: kernel.event_subscriber }
 

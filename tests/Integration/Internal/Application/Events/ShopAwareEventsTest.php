@@ -14,13 +14,14 @@ use OxidEsales\EshopCommunity\Core\Registry;
 use OxidEsales\EshopCommunity\Internal\Application\ContainerFactory;
 use OxidEsales\EshopCommunity\Internal\Application\PSR11Compliance\ContainerWrapper;
 use OxidEsales\EshopCommunity\Tests\Unit\Internal\ContextStub;
+use Psr\Container\ContainerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class ShopAwareEventsTest extends \PHPUnit_Framework_TestCase
 {
 
     /**
-     * @var ContainerWrapper
+     * @var ContainerInterface
      */
     private $container;
 
@@ -35,7 +36,7 @@ class ShopAwareEventsTest extends \PHPUnit_Framework_TestCase
     public function setUp()
     {
         $this->originalConfig = Registry::get(\OxidEsales\Eshop\Core\Config::class);
-        Registry::set(\OxidEsales\Eshop\Core\Config::class, new TestConfig($this->originalConfig));
+        Registry::set(\OxidEsales\Eshop\Core\Config::class, new TestConfig());
 
         $factory = ContainerFactory::getInstance();
         $factory->resetContainer();
