@@ -60,7 +60,7 @@ services:
     tags: [{ name: kernel.event_subscriber }]
     calls:
       - [setActiveShops, [[1]]]
-      - [setContext, [@OxidEsales\EshopCommunity\Internal\Utility\ContextInterface]]
+      - [setContext, ['@OxidEsales\EshopCommunity\Internal\Utility\ContextInterface']]
 
 EOT;
 
@@ -79,7 +79,7 @@ EOT;
         $keys = $this->service->findModuleEventSubscribers($this->moduleDir);
 
         $this->assertEquals(1, sizeof($keys));
-        $this->assertEquals('somemodule\events\testeventsubscriber', $keys[0]);
+        $this->assertEquals('SomeModule\Events\TestEventSubscriber', $keys[0]);
     }
 
     public function testAddFirstActiveShopToEventSubscribers() {
@@ -89,7 +89,7 @@ EOT;
 
         $this->service->addActiveShopsToEventSubscribers($this->moduleDir, [2]);
 
-        $activeShops = $this->service->getActiveShopsForEventSubscriber('somemodule\events\testeventsubscriber');
+        $activeShops = $this->service->getActiveShopsForEventSubscriber('SomeModule\Events\TestEventSubscriber');
 
         $this->assertEquals(1, sizeof($activeShops));
         $this->assertEquals(2, $activeShops[0]);
@@ -106,7 +106,7 @@ services:
     tags: [{ name: kernel.event_subscriber }]
     calls:
       - [setActiveShops, [[1]]]
-      - [setContext, [@OxidEsales\EshopCommunity\Internal\Utility\ContextInterface]]
+      - [setContext, ['@OxidEsales\EshopCommunity\Internal\Utility\ContextInterface']]
 
 EOT;
 
@@ -226,7 +226,7 @@ services:
     tags: [{ name: kernel.event_subscriber }]
     calls:
       - [setActiveShops, [[1, 2, 3, 4]]]
-      - [setContext, [@OxidEsales\EshopCommunity\Internal\Utility\ContextInterface]]
+      - [setContext, ['@OxidEsales\EshopCommunity\Internal\Utility\ContextInterface']]
 
 EOT;
 

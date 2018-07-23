@@ -324,7 +324,7 @@ class ProjectYamlConfigurationService implements ProjectYamlConfigurationService
         $services = $yaml[self::SERVICES_SECTION];
         $entries = [];
         foreach ($services as $name => $fields) {
-            if (in_array(strtolower($name), $subscriberKeys)) {
+            if (in_array($name, $subscriberKeys)) {
                 $entries[$name] = $fields;
             }
         }
