@@ -16,8 +16,8 @@
         "monolog/monolog": "^v1.23.0",
         "psr/container": "1.0.*",
         "symfony/config": "~2.8|~3.0",
-        "symfony/dependency-injection": "^3.1",
-        "symfony/event-dispatcher": "^3.1"
+        "symfony/dependency-injection": "^3.4",
+        "symfony/event-dispatcher": "^3.4"
     },
     "require-dev": {
         "oxid-esales/flow-theme": "^v3.0.0",
@@ -27,7 +27,7 @@
         "oxid-esales/oxideshop-demodata-installer": "^v1.1.0",
         "oxid-esales/oxideshop-composer-plugin": "^v2.0.0",
         "oxid-esales/oxideshop-unified-namespace-generator": "^2.0.0",
-        "oxid-esales/testing-library": "dev-master",
+        "oxid-esales/testing-library": "dev-OXDEV-1309_Update_DI_container",
         "oxid-esales/coding-standards": "^v3.0.2",
         "oxid-esales/coding-standards-wrapper": "dev-master",
         "incenteev/composer-parameter-handler": "~v2.0",

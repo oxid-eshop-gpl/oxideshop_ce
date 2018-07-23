@@ -7,8 +7,6 @@
 namespace OxidEsales\EshopCommunity\Internal\Application;
 
 use OxidEsales\Eshop\Core\Registry;
-use OxidEsales\EshopCommunity\Internal\Application\Events\ShopAwareEventDispatcher;
-use OxidEsales\EshopCommunity\Internal\Application\PSR11Compliance\ContainerWrapper;
 use Psr\Container\ContainerInterface;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -50,7 +48,7 @@ class ContainerFactory
             $this->initializeContainer();
         }
 
-        return new ContainerWrapper($this->symfonyContainer);
+        return $this->symfonyContainer;
     }
 
     /**
