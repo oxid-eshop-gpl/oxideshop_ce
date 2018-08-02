@@ -7,6 +7,7 @@
 namespace OxidEsales\EshopCommunity\Application\Controller\Admin;
 
 use OxidEsales\EshopCommunity\Application\Controller\TemplateController;
+use OxidEsales\EshopCommunity\Core\SmartyEngine;
 use oxRegistry;
 use Symfony\Component\Templating\TemplateNameParser;
 
