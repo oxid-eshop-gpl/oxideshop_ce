@@ -16,6 +16,7 @@ use PHPMailer\PHPMailer\PHPMailer;
 use ReflectionMethod;
 use OxidEsales\EshopCommunity\Internal\ShopEvents\ViewRenderedEvent;
 use OxidEsales\EshopCommunity\Internal\ShopEvents\BeforeHeadersSendEvent;
+use Symfony\Component\Templating\TemplateNameParser;
 
 /**
  * Main shop actions controller. Processes user actions, logs
@@ -456,9 +457,6 @@ class ShopControl extends \OxidEsales\Eshop\Core\Base
      */
     protected function _render($view)
     {
-        // get Smarty is important here as it sets template directory correct
-        $smarty = \OxidEsales\Eshop\Core\Registry::getUtilsView()->getSmarty();
-
         // render it
         $templateName = $view->render();
 
@@ -488,33 +486,22 @@ class ShopControl extends \OxidEsales\Eshop\Core\Base
             \OxidEsales\Eshop\Core\Registry::getUtilsView()->passAllErrorsToView($viewData, $errors);
         }
 
-        foreach (array_keys($viewData) as $viewName) {
-            $smarty->assign($viewName, $viewData[$viewName]);
-        }
+      /*  foreach (array_keys($viewData) as $viewName) {
+            $smarty->assign_by_ref($viewName, $viewData[$viewName]);
+        }*/
 
         // passing current view object to smarty
-        $smarty->oxobject = $view;
+       // $smarty->oxobject = $view;
 
-        $output = $this->fetchSmartyOutput($smarty, $templateName, $view->getViewId());
+        $templating = new TemplateRenderer();
+        $output = $templating->renderTemplate($templateName, $viewData, $view);
+
+            //$smarty->fetch($templateName, $view->getViewId());
 
         //Output processing - useful for modules as sometimes you may want to process output manually.
         $output = $outputManager->process($output, $view->getClassName());
 
         return $outputManager->addVersionTags($output);
-    }
-
-    /**
-     * Call smarty::fetch.
-     *
-     * @param Smarty $smarty
-     * @param string $templateName
-     * @param string $viewId
-     *
-     * @return mixed
-     */
-    protected function fetchSmartyOutput($smarty, $templateName, $viewId)
-    {
-        return $smarty->fetch($templateName, $viewId);
     }
 
     /**
