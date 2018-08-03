@@ -880,16 +880,7 @@ class BaseController extends \OxidEsales\Eshop\Core\Base
     {
         return true;
     }
-
-    /**
-     * @internal
-     *
-     * @return ContainerInterface
-     */
-    protected function getContainer()
-    {
-        return \OxidEsales\EshopCommunity\Internal\Application\ContainerFactory::getInstance()->getContainer();
-    }
+}
 
     /**
      * Config instance getter

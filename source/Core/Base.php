@@ -151,4 +151,14 @@ class Base
     {
         self::$_blIsAdmin = $isAdmin;
     }
+
+    /**
+     * @internal
+     *
+     * @return \Psr\Container\ContainerInterface
+     */
+    protected function getContainer()
+    {
+        return \OxidEsales\EshopCommunity\Internal\Application\ContainerFactory::getInstance()->getContainer();
+    }
 }
