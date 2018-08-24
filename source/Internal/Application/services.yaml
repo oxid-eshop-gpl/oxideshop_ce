@@ -10,5 +10,6 @@ imports:
     - { resource: ../Templating/services.yaml }
     - { resource: ../Smarty/services.yaml }
     - { resource: ../ProjectDIConfig/services.yaml }
+    - { resource: ../Twig/services.yaml }
     - { resource: Service/services.yaml }
     - { resource: Utility/services.yaml }
