@@ -56,6 +56,7 @@ class TwigEngine implements BaseEngineInterface
         $this->engine->addExtension(new OxidExtension());
         $this->engine->addExtension(new OxidIncludeExtension());
         $this->engine->addExtension(new SmartyExtension());
+        $this->engine->addExtension(new \Twig_Extension_StringLoader());
     }
 
     /**
