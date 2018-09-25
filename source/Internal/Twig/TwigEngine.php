@@ -19,6 +19,9 @@ use Symfony\Component\Templating\TemplateNameParserInterface;
 use Symfony\Component\Templating\TemplateReferenceInterface;
 use Twig\Environment;
 
+/**
+ * Class TwigEngine
+ */
 class TwigEngine implements BaseEngineInterface
 {
     /**
@@ -41,11 +44,15 @@ class TwigEngine implements BaseEngineInterface
 
     /**
      * TwigEngine constructor.
-     * @param Environment $engine
+     * @param Environment                 $engine
      * @param TemplateNameParserInterface $parser
+     * @param OxidExtension $oxidExtension
      */
-    public function __construct(Environment $engine, TemplateNameParserInterface $parser)
-    {
+    public function __construct(
+        Environment $engine,
+        TemplateNameParserInterface $parser,
+        OxidExtension $oxidExtension
+    ) {
 		$this->engine = $engine;
         $this->parser = $parser;
 
@@ -54,7 +61,7 @@ class TwigEngine implements BaseEngineInterface
         }
 
         $this->engine->addExtension(new MathExtension());
-        $this->engine->addExtension(new OxidExtension());
+        $this->engine->addExtension($oxidExtension);
         $this->engine->addExtension(new OxidIncludeExtension());
         $this->engine->addExtension(new SmartyExtension());
 
@@ -64,8 +71,8 @@ class TwigEngine implements BaseEngineInterface
     /**
      * Renders a template.
      *
-     * @param string|TemplateReferenceInterface $name A template name or a TemplateReferenceInterface instance
-     * @param array $parameters An array of parameters to pass to the template
+     * @param string $name       A template name or a TemplateReferenceInterface instance
+     * @param array  $parameters An array of parameters to pass to the template
      *
      * @return string The evaluated template as a string
      */
@@ -77,7 +84,7 @@ class TwigEngine implements BaseEngineInterface
     /**
      * Returns true if the template exists.
      *
-     * @param string|TemplateReferenceInterface $name A template name or a TemplateReferenceInterface instance
+     * @param string $name A template name or a TemplateReferenceInterface instance
      *
      * @return bool true if the template exists, false otherwise
      */
