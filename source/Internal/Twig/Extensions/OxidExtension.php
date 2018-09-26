@@ -2,7 +2,11 @@
 
 namespace OxidEsales\EshopCommunity\Internal\Twig\Extensions;
 
+use OxidEsales\EshopCommunity\Internal\Adapter\TemplateLogic\OxaddparamsLogic;
+use OxidEsales\EshopCommunity\Internal\Adapter\TemplateLogic\OxgetseourlLogic;
+
 use Twig\Extension\AbstractExtension;
+use Twig\TwigFilter;
 use Twig\TwigFunction;
 
 /**
@@ -10,70 +14,73 @@ use Twig\TwigFunction;
  */
 class OxidExtension extends AbstractExtension
 {
+    /** @var OxgetseourlLogic */
+    private $oxgetseourlLogic;
+
+    /** @var OxaddparamsLogic */
+    private $oxaddparamsLogic;
+
+    /**
+     * OxidExtension constructor.
+     *
+     * @param OxgetseourlLogic $oxgetseourlLogic
+     * @param OxaddparamsLogic $oxaddparamsLogic
+     */
+    public function __construct(OxgetseourlLogic $oxgetseourlLogic, OxaddparamsLogic $oxaddparamsLogic)
+    {
+        $this->oxgetseourlLogic = $oxgetseourlLogic;
+        $this->oxaddparamsLogic = $oxaddparamsLogic;
+    }
+
     /**
      * {@inheritdoc}
      */
     public function getFunctions()
     {
         return [
-            new TwigFunction('oxmultilang', [$this, 'oxmultilang'])
+            new TwigFunction('oxgetseourl', [$this, 'oxgetseourl'], ['is_safe' => ['html']])
         ];
     }
 
-    public function oxmultilang($params)
+    /**
+     * {@inheritdoc}
+     */
+    public function getFilters()
     {
-        startProfile("smarty_function_oxmultilang");
+        return [
+            new TwigFilter('oxaddparams', [$this, 'oxaddparams'], ['is_safe' => ['html']])
+        ];
+    }
 
-        $oLang = \OxidEsales\Eshop\Core\Registry::getLang();
-        $oConfig = \OxidEsales\Eshop\Core\Registry::getConfig();
-        $oShop = $oConfig->getActiveShop();
-        $blAdmin = $oLang->isAdmin();
+    /**
+     * Output SEO style url
+     *
+     * @param array $parameters
+     *
+     * @return null|string
+     */
+    public function oxgetseourl(array $parameters)
+    {
+        $url = $this->oxgetseourlLogic->oxgetseourl($parameters);
 
-        $sIdent  = isset( $params['ident'] ) ? $params['ident'] : 'IDENT MISSING';
-        $aArgs = isset( $params['args'] ) ? $params['args'] : false;
-        $sSuffix = isset( $params['suffix'] ) ? $params['suffix'] : 'NO_SUFFIX';
-        $blShowError = isset( $params['noerror']) ? !$params['noerror'] : true ;
-
-        $iLang = $oLang->getTplLanguage();
-
-        if( !$blAdmin && $oShop->isProductiveMode() ) {
-            $blShowError = false;
+        $dynamicParameters = isset($parameters['params']) ? $parameters['params'] : false;
+        if ($dynamicParameters) {
+            $url = $this->oxaddparams($url, $dynamicParameters);
         }
 
-        try {
-            $sTranslation = $oLang->translateString( $sIdent, $iLang, $blAdmin );
-            $blTranslationNotFound = !$oLang->isTranslated();
-            if ( 'NO_SUFFIX' != $sSuffix ) {
-                $sSuffixTranslation = $oLang->translateString( $sSuffix, $iLang, $blAdmin );
-            }
-        } catch (\OxidEsales\Eshop\Core\Exception\LanguageException $oEx ) {
-            // is thrown in debug mode and has to be caught here, as smarty hangs otherwise!
-        }
+        return $url;
+    }
 
-        if( $blTranslationNotFound && isset( $params['alternative'] ) ) {
-            $sTranslation = $params['alternative'];
-            $blTranslationNotFound = false;
-        }
-
-        if ( !$blTranslationNotFound ) {
-            if ( $aArgs !== false ) {
-                if ( is_array( $aArgs ) ) {
-                    $sTranslation = vsprintf( $sTranslation, $aArgs );
-                } else {
-                    $sTranslation = sprintf( $sTranslation, $aArgs );
-                }
-            }
-
-            if ( 'NO_SUFFIX' != $sSuffix ) {
-                $sTranslation .= $sSuffixTranslation;
-            }
-
-        } elseif( $blShowError ) {
-            $sTranslation = 'ERROR: Translation for '.$sIdent.' not found!';
-        }
-
-        stopProfile("smarty_function_oxmultilang");
-
-        return $sTranslation;
+    /**
+     * Add additional parameters to SEO url
+     *
+     * @param string $url               Url
+     * @param string $dynamicParameters Dynamic URL parameters
+     *
+     * @return string
+     */
+    public function oxaddparams($url, $dynamicParameters)
+    {
+        return $this->oxaddparamsLogic->oxaddparams($url, $dynamicParameters);
     }
 }
