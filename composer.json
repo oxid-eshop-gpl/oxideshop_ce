@@ -9,7 +9,7 @@
         "proprietary"
     ],
     "require": {
-        "php": "^7.0",
+        "php": "^7.1",
         "phpmailer/phpmailer": "v5.2.26",
         "smarty/smarty": "^v2.6.31",
         "doctrine/dbal": "^v2.5.13",
@@ -17,8 +17,6 @@
         "monolog/monolog": "^v1.23.0",
         "psr/container": "1.0.*",
         "symfony/event-dispatcher": "^3.4",
-        "symfony/expression-language": "~2.8|~3.0",
-        "twig/twig": "^2.0",
         "symfony/dependency-injection": "^3.4",
         "symfony/templating": "^4.1",
         "twig/twig": "^2.5",
