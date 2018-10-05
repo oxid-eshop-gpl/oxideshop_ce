@@ -15,6 +15,9 @@ services:
 
 # TemplateLogic
 
+  OxidEsales\EshopCommunity\Internal\Adapter\TemplateLogic\ContentFactory:
+    class: OxidEsales\EshopCommunity\Internal\Adapter\TemplateLogic\ContentFactory
+
   OxidEsales\EshopCommunity\Internal\Adapter\TemplateLogic\SeoUrlLogic:
     class: OxidEsales\EshopCommunity\Internal\Adapter\TemplateLogic\SeoUrlLogic
 
