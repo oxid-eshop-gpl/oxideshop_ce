@@ -81,6 +81,8 @@ services:
 
   OxidEsales\EshopCommunity\Internal\Twig\Extensions\IncludeExtension:
     class: OxidEsales\EshopCommunity\Internal\Twig\Extensions\IncludeExtension
+    arguments:
+      - '@OxidEsales\EshopCommunity\Internal\Adapter\TemplateLogic\IncludeDynamicLogic'
 
   OxidEsales\EshopCommunity\Internal\Twig\Extensions\SmartyExtension:
     class: OxidEsales\EshopCommunity\Internal\Twig\Extensions\SmartyExtension
