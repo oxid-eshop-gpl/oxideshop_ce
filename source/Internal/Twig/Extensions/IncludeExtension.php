@@ -6,8 +6,10 @@
 
 namespace OxidEsales\EshopCommunity\Internal\Twig\Extensions;
 
+use OxidEsales\EshopCommunity\Internal\Adapter\TemplateLogic\IncludeDynamicLogic;
+use OxidEsales\EshopCommunity\Internal\Twig\TokenParser\IncludeDynamicTokenParser;
 use Twig\Extension\AbstractExtension;
-use Twig\TwigFunction;
+use Twig\TokenParser\TokenParserInterface;
 
 /**
  * Class IncludeExtension
@@ -15,14 +17,44 @@ use Twig\TwigFunction;
 class IncludeExtension extends AbstractExtension
 {
 
+    /** @var IncludeDynamicLogic */
+    private $includeDynamicLogic;
+
     /**
-     * Returns a list of functions to add to the existing list.
+     * IncludeExtension constructor.
      *
-     * @return TwigFunction[]
+     * @param IncludeDynamicLogic $includeDynamicLogic
      */
-    public function getFunctions()
+    public function __construct(IncludeDynamicLogic $includeDynamicLogic)
     {
-        return [
-        ];
+        $this->includeDynamicLogic = $includeDynamicLogic;
+    }
+
+    /**
+     * @return TokenParserInterface[]
+     */
+    public function getTokenParsers()
+    {
+        return [new IncludeDynamicTokenParser()];
+    }
+
+    /**
+     * @param array $parameters
+     *
+     * @return string
+     */
+    public function renderForCache(array $parameters)
+    {
+        return $this->includeDynamicLogic->renderForCache($parameters);
+    }
+
+    /**
+     * @param array $parameters
+     *
+     * @return array
+     */
+    public function includeDynamicPrefix(array $parameters)
+    {
+        return $this->includeDynamicLogic->includeDynamicPrefix($parameters);
     }
 }
