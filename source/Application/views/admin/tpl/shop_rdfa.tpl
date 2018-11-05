@@ -12,9 +12,10 @@ function _groupExp(el) {
 </script>
 [{include file="include/rdfa_script.tpl"}]
 
-[{assign var="readonly" value=""}]
 [{if $readonly}]
     [{assign var="readonly" value="readonly disabled"}]
+[{else}]
+    [{assign var="readonly" value=""}]
 [{/if}]
 
 [{assign var="aContents" value=$oView->getContentList()}]
