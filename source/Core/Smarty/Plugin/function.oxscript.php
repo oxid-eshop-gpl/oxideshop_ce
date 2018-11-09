@@ -4,6 +4,9 @@
  * See LICENSE file for license details.
  */
 
+use OxidEsales\EshopCommunity\Internal\Adapter\TemplateLogic\ScriptLogic;
+use OxidEsales\EshopCommunity\Internal\Application\ContainerFactory;
+
 /**
  * Smarty plugin
  * -------------------------------------------------------------
@@ -34,25 +37,25 @@ function smarty_function_oxscript($params, &$smarty)
     $isInWidget = !empty($params['inWidget']) ? $params['inWidget'] : false;
     $output = '';
 
+    /** @var ScriptLogic $scriptLogic */
+    $scriptLogic = ContainerFactory::getInstance()->getContainer()->get(ScriptLogic::class);
+
     if (isset($params['add'])) {
         if (empty($params['add'])) {
             $smarty->trigger_error("{oxscript} parameter 'add' can not be empty!");
             return '';
         }
 
-        $register = oxNew(\OxidEsales\Eshop\Core\ViewHelper\JavaScriptRegistrator::class);
-        $register->addSnippet($params['add'], $isDynamic);
+        $scriptLogic->add($params['add'], $isDynamic);
     } elseif (isset($params['include'])) {
         if (empty($params['include'])) {
             $smarty->trigger_error("{oxscript} parameter 'include' can not be empty!");
             return '';
         }
 
-        $register = oxNew(\OxidEsales\Eshop\Core\ViewHelper\JavaScriptRegistrator::class);
-        $register->addFile($params['include'], $priority, $isDynamic);
+        $scriptLogic->include($params['include'], $priority, $isDynamic);
     } else {
-        $renderer = oxNew(\OxidEsales\Eshop\Core\ViewHelper\JavaScriptRenderer::class);
-        $output = $renderer->render($widget, $isInWidget, $isDynamic);
+        $output = $scriptLogic->render($widget, $isInWidget, $isDynamic);
     }
 
     return $output;
