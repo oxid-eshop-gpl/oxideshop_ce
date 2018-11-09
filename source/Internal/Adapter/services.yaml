@@ -35,3 +35,6 @@ services:
 
   OxidEsales\EshopCommunity\Internal\Adapter\TemplateLogic\FormatPriceLogic:
     class: OxidEsales\EshopCommunity\Internal\Adapter\TemplateLogic\FormatPriceLogic
+
+  OxidEsales\EshopCommunity\Internal\Adapter\TemplateLogic\ScriptLogic:
+    class: OxidEsales\EshopCommunity\Internal\Adapter\TemplateLogic\ScriptLogic
