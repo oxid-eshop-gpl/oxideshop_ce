@@ -116,3 +116,7 @@ services:
     arguments:
       - '@OxidEsales\EshopCommunity\Internal\Adapter\TemplateLogic\FormatPriceLogic'
     tags: ['twig.extension']
+
+  OxidEsales\EshopCommunity\Internal\Twig\Extensions\Filters\CatExtension:
+    class: OxidEsales\EshopCommunity\Internal\Twig\Extensions\Filters\CatExtension
+    tags: ['twig.extension']
