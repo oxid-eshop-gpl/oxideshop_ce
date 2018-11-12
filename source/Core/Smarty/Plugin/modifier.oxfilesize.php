@@ -4,6 +4,9 @@
  * See LICENSE file for license details.
  */
 
+use \OxidEsales\EshopCommunity\Internal\Adapter\TemplateLogic\FileSizeLogic;
+use OxidEsales\EshopCommunity\Internal\Application\ContainerFactory;
+
 /**
  * Smarty modifier
  * -------------------------------------------------------------
@@ -11,30 +14,15 @@
  * Purpose:  {$var|oxfilesize} Convert integer file size to readable format
  * -------------------------------------------------------------
  *
- * @param int $iSize Integer size value
+ * @param int $size Integer size value
  *
  * @return string
  */
-function smarty_modifier_oxfilesize($iSize)
+function smarty_modifier_oxfilesize($size)
 {
-    if ($iSize < 1024) {
-        return $iSize. " B";
-    }
 
-    $iSize = $iSize/1024;
+    /** @var FileSizeLogic $fileSizeLogic */
+    $fileSizeLogic = ContainerFactory::getInstance()->getContainer()->get(FileSizeLogic::class);
 
-    if ($iSize < 1024) {
-        return sprintf("%.1f KB", $iSize);
-    }
-
-    $iSize = $iSize/1024;
-
-    if ($iSize < 1024) {
-        return sprintf("%.1f MB", $iSize);
-    }
-
-    $iSize = $iSize/1024;
-
-    return sprintf("%.1f GB", $iSize);
-
+    return $fileSizeLogic->getFileSize($size);
 }

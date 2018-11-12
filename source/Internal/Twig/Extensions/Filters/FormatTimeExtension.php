@@ -23,6 +23,11 @@ class FormatTimeExtension extends AbstractExtension
      */
     private $formatTimeLogic;
 
+    /**
+     * FormatTimeExtension constructor.
+     *
+     * @param FormatTimeLogic $formatTimeLogic
+     */
     public function __construct(FormatTimeLogic $formatTimeLogic)
     {
         $this->formatTimeLogic = $formatTimeLogic;
@@ -50,5 +55,4 @@ class FormatTimeExtension extends AbstractExtension
 
         return $formattedTime;
     }
-
 }
