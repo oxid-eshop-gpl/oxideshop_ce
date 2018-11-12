@@ -4,6 +4,9 @@
  * See LICENSE file for license details.
  */
 
+use OxidEsales\EshopCommunity\Internal\Adapter\TemplateLogic\StyleLogic;
+use OxidEsales\EshopCommunity\Internal\Application\ContainerFactory;
+
 /**
  * Smarty plugin
  * -------------------------------------------------------------
@@ -20,33 +23,17 @@
  * Do not forget to add plain [{oxstyle}] tag where you need to output all collected css includes.
  * -------------------------------------------------------------
  *
- * @param array  $params  params
+ * @param array  $params params
  * @param Smarty &$smarty clever simulation of a method
  *
  * @return string
  */
 function smarty_function_oxstyle($params, &$smarty)
 {
-    $defaults = [
-        'widget' => '',
-        'inWidget' => false,
-        'if' => null,
-        'include' => null,
-    ];
-    $params = array_merge($defaults, $params);
-
-    $widget = $params['widget'];
-    $forceRender = $params['inWidget'];
-    $isDynamic = isset($smarty->_tpl_vars["__oxid_include_dynamic"]) ? (bool)$smarty->_tpl_vars["__oxid_include_dynamic"] : false;
-
-    $output = '';
-    if (!empty($params['include'])) {
-        $registrator = oxNew(\OxidEsales\Eshop\Core\ViewHelper\StyleRegistrator::class);
-        $registrator->addFile($params['include'], $params['if'], $isDynamic);
-    } else {
-        $renderer = oxNew(\OxidEsales\Eshop\Core\ViewHelper\StyleRenderer::class);
-        $output = $renderer->render($widget, $forceRender, $isDynamic);
-    }
+    $isDynamic = isset($smarty->_tpl_vars["__oxid_include_dynamic"]) ? (bool) $smarty->_tpl_vars["__oxid_include_dynamic"] : false;
+    /**@var StyleLogic $styleLogic */
+    $styleLogic = ContainerFactory::getInstance()->getContainer()->get(StyleLogic::class);
+    $output = $styleLogic->collectStyleSheets($params, $isDynamic);
 
     return $output;
 }
