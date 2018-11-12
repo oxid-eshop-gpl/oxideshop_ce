@@ -157,3 +157,9 @@ services:
       - '@OxidEsales\EshopCommunity\Internal\Adapter\TemplateLogic\FormatTimeLogic'
     tags: ['twig.extension']
 
+  OxidEsales\EshopCommunity\Internal\Twig\Extensions\Filters\FileSizeExtension:
+    class: OxidEsales\EshopCommunity\Internal\Twig\Extensions\Filters\FileSizeExtension
+    arguments:
+      - '@OxidEsales\EshopCommunity\Internal\Adapter\TemplateLogic\FileSizeLogic'
+    tags: ['twig.extension']
+
