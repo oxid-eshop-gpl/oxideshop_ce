@@ -51,6 +51,9 @@ services:
   OxidEsales\EshopCommunity\Internal\Adapter\TemplateLogic\FileSizeLogic:
     class: OxidEsales\EshopCommunity\Internal\Adapter\TemplateLogic\FileSizeLogic
 
+  OxidEsales\EshopCommunity\Internal\Adapter\TemplateLogic\StyleLogic:
+    class: OxidEsales\EshopCommunity\Internal\Adapter\TemplateLogic\StyleLogic
+
   OxidEsales\EshopCommunity\Internal\Adapter\TemplateLogic\TruncateLogic:
     class: OxidEsales\EshopCommunity\Internal\Adapter\TemplateLogic\TruncateLogic
 

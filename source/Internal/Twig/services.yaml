@@ -202,6 +202,12 @@ services:
       - '@OxidEsales\EshopCommunity\Internal\Adapter\TemplateLogic\FileSizeLogic'
     tags: ['twig.extension']
 
+  OxidEsales\EshopCommunity\Internal\Twig\Extensions\StyleExtension:
+    class: OxidEsales\EshopCommunity\Internal\Twig\Extensions\StyleExtension
+    arguments:
+      - '@OxidEsales\EshopCommunity\Internal\Adapter\TemplateLogic\StyleLogic'
+    tags: ['twig.extension']
+
   OxidEsales\EshopCommunity\Internal\Twig\Extensions\Filters\TruncateExtension:
     class: OxidEsales\EshopCommunity\Internal\Twig\Extensions\Filters\TruncateExtension
     arguments:
