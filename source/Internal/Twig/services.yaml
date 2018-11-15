@@ -24,28 +24,17 @@ services:
     class: Symfony\Component\Templating\TemplateNameParser
     public: false
 
-  twig.environment:
+  twig:
     class: Twig\Environment
     arguments:
-      - '@twig.loader.chain'
+      - '@twig.loader'
       - "@=service('OxidEsales\\\\EshopCommunity\\\\Internal\\\\Twig\\\\TemplateEngineConfigurationInterface').getParameters()"
     public: false
-    calls:
-      - [addExtension, ['@OxidEsales\EshopCommunity\Internal\Twig\Extensions\MathExtension']]
-      - [addExtension, ['@OxidEsales\EshopCommunity\Internal\Twig\Extensions\IncludeExtension']]
-      - [addExtension, ['@OxidEsales\EshopCommunity\Internal\Twig\Extensions\SmartyExtension']]
-      - [addExtension, ['@OxidEsales\EshopCommunity\Internal\Twig\Extensions\MailtoExtension']]
-      - [addExtension, ['@OxidEsales\EshopCommunity\Internal\Twig\Extensions\UrlExtension']]
-      - [addExtension, ['@OxidEsales\EshopCommunity\Internal\Twig\Extensions\AssignAdvancedExtension']]
-      - [addExtension, ['@Twig_Extension_StringLoader']]
-      - [addExtension, ['@OxidEsales\EshopCommunity\Internal\Twig\Extensions\HasRightsExtension\HasRightsExtension']]
-      - [addTokenParser, ['@OxidEsales\EshopCommunity\Internal\Twig\Extensions\HasRightsExtension\HasRightsParser']]
-      - [addExtension, ['@OxidEsales\EshopCommunity\Internal\Twig\Extensions\IfContentExtension']]
 
   OxidEsales\EshopCommunity\Internal\Twig\TwigEngine:
     class: OxidEsales\EshopCommunity\Internal\Twig\TwigEngine
     arguments:
-      - '@twig.environment'
+      - '@twig'
       - '@Symfony\Component\Templating\TemplateNameParserInterface'
     public: false
 
@@ -58,60 +47,65 @@ services:
   twig.loader.filesystem:
     class: Twig\Loader\FilesystemLoader
     arguments: ["@=service('OxidEsales\\\\EshopCommunity\\\\Internal\\\\Twig\\\\TwigContextInterface').getTemplateDirectories()"]
-    public: false
+    tags: ['twig.loader']
 
   OxidEsales\EshopCommunity\Internal\Twig\Loader\ContentTemplateLoader:
     class: OxidEsales\EshopCommunity\Internal\Twig\Loader\ContentTemplateLoader
     arguments:
       - '@OxidEsales\EshopCommunity\Internal\Twig\TemplateLoaderNameParser'
       - '@OxidEsales\EshopCommunity\Internal\Adapter\TemplateLogic\ContentFactory'
-    public: false
+    tags: ['twig.loader']
 
   twig.loader.chain:
     class: Twig\Loader\ChainLoader
     public: false
-    calls:
-      - [addLoader, ['@twig.loader.filesystem']]
-      - [addLoader, ['@OxidEsales\EshopCommunity\Internal\Twig\Loader\ContentTemplateLoader']]
-
 
   # Extensions
 
   OxidEsales\EshopCommunity\Internal\Twig\Extensions\MathExtension:
     class: OxidEsales\EshopCommunity\Internal\Twig\Extensions\MathExtension
+    tags: ['twig.extension']
 
   OxidEsales\EshopCommunity\Internal\Twig\Extensions\IncludeExtension:
     class: OxidEsales\EshopCommunity\Internal\Twig\Extensions\IncludeExtension
     arguments:
       - '@OxidEsales\EshopCommunity\Internal\Adapter\TemplateLogic\IncludeDynamicLogic'
+    tags: ['twig.extension']
 
   OxidEsales\EshopCommunity\Internal\Twig\Extensions\SmartyExtension:
     class: OxidEsales\EshopCommunity\Internal\Twig\Extensions\SmartyExtension
+    tags: ['twig.extension']
 
   OxidEsales\EshopCommunity\Internal\Twig\Extensions\MailtoExtension:
     class: OxidEsales\EshopCommunity\Internal\Twig\Extensions\MailtoExtension
+    tags: ['twig.extension']
 
   OxidEsales\EshopCommunity\Internal\Twig\Extensions\UrlExtension:
     class: OxidEsales\EshopCommunity\Internal\Twig\Extensions\UrlExtension
     arguments:
       - '@OxidEsales\EshopCommunity\Internal\Adapter\TemplateLogic\SeoUrlLogic'
       - '@OxidEsales\EshopCommunity\Internal\Adapter\TemplateLogic\AddUrlParametersLogic'
+    tags: ['twig.extension']
 
   OxidEsales\EshopCommunity\Internal\Twig\Extensions\AssignAdvancedExtension:
     class: OxidEsales\EshopCommunity\Internal\Twig\Extensions\AssignAdvancedExtension
     arguments:
       - '@OxidEsales\EshopCommunity\Internal\Adapter\TemplateLogic\AssignAdvancedLogic'
+    tags: ['twig.extension']
 
   Twig_Extension_StringLoader:
     class: Twig_Extension_StringLoader
+    tags: ['twig.extension']
 
   OxidEsales\EshopCommunity\Internal\Twig\Extensions\HasRightsExtension\HasRightsParser:
     class: OxidEsales\EshopCommunity\Internal\Twig\Extensions\HasRightsExtension\HasRightsParser
 
   OxidEsales\EshopCommunity\Internal\Twig\Extensions\HasRightsExtension\HasRightsExtension:
     class: OxidEsales\EshopCommunity\Internal\Twig\Extensions\HasRightsExtension\HasRightsExtension
+    tags: ['twig.extension']
 
   OxidEsales\EshopCommunity\Internal\Twig\Extensions\IfContentExtension:
     class: OxidEsales\EshopCommunity\Internal\Twig\Extensions\IfContentExtension
     arguments:
       - '@OxidEsales\EshopCommunity\Internal\Adapter\TemplateLogic\IfContentLogic'
+    tags: ['twig.extension']
