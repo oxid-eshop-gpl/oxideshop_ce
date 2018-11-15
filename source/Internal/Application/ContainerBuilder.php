@@ -53,6 +53,15 @@ class ContainerBuilder
     {
         $symfonyContainer = new SymfonyContainerBuilder();
         $symfonyContainer->addCompilerPass(new RegisterListenersPass());
+
+        try {
+            $symfonyContainer
+                ->addCompilerPass(new \OxidEsales\EshopCommunity\Internal\Twig\DependencyInjection\Compiler\TwigEnvironmentPass())
+                ->addCompilerPass(new \OxidEsales\EshopCommunity\Internal\Twig\DependencyInjection\Compiler\TwigLoaderPass());
+        } catch (\Exception $exception) {
+            // Skip loading Twig compilers if there are any problems
+        }
+
         $this->loadServiceFiles($symfonyContainer);
         if ($this->facts->isProfessional()) {
             $this->loadEditionServices($symfonyContainer, $this->facts->getProfessionalEditionRootPath());
