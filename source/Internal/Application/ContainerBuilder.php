@@ -52,6 +52,16 @@ class ContainerBuilder
         $symfonyContainer->addCompilerPass(new RegisterListenersPass(EventDispatcherInterface::class));
         $symfonyContainer->addCompilerPass(new GraphQlTypePass());
         $symfonyContainer->addCompilerPass(new AddConsoleCommandPass());
+        $symfonyContainer->addCompilerPass(new RegisterListenersPass());
+
+        try {
+            $symfonyContainer
+                ->addCompilerPass(new \OxidEsales\EshopCommunity\Internal\Twig\DependencyInjection\Compiler\TwigEnvironmentPass())
+                ->addCompilerPass(new \OxidEsales\EshopCommunity\Internal\Twig\DependencyInjection\Compiler\TwigLoaderPass());
+        } catch (\Exception $exception) {
+            // Skip loading Twig compilers if there are any problems
+        }
+
         $this->loadServiceFiles($symfonyContainer);
         $this->loadEditionServices($symfonyContainer);
         $this->loadProjectServices($symfonyContainer);
