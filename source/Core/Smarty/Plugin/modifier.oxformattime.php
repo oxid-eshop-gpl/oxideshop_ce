@@ -4,6 +4,9 @@
  * See LICENSE file for license details.
  */
 
+use \OxidEsales\EshopCommunity\Internal\Adapter\TemplateLogic\FormatTimeLogic;
+use OxidEsales\EshopCommunity\Internal\Application\ContainerFactory;
+
 /**
  * Smarty modifier
  * -------------------------------------------------------------
@@ -16,13 +19,12 @@
  *
  * @return string
  */
-function smarty_modifier_oxformattime( $iSeconds )
+function smarty_modifier_oxformattime($iSeconds)
 {
-        $iHours = floor($iSeconds / 3600);
-        $iMins  = floor($iSeconds % 3600 / 60);
-        $iSecs  = $iSeconds % 60;
+    /** @var FormatTimeLogic $formatTimeLogic */
+    $formatTimeLogic = ContainerFactory::getInstance()->getContainer()->get(FormatTimeLogic::class);
 
-        return sprintf("%02d:%02d:%02d", $iHours, $iMins, $iSecs);
+    return $formatTimeLogic->getFormattedTime($iSeconds);
 }
 
 /* vim: set expandtab: */
