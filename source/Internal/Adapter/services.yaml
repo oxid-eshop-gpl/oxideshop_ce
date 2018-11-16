@@ -44,3 +44,6 @@ services:
 
   OxidEsales\EshopCommunity\Internal\Adapter\TemplateLogic\MultiLangLogic:
     class: OxidEsales\EshopCommunity\Internal\Adapter\TemplateLogic\MultiLangLogic
+
+  OxidEsales\EshopCommunity\Internal\Adapter\TemplateLogic\FormatTimeLogic:
+    class: OxidEsales\EshopCommunity\Internal\Adapter\TemplateLogic\FormatTimeLogic

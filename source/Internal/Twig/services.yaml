@@ -150,3 +150,10 @@ services:
     arguments:
       - '@OxidEsales\EshopCommunity\Internal\Adapter\TemplateLogic\MultiLangLogic'
     tags: ['twig.extension']
+
+  OxidEsales\EshopCommunity\Internal\Twig\Extensions\Filters\FormatTimeExtension:
+    class: OxidEsales\EshopCommunity\Internal\Twig\Extensions\Filters\FormatTimeExtension
+    arguments:
+      - '@OxidEsales\EshopCommunity\Internal\Adapter\TemplateLogic\FormatTimeLogic'
+    tags: ['twig.extension']
+
