@@ -4,17 +4,17 @@
  * See LICENSE file for license details.
  */
 
-namespace OxidEsales\EshopCommunity\Internal\Twig\Filters;
+namespace OxidEsales\EshopCommunity\Internal\Twig\Extensions\Filters;
 
 use Twig\Extension\AbstractExtension;
 
 /**
- * Class EncloseFilter
+ * Class EncloseExtension
  *
  * @package OxidEsales\EshopCommunity\Internal\Twig\Extensions
  * @author  Jędrzej Skoczek
  */
-class EncloseFilter extends AbstractExtension
+class EncloseExtension extends AbstractExtension
 {
 
     /**

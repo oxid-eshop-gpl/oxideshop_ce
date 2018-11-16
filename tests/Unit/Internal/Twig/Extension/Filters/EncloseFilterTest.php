@@ -6,31 +6,31 @@
 
 namespace OxidEsales\EshopCommunity\Tests\Unit\Internal\Twig\Filters;
 
-use OxidEsales\EshopCommunity\Internal\Twig\Filters\EncloseFilter;
+use OxidEsales\EshopCommunity\Internal\Twig\Extensions\Filters\EncloseExtension;
 use PHPUnit\Framework\TestCase;
 
 class EncloseFilterTest extends TestCase
 {
 
     /**
-     * @covers \OxidEsales\EshopCommunity\Internal\Twig\Filters\EncloseFilter::enclose
+     * @covers \OxidEsales\EshopCommunity\Internal\Twig\Filters\EncloseExtension::enclose
      */
     public function testEnclose()
     {
         $string = "foo";
         $encloser = "*";
-        $encloseFilter = new EncloseFilter();
+        $encloseFilter = new EncloseExtension();
         $enclosedString = $encloseFilter->enclose($string, $encloser);
         $this->assertEquals('*foo*', $enclosedString);
     }
 
     /**
-     * @covers \OxidEsales\EshopCommunity\Internal\Twig\Filters\EncloseFilter::enclose
+     * @covers \OxidEsales\EshopCommunity\Internal\Twig\Filters\EncloseExtension::enclose
      */
     public function testEncloseNoEncloder()
     {
         $string = "foo";
-        $encloseFilter = new EncloseFilter();
+        $encloseFilter = new EncloseExtension();
         $enclosedString = $encloseFilter->enclose($string);
         $this->assertEquals('foo', $enclosedString);
     }

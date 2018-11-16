@@ -41,9 +41,9 @@ services:
       - [addExtension, ['@OxidEsales\EshopCommunity\Internal\Twig\Extensions\HasRightsExtension\HasRightsExtension']]
       - [addTokenParser, ['@OxidEsales\EshopCommunity\Internal\Twig\Extensions\HasRightsExtension\HasRightsParser']]
       - [addExtension, ['@OxidEsales\EshopCommunity\Internal\Twig\Extensions\IfContentExtension']]
-      - [addExtension, ['@OxidEsales\EshopCommunity\Internal\Twig\Filters\TranslateColonFilter']]
-      - [addExtension, ['@OxidEsales\EshopCommunity\Internal\Twig\Filters\AddSlashesFilter']]
-      - [addExtension, ['@OxidEsales\EshopCommunity\Internal\Twig\Filters\EncloseFilter']]
+      - [addExtension, ['@OxidEsales\EshopCommunity\Internal\Twig\Filters\TranslateColonExtension']]
+      - [addExtension, ['@OxidEsales\EshopCommunity\Internal\Twig\Filters\AddSlashesExtension']]
+      - [addExtension, ['@OxidEsales\EshopCommunity\Internal\Twig\Filters\EncloseExtension']]
 
   OxidEsales\EshopCommunity\Internal\Twig\TwigEngine:
     class: OxidEsales\EshopCommunity\Internal\Twig\TwigEngine
@@ -119,11 +119,11 @@ services:
     arguments:
       - '@OxidEsales\EshopCommunity\Internal\Adapter\TemplateLogic\IfContentLogic'
 
-  OxidEsales\EshopCommunity\Internal\Twig\Filters\TranslateColonFilter:
-    class: OxidEsales\EshopCommunity\Internal\Twig\Filters\TranslateColonFilter
+  OxidEsales\EshopCommunity\Internal\Twig\Filters\TranslateColonExtension:
+    class: OxidEsales\EshopCommunity\Internal\Twig\Extensions\Filters\TranslateColonExtension
 
-  OxidEsales\EshopCommunity\Internal\Twig\Filters\AddSlashesFilter:
-    class: OxidEsales\EshopCommunity\Internal\Twig\Filters\AddSlashesFilter
+  OxidEsales\EshopCommunity\Internal\Twig\Filters\AddSlashesExtension:
+    class: OxidEsales\EshopCommunity\Internal\Twig\Extensions\Filters\AddSlashesExtension
 
-  OxidEsales\EshopCommunity\Internal\Twig\Filters\EncloseFilter:
-    class: OxidEsales\EshopCommunity\Internal\Twig\Filters\EncloseFilter
+  OxidEsales\EshopCommunity\Internal\Twig\Filters\EncloseExtension:
+    class: OxidEsales\EshopCommunity\Internal\Twig\Extensions\Filters\EncloseExtension

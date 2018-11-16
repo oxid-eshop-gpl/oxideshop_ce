@@ -4,7 +4,7 @@
  * See LICENSE file for license details.
  */
 
-namespace OxidEsales\EshopCommunity\Internal\Twig\Filters;
+namespace OxidEsales\EshopCommunity\Internal\Twig\Extensions\Filters;
 
 use Twig\Extension\AbstractExtension;
 
@@ -13,7 +13,7 @@ use Twig\Extension\AbstractExtension;
  *
  * @package OxidEsales\EshopCommunity\Internal\Twig\Extensions
  */
-class TranslateColonFilter extends AbstractExtension
+class TranslateColonExtension extends AbstractExtension
 {
 
     /**

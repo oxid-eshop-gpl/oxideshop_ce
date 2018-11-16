@@ -4,17 +4,17 @@
  * See LICENSE file for license details.
  */
 
-namespace OxidEsales\EshopCommunity\Internal\Twig\Filters;
+namespace OxidEsales\EshopCommunity\Internal\Twig\Extensions\Filters;
 
 use Twig\Extension\AbstractExtension;
 
 /**
- * Class AddSlashesFilter
+ * Class AddSlashesExtension
  *
  * @package OxidEsales\EshopCommunity\Internal\Twig\Extensions
  * @author  Jędrzej Skoczek
  */
-class AddSlashesFilter extends AbstractExtension
+class AddSlashesExtension extends AbstractExtension
 {
 
     /**

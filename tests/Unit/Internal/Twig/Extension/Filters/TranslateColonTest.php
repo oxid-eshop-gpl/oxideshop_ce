@@ -6,7 +6,7 @@
 
 namespace OxidEsales\EshopCommunity\Tests\Unit\Internal\Twig\Filters;
 
-use OxidEsales\EshopCommunity\Internal\Twig\Filters\TranslateColonFilter;
+use OxidEsales\EshopCommunity\Internal\Twig\Extensions\Filters\TranslateColonExtension;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -18,11 +18,11 @@ class TranslateColonFilterTest extends TestCase
 {
 
     /**
-     * @covers \OxidEsales\EshopCommunity\Internal\Twig\Filters\TranslateColonFilter::getTranslatedColon
+     * @covers \OxidEsales\EshopCommunity\Internal\Twig\Filters\TranslateColonExtension::getTranslatedColon
      */
     public function testGetTranslatedColon()
     {
-        $translateColonFilter = new TranslateColonFilter();
+        $translateColonFilter = new TranslateColonExtension();
         $translatedColon = $translateColonFilter->getTranslatedColon('foo');
         $this->assertEquals('foo:', $translatedColon);
     }
