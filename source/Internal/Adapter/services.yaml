@@ -29,3 +29,6 @@ services:
 
   OxidEsales\EshopCommunity\Internal\Adapter\TemplateLogic\ScriptLogic:
     class: OxidEsales\EshopCommunity\Internal\Adapter\TemplateLogic\ScriptLogic
+
+  OxidEsales\EshopCommunity\Internal\Adapter\TemplateLogic\FormDateLogic:
+    class: OxidEsales\EshopCommunity\Internal\Adapter\TemplateLogic\FormDateLogic
