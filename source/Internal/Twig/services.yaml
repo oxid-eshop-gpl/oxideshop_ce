@@ -134,3 +134,9 @@ services:
     arguments:
       - '@OxidEsales\EshopCommunity\Internal\Adapter\TemplateLogic\ScriptLogic'
     tags: ['twig.extension']
+
+  OxidEsales\EshopCommunity\Internal\Twig\Extensions\Filters\FormDateFilterExtension:
+    class: OxidEsales\EshopCommunity\Internal\Twig\Extensions\Filters\FormDateFilterExtension
+    arguments:
+      - '@OxidEsales\EshopCommunity\Internal\Adapter\TemplateLogic\FormDateLogic'
+    tags: ['twig.extension']
