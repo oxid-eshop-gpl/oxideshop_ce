@@ -119,11 +119,5 @@ services:
     arguments:
       - '@OxidEsales\EshopCommunity\Internal\Adapter\TemplateLogic\IfContentLogic'
 
-  OxidEsales\EshopCommunity\Internal\Twig\Filters\TranslateColonExtension:
-    class: OxidEsales\EshopCommunity\Internal\Twig\Extensions\Filters\TranslateColonExtension
-
-  OxidEsales\EshopCommunity\Internal\Twig\Filters\AddSlashesExtension:
-    class: OxidEsales\EshopCommunity\Internal\Twig\Extensions\Filters\AddSlashesExtension
-
   OxidEsales\EshopCommunity\Internal\Twig\Filters\EncloseExtension:
     class: OxidEsales\EshopCommunity\Internal\Twig\Extensions\Filters\EncloseExtension
