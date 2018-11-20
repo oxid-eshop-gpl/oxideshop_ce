@@ -2,12 +2,12 @@
 
 namespace OxidEsales\EshopCommunity\Tests\Unit\Internal\Twig\Extensions;
 
-use PHPUnit\Framework\TestCase;
+use OxidEsales\TestingLibrary\UnitTestCase;
 use Twig\Environment;
 use Twig\Extension\AbstractExtension;
 use Twig\Loader\ArrayLoader;
 
-abstract class AbstractExtensionTest extends TestCase
+abstract class AbstractExtensionTest extends UnitTestCase
 {
     /** @var AbstractExtension */
     protected $extension;
