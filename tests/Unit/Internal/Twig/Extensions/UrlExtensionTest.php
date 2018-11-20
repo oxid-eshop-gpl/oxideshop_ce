@@ -4,7 +4,7 @@
  * See LICENSE file for license details.
  */
 
-namespace OxidEsales\EshopCommunity\Tests\Unit\Internal\Twig\Extension;
+namespace OxidEsales\EshopCommunity\Tests\Unit\Internal\Twig\Extensions;
 
 use OxidEsales\EshopCommunity\Internal\Adapter\TemplateLogic\AddUrlParametersLogic;
 use OxidEsales\EshopCommunity\Internal\Adapter\TemplateLogic\SeoUrlLogic;

@@ -1,6 +1,6 @@
 <?php
 
-namespace OxidEsales\EshopCommunity\Tests\Unit\Internal\Twig\Extension;
+namespace OxidEsales\EshopCommunity\Tests\Unit\Internal\Twig\Extensions;
 
 use OxidEsales\EshopCommunity\Internal\Twig\Extensions\MailtoExtension;
 

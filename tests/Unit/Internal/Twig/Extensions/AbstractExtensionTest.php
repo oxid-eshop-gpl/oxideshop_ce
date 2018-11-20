@@ -1,6 +1,6 @@
 <?php
 
-namespace OxidEsales\EshopCommunity\Tests\Unit\Internal\Twig\Extension;
+namespace OxidEsales\EshopCommunity\Tests\Unit\Internal\Twig\Extensions;
 
 use PHPUnit\Framework\TestCase;
 use Twig\Environment;
