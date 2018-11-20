@@ -4,7 +4,7 @@
  * See LICENSE file for license details.
  */
 
-namespace OxidEsales\EshopCommunity\Tests\Unit\Internal\Twig\Extension\HasRightsExtension;
+namespace OxidEsales\EshopCommunity\Tests\Unit\Internal\Twig\Extensions\HasRightsExtension;
 
 use OxidEsales\EshopCommunity\Internal\Twig\Extensions\HasRightsExtension\HasRightsNode;
 use PHPUnit\Framework\TestCase;
