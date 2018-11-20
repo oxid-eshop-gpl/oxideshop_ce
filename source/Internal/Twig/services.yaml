@@ -140,3 +140,9 @@ services:
     arguments:
       - '@OxidEsales\EshopCommunity\Internal\Adapter\TemplateLogic\FormDateLogic'
     tags: ['twig.extension']
+
+  OxidEsales\EshopCommunity\Internal\Twig\Extensions\Filters\MultiLangExtension:
+    class: OxidEsales\EshopCommunity\Internal\Twig\Extensions\Filters\MultiLangExtension
+    arguments:
+      - '@OxidEsales\EshopCommunity\Internal\Adapter\TemplateLogic\MultiLangLogic'
+    tags: ['twig.extension']
