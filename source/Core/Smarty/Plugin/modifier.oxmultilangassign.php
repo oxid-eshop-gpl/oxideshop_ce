@@ -22,7 +22,7 @@ use OxidEsales\EshopCommunity\Internal\Application\ContainerFactory;
 function smarty_modifier_oxmultilangassign( $sIdent, $args = null )
 {
     /** @var MultiLangLogic $multiLangLogic */
-    $multiLangLogic = ContainerFactory::getInstance()->getContainer(MultiLangLogic::class);
+    $multiLangLogic = ContainerFactory::getInstance()->getContainer()->get(MultiLangLogic::class);
 
     return $multiLangLogic->multiLang($sIdent, $args);
 }
