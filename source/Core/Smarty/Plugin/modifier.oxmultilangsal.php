@@ -4,6 +4,9 @@
  * See LICENSE file for license details.
  */
 
+use OxidEsales\EshopCommunity\Internal\Adapter\TemplateLogic\TranslateSalutationLogic;
+use OxidEsales\EshopCommunity\Internal\Application\ContainerFactory;
+
 /**
  * Smarty function
  * -------------------------------------------------------------
@@ -17,21 +20,8 @@
  */
 function smarty_modifier_oxmultilangsal( $sIdent )
 {
-    $oLang = \OxidEsales\Eshop\Core\Registry::getLang();
-    $iLang = $oLang->getTplLanguage();
+    /** @var TranslateSalutationLogic $translateSalutationLogic */
+    $translateSalutationLogic = ContainerFactory::getInstance()->getContainer()->get(TranslateSalutationLogic::class);
 
-    if ( !isset( $iLang ) ) {
-        $iLang = $oLang->getBaseLanguage();
-        if ( !isset( $iLang ) ) {
-            $iLang = 0;
-        }
-    }
-
-    try {
-        $sTranslation = $oLang->translateString( $sIdent, $iLang, $oLang->isAdmin() );
-    } catch (\OxidEsales\Eshop\Core\Exception\LanguageException $oEx ) {
-        // is thrown in debug mode and has to be caught here, as smarty hangs otherwise!
-    }
-
-    return $sTranslation;
+    return $translateSalutationLogic->translateSalutation($sIdent);
 }
