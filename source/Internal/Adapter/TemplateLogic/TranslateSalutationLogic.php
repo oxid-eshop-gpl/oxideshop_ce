@@ -13,6 +13,7 @@ namespace OxidEsales\EshopCommunity\Internal\Adapter\TemplateLogic;
  */
 class TranslateSalutationLogic
 {
+
     /**
      * @param string $sIdent
      *
@@ -23,16 +24,16 @@ class TranslateSalutationLogic
         $oLang = \OxidEsales\Eshop\Core\Registry::getLang();
         $iLang = $oLang->getTplLanguage();
 
-        if ( !isset( $iLang ) ) {
+        if (!isset($iLang)) {
             $iLang = $oLang->getBaseLanguage();
-            if ( !isset( $iLang ) ) {
+            if (!isset($iLang)) {
                 $iLang = 0;
             }
         }
 
         try {
-            $sTranslation = $oLang->translateString( $sIdent, $iLang, $oLang->isAdmin() );
-        } catch (\OxidEsales\Eshop\Core\Exception\LanguageException $oEx ) {
+            $sTranslation = $oLang->translateString($sIdent, $iLang, $oLang->isAdmin());
+        } catch (\OxidEsales\Eshop\Core\Exception\LanguageException $oEx) {
             // is thrown in debug mode and has to be caught here, as smarty hangs otherwise!
         }
 
