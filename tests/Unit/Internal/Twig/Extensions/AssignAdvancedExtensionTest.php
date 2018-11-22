@@ -25,9 +25,12 @@ class AssignAdvancedExtensionTest extends TestCase
         $this->assignAdvancedExtension = new AssignAdvancedExtension($assignAdvancedLogic);
     }
 
+    /**
+     * @covers \OxidEsales\EshopCommunity\Internal\Twig\Extensions\AssignAdvancedExtension::assignAdvanced
+     */
     public function testAssignAdvanced()
     {
-        $a = $this->assignAdvancedExtension->assignAdvanced('foo');
-        $this->assertEquals('foo', $a);
+        $assigned = $this->assignAdvancedExtension->assignAdvanced('foo');
+        $this->assertEquals('foo', $assigned);
     }
 }
