@@ -99,7 +99,6 @@ services:
 
   OxidEsales\EshopCommunity\Internal\Twig\Extensions\HasRightsExtension\HasRightsParser:
     class: OxidEsales\EshopCommunity\Internal\Twig\Extensions\HasRightsExtension\HasRightsParser
-    tags: ['twig.parser']
 
   OxidEsales\EshopCommunity\Internal\Twig\Extensions\HasRightsExtension\HasRightsExtension:
     class: OxidEsales\EshopCommunity\Internal\Twig\Extensions\HasRightsExtension\HasRightsExtension
@@ -109,14 +108,4 @@ services:
     class: OxidEsales\EshopCommunity\Internal\Twig\Extensions\IfContentExtension
     arguments:
       - '@OxidEsales\EshopCommunity\Internal\Adapter\TemplateLogic\IfContentLogic'
-    tags: ['twig.extension']
-
-  OxidEsales\EshopCommunity\Internal\Twig\TokenParser\IncludeDynamicTokenParser:
-    class: OxidEsales\EshopCommunity\Internal\Twig\TokenParser\IncludeDynamicTokenParser
-    tags: ['twig.parser']
-
-  OxidEsales\EshopCommunity\Internal\Twig\Extensions\FormatPriceExtension:
-    class: OxidEsales\EshopCommunity\Internal\Twig\Extensions\FormatPriceExtension
-    arguments:
-      - '@OxidEsales\EshopCommunity\Internal\Adapter\TemplateLogic\FormatPriceLogic'
     tags: ['twig.extension']
