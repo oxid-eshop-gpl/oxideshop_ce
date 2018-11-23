@@ -13,7 +13,7 @@ services:
     class: OxidEsales\EshopCommunity\Internal\Adapter\Configuration\Utility\ShopSettingEncoder
     public: false
 
-# TemplateLogic
+  # TemplateLogic
 
   OxidEsales\EshopCommunity\Internal\Adapter\TemplateLogic\ContentFactory:
     class: OxidEsales\EshopCommunity\Internal\Adapter\TemplateLogic\ContentFactory
@@ -32,3 +32,6 @@ services:
 
   OxidEsales\EshopCommunity\Internal\Adapter\TemplateLogic\IfContentLogic:
     class: OxidEsales\EshopCommunity\Internal\Adapter\TemplateLogic\IfContentLogic
+
+  OxidEsales\EshopCommunity\Internal\Adapter\TemplateLogic\FormatPriceLogic:
+    class: OxidEsales\EshopCommunity\Internal\Adapter\TemplateLogic\FormatPriceLogic
