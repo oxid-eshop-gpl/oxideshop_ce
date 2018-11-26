@@ -6,6 +6,7 @@
 
 namespace OxidEsales\EshopCommunity\Tests\Unit\Internal\Twig\Extensions\Filters;
 
+use OxidEsales\EshopCommunity\Internal\Adapter\TemplateLogic\FormatTimeLogic;
 use OxidEsales\EshopCommunity\Internal\Twig\Extensions\Filters\FormatTimeExtension;
 use PHPUnit\Framework\TestCase;
 
@@ -29,7 +30,8 @@ class FormatTimeExtensionTest extends TestCase
      */
     public function testFormatTime($seconds, $expectedTime)
     {
-        $formatTimeExtension = new FormatTimeExtension();
+        $formatTimeLogic = new FormatTimeLogic();
+        $formatTimeExtension = new FormatTimeExtension($formatTimeLogic);
         $formattedTime = $formatTimeExtension->formatTime($seconds);
         $this->assertEquals($expectedTime, $formattedTime);
     }
@@ -49,7 +51,8 @@ class FormatTimeExtensionTest extends TestCase
      */
     public function testFormatTimeError($seconds)
     {
-        $formatTimeExtension = new FormatTimeExtension();
+        $formatTimeLogic = new FormatTimeLogic();
+        $formatTimeExtension = new FormatTimeExtension($formatTimeLogic);
         $formatTimeExtension->formatTime($seconds);
     }
 
