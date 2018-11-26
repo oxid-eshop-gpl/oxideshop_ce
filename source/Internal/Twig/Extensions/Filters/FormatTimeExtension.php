@@ -6,7 +6,7 @@
 
 namespace OxidEsales\EshopCommunity\Internal\Twig\Extensions\Filters;
 
-use Twig\Error\Error;
+use OxidEsales\EshopCommunity\Internal\Adapter\TemplateLogic\FormatTimeLogic;
 use Twig\Extension\AbstractExtension;
 
 /**
@@ -17,6 +17,16 @@ use Twig\Extension\AbstractExtension;
  */
 class FormatTimeExtension extends AbstractExtension
 {
+
+    /**
+     * @var FormatTimeLogic
+     */
+    private $formatTimeLogic;
+
+    public function __construct(FormatTimeLogic $formatTimeLogic)
+    {
+        $this->formatTimeLogic = $formatTimeLogic;
+    }
 
     /**
      * @return array|\Twig_Filter[]
@@ -36,22 +46,9 @@ class FormatTimeExtension extends AbstractExtension
         if (!is_int($seconds)) {
             throw new \Twig_Error('Given argument is not an integer');
         }
-        $formattedTime = $this->getFormattedTime($seconds);
+        $formattedTime = $this->formatTimeLogic->getFormattedTime($seconds);
 
         return $formattedTime;
     }
 
-    /**
-     * @param int $seconds
-     *
-     * @return string
-     */
-    private function getFormattedTime($seconds)
-    {
-        $hours = floor($seconds / 3600);
-        $minutes = floor($seconds % 3600 / 60);
-        $seconds = $seconds % 60;
-
-        return sprintf("%02d:%02d:%02d", $hours, $minutes, $seconds);
-    }
 }
