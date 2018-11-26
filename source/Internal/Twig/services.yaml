@@ -128,3 +128,7 @@ services:
   OxidEsales\EshopCommunity\Internal\Twig\Extensions\Filters\AddSlashesExtension:
     class: OxidEsales\EshopCommunity\Internal\Twig\Extensions\Filters\AddSlashesExtension
     tags: ['twig.extension']
+
+  OxidEsales\EshopCommunity\Internal\Twig\Extensions\Filters\EncloseExtension:
+    class: OxidEsales\EshopCommunity\Internal\Twig\Extensions\Filters\EncloseExtension
+    tags: ['twig.extension']
