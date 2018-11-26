@@ -25,7 +25,7 @@ class HasRightsNodeVisitorTest extends TestCase
     }
 
     /**
-     * @covers \OxidEsales\EshopCommunity\Tests\Unit\Internal\Twig\Extensions\HasRightsExtension:leaveNode
+     * @covers \OxidEsales\EshopCommunity\Tests\Unit\Internal\Twig\Extension\HasRightsExtension:leaveNode
      */
     public function testLeaveNode()
     {
@@ -35,7 +35,7 @@ class HasRightsNodeVisitorTest extends TestCase
     }
 
     /**
-     * @covers \OxidEsales\EshopCommunity\Tests\Unit\Internal\Twig\Extensions\HasRightsExtension:getPriority
+     * @covers \OxidEsales\EshopCommunity\Tests\Unit\Internal\Twig\Extension\HasRightsExtension:getPriority
      */
     public function testGetPriority()
     {
@@ -43,7 +43,7 @@ class HasRightsNodeVisitorTest extends TestCase
     }
 
     /**
-     * @covers \OxidEsales\EshopCommunity\Tests\Unit\Internal\Twig\Extensions\HasRightsExtension:enterNode
+     * @covers \OxidEsales\EshopCommunity\Tests\Unit\Internal\Twig\Extension\HasRightsExtension:enterNode
      */
     public function testEnterNode()
     {

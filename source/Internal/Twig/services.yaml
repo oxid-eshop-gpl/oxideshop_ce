@@ -120,3 +120,8 @@ services:
   OxidEsales\EshopCommunity\Internal\Twig\Extensions\Filters\CatExtension:
     class: OxidEsales\EshopCommunity\Internal\Twig\Extensions\Filters\CatExtension
     tags: ['twig.extension']
+
+
+  OxidEsales\EshopCommunity\Internal\Twig\Extensions\Filters\TranslateColonExtension:
+    class: OxidEsales\EshopCommunity\Internal\Twig\Extensions\Filters\TranslateColonExtension
+    tags: ['twig.extension']
