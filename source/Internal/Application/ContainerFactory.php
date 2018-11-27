@@ -56,7 +56,7 @@ class ContainerFactory
      */
     private function initializeContainer()
     {
-        $cacheFilePath = $this->getCacheFilePath();
+        $cacheFilePath = $this::getCacheFilePath();
 
         if (file_exists($cacheFilePath)) {
             $this->loadContainerFromCache($cacheFilePath);
@@ -101,7 +101,7 @@ class ContainerFactory
      *
      * @return string
      */
-    private function getCacheFilePath()
+    private static function getCacheFilePath()
     {
         $context = new Context(Registry::getConfig());
         return $context->getContainerCacheFile();
@@ -121,8 +121,11 @@ class ContainerFactory
     /**
      * Forces reload of the ContainerFactory on next request.
      */
-    public static function reloadContainer()
+    public static function resetContainer()
     {
+        if (file_exists(self::getCacheFilePath())) {
+            unlink(self::getCacheFilePath());
+        }
         self::$instance = null;
     }
 }

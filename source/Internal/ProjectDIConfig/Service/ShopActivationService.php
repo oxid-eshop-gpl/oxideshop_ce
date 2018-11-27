@@ -7,9 +7,9 @@
 
 namespace OxidEsales\EshopCommunity\Internal\ProjectDIConfig\Service;
 
-use OxidEsales\EshopCommunity\Internal\ProjectDIConfig\Dao\ProjectYamlDaoInterface;
-use OxidEsales\EshopCommunity\Internal\ProjectDIConfig\DataObject\DIConfigWrapper;
-use OxidEsales\EshopCommunity\Internal\ProjectDIConfig\DataObject\DIServiceWrapper;
+use OxidEsales\EshopCommunity\Internal\Application\Dao\ProjectYamlDaoInterface;
+use OxidEsales\EshopCommunity\Internal\Application\DataObject\DIConfigWrapper;
+use OxidEsales\EshopCommunity\Internal\Application\DataObject\DIServiceWrapper;
 use OxidEsales\EshopCommunity\Internal\ProjectDIConfig\Exception\NoServiceYamlException;
 
 /**

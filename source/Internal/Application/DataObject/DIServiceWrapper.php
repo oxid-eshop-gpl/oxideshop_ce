@@ -6,9 +6,10 @@ declare(strict_types=1);
  * See LICENSE file for license details.
  */
 
-namespace OxidEsales\EshopCommunity\Internal\ProjectDIConfig\DataObject;
+namespace OxidEsales\EshopCommunity\Internal\Application\DataObject;
 
 use OxidEsales\EshopCommunity\Internal\Application\Events\ShopAwareInterface;
+use OxidEsales\EshopCommunity\Internal\Application\DataObject\DICallWrapper;
 
 /**
  * @internal

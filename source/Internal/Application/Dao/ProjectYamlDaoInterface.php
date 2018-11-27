@@ -5,9 +5,9 @@
  * See LICENSE file for license details.
  */
 
-namespace OxidEsales\EshopCommunity\Internal\ProjectDIConfig\Dao;
+namespace OxidEsales\EshopCommunity\Internal\Application\Dao;
 
-use OxidEsales\EshopCommunity\Internal\ProjectDIConfig\DataObject\DIConfigWrapper;
+use OxidEsales\EshopCommunity\Internal\Application\DataObject\DIConfigWrapper;
 
 /**
  * @internal

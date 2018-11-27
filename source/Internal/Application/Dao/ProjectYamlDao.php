@@ -5,11 +5,12 @@
  * See LICENSE file for license details.
  */
 
-namespace OxidEsales\EshopCommunity\Internal\ProjectDIConfig\Dao;
+namespace OxidEsales\EshopCommunity\Internal\Application\Dao;
 
-use OxidEsales\EshopCommunity\Internal\Application\ContainerFactory;
-use OxidEsales\EshopCommunity\Internal\ProjectDIConfig\DataObject\DIConfigWrapper;
+use OxidEsales\EshopCommunity\Internal\Application\Events\ProjectYamlChangedEvent;
+use OxidEsales\EshopCommunity\Internal\Application\DataObject\DIConfigWrapper;
 use OxidEsales\EshopCommunity\Internal\Utility\ContextInterface;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Yaml\Yaml;
 
 /**
@@ -41,15 +42,11 @@ class ProjectYamlDao implements ProjectYamlDaoInterface
     }
 
     /**
-     * @param DIConfigWrapper $config
+     * @param \OxidEsales\EshopCommunity\Internal\Application\DataObject\DIConfigWrapper $config
      */
     public function saveProjectConfigFile(DIConfigWrapper $config)
     {
         file_put_contents($this->getProjectFileName(), Yaml::dump($config->getConfigAsArray(), 3, 2));
-        if (file_exists($this->context->getContainerCacheFile())) {
-            unlink($this->context->getContainerCacheFile());
-        }
-        ContainerFactory::reloadContainer();
     }
 
     /**

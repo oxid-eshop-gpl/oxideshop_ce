@@ -5,8 +5,9 @@
  * See LICENSE file for license details.
  */
 
-namespace OxidEsales\EshopCommunity\Internal\ProjectDIConfig\DataObject;
+namespace OxidEsales\EshopCommunity\Internal\Application\DataObject;
 
+use OxidEsales\EshopCommunity\Internal\Application\DataObject\DIServiceWrapper;
 use OxidEsales\EshopCommunity\Internal\ProjectDIConfig\Exception\NoServiceYamlException;
 
 /**

@@ -1,12 +1,12 @@
 <?php declare(strict_types=1);
 
-namespace OxidEsales\EshopCommunity\Tests\Unit\Internal\ProjectDIConfig\DataObject;
+namespace OxidEsales\EshopCommunity\Tests\Unit\Internal\Application\DataObject;
 /**
  * Copyright © OXID eSales AG. All rights reserved.
  * See LICENSE file for license details.
  */
 
-use OxidEsales\EshopCommunity\Internal\ProjectDIConfig\DataObject\DIConfigWrapper;
+use OxidEsales\EshopCommunity\Internal\Application\DataObject\DIConfigWrapper;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -98,7 +98,7 @@ class DIConfigWrapperTest extends TestCase
 
         $projectYaml = new DIConfigWrapper(['services' =>
                                                 ['testmodulesubscriber' =>
-                                                     ['class' => 'OxidEsales\EshopCommunity\Tests\Unit\Internal\ProjectDIConfig\TestModule1\TestEventSubscriber']]]);
+                                                     ['class' => 'OxidEsales\EshopCommunity\Tests\Unit\Internal\ProjectDIConfig\TestModule\TestEventSubscriber']]]);
         $service = $projectYaml->getService('testmodulesubscriber');
         $activeShops = $service->addActiveShops([1, 5]);
         $projectYaml->addOrUpdateService($service);
@@ -114,7 +114,7 @@ class DIConfigWrapperTest extends TestCase
 
         $projectYaml = new DIConfigWrapper(['services' =>
                                                 ['testmodulesubscriber' =>
-                                                     ['class' => 'OxidEsales\EshopCommunity\Tests\Unit\Internal\ProjectDIConfig\TestModule1\TestEventSubscriber',
+                                                     ['class' => 'OxidEsales\EshopCommunity\Tests\Unit\Internal\ProjectDIConfig\TestModule\TestEventSubscriber',
                                                       'calls' => [['method' => 'setActiveShops', 'arguments' => [[1, 5, 7]]]]]]]);
 
         $service = $projectYaml->getService('testmodulesubscriber');
@@ -131,7 +131,7 @@ class DIConfigWrapperTest extends TestCase
 
         $projectYaml = new DIConfigWrapper(['services' =>
                                                 ['testmodulesubscriber' =>
-                                                     ['class' => 'OxidEsales\EshopCommunity\Tests\Unit\Internal\ProjectDIConfig\TestModule1\TestEventSubscriber',
+                                                     ['class' => 'OxidEsales\EshopCommunity\Tests\Unit\Internal\ProjectDIConfig\TestModule\TestEventSubscriber',
                                                       'calls' => [['method' => 'setActiveShops', 'arguments' => [[1, 5, 7]]]]]]]);
 
         $services = $projectYaml->getServices();
@@ -145,7 +145,7 @@ class DIConfigWrapperTest extends TestCase
 
         $projectYaml = new DIConfigWrapper(['services' =>
                                                 ['testmodulesubscriber' =>
-                                                     ['class' => 'OxidEsales\EshopCommunity\Tests\Unit\Internal\ProjectDIConfig\TestModule1\TestEventSubscriber',
+                                                     ['class' => 'OxidEsales\EshopCommunity\Tests\Unit\Internal\ProjectDIConfig\TestModule\TestEventSubscriber',
                                                       'calls' => [['method' => 'setActiveShops', 'arguments' => [[1]]]]]]]);
         $service = $projectYaml->getService('testmodulesubscriber');
         $service->removeActiveShops([1]);

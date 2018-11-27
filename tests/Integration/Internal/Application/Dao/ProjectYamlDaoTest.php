@@ -9,11 +9,12 @@
 namespace OxidEsales\EshopCommunity\Tests\Integration\Internal\ProjectDIConfig\Dao;
 
 use OxidEsales\EshopCommunity\Core\Registry;
+use OxidEsales\EshopCommunity\Internal\Application\ContainerBuilder;
 use OxidEsales\EshopCommunity\Internal\Application\ContainerFactory;
-use OxidEsales\EshopCommunity\Internal\ProjectDIConfig\Dao\ProjectYamlDao;
-use OxidEsales\EshopCommunity\Internal\ProjectDIConfig\Dao\ProjectYamlDaoInterface;
-use OxidEsales\EshopCommunity\Internal\ProjectDIConfig\DataObject\DIConfigWrapper;
+use OxidEsales\EshopCommunity\Internal\Application\Dao\ProjectYamlDaoInterface;
+use OxidEsales\EshopCommunity\Internal\Application\DataObject\DIConfigWrapper;
 use OxidEsales\EshopCommunity\Internal\Utility\Context;
+use OxidEsales\EshopCommunity\Internal\Utility\ContextInterface;
 use OxidEsales\EshopCommunity\Tests\Unit\Internal\ContextStub;
 use PHPUnit\Framework\TestCase;
 
@@ -26,10 +27,20 @@ class ProjectYamlDaoTest extends TestCase
 
     public function setUp()
     {
-        $context = new ContextStub();
-        $context->setShopDir(__DIR__);
 
-        $this->dao = new ProjectYamlDao($context);
+        /** @var \Symfony\Component\DependencyInjection\ContainerBuilder $container */
+        $containerBuilder = new ContainerBuilder();
+        $container = $containerBuilder->getContainer();
+        $contextDefinition = $container->getDefinition(ContextInterface::class);
+        $contextDefinition->setClass(ContextStub::class);
+        $context = $container->get(ContextInterface::class);
+        $context->setShopDir(__DIR__);
+        $daoDefinition = $container->getDefinition(ProjectYamlDaoInterface::class);
+        $daoDefinition->setPublic(true);
+        $container->compile();
+
+        $this->dao = $container->get(ProjectYamlDaoInterface::class);
+
     }
 
     public function testLoading()
@@ -87,12 +98,18 @@ EOT;
 
     public function testClearingCacheOnWriting()
     {
+        $context = new Context(Registry::getConfig());
         $projectYaml = new DIConfigWrapper([]);
+
+        // Make sure that the cache file exists
+        ContainerFactory::getInstance()->getContainer();
+        $this->assertTrue(file_exists($context->getContainerCacheFile()));
+
+        // This should trigger the event that deletes the cachefile
         $this->dao->saveProjectConfigFile($projectYaml);
 
-        $context = new Context(Registry::getConfig());
-
         $this->assertFalse(file_exists($context->getContainerCacheFile()));
+
         ContainerFactory::getInstance()->getContainer();
         // Verify container has been rebuild be checking that a cachefile exists
         $this->assertTrue(file_exists($context->getContainerCacheFile()));
