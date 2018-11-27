@@ -4,6 +4,9 @@
  * See LICENSE file for license details.
  */
 
+use OxidEsales\EshopCommunity\Internal\Adapter\TemplateLogic\TruncateLogic;
+use OxidEsales\EshopCommunity\Internal\Application\ContainerFactory;
+
 /**
  * This method replaces existing Smarty function for truncating strings
  * (check Smarty documentation for details). When truncating strings
@@ -27,23 +30,10 @@
  */
 function smarty_modifier_oxtruncate($sString, $iLength = 80, $sSufix = '...', $blBreakWords = false, $middle = false)
 {
-    if ($iLength == 0) {
-        return '';
-    } elseif ( $iLength > 0 && getStr()->strlen( $sString ) > $iLength ) {
-        $iLength -= getStr()->strlen( $sSufix );
+    /** @var TruncateLogic $truncateLogic */
+    $truncateLogic = ContainerFactory::getInstance()->getContainer()->get(TruncateLogic::class);
 
-        $sString = str_replace( ['&#039;', '&quot;'], [ "'",'"' ], $sString );
-
-        if (!$blBreakWords ) {
-            $sString = getStr()->preg_replace( '/\s+?(\S+)?$/', '', getStr()->substr( $sString, 0, $iLength + 1 ) );
-        }
-
-        $sString = getStr()->substr( $sString, 0, $iLength ).$sSufix;
-
-        return str_replace( [ "'",'"' ], ['&#039;', '&quot;'], $sString );
-    }
-
-    return $sString;
+    return $truncateLogic->truncate($sString, $iLength, $sSufix, $blBreakWords, $middle);
 }
 
 /* vim: set expandtab: */
