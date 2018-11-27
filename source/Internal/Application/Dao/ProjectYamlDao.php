@@ -7,10 +7,8 @@
 
 namespace OxidEsales\EshopCommunity\Internal\Application\Dao;
 
-use OxidEsales\EshopCommunity\Internal\Application\Events\ProjectYamlChangedEvent;
 use OxidEsales\EshopCommunity\Internal\Application\DataObject\DIConfigWrapper;
 use OxidEsales\EshopCommunity\Internal\Utility\ContextInterface;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Yaml\Yaml;
 
 /**
