@@ -47,3 +47,6 @@ services:
 
   OxidEsales\EshopCommunity\Internal\Adapter\TemplateLogic\TranslateSalutationLogic:
     class: OxidEsales\EshopCommunity\Internal\Adapter\TemplateLogic\TranslateSalutationLogic
+
+  OxidEsales\EshopCommunity\Internal\Adapter\TemplateLogic\NumberFormatLogic:
+    class: OxidEsales\EshopCommunity\Internal\Adapter\TemplateLogic\NumberFormatLogic
