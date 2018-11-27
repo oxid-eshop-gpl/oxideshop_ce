@@ -38,3 +38,6 @@ services:
 
   OxidEsales\EshopCommunity\Internal\Adapter\TemplateLogic\FormatTimeLogic:
     class: OxidEsales\EshopCommunity\Internal\Adapter\TemplateLogic\FormatTimeLogic
+
+  OxidEsales\EshopCommunity\Internal\Adapter\TemplateLogic\FileSizeLogic:
+    class: OxidEsales\EshopCommunity\Internal\Adapter\TemplateLogic\FileSizeLogic
