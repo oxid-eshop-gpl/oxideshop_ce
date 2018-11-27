@@ -208,3 +208,9 @@ services:
     arguments:
       - '@OxidEsales\EshopCommunity\Internal\Adapter\TemplateLogic\TranslateSalutationLogic'
     tags: ['twig.extension']
+
+  OxidEsales\EshopCommunity\Internal\Twig\Extensions\Filters\NumberFormatExtension:
+    class: OxidEsales\EshopCommunity\Internal\Twig\Extensions\Filters\NumberFormatExtension
+    arguments:
+      - '@OxidEsales\EshopCommunity\Internal\Adapter\TemplateLogic\NumberFormatLogic'
+    tags: ['twig.extension']
