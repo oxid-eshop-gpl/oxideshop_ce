@@ -7,11 +7,20 @@ namespace OxidEsales\EshopCommunity\Tests\Unit\Internal\Application\DataObject;
  */
 
 use OxidEsales\EshopCommunity\Internal\Application\DataObject\DIConfigWrapper;
+use OxidEsales\EshopCommunity\Internal\Application\Exception\SystemServiceOverwriteException;
 use PHPUnit\Framework\TestCase;
+use Psr\Container\ContainerInterface;
 
-/**
- * @internal
- */
+class ContainerStub implements ContainerInterface
+{
+    public function get($key){
+        return null;
+    }
+    public function has($key){
+        return $key == 'existing.service';
+    }
+}
+
 class DIConfigWrapperTest extends TestCase
 {
     private $servicePath1;
@@ -153,6 +162,26 @@ class DIConfigWrapperTest extends TestCase
         // services section should be cleaned away after removeal of service
         $this->assertCount(0, $projectYaml->getConfigAsArray());
 
+    }
+
+    public function testSystemServiceCheckSucceeding() {
+
+        $config = new DIConfigWrapper(['services' => ['nonexisting.service' => []]]);
+        try {
+            $config->checkServices(new ContainerStub());
+        }
+        catch (SystemServiceOverwriteException $e) {
+            $this->fail('There should no exception been raised!');
+        }
+        // This is for php unit that is too stupid to recognize the above construct as test
+        $this->assertTrue(true);
+    }
+
+    public function testSystemServiceCheckFailing() {
+
+        $this->expectException(SystemServiceOverwriteException::class);
+        $config = new DIConfigWrapper(['services' => ['existing.service' => []]]);
+        $config->checkServices(new ContainerStub());
     }
 
 }

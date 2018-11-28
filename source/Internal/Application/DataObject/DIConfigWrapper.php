@@ -7,7 +7,8 @@
 
 namespace OxidEsales\EshopCommunity\Internal\Application\DataObject;
 
-use OxidEsales\EshopCommunity\Internal\Application\DataObject\DIServiceWrapper;
+use OxidEsales\EshopCommunity\Internal\Application\Exception\SystemServiceOverwriteException;
+use Psr\Container\ContainerInterface;
 use OxidEsales\EshopCommunity\Internal\ProjectDIConfig\Exception\NoServiceYamlException;
 
 /**
@@ -17,6 +18,7 @@ class DIConfigWrapper
 {
 
     const SERVICE_SECTION = 'services';
+    const RESOURCE_KEY = 'resource';
     const IMPORTS_SECTION = 'imports';
 
     /**
@@ -45,11 +47,11 @@ class DIConfigWrapper
 
         $this->addSectionIfMissing($this::IMPORTS_SECTION);
         foreach ($this->getImports() as $import) {
-            if ($import['resource'] == $normalizedImportPath) {
+            if ($import[$this::RESOURCE_KEY] == $normalizedImportPath) {
                 return;
             }
         }
-        $this->configArray[$this::IMPORTS_SECTION][] = ['resource' => $normalizedImportPath];
+        $this->configArray[$this::IMPORTS_SECTION][] = [$this::RESOURCE_KEY => $normalizedImportPath];
     }
 
     /**
@@ -59,7 +61,7 @@ class DIConfigWrapper
     {
         $importFileNames = [];
         foreach ($this->getImports() as $import) {
-            $importFileNames[] = $import['resource'];
+            $importFileNames[] = $import[$this::RESOURCE_KEY];
         }
         return $importFileNames;
     }
@@ -77,7 +79,7 @@ class DIConfigWrapper
 
         $imports = [];
         foreach ($this->getImports() as $import) {
-            if ($import['resource'] !== $normalizedImportPath) {
+            if ($import[$this::RESOURCE_KEY] !== $normalizedImportPath) {
                 $imports[] = $import;
             }
         }
@@ -133,6 +135,21 @@ class DIConfigWrapper
         $this->cleanUpConfig();
 
         return $this->configArray;
+    }
+
+    /**
+     * @param ContainerInterface $container
+     *
+     * @throws SystemServiceOverwriteException
+     */
+    public function checkServices(ContainerInterface $container)
+    {
+        /** @var DIServiceWrapper $service */
+        foreach ($this->getServices() as $service) {
+            if ($container->has($service->getKey())) {
+                throw new SystemServiceOverwriteException($service->getKey() . ' is already defined');
+            }
+        }
     }
 
     /**
