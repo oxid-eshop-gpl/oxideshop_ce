@@ -59,3 +59,6 @@ services:
 
   OxidEsales\EshopCommunity\Internal\Adapter\TemplateLogic\NumberFormatLogic:
     class: OxidEsales\EshopCommunity\Internal\Adapter\TemplateLogic\NumberFormatLogic
+
+  OxidEsales\EshopCommunity\Internal\Adapter\TemplateLogic\WordWrapLogic:
+    class: OxidEsales\EshopCommunity\Internal\Adapter\TemplateLogic\WordWrapLogic

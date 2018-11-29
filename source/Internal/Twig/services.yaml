@@ -214,3 +214,9 @@ services:
     arguments:
       - '@OxidEsales\EshopCommunity\Internal\Adapter\TemplateLogic\NumberFormatLogic'
     tags: ['twig.extension']
+
+  OxidEsales\EshopCommunity\Internal\Twig\Extensions\Filters\WordWrapExtension:
+    class: OxidEsales\EshopCommunity\Internal\Twig\Extensions\Filters\WordWrapExtension
+    arguments:
+      - '@OxidEsales\EshopCommunity\Internal\Adapter\TemplateLogic\WordWrapLogic'
+    tags: ['twig.extension']
