@@ -47,7 +47,7 @@ class SmartyEngineConfiguration implements TemplateEngineConfigurationInterface
             'compile_id' => $this->context->getTemplateCompileId(),
             'default_template_handler_func' => [new SmartyDefaultTemplateHandler($this->context), 'handleTemplate'],
             'debugging' => $this->context->getTemplateEngineDebugMode(),
-            'compile_check' => $this->context->getTemplateCompileCheck()
+            'compile_check' => $this->context->getTemplateCompileCheckMode()
         ];
     }
 

@@ -7,9 +7,8 @@ namespace OxidEsales\EshopCommunity\Tests\Unit\Application\Controller\Admin;
 
 use DynExportBase;
 use Exception;
-use OxidEsales\EshopCommunity\Application\Model\Article;
+use OxidEsales\Eshop\Application\Model\Article;
 use oxDb;
-use OxidEsales\EshopCommunity\Core\DatabaseProvider;
 use OxidEsales\TestingLibrary\VfsStreamWrapper;
 use oxRegistry;
 use oxTestModules;
@@ -410,7 +409,7 @@ class DynExportBaseTest extends \OxidTestCase
         $oView->expects($this->once())->method('_getHeapTableName')->will($this->returnValue("oxarticles"));
         $oView->expects($this->once())->method('_setCampaignDetailLink')->with($this->isInstanceOf('\OxidEsales\EshopCommunity\Application\Model\Article'))->will($this->returnValue(oxNew('oxarticle')));
 
-        $this->assertTrue($oView->getOneArticle(0, $blContinue) instanceof article);
+        $this->assertTrue($oView->getOneArticle(0, $blContinue) instanceof Article);
         $this->assertTrue($blContinue);
     }
 

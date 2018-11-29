@@ -45,7 +45,7 @@ interface SmartyContextInterface
     /**
      * @return bool
      */
-    public function getTemplateCompileCheck();
+    public function getTemplateCompileCheckMode();
 
     /**
      * @return array

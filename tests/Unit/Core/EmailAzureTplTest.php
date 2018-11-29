@@ -8,7 +8,7 @@ namespace OxidEsales\EshopCommunity\Tests\Unit\Core;
 use \oxField;
 use OxidEsales\Eshop\Core\Registry;
 use OxidEsales\Eshop\Core\UtilsView;
-use OxidEsales\EshopCommunity\Internal\Templating\TemplateEngineBridgeInterface;
+use OxidEsales\EshopCommunity\Internal\Templating\EngineInterface;
 use \oxPrice;
 use \stdClass;
 use \oxDb;
@@ -874,18 +874,18 @@ class EmailAzureTplTest extends \OxidTestCase
 
         oxTestModules::addModuleObject("oxShop", $this->_oShop);
 
-        $templateEngine = $this->getMockBuilder(TemplateEngineBridgeInterface::class)
-            ->setMethods(['renderTemplate', 'exists', 'getEngine'])
+        $templateEngine = $this->getMockBuilder(EngineInterface::class)
+            ->setMethods(['renderTemplate', 'addFallBackEngine', 'render', 'exists', 'supports'])
             ->disableOriginalConstructor()
             ->getMock();
         $templateEngine->expects($this->any())->method('renderTemplate')->will($this->returnValue("body"));
         $templateEngine->expects($this->any())->method('exists')->will($this->returnValue(true));
 
-        $oEmail = $this->getMock(\OxidEsales\Eshop\Core\Email::class, array("_sendMail", "_getShop", "_getUseInlineImages", "_getTemplateRenderer"));
+        $oEmail = $this->getMock(\OxidEsales\Eshop\Core\Email::class, array("_sendMail", "_getShop", "_getUseInlineImages", "getTemplateRenderer"));
         $oEmail->expects($this->once())->method('_sendMail')->will($this->returnValue(true));
         $oEmail->expects($this->any())->method('_getShop')->will($this->returnValue($this->_oShop));
         $oEmail->expects($this->any())->method('_getUseInlineImages')->will($this->returnValue(true));
-        $oEmail->expects($this->any())->method('_getTemplateRenderer')->will($this->returnValue($templateEngine));
+        $oEmail->expects($this->any())->method('getTemplateRenderer')->will($this->returnValue($templateEngine));
 
         $blRet = $oEmail->sendPriceAlarmToCustomer('username@useremail.nl', $oAlarm);
         $config->setConfigParam('blAdmin', false);

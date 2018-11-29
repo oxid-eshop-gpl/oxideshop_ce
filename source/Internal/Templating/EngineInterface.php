@@ -7,22 +7,10 @@
 namespace OxidEsales\EshopCommunity\Internal\Templating;
 
 /**
- * Interface TemplateEngineBridgeInterface
+ * Interface EngineInterface
  */
-interface TemplateEngineBridgeInterface
+interface EngineInterface extends \Symfony\Component\Templating\EngineInterface
 {
-    /**
-     * @param string $name The template name
-     *
-     * @return bool
-     */
-    public function exists($name);
-
-    /**
-     * @return BaseEngineInterface
-     */
-    public function getEngine();
-
     /**
      * @param string $templateName The template name
      * @param array  $viewData     An array of parameters to pass to the template
@@ -31,4 +19,11 @@ interface TemplateEngineBridgeInterface
      * @return string
      */
     public function renderTemplate($templateName, $viewData, $cacheId = null);
+
+    /**
+     * Set fallback engine, if not a template, but string will be given.
+     *
+     * @param BaseEngineInterface $engine
+     */
+    public function addFallBackEngine(BaseEngineInterface $engine);
 }

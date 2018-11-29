@@ -11,7 +11,7 @@ use OxidEsales\Eshop\Core\Exception\DatabaseConnectionException;
 use OxidEsales\Eshop\Core\Exception\RoutingException;
 use OxidEsales\Eshop\Core\Exception\StandardException;
 use OxidEsales\Eshop\Core\Cache\DynamicContent\ContentCache;
-use OxidEsales\EshopCommunity\Internal\Templating\TemplateEngineBridgeInterface;
+use OxidEsales\EshopCommunity\Internal\Templating\EngineInterface;
 use oxOutput;
 use oxSystemComponentException;
 use PHPMailer\PHPMailer\PHPMailer;
@@ -490,17 +490,13 @@ class ShopControl extends \OxidEsales\Eshop\Core\Base
             \OxidEsales\Eshop\Core\Registry::getUtilsView()->passAllErrorsToView($viewData, $errors);
         }
 
-        /*  foreach (array_keys($viewData) as $viewName) {
-              $smarty->assign_by_ref($viewName, $viewData[$viewName]);
-          }*/
 
         // passing current view object to smarty
-        // $smarty->oxobject = $view;
+        // TODO: check if it could be moved out
+        /** @deprecated oxobject */
+        $templating->getEngine()->oxobject = $view;
 
         $output = $templating->renderTemplate($templateName, $viewData, $view->getViewId());
-
-        //$smarty->fetch($templateName, $view->getViewId());
-
 
         //Output processing - useful for modules as sometimes you may want to process output manually.
         $output = $outputManager->process($output, $view->getClassName());
@@ -511,11 +507,11 @@ class ShopControl extends \OxidEsales\Eshop\Core\Base
     /**
      * @internal
      *
-     * @return TemplateEngineBridgeInterface
+     * @return EngineInterface
      */
     protected function getTemplating()
     {
-        return $this->getContainer()->get(TemplateEngineBridgeInterface::class);
+        return $this->getContainer()->get(EngineInterface::class);
     }
 
     /**

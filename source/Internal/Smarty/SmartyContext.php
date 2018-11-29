@@ -90,7 +90,7 @@ class SmartyContext implements SmartyContextInterface
     /**
      * @return bool
      */
-    public function getTemplateCompileCheck()
+    public function getTemplateCompileCheckMode()
     {
         return (bool) $this->getConfigParameter('blCheckTemplates');
     }
