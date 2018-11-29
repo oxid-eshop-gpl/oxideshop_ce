@@ -9,7 +9,7 @@ use Exception;
 use modDB;
 use oxField;
 use OxidEsales\EshopCommunity\Core\Registry;
-use OxidEsales\EshopCommunity\Internal\Templating\TemplateEngineBridgeInterface;
+use OxidEsales\EshopCommunity\Internal\Templating\EngineInterface;
 use oxRegistry;
 use oxSystemComponentException;
 use oxTestModules;
@@ -750,7 +750,7 @@ class UtilsTest extends \OxidTestCase
         $config->setConfigParam('sTheme', 'azure');
 
         $utils = oxRegistry::getUtils();
-        $templateEngine = $this->getContainer()->get(TemplateEngineBridgeInterface::class);
+        $templateEngine = $this->getContainer()->get(EngineInterface::class);
         $tmpDir = $config->getConfigParam('sCompileDir') . "/smarty/";
 
         $templates = array('message/success.tpl', 'message/notice.tpl', 'message/errors.tpl',);

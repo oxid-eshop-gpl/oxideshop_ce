@@ -141,7 +141,7 @@ class SmartyEngineConfigurationTest extends \PHPUnit\Framework\TestCase
             ->willReturn('2');
 
         $smartyContextMock
-            ->method('getTemplateCompileCheck')
+            ->method('getTemplateCompileCheckMode')
             ->willReturn(true);
 
         $smartyContextMock

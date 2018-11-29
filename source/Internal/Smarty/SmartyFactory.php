@@ -45,7 +45,7 @@ class SmartyFactory implements SmartyFactoryInterface
     /**
      * @return Smarty
      */
-    public function getSmarty()
+    public function getSmarty() : Smarty
     {
         $this->smarty = new Smarty();
 
@@ -62,7 +62,7 @@ class SmartyFactory implements SmartyFactoryInterface
      *
      * @param array $properties Smarty option.
      */
-    private function fillSmartyProperties($properties)
+    private function fillSmartyProperties(array $properties)
     {
         //set options
         if (isset($properties['options'])) {

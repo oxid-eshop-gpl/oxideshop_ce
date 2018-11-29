@@ -10,7 +10,7 @@ use OxidEsales\Eshop\Application\Component\Widget\LanguageList;
 use OxidEsales\Eshop\Application\Controller\ContactController;
 use OxidEsales\Eshop\Core\Registry;
 use OxidEsales\EshopCommunity\Core\Controller\BaseController;
-use OxidEsales\EshopCommunity\Internal\Templating\TemplateEngineBridgeInterface;
+use OxidEsales\EshopCommunity\Internal\Templating\EngineInterface;
 use \oxRegistry;
 
 class WidgetControlTest extends \OxidTestCase
@@ -57,7 +57,7 @@ class WidgetControlTest extends \OxidTestCase
 
         \OxidEsales\Eshop\Core\Registry::set(\OxidEsales\Eshop\Core\Config::class, $oConfig);
 
-        $template = $this->getContainer()->get(TemplateEngineBridgeInterface::class);
+        $template = $this->getContainer()->get(EngineInterface::class);
 
         $oControl = $this->getMock(\OxidEsales\Eshop\Core\WidgetControl::class, array("getTemplating"));
         $oControl->expects($this->any())->method('getTemplating')->will($this->returnValue($template));

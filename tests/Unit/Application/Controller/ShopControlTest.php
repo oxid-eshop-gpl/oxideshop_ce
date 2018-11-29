@@ -14,7 +14,7 @@ use OxidEsales\Eshop\Core\Registry;
 use OxidEsales\EshopCommunity\Core\Exception\ConnectionException;
 use OxidEsales\EshopCommunity\Core\Exception\ExceptionToDisplay;
 use OxidEsales\EshopCommunity\Core\Output;
-use OxidEsales\EshopCommunity\Internal\Templating\TemplateEngineBridgeInterface;
+use OxidEsales\EshopCommunity\Internal\Templating\EngineInterface;
 use oxOutput;
 use oxRegistry;
 use oxSystemComponentException;
@@ -269,11 +269,12 @@ class ShopControlTest extends \OxidTestCase
         $oOut->expects($this->once())->method('process');
         $oOut->expects($this->any())->method('addVersionTags')->will($this->returnValue(true));
 
-        $templateEngine = $this->getMockBuilder(TemplateEngineBridgeInterface::class)
-            ->setMethods(['renderTemplate', 'exists', 'getEngine'])
+        $templateEngine = $this->getMockBuilder(EngineInterface::class)
+            ->setMethods(['renderTemplate', 'addFallBackEngine', 'render', 'exists', 'supports', 'getEngine'])
             ->disableOriginalConstructor()
             ->getMock();
         $templateEngine->expects($this->any())->method('renderTemplate')->with($this->equalTo("message/exception.tpl"));
+        $templateEngine->expects($this->any())->method('getEngine')->will($this->returnValue((object)[]));
 
         $oControl = $this->getMock(\OxidEsales\Eshop\Core\ShopControl::class, array("isAdmin", '_getOutputManager', '_isDebugMode', 'getTemplating'), array(), '', false);
         $oControl->expects($this->any())->method('isAdmin')->will($this->returnValue(false));
@@ -607,11 +608,12 @@ class ShopControlTest extends \OxidTestCase
      */
     private function getTemplateEngineMock($expectedTemplate)
     {
-        $templateEngine = $this->getMockBuilder(TemplateEngineBridgeInterface::class)
-            ->setMethods(['renderTemplate', 'exists', 'getEngine'])
+        $templateEngine = $this->getMockBuilder(EngineInterface::class)
+            ->setMethods(['renderTemplate', 'addFallBackEngine', 'render', 'exists', 'supports', 'getEngine'])
             ->disableOriginalConstructor()
             ->getMock();
         $templateEngine->expects($this->any())->method('renderTemplate')->with($this->equalTo($expectedTemplate));
+        $templateEngine->expects($this->any())->method('getEngine')->will($this->returnValue((object)[]));
 
         return $templateEngine;
     }

@@ -4,10 +4,13 @@
  * See LICENSE file for license details.
  */
 
-namespace OxidEsales\EshopCommunity\Tests\Unit\Internal\Smarty;
+namespace OxidEsales\EshopCommunity\Tests\Integration\Internal\Smarty;
 
 
 use org\bovigo\vfs\vfsStream;
+use OxidEsales\Eshop\Core\Config;
+use OxidEsales\Eshop\Core\UtilsView;
+use OxidEsales\EshopCommunity\Internal\Smarty\SmartyContext;
 use OxidEsales\EshopCommunity\Internal\Smarty\SmartyContextInterface;
 use OxidEsales\EshopCommunity\Internal\Smarty\SmartyFactory;
 use OxidEsales\EshopCommunity\Internal\Smarty\SmartyEngineConfiguration;
@@ -15,16 +18,16 @@ use OxidEsales\EshopCommunity\Internal\Smarty\SmartyEngineConfiguration;
 class SmartyFactoryTest extends \PHPUnit\Framework\TestCase
 {
     /**
-     * @dataProvider smartySettingsProvider
+     * @dataProvider smartySettingsDataProvider
      *
      * @param bool  $securityMode
      * @param array $smartySettings
      */
     public function testFillSmartyProperties($securityMode, $smartySettings)
     {
-        /** @var SmartyContextInterface $smartyContextMock */
-        $smartyContextMock = $this->getSmartyContextMock($securityMode);
-        $smartyFactory = new SmartyFactory(new SmartyEngineConfiguration($smartyContextMock));
+        /** @var SmartyContextInterface $smartyContext */
+        $smartyContext = $this->getSmartyContext($securityMode);
+        $smartyFactory = new SmartyFactory(new SmartyEngineConfiguration($smartyContext));
 
         $smarty = $smartyFactory->getSmarty();
 
@@ -37,7 +40,7 @@ class SmartyFactoryTest extends \PHPUnit\Framework\TestCase
     /**
      * @return array
      */
-    public function smartySettingsProvider()
+    public function smartySettingsDataProvider()
     {
         return [
                 'security on' => [true, $this->getSmartySettingsWithSecurityOn()],
@@ -130,59 +133,86 @@ class SmartyFactoryTest extends \PHPUnit\Framework\TestCase
         return $aCheck;
     }
 
-    private function getSmartyContextMock($securityMode = false)
+    private function getSmartyContext($securityMode = false)
     {
-        $smartyPluginDir = vfsStream::setup('testPluginDir');
-        vfsStream::newFile('prefilter.oxblock.php')->at($smartyPluginDir);
+        $config = $this->getConfigMock($securityMode);
+        $utilsView = $this->getUtilsViewMock();
 
-        $smartyContextMock = $this
-            ->getMockBuilder(SmartyContextInterface::class)
+        $smartyContext = new SmartyContext($config, $utilsView);
+
+        return $smartyContext;
+    }
+
+    private function getConfigMock($demoShopMode = false)
+    {
+        $structure = [
+            'Smarty' => [
+                'Plugin' => 'prefilter.oxblock.php'
+            ]
+        ];
+        $smartyDir = vfsStream::setup('testDir', null, $structure);
+
+        $configMock = $this
+            ->getMockBuilder(Config::class)
             ->getMock();
 
-        $smartyContextMock
-            ->method('getTemplateCompileDirectory')
-            ->willReturn('testCompileDir');
+        $configMock->expects($this->at(0))
+            ->method('getConfigParam')
+            ->with('iDebug')
+            ->will($this->returnValue(1));
 
-        $smartyContextMock
-            ->method('getTemplateDirectories')
-            ->willReturn('testTemplateDir');
+        $configMock->expects($this->at(1))
+            ->method('getConfigParam')
+            ->with('blCheckTemplates')
+            ->will($this->returnValue(true));
 
-        $smartyContextMock
-            ->method('getTemplateCompileId')
-            ->willReturn('testCompileId');
+        $configMock->expects($this->at(2))
+            ->method('getConfigParam')
+            ->with('iSmartyPhpHandling')
+            ->will($this->returnValue(true));
 
-        $smartyContextMock
-            ->method('getTemplateEngineDebugMode')
-            ->willReturn(true);
+        $configMock->expects($this->at(4))
+            ->method('getConfigParam')
+            ->with('sCoreDir')
+            ->will($this->returnValue($smartyDir->url().'Smarty/Plugin'));
 
-        $smartyContextMock
-            ->method('getTemplateCompileCheck')
-            ->willReturn(true);
+        $configMock->expects($this->at(5))
+            ->method('getConfigParam')
+            ->with('iDebug')
+            ->will($this->returnValue(1));
 
-        $smartyContextMock
-            ->method('getTemplatePhpHandlingMode')
-            ->willReturn(true);
+        $configMock->method('isDemoShop')
+            ->will($this->returnValue($demoShopMode));
 
-        $smartyContextMock
-            ->method('getTemplateSecurityMode')
-            ->willReturn($securityMode);
+        $configMock->method('isAdmin')
+            ->will($this->returnValue(false));
 
-        $smartyContextMock
-            ->method('getShopTemplatePluginDirectory')
-            ->willReturn($smartyPluginDir->url());
+        return $configMock;
+    }
 
-        $smartyContextMock
-            ->method('showTemplateNames')
-            ->willReturn(false);
+    private function getUtilsViewMock()
+    {
+        $utilsViewMock = $this
+            ->getMockBuilder(UtilsView::class)
+            ->getMock();
 
-        $smartyContextMock
-            ->method('getModuleTemplatePluginDirectories')
+        $utilsViewMock->method('getSmartyDir')
+            ->will($this->returnValue('testCompileDir'));
+
+        $utilsViewMock->method('getTemplateDirs')
+            ->will($this->returnValue('testTemplateDir'));
+
+        $utilsViewMock->method('getTemplateCompileId')
+            ->will($this->returnValue('testCompileId'));
+
+        $utilsViewMock
+            ->method('getModuleSmartyPluginDirectories')
             ->willReturn(['testModuleDir']);
 
-        $smartyContextMock
-            ->method('getShopTemplatePluginDirectories')
+        $utilsViewMock
+            ->method('getShopSmartyPluginDirectories')
             ->willReturn(['testShopDir']);
 
-        return $smartyContextMock;
+        return $utilsViewMock;
     }
 }

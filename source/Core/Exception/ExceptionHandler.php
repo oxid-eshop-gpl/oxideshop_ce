@@ -68,14 +68,10 @@ class ExceptionHandler
      **/
     public function handleUncaughtException(\Throwable $exception)
     {
-        try {
-            Registry::getLogger()->error(
-                $exception->getMessage(),
-                [$exception]
-            );
-        } catch (\Exception $exp) {
-            throw $exception;
-        }
+        Registry::getLogger()->error(
+            $exception->getMessage(),
+            [$exception]
+        );
 
         $this->renderErrorMessage($exception);
 

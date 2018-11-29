@@ -5,9 +5,8 @@
  */
 namespace OxidEsales\EshopCommunity\Tests\Unit\Application\Controller;
 
-use OxidEsales\Eshop\Core\Config;
 use OxidEsales\Eshop\Core\Registry;
-use OxidEsales\EshopCommunity\Internal\Templating\TemplateEngineBridgeInterface;
+use OxidEsales\EshopCommunity\Internal\Templating\EngineInterface;
 use \oxTestModules;
 
 class RssTest extends \OxidTestCase
@@ -53,8 +52,8 @@ class RssTest extends \OxidTestCase
     public function testRender()
     {
 
-        $templateEngine = $this->getMockBuilder(TemplateEngineBridgeInterface::class)
-            ->setMethods(['renderTemplate', 'exists', 'getEngine'])
+        $templateEngine = $this->getMockBuilder(EngineInterface::class)
+            ->setMethods(['renderTemplate', 'addFallBackEngine', 'render', 'exists', 'supports'])
             ->disableOriginalConstructor()
             ->getMock();
         $templateEngine->expects($this->any())->method('renderTemplate')->with($this->equalTo("widget/rss.tpl"))->will($this->returnValue('smarty processed xml'));

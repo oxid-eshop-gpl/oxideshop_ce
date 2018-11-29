@@ -6,7 +6,7 @@
 
 namespace OxidEsales\EshopCommunity\Application\Controller;
 
-use OxidEsales\EshopCommunity\Internal\Templating\TemplateEngineBridgeInterface;
+use OxidEsales\EshopCommunity\Internal\Templating\EngineInterface;
 
 /**
  * Shop RSS page.
@@ -79,11 +79,11 @@ class RssController extends \OxidEsales\Eshop\Application\Controller\FrontendCon
     /**
      * @internal
      *
-     * @return TemplateEngineBridgeInterface
+     * @return EngineInterface
      */
     protected function getTemplating()
     {
-        return $this->getContainer()->get(TemplateEngineBridgeInterface::class);
+        return $this->getContainer()->get(EngineInterface::class);
     }
 
     /**

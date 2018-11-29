@@ -1,6 +1,11 @@
 services:
-  OxidEsales\EshopCommunity\Internal\Templating\TemplateEngineBridgeInterface:
-    class: OxidEsales\EshopCommunity\Internal\Templating\TemplateEngineBridge
+  OxidEsales\EshopCommunity\Internal\Templating\EngineInterface:
+    class: OxidEsales\EshopCommunity\Internal\Templating\DelegatingEngine
     arguments:
-        $templateEngine: '@OxidEsales\EshopCommunity\Internal\Smarty\SmartyEngine'
+      - ['@OxidEsales\EshopCommunity\Internal\Smarty\SmartyEngine', '@OxidEsales\EshopCommunity\Internal\Twig\TwigEngine']
+    calls:
+      - method: addFallBackEngine
+        arguments:
+          - '@OxidEsales\EshopCommunity\Internal\Smarty\SmartyEngine'
     public: true
+    tags: ['templating']

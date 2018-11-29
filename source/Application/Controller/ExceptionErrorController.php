@@ -6,8 +6,6 @@
 
 namespace OxidEsales\EshopCommunity\Application\Controller;
 
-use oxRegistry;
-
 /**
  * Displays exception errors
  */

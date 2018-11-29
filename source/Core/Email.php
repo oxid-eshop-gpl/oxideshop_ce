@@ -7,7 +7,7 @@
 namespace OxidEsales\EshopCommunity\Core;
 
 use Exception;
-use OxidEsales\EshopCommunity\Internal\Templating\TemplateEngineBridgeInterface;
+use OxidEsales\EshopCommunity\Internal\Templating\EngineInterface;
 use oxSystemComponentException;
 
 /**
@@ -246,11 +246,20 @@ class Email extends \PHPMailer
     protected $_aAttachments = [];
 
     /**
-     * Smarty instance
+     * Template engine instance
      *
-     * @var TemplateEngineBridgeInterface
+     * @var EngineInterface
      */
     protected $templateEngine = null;
+
+    /**
+     * Smarty instance
+     *
+     * @deprecated
+     *
+     * @var smarty
+     */
+    protected $_oSmarty = null;
 
     /**
      * Email view data
@@ -292,7 +301,7 @@ class Email extends \PHPMailer
         $this->isHtml(true);
         $this->setLanguage("en", $myConfig->getConfigParam('sShopDir') . "/Core/phpmailer/language/");
 
-        $this->_getTemplateRenderer();
+        $this->_getSmarty();
     }
 
     /**
@@ -323,12 +332,24 @@ class Email extends \PHPMailer
     /**
      * Smarty instance getter, assigns this oxEmail instance to "oEmailView" variable
      *
-     * @return TemplateEngineBridgeInterface
+     * @deprecated
+     *
+     * @return smarty
      */
-    protected function _getTemplateRenderer()
+    protected function _getSmarty()
+    {
+        $this->_oSmarty = $this->getTemplateRenderer();
+        return $this->_oSmarty;
+    }
+    /**
+     * Template engine instance getter, assigns this oxEmail instance to "oEmailView" variable
+     *
+     * @return EngineInterface
+     */
+    protected function getTemplateRenderer()
     {
         if ($this->templateEngine === null) {
-            $this->templateEngine = $this->getContainer()->get(TemplateEngineBridgeInterface::class);
+            $this->templateEngine = $this->getContainer()->get(EngineInterface::class);
         }
 
         //setting default view
@@ -513,7 +534,7 @@ class Email extends \PHPMailer
         $this->setUser($user);
 
         // create messages
-        $templating = $this->_getTemplateRenderer();
+        $templating = $this->_getSmarty();
         $this->setViewData("order", $order);
 
         $this->setViewData("blShowReviewLink", $this->shouldProductReviewLinksBeIncluded());
@@ -583,7 +604,7 @@ class Email extends \PHPMailer
         $this->setSmtp($shop);
 
         // create messages
-        $templating = $this->_getTemplateRenderer();
+        $templating = $this->_getSmarty();
         $this->setViewData("order", $order);
 
         // Process view data array through oxoutput processor
@@ -678,7 +699,7 @@ class Email extends \PHPMailer
         $this->_setMailParams($shop);
 
         // create messages
-        $templating = $this->_getTemplateRenderer();
+        $templating = $this->_getSmarty();
         $this->setUser($user);
 
         // Process view data array through oxOutput processor
@@ -716,7 +737,7 @@ class Email extends \PHPMailer
         $user = oxNew(\OxidEsales\Eshop\Application\Model\User::class);
         if ($oxid && $user->load($oxid)) {
             // create messages
-            $templating = $this->_getTemplateRenderer();
+            $templating = $this->_getSmarty();
             $this->setUser($user);
             $this->_processViewArray();
 
@@ -791,7 +812,7 @@ class Email extends \PHPMailer
         $this->_setMailParams($shop);
 
         // create messages
-        $templating = $this->_getTemplateRenderer();
+        $templating = $this->_getSmarty();
         $confirmCode = md5($user->oxuser__oxusername->value . $user->oxuser__oxpasssalt->value);
         $this->setViewData("subscribeLink", $this->_getNewsSubsLink($user->oxuser__oxid->value, $confirmCode));
         $this->setUser($user);
@@ -900,7 +921,7 @@ class Email extends \PHPMailer
         $this->setSMTP();
 
         // create messages
-        $templating = $this->_getTemplateRenderer();
+        $templating = $this->_getSmarty();
         $this->setViewData("product", $product);
         $this->setUser($params);
 
@@ -950,7 +971,7 @@ class Email extends \PHPMailer
         $this->setSMTP();
 
         // create messages
-        $templating = $this->_getTemplateRenderer();
+        $templating = $this->_getSmarty();
         $this->setUser($params);
 
         $homeUrl = $this->getViewConfig()->getHomeLink();
@@ -1013,7 +1034,7 @@ class Email extends \PHPMailer
 
         //create messages
         $lang = \OxidEsales\Eshop\Core\Registry::getLang();
-        $templating = $this->_getTemplateRenderer();
+        $templating = $this->_getSmarty();
         $this->setViewData("order", $order);
         $this->setViewData("shopTemplateDir", $myConfig->getTemplateDir(false));
 
@@ -1081,7 +1102,7 @@ class Email extends \PHPMailer
 
         //create messages
         $lang = \OxidEsales\Eshop\Core\Registry::getLang();
-        $templating = $this->_getTemplateRenderer();
+        $templating = $this->_getSmarty();
         $this->setViewData("order", $order);
         $this->setViewData("shopTemplateDir", $myConfig->getTemplateDir(false));
 
@@ -1236,7 +1257,7 @@ class Email extends \PHPMailer
             $this->_setMailParams($shop);
             $lang = \OxidEsales\Eshop\Core\Registry::getLang();
 
-            $templating = $this->_getTemplateRenderer();
+            $templating = $this->_getSmarty();
             $this->setViewData("articles", $articleList);
 
             // Process view data array through oxOutput processor
@@ -1271,7 +1292,7 @@ class Email extends \PHPMailer
         $this->setSMTP();
 
         // create messages
-        $templating = $this->_getTemplateRenderer();
+        $templating = $this->_getSmarty();
         $this->setUser($params);
 
         // Process view data array through oxoutput processor
@@ -1313,7 +1334,7 @@ class Email extends \PHPMailer
         $lang = \OxidEsales\Eshop\Core\Registry::getLang();
 
         // create messages
-        $templating = $this->_getTemplateRenderer();
+        $templating = $this->_getSmarty();
         $this->setViewData("product", $article);
         $this->setViewData("email", $params['email']);
         $this->setViewData("bidprice", $lang->formatCurrency($alarm->oxpricealarm__oxprice->value));
@@ -1357,7 +1378,7 @@ class Email extends \PHPMailer
         $this->_setMailParams($shop);
 
         // create messages
-        $templating = $this->_getTemplateRenderer();
+        $templating = $this->_getSmarty();
 
         $this->setViewData("product", $alarm->getArticle());
         $this->setViewData("oPriceAlarm", $alarm);
