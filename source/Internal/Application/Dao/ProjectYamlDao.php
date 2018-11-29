@@ -40,7 +40,7 @@ class ProjectYamlDao implements ProjectYamlDaoInterface
     }
 
     /**
-     * @param \OxidEsales\EshopCommunity\Internal\Application\DataObject\DIConfigWrapper $config
+     * @param DIConfigWrapper $config
      */
     public function saveProjectConfigFile(DIConfigWrapper $config)
     {
@@ -54,13 +54,12 @@ class ProjectYamlDao implements ProjectYamlDaoInterface
      */
     public function loadDIConfigFile(string $path): DIConfigWrapper
     {
-        $yamlArray = null;
+        $yamlArray = [];
+
         if (file_exists($path)) {
-            $yamlArray = Yaml::parse(file_get_contents($path));
+            $yamlArray = Yaml::parse(file_get_contents($path)) ?? [];
         }
-        if (is_null($yamlArray)) {
-            $yamlArray = [];
-        }
+
         return new DIConfigWrapper($yamlArray);
     }
 

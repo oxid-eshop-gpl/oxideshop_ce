@@ -14,7 +14,6 @@ use OxidEsales\EshopCommunity\Internal\Application\DataObject\DIConfigWrapper;
  */
 interface ProjectYamlDaoInterface
 {
-
     const PROJECT_FILE_NAME = 'project.yaml';
 
     /**

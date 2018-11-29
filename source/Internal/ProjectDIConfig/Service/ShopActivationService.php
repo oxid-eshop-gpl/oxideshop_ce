@@ -52,7 +52,7 @@ class ShopActivationService implements ShopActivationServiceInterface
 
         /** @var DIServiceWrapper $service */
         foreach ($moduleConfig->getServices() as $service) {
-            if (! $service->isShopAware()) {
+            if (!$service->isShopAware()) {
                 continue;
             }
             if ($projectConfig->hasService($service->getKey())) {
@@ -83,7 +83,7 @@ class ShopActivationService implements ShopActivationServiceInterface
 
         /** @var DIServiceWrapper $service */
         foreach ($moduleConfig->getServices() as $service) {
-            if (! $service->isShopAware()) {
+            if (!$service->isShopAware()) {
                 continue;
             }
             $service = $projectConfig->getService($service->getKey());
@@ -101,8 +101,7 @@ class ShopActivationService implements ShopActivationServiceInterface
      */
     private function getModuleConfig(string $moduleConfigFile): DIConfigWrapper
     {
-
-        if (! file_exists($moduleConfigFile)) {
+        if (!file_exists($moduleConfigFile)) {
             throw new NoServiceYamlException();
         }
         return $this->dao->loadDIConfigFile($moduleConfigFile);

@@ -27,20 +27,22 @@ class ProjectYamlDaoTest extends TestCase
 
     public function setUp()
     {
-
         /** @var \Symfony\Component\DependencyInjection\ContainerBuilder $container */
         $containerBuilder = new ContainerBuilder();
         $container = $containerBuilder->getContainer();
+
         $contextDefinition = $container->getDefinition(ContextInterface::class);
         $contextDefinition->setClass(ContextStub::class);
+
         $context = $container->get(ContextInterface::class);
         $context->setShopDir(__DIR__);
+
         $daoDefinition = $container->getDefinition(ProjectYamlDaoInterface::class);
         $daoDefinition->setPublic(true);
+
         $container->compile();
 
         $this->dao = $container->get(ProjectYamlDaoInterface::class);
-
     }
 
     public function testLoading()
@@ -103,15 +105,15 @@ EOT;
 
         // Make sure that the cache file exists
         ContainerFactory::getInstance()->getContainer();
-        $this->assertTrue(file_exists($context->getContainerCacheFile()));
+        $this->assertFileExists($context->getContainerCacheFile());
 
         // This should trigger the event that deletes the cachefile
         $this->dao->saveProjectConfigFile($projectYaml);
 
-        $this->assertFalse(file_exists($context->getContainerCacheFile()));
+        $this->assertFileNotExists($context->getContainerCacheFile());
 
         ContainerFactory::getInstance()->getContainer();
         // Verify container has been rebuild be checking that a cachefile exists
-        $this->assertTrue(file_exists($context->getContainerCacheFile()));
+        $this->assertFileExists($context->getContainerCacheFile());
     }
 }

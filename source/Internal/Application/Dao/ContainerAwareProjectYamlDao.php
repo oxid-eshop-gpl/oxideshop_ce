@@ -11,7 +11,6 @@ use OxidEsales\EshopCommunity\Internal\Application\Events\ProjectYamlChangedEven
 use OxidEsales\EshopCommunity\Internal\Application\DataObject\DIConfigWrapper;
 use OxidEsales\EshopCommunity\Internal\Utility\ContextInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
-use Symfony\Component\Yaml\Yaml;
 
 /**
  * @internal
@@ -36,7 +35,7 @@ class ContainerAwareProjectYamlDao extends ProjectYamlDao
     }
 
     /**
-     * @param \OxidEsales\EshopCommunity\Internal\Application\DataObject\DIConfigWrapper $config
+     * @param DIConfigWrapper $config
      */
     public function saveProjectConfigFile(DIConfigWrapper $config)
     {

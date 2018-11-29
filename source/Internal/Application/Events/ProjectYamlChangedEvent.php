@@ -15,5 +15,5 @@ use Symfony\Component\EventDispatcher\Event;
  */
 class ProjectYamlChangedEvent extends Event
 {
-    const NAME = 'oxidesales.projectyamldao.saveprojectconfigfile';
+    const NAME = self::class;
 }

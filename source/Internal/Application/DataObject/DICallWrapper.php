@@ -26,7 +26,7 @@ class DICallWrapper
      */
     public function __construct(array $callArray = [])
     {
-        if (! $callArray) {
+        if (!$callArray) {
             $this->callArray = ['method' => '', 'arguments' => []];
         } else {
             $this->callArray = $callArray;

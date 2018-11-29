@@ -16,7 +16,6 @@ use OxidEsales\EshopCommunity\Internal\ProjectDIConfig\Exception\NoServiceYamlEx
  */
 class DIConfigWrapper
 {
-
     const SERVICE_SECTION = 'services';
     const RESOURCE_KEY = 'resource';
     const IMPORTS_SECTION = 'imports';
@@ -47,7 +46,7 @@ class DIConfigWrapper
 
         $this->addSectionIfMissing($this::IMPORTS_SECTION);
         foreach ($this->getImports() as $import) {
-            if ($import[$this::RESOURCE_KEY] == $normalizedImportPath) {
+            if ($import[$this::RESOURCE_KEY] === $normalizedImportPath) {
                 return;
             }
         }
@@ -111,7 +110,7 @@ class DIConfigWrapper
     {
         /** @var DIServiceWrapper $service */
         foreach ($this->getServices() as $service) {
-            if ($service->getKey() == $serviceKey) {
+            if ($service->getKey() === $serviceKey) {
                 return $service;
             }
         }

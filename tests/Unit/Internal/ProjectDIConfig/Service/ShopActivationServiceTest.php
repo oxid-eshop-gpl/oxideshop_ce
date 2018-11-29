@@ -20,7 +20,6 @@ use PHPUnit\Framework\TestCase;
 
 class ShopActivationServiceTest extends TestCase
 {
-
     /**
      * @var ProjectYamlDaoInterface|MockObject $daoMock ;
      */
@@ -116,7 +115,5 @@ class ShopActivationServiceTest extends TestCase
 
         $this->assertTrue(array_key_exists('imports', $this->projectYamlArray));
         $this->assertFalse(array_key_exists('services', $this->projectYamlArray));
-
     }
-
 }
