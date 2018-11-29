@@ -22,7 +22,7 @@ class WordWrapLogic
      *
      * @return string
      */
-    public function wordWrap($sString, $iLength = 80, $sWraper = "\n", $blCut = false): string
+    public function wordWrap($sString, $iLength = 80, $sWraper = "\n", $blCut = false)
     {
         return getStr()->wordwrap($sString, $iLength, $sWraper, $blCut);
     }
