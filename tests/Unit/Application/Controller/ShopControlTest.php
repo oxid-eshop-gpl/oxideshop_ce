@@ -307,7 +307,7 @@ class ShopControlTest extends \OxidTestCase
         oxTestModules::addFunction('oxUtils', 'isSearchEngine', '{ return false; }');
         oxTestModules::addFunction('oxUtils', 'setHeader', '{}');
 
-        $aTasks = array("isAdmin", "_log", "_startMonitor", "_stopMonitor", '_getOutputManager', '_executeMaintenanceTasks');
+        $aTasks = array("isAdmin", "_log", "_startMonitor", "_stopMonitor", '_getOutputManager', '_executeMaintenanceTasks', 'getTemplating');
 
         $oOut = $this->getMock(\OxidEsales\Eshop\Core\Output::class, array('output', 'flushOutput', 'sendHeaders'));
         $oOut->expects($this->once())->method('output')->with($this->equalTo($controllerClassName));
@@ -339,7 +339,7 @@ class ShopControlTest extends \OxidTestCase
 
         $this->setRequestParameter('renderPartial', 'asd');
 
-        $aTasks = array("isAdmin", "_log", "_startMonitor", "_stopMonitor", '_getOutputManager', '_getErrors', '_executeMaintenanceTasks');
+        $aTasks = array("isAdmin", "_log", "_startMonitor", "_stopMonitor", '_getOutputManager', '_getErrors', '_executeMaintenanceTasks', 'getTemplating');
 
         $oOut = $this->getMock(\OxidEsales\Eshop\Core\Output::class, array('output', 'flushOutput', 'sendHeaders', 'setOutputFormat'));
         $oOut->expects($this->at(0))->method('setOutputFormat')->with($this->equalTo(oxOutput::OUTPUT_FORMAT_JSON));

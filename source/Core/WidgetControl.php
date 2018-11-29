@@ -75,7 +75,6 @@ class WidgetControl extends \OxidEsales\Eshop\Core\ShopControl
         $oConfig = \OxidEsales\Eshop\Core\Registry::getConfig();
 
         if ($oConfig->hasActiveViewsChain()) {
-
             // Removing current active view.
             $oConfig->dropLastActiveView();
 
