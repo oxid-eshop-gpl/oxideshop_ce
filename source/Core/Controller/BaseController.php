@@ -895,7 +895,6 @@ class BaseController extends \OxidEsales\Eshop\Core\Base
     {
         return true;
     }
-}
 
     /**
      * Config instance getter

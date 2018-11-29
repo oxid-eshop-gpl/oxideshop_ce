@@ -7,6 +7,7 @@
 namespace OxidEsales\EshopCommunity\Application\Controller\Admin;
 
 use OxidEsales\EshopCommunity\Application\Controller\TemplateController;
+use OxidEsales\EshopCommunity\Internal\Templating\TemplateEngineBridgeInterface;
 use oxRegistry;
 use Symfony\Component\Templating\TemplateNameParser;
 
@@ -74,6 +75,11 @@ class GenericExportDo extends \OxidEsales\Eshop\Application\Controller\Admin\Dyn
         return $blContinue;
     }
 
+    /**
+     * @internal
+     *
+     * @return TemplateEngineBridgeInterface
+     */
     protected function getTemplating()
     {
         return $this->getContainer()->get(\OxidEsales\EshopCommunity\Internal\Templating\TemplateEngineBridgeInterface::class);

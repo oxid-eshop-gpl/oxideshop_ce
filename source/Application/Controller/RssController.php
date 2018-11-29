@@ -87,16 +87,6 @@ class RssController extends \OxidEsales\Eshop\Application\Controller\FrontendCon
     }
 
     /**
-     * @internal
-     *
-     * @return TemplateEngineBridgeInterface
-     */
-    protected function getTemplating()
-    {
-        return $this->getContainer()->get(TemplateEngineBridgeInterface::class);
-    }
-
-    /**
      * Processes xml before outputting to user
      *
      * @param string $sInput input to process
