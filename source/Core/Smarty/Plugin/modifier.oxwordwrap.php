@@ -4,6 +4,9 @@
  * See LICENSE file for license details.
  */
 
+use OxidEsales\EshopCommunity\Internal\Adapter\TemplateLogic\WordWrapLogic;
+use OxidEsales\EshopCommunity\Internal\Application\ContainerFactory;
+
 
 /**
  * Smarty wordwrap modifier
@@ -21,7 +24,10 @@
  */
 function smarty_modifier_oxwordwrap($sString, $iLength=80, $sWraper="\n", $blCut=false)
 {
-    return getStr()->wordwrap($sString, $iLength, $sWraper, $blCut);
+    /** @var WordWrapLogic $wordWrapLogic */
+    $wordWrapLogic = ContainerFactory::getInstance()->getContainer()->get(WordWrapLogic::class);
+
+    return $wordWrapLogic->wordWrap($sString, $iLength, $sWraper, $blCut);
 }
 
 ?>
