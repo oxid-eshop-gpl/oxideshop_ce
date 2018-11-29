@@ -10,9 +10,11 @@ namespace OxidEsales\EshopCommunity\Internal\Twig;
 
 use OxidEsales\EshopCommunity\Internal\Templating\BaseEngineInterface;
 
+use OxidEsales\EshopCommunity\Internal\Twig\Escaper\EscaperInterface;
 use Symfony\Component\Templating\TemplateNameParserInterface;
 use Symfony\Component\Templating\TemplateReferenceInterface;
 use Twig\Environment;
+use Twig\Extension\CoreExtension;
 
 /**
  * Class TwigEngine
@@ -116,5 +118,15 @@ class TwigEngine implements BaseEngineInterface
     public function getGlobals()
     {
         return $this->globals;
+    }
+
+    /**
+     * @param EscaperInterface $escaper
+     */
+    public function addEscaper(EscaperInterface $escaper)
+    {
+        /** @var CoreExtension $coreExtension */
+        $coreExtension = $this->engine->getExtension(CoreExtension::class);
+        $coreExtension->setEscaper($escaper->getStrategy(), [$escaper, 'escape']);
     }
 }

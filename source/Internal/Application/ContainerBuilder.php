@@ -57,7 +57,8 @@ class ContainerBuilder
         try {
             $symfonyContainer
                 ->addCompilerPass(new \OxidEsales\EshopCommunity\Internal\Twig\DependencyInjection\Compiler\TwigEnvironmentPass())
-                ->addCompilerPass(new \OxidEsales\EshopCommunity\Internal\Twig\DependencyInjection\Compiler\TwigLoaderPass());
+                ->addCompilerPass(new \OxidEsales\EshopCommunity\Internal\Twig\DependencyInjection\Compiler\TwigLoaderPass())
+                ->addCompilerPass(new \OxidEsales\EshopCommunity\Internal\Twig\DependencyInjection\Compiler\TwigEscaperPass());
         } catch (\Exception $exception) {
             // Skip loading Twig compilers if there are any problems
         }
