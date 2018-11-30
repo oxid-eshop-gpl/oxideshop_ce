@@ -237,3 +237,9 @@ services:
     arguments:
       - '@OxidEsales\EshopCommunity\Internal\Adapter\TemplateLogic\IncludeWidgetLogic'
     tags: ['twig.extension']
+
+  OxidEsales\EshopCommunity\Internal\Twig\Extensions\Filters\SmartWordWrapExtension:
+    class: OxidEsales\EshopCommunity\Internal\Twig\Extensions\Filters\SmartWordWrapExtension
+    arguments:
+      - '@OxidEsales\EshopCommunity\Internal\Adapter\TemplateLogic\SmartWordWrapLogic'
+    tags: ['twig.extension']
