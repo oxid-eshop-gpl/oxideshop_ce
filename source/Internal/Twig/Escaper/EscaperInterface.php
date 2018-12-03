@@ -24,8 +24,9 @@ interface EscaperInterface
     /**
      * @param Environment $environment
      * @param string      $string
+     * @param string      $charset
      *
      * @return string
      */
-    public function escape(Environment $environment, $string): string;
+    public function escape(Environment $environment, $string, $charset): string;
 }

@@ -9,11 +9,11 @@ namespace OxidEsales\EshopCommunity\Internal\Twig\Escaper;
 use Twig\Environment;
 
 /**
- * Class MailEscaper
+ * Class DecEntityEscaper
  *
  * @author Tomasz Kowalewski (t.kowalewski@createit.pl)
  */
-class MailEscaper implements EscaperInterface
+class DecEntityEscaper implements EscaperInterface
 {
 
     /**
@@ -21,7 +21,7 @@ class MailEscaper implements EscaperInterface
      */
     public function getStrategy(): string
     {
-        return 'mail';
+        return 'decentity';
     }
 
     /**
@@ -33,6 +33,12 @@ class MailEscaper implements EscaperInterface
      */
     public function escape(Environment $environment, $string, $charset): string
     {
-        return str_replace(['@', '.'], [' [AT] ', ' [DOT] '], $string);
+        $return = '';
+
+        for ($i = 0; $i < strlen($string); $i++) {
+            $return .= '&#' . ord($string[$i]) . ';';
+        }
+
+        return $return;
     }
 }

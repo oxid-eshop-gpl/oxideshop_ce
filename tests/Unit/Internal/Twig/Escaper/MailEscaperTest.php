@@ -6,6 +6,7 @@
 
 namespace OxidEsales\EshopCommunity\Tests\Unit\Internal\Twig\Escaper;
 
+use OxidEsales\EshopCommunity\Internal\Twig\Escaper\EscaperInterface;
 use OxidEsales\EshopCommunity\Internal\Twig\Escaper\MailEscaper;
 use OxidEsales\TestingLibrary\UnitTestCase;
 use Twig\Environment;
@@ -18,8 +19,8 @@ use Twig\Environment;
 class MailEscaperTest extends UnitTestCase
 {
 
-    /** @var MailEscaper */
-    private $mailEscaper;
+    /** @var EscaperInterface */
+    private $escaper;
 
     /** @var Environment */
     private $environment;
@@ -27,7 +28,7 @@ class MailEscaperTest extends UnitTestCase
     public function setUp()
     {
         parent::setUp();
-        $this->mailEscaper = new MailEscaper();
+        $this->escaper = new MailEscaper();
         $this->environment = $this->createMock(Environment::class);
     }
 
@@ -89,18 +90,18 @@ class MailEscaperTest extends UnitTestCase
     }
 
     /**
-     * @param $email
-     * @param $expected
+     * @param string $string
+     * @param string $expected
      *
      * @dataProvider escapeProvider
      */
-    public function testEscape($email, $expected)
+    public function testEscape($string, $expected)
     {
-        $this->assertEquals($expected, $this->mailEscaper->escape($this->environment, $email));
+        $this->assertEquals($expected, $this->escaper->escape($this->environment, $string, 'UTF-8'));
     }
 
     public function testGetStrategy()
     {
-        $this->assertEquals('mail', $this->mailEscaper->getStrategy());
+        $this->assertEquals('mail', $this->escaper->getStrategy());
     }
 }
