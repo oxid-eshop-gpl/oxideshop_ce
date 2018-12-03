@@ -9,11 +9,13 @@ namespace OxidEsales\EshopCommunity\Internal\Twig\Escaper;
 use Twig\Environment;
 
 /**
- * Class MailEscaper
+ * Class QuotesEscaper
+ *
+ * Escape unescaped single quotes
  *
  * @author Tomasz Kowalewski (t.kowalewski@createit.pl)
  */
-class MailEscaper implements EscaperInterface
+class QuotesEscaper implements EscaperInterface
 {
 
     /**
@@ -21,10 +23,12 @@ class MailEscaper implements EscaperInterface
      */
     public function getStrategy(): string
     {
-        return 'mail';
+        return 'quotes';
     }
 
     /**
+     * Escape unescaped single quotes
+     *
      * @param Environment $environment
      * @param string      $string
      * @param string      $charset
@@ -33,6 +37,6 @@ class MailEscaper implements EscaperInterface
      */
     public function escape(Environment $environment, $string, $charset): string
     {
-        return str_replace(['@', '.'], [' [AT] ', ' [DOT] '], $string);
+        return preg_replace("%(?<!\\\\)'%", "\\'", $string);
     }
 }

@@ -9,11 +9,13 @@ namespace OxidEsales\EshopCommunity\Internal\Twig\Escaper;
 use Twig\Environment;
 
 /**
- * Class MailEscaper
+ * Class HexEscaper
+ *
+ * Escape every character into hex
  *
  * @author Tomasz Kowalewski (t.kowalewski@createit.pl)
  */
-class MailEscaper implements EscaperInterface
+class HexEscaper implements EscaperInterface
 {
 
     /**
@@ -21,10 +23,12 @@ class MailEscaper implements EscaperInterface
      */
     public function getStrategy(): string
     {
-        return 'mail';
+        return 'hex';
     }
 
     /**
+     * Escape every character into hex
+     *
      * @param Environment $environment
      * @param string      $string
      * @param string      $charset
@@ -33,6 +37,12 @@ class MailEscaper implements EscaperInterface
      */
     public function escape(Environment $environment, $string, $charset): string
     {
-        return str_replace(['@', '.'], [' [AT] ', ' [DOT] '], $string);
+        $return = '';
+
+        for ($i = 0; $i < strlen($string); $i++) {
+            $return .= '%' . bin2hex($string[$i]);
+        }
+
+        return $return;
     }
 }
