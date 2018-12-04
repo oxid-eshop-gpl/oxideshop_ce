@@ -8,7 +8,6 @@ namespace OxidEsales\EshopCommunity\Internal\Twig\Extensions;
 
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
-use Twig\TwigTest;
 
 /**
  * Class PhpFunctionsExtension
@@ -28,16 +27,7 @@ class PhpFunctionsExtension extends AbstractExtension
         return [
             new TwigFunction('count', 'count'),
             new TwigFunction('empty', 'empty'),
-        ];
-    }
-
-    /**
-     * @return array|\Twig_Test[]
-     */
-    public function getTests(): array
-    {
-        return [
-            new TwigTest('isset', [$this, 'twigIsset'])
+            new TwigFunction('isset', [$this, 'twigIsset'])
         ];
     }
 

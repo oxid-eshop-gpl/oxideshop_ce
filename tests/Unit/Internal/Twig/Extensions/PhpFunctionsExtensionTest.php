@@ -29,8 +29,8 @@ class PhpFunctionsExtensionTest extends AbstractExtensionTest
             ["{{ count({0:0, 1:1, 2:2}) }}", 3],
             ["{{ empty({0:0, 1:1}) }}", false],
             ["{{ empty({}) }}", true],
-            ["{{ foo is isset }}", false],
-            ["{% set foo = 'bar' %} {{ foo is isset }}", true],
+            ["{{ isset(foo) }}", false],
+            ["{% set foo = 'bar' %} {{ isset(foo) }}", true],
         ];
     }
 

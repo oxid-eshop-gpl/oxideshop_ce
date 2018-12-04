@@ -78,5 +78,9 @@ services:
   OxidEsales\EshopCommunity\Internal\Adapter\TemplateLogic\InputHelpLogic:
     class: OxidEsales\EshopCommunity\Internal\Adapter\TemplateLogic\InputHelpLogic
 
+  OxidEsales\EshopCommunity\Internal\Adapter\TemplateLogic\DateFormatHelper:
+    class: OxidEsales\EshopCommunity\Internal\Adapter\TemplateLogic\DateFormatHelper
+
+
 
 
