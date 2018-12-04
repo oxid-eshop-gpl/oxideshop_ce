@@ -26,30 +26,11 @@ class NumberFormatExtensionTest extends AbstractExtensionTest
         $this->extension = new NumberFormatExtension(new NumberFormatLogic());
     }
 
-    /**
-     * Provides data to testNumberFormat
-     *
-     * @return array
-     */
-    public function numberFormatProvider(): array
+    public function testNumberFormat()
     {
-        return [
-            ["{{ 'EUR@ 1.00@ ,@ .@ EUR@ 2'|number_format(25000) }}", '25.000,00'],
-            ["{{ 'EUR@ 1.00@ ,@ .@ EUR@ 2'|number_format(25000.1584) }}", '25.000,16'],
-            ["{{ 'EUR@ 1.00@ ,@ .@ EUR@ 3'|number_format(25000.1584) }}", '25.000,158'],
-            ["{{ 'EUR@ 1.00@ ,@ .@ EUR@ 0'|number_format(25000000.5584) }}", '25.000.001'],
-            ["{{ 'EUR@ 1.00@ .@ ,@ EUR@ 2'|number_format(25000000.5584) }}", '25,000,000.56'],
-        ];
-    }
+        $template = "{{ 'EUR@ 1.00@ .@ ,@ EUR@ 2'|number_format(25000000.5584) }}";
+        $expected = '25,000,000.56';
 
-    /**
-     * @param string $template
-     * @param string $expected
-     *
-     * @dataProvider numberFormatProvider
-     */
-    public function testNumberFormat($template, $expected)
-    {
         $this->assertEquals($expected, $this->getTemplate($template)->render([]));
     }
 }
