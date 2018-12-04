@@ -8,8 +8,9 @@
 namespace OxidEsales\EshopCommunity\Internal\Application\DataObject;
 
 use OxidEsales\EshopCommunity\Internal\Application\Exception\SystemServiceOverwriteException;
+use OxidEsales\EshopCommunity\Internal\Application\Exception\MissingServiceException;
 use Psr\Container\ContainerInterface;
-use OxidEsales\EshopCommunity\Internal\ProjectDIConfig\Exception\NoServiceYamlException;
+use OxidEsales\EshopCommunity\Internal\Application\Exception\NoServiceYamlException;
 
 /**
  * @internal
@@ -94,7 +95,7 @@ class DIConfigWrapper
     {
         try {
             $this->getService($serviceKey);
-        } catch (\Exception $e) {
+        } catch (MissingServiceException $e) {
             return false;
         }
         return true;
@@ -104,7 +105,7 @@ class DIConfigWrapper
      * @param string $serviceKey
      *
      * @return DIServiceWrapper
-     * @throws \Exception
+     * @throws MissingServiceException
      */
     public function getService(string $serviceKey): DIServiceWrapper
     {
@@ -114,7 +115,7 @@ class DIConfigWrapper
                 return $service;
             }
         }
-        throw new \Exception("Service $serviceKey not found");
+        throw new MissingServiceException("Service $serviceKey not found");
     }
 
     /**

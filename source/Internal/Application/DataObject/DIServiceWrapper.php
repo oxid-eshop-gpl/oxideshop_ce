@@ -9,6 +9,7 @@ declare(strict_types=1);
 namespace OxidEsales\EshopCommunity\Internal\Application\DataObject;
 
 use OxidEsales\EshopCommunity\Internal\Application\Events\ShopAwareInterface;
+use OxidEsales\EshopCommunity\Internal\DIProjectConfig\Exception\MissingUpdateCallException;
 
 /**
  * @internal
@@ -181,7 +182,7 @@ class DIServiceWrapper
     /**
      * @param DICallWrapper $call
      *
-     * @throws \Exception
+     * @throws MissingUpdateCallException
      * @return void
      */
     private function updateCall(DICallWrapper $call)
@@ -195,7 +196,7 @@ class DIServiceWrapper
                 return;
             }
         }
-        throw new \Exception("Did not find call to update");
+        throw new MissingUpdateCallException();
     }
 
 
@@ -203,7 +204,7 @@ class DIServiceWrapper
      * @param string $methodName
      *
      * @return DICallWrapper
-     * @throws \Exception
+     * @throws MissingUpdateCallException
      */
     private function getCall(string $methodName): DICallWrapper
     {
@@ -215,7 +216,7 @@ class DIServiceWrapper
                 }
             }
         }
-        throw new \Exception("Call $methodName does not exist");
+        throw new MissingUpdateCallException();
     }
 
 

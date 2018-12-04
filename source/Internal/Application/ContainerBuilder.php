@@ -10,7 +10,6 @@ namespace OxidEsales\EshopCommunity\Internal\Application;
 
 use OxidEsales\EshopCommunity\Core\Registry;
 use OxidEsales\EshopCommunity\Internal\Application\Dao\ProjectYamlDao;
-use OxidEsales\EshopCommunity\Internal\Application\Dao\ProjectYamlDaoInterface;
 use OxidEsales\EshopCommunity\Internal\Application\Service\ProjectYamlImportService;
 use OxidEsales\EshopCommunity\Internal\Utility\Context;
 use Symfony\Component\Config\FileLocator;
@@ -18,7 +17,6 @@ use Symfony\Component\DependencyInjection\Container;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 use Symfony\Component\DependencyInjection\ContainerBuilder as SymfonyContainerBuilder;
 use Symfony\Component\EventDispatcher\DependencyInjection\RegisterListenersPass;
-use Symfony\Component\EventDispatcher\EventDispatcher;
 
 /**
  * @internal
@@ -67,12 +65,12 @@ class ContainerBuilder
     {
 
         if (! file_exists($this->getShopSourcePath() .
-                          DIRECTORY_SEPARATOR . ProjectYamlDaoInterface::PROJECT_FILE_NAME)) {
+                          DIRECTORY_SEPARATOR . ProjectYamlDao::PROJECT_FILE_NAME)) {
             return;
         }
         $this->cleanupProjectYaml();
         $loader = new YamlFileLoader($symfonyContainer, new FileLocator($this->getShopSourcePath()));
-        $loader->load(ProjectYamlDaoInterface::PROJECT_FILE_NAME);
+        $loader->load(ProjectYamlDao::PROJECT_FILE_NAME);
     }
 
     /**

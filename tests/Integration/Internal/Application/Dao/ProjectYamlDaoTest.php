@@ -11,6 +11,7 @@ namespace OxidEsales\EshopCommunity\Tests\Integration\Internal\ProjectDIConfig\D
 use OxidEsales\EshopCommunity\Core\Registry;
 use OxidEsales\EshopCommunity\Internal\Application\ContainerBuilder;
 use OxidEsales\EshopCommunity\Internal\Application\ContainerFactory;
+use OxidEsales\EshopCommunity\Internal\Application\Dao\ProjectYamlDao;
 use OxidEsales\EshopCommunity\Internal\Application\Dao\ProjectYamlDaoInterface;
 use OxidEsales\EshopCommunity\Internal\Application\DataObject\DIConfigWrapper;
 use OxidEsales\EshopCommunity\Internal\Utility\Context;
@@ -54,7 +55,7 @@ imports:
 
 EOT;
         file_put_contents(
-            __DIR__ . DIRECTORY_SEPARATOR . ProjectYamlDaoInterface::PROJECT_FILE_NAME,
+            __DIR__ . DIRECTORY_SEPARATOR . ProjectYamlDao::PROJECT_FILE_NAME,
             $testData
         );
 
@@ -65,7 +66,7 @@ EOT;
     public function testLoadingEmptyFile()
     {
         file_put_contents(
-            __DIR__ . DIRECTORY_SEPARATOR . ProjectYamlDaoInterface::PROJECT_FILE_NAME,
+            __DIR__ . DIRECTORY_SEPARATOR . ProjectYamlDao::PROJECT_FILE_NAME,
             ''
         );
 
@@ -76,7 +77,7 @@ EOT;
     public function testLoadingNonExistingFile()
     {
         try {
-            unlink(__DIR__ . DIRECTORY_SEPARATOR . ProjectYamlDaoInterface::PROJECT_FILE_NAME);
+            unlink(__DIR__ . DIRECTORY_SEPARATOR . ProjectYamlDao::PROJECT_FILE_NAME);
         } catch (\Exception $e) {
             // pass
         }

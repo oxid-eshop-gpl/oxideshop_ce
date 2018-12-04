@@ -16,7 +16,10 @@ use Symfony\Component\Yaml\Yaml;
  */
 class ProjectYamlDao implements ProjectYamlDaoInterface
 {
-   /**
+
+    const PROJECT_FILE_NAME = 'project.yaml';
+
+    /**
      * @var ContextInterface $context
      */
     private $context;
@@ -68,6 +71,6 @@ class ProjectYamlDao implements ProjectYamlDaoInterface
      */
     private function getProjectFileName(): string
     {
-        return $this->context->getShopDir() . DIRECTORY_SEPARATOR . ProjectYamlDaoInterface::PROJECT_FILE_NAME;
+        return $this->context->getShopDir() . DIRECTORY_SEPARATOR . self::PROJECT_FILE_NAME;
     }
 }
