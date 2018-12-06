@@ -36,7 +36,7 @@ class FileSizeExtension extends AbstractExtension
     /**
      * @return array|\Twig_Filter[]
      */
-    public function getFilters()
+    public function getFilters(): array
     {
         return [new \Twig_Filter('fileSize', [$this, 'fileSize'])];
     }
@@ -46,7 +46,7 @@ class FileSizeExtension extends AbstractExtension
      *
      * @return string
      */
-    public function fileSize($size)
+    public function fileSize($size): string
     {
         return $this->fileSizeLogic->getFileSize($size);
     }

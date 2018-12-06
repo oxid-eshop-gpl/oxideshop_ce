@@ -44,7 +44,7 @@ class TwigContext implements TwigContextInterface
     /**
      * @return array
      */
-    public function getTemplateDirectories()
+    public function getTemplateDirectories(): array
     {
         $templateDirectory = $this->utilsView->getTemplateDirs();
         $directories = array_filter(
@@ -60,7 +60,7 @@ class TwigContext implements TwigContextInterface
     /**
      * @return bool
      */
-    public function getIsDebug()
+    public function getIsDebug(): bool
     {
         return $this->config->getConfigParam('iDebug', false);
     }
@@ -68,7 +68,7 @@ class TwigContext implements TwigContextInterface
     /**
      * @return string
      */
-    public function getCacheDir()
+    public function getCacheDir(): string
     {
         return $this->config->getConfigParam('sCompileDir') . '/twig';
     }

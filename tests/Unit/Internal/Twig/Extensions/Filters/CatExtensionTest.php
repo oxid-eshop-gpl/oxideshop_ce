@@ -15,7 +15,7 @@ class CatExtensionTest extends TestCase
     /**
      * @covers \OxidEsales\EshopCommunity\Internal\Twig\Extensions\Filters\CatExtension::cat
      */
-    public function testCat()
+    public function testCat(): void
     {
         $catFilter = new CatExtension();
         $string = 'foo';

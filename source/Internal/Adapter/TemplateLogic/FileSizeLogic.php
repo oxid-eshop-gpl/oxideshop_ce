@@ -20,7 +20,7 @@ class FileSizeLogic
      *
      * @return string
      */
-    public function getFileSize($size)
+    public function getFileSize(int $size): string
     {
         if ($size < 1024) {
             return $size . " B";

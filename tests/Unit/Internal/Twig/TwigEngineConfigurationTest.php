@@ -14,14 +14,14 @@ use OxidEsales\EshopCommunity\Internal\Twig\TwigContextInterface;
 class TwigEngineConfigurationTest extends \PHPUnit\Framework\TestCase
 {
 
-    public function testGetParameters()
+    public function testGetParameters(): void
     {
         $engineConfiguration = $this->getEngineConfiguration();
-        $this->assertEquals(['debug' => 'dummy_is_debug', 'cache' => 'dummy_cache_dir'], $engineConfiguration->getParameters());
+        $this->assertEquals(['debug' => true, 'cache' => 'dummy_cache_dir'], $engineConfiguration->getParameters());
         $this->assertNotEquals(['debug' => 'foo', 'cache' => 'foo'], $engineConfiguration->getParameters());
     }
 
-    private function getEngineConfiguration()
+    private function getEngineConfiguration(): TwigEngineConfiguration
     {
         /** @var TwigContextInterface $context */
         $context = $this->getMockBuilder('OxidEsales\EshopCommunity\Internal\Twig\TwigContextInterface')->getMock();

@@ -35,7 +35,7 @@ class IfContentExtension extends AbstractExtension
     /**
      * @return TokenParserInterface[]
      */
-    public function getTokenParsers()
+    public function getTokenParsers(): array
     {
         return [new IfContentTokenParser()];
     }
@@ -44,9 +44,9 @@ class IfContentExtension extends AbstractExtension
      * @param string $sIdent
      * @param string $sOxid
      *
-     * @return array
+     * @return mixed
      */
-    public function getContent($sIdent, $sOxid)
+    public function getContent(string $sIdent, string $sOxid)
     {
         return $this->ifContentLogic->getContent($sIdent, $sOxid);
     }

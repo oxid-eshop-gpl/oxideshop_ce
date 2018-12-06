@@ -20,32 +20,32 @@ class UrlExtensionTest extends AbstractExtensionTest
     /**
      * {@inheritdoc}
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
         $this->extension = new UrlExtension(new SeoUrlLogic(), new AddUrlParametersLogic());
     }
 
     /**
-     * @param $template
-     * @param $expected
+     * @param string $template
+     * @param string $expected
      * @param array $variables
      *
      * @dataProvider getSeoUrlTests
      */
-    public function testSeoUrl($template, $expected, array $variables = [])
+    public function testSeoUrl(string $template, string $expected, array $variables = []): void
     {
         $this->assertEquals($expected, $this->getTemplate($template)->render($variables));
     }
 
     /**
-     * @param $template
-     * @param $expected
+     * @param string $template
+     * @param string $expected
      * @param array $variables
      *
      * @dataProvider getAddUrlParametersTests
      */
-    public function testAddUrlParameters($template, $expected, array $variables = [])
+    public function testAddUrlParameters(string $template, string $expected, array $variables = []): void
     {
         $this->assertEquals($expected, $this->getTemplate($template)->render($variables));
     }
@@ -53,7 +53,7 @@ class UrlExtensionTest extends AbstractExtensionTest
     /**
      * @return array
      */
-    public function getSeoUrlTests()
+    public function getSeoUrlTests(): array
     {
         return [
             [
@@ -66,7 +66,7 @@ class UrlExtensionTest extends AbstractExtensionTest
     /**
      * @return array
      */
-    public function getAddUrlParametersTests()
+    public function getAddUrlParametersTests(): array
     {
         return [
             [

@@ -36,7 +36,7 @@ use Symfony\Component\DependencyInjection\Reference;
 class TwigEnvironmentPassTest extends TestCase
 {
 
-    public function testTwigBridgeExtensionsAreRegisteredFirst()
+    public function testTwigBridgeExtensionsAreRegisteredFirst(): void
     {
         $container = new ContainerBuilder();
         $twigDefinition = $container->register('twig');

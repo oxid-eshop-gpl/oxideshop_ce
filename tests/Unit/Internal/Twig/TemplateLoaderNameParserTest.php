@@ -25,7 +25,7 @@ class TemplateLoaderNameParserTest extends TestCase
     /**
      * {@inheritdoc}
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->templateLoaderNameParser = new TemplateLoaderNameParser();
     }
@@ -39,7 +39,7 @@ class TemplateLoaderNameParserTest extends TestCase
      * @dataProvider getInvalidNameTests
      * @dataProvider getValidNameTests
      */
-    public function testIsValidName($name, $expected)
+    public function testIsValidName(string $name, array $expected): void
     {
         $this->assertEquals($this->templateLoaderNameParser->isValidName($name), $expected['valid']);
     }
@@ -52,7 +52,7 @@ class TemplateLoaderNameParserTest extends TestCase
      *
      * @dataProvider getValidNameTests
      */
-    public function testGetLoaderName($name, $expected)
+    public function testGetLoaderName(string $name, array $expected): void
     {
         $this->assertEquals($this->templateLoaderNameParser->getLoaderName($name), $expected['loaderName']);
     }
@@ -65,7 +65,7 @@ class TemplateLoaderNameParserTest extends TestCase
      *
      * @dataProvider getValidNameTests
      */
-    public function testGetValue($name, $expected)
+    public function testGetValue(string $name, array $expected): void
     {
         $this->assertEquals($this->templateLoaderNameParser->getValue($name), $expected['value']);
     }
@@ -78,7 +78,7 @@ class TemplateLoaderNameParserTest extends TestCase
      *
      * @dataProvider getValidNameTests
      */
-    public function testGetParameters($name, $expected)
+    public function testGetParameters(string $name, array $expected): void
     {
         $this->assertEquals($this->templateLoaderNameParser->getParameters($name), $expected['parameters']);
     }
@@ -91,7 +91,7 @@ class TemplateLoaderNameParserTest extends TestCase
      *
      * @dataProvider getValidNameTests
      */
-    public function testGetKey($name, $expected)
+    public function testGetKey(string $name, array $expected): void
     {
         $this->assertEquals($this->templateLoaderNameParser->getKey($name), $expected['key']);
     }
@@ -99,7 +99,7 @@ class TemplateLoaderNameParserTest extends TestCase
     /**
      * @return array
      */
-    public function getInvalidNameTests()
+    public function getInvalidNameTests(): array
     {
         $invalidNames = [
             '',
@@ -125,7 +125,7 @@ class TemplateLoaderNameParserTest extends TestCase
     /**
      * @return array
      */
-    public function getValidNameTests()
+    public function getValidNameTests(): array
     {
         return [
             [

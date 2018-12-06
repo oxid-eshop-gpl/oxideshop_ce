@@ -16,7 +16,7 @@ class MailtoExtension extends AbstractExtension
      *
      * @return TwigFunction[]
      */
-    public function getFunctions()
+    public function getFunctions(): array
     {
         return [
             new TwigFunction('mailto', [$this, 'mailto'], ['is_safe' => ['html']]),
@@ -32,7 +32,7 @@ class MailtoExtension extends AbstractExtension
      *
      * @return string
      */
-    public function mailto($address, array $parameters = [])
+    public function mailto(string $address, array $parameters = []): string
     {
         $text = isset($parameters['text']) ? $parameters['text'] : $address;
         $extra = isset($parameters['extra']) ? $parameters['extra'] : '';
@@ -66,7 +66,7 @@ class MailtoExtension extends AbstractExtension
      *
      * @return string
      */
-    public function oxmailto($address, array $parameters = [])
+    public function oxmailto(string $address, array $parameters = []): string
     {
         if (isset($parameters['encode']) && $parameters['encode'] == 'javascript') {
             $text = isset($parameters['text']) ? $parameters['text'] : $address;
@@ -88,7 +88,7 @@ class MailtoExtension extends AbstractExtension
      *
      * @return string
      */
-    private function prepareMailParametersString($parameters)
+    private function prepareMailParametersString(array $parameters): string
     {
         // Netscape and Mozilla do not decode %40 (@) in BCC field (bug?), so don't encode it.
         $search = ['%40', '%2C'];
@@ -128,7 +128,7 @@ class MailtoExtension extends AbstractExtension
      *
      * @return string
      */
-    private function mailJavascript($address, $text, $extra)
+    private function mailJavascript(string $address, string $text, string $extra): string
     {
         $string = "document.write('<a href=\"mailto:$address\" $extra>$text</a>');";
 
@@ -149,7 +149,7 @@ class MailtoExtension extends AbstractExtension
      *
      * @return string
      */
-    private function mailJavascriptCharcode($address, $text, $extra)
+    private function mailJavascriptCharcode(string $address, string $text, string $extra): string
     {
         $string = "<a href=\"mailto:$address\" $extra>$text</a>";
 
@@ -175,7 +175,7 @@ class MailtoExtension extends AbstractExtension
      *
      * @return string
      */
-    private function mailHex($address, $text, $extra)
+    private function mailHex(string $address, string $text, string $extra): string
     {
         $match = [];
         preg_match('!^(.*)(\?.*)$!', $address, $match);

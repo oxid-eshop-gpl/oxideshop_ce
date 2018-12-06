@@ -19,7 +19,7 @@ class TranslateColonExtension extends AbstractExtension
     /**
      * @return array|\Twig_Filter[]
      */
-    public function getFilters()
+    public function getFilters(): array
     {
         return [new \Twig_Filter('getTranslatedColon', [$this, 'getTranslatedColon'])];
     }
@@ -31,7 +31,7 @@ class TranslateColonExtension extends AbstractExtension
      *
      * @return mixed
      */
-    public function getTranslatedColon($string)
+    public function getTranslatedColon(string $string): string
     {
         $colon = \OxidEsales\Eshop\Core\Registry::getLang()->translateString('COLON');
 

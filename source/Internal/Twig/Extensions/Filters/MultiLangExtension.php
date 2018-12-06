@@ -46,7 +46,7 @@ class MultiLangExtension extends AbstractExtension
      *
      * @return string
      */
-    public function multiLang($ident, $arguments = null): string
+    public function multiLang(string $ident, $arguments = null): string
     {
         return $this->multiLangLogic->multiLang($ident, $arguments);
     }

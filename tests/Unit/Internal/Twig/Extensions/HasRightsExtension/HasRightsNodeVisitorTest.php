@@ -18,7 +18,7 @@ class HasRightsNodeVisitorTest extends TestCase
      */
     private $hasRightsNodeVisitor;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->hasRightsNodeVisitor = new HasRightsVisitor();
         parent::setUp();
@@ -27,7 +27,7 @@ class HasRightsNodeVisitorTest extends TestCase
     /**
      * @covers \OxidEsales\EshopCommunity\Tests\Unit\Internal\Twig\Extension\HasRightsExtension:leaveNode
      */
-    public function testLeaveNode()
+    public function testLeaveNode(): void
     {
         $node = $this->getNode();
         $env = $this->getEnv();
@@ -37,7 +37,7 @@ class HasRightsNodeVisitorTest extends TestCase
     /**
      * @covers \OxidEsales\EshopCommunity\Tests\Unit\Internal\Twig\Extension\HasRightsExtension:getPriority
      */
-    public function testGetPriority()
+    public function testGetPriority(): void
     {
         $this->assertEquals(0, $this->hasRightsNodeVisitor->getPriority());
     }
@@ -45,7 +45,7 @@ class HasRightsNodeVisitorTest extends TestCase
     /**
      * @covers \OxidEsales\EshopCommunity\Tests\Unit\Internal\Twig\Extension\HasRightsExtension:enterNode
      */
-    public function testEnterNode()
+    public function testEnterNode(): void
     {
         $node = $this->getNode();
         $env = $this->getEnv();
@@ -55,7 +55,7 @@ class HasRightsNodeVisitorTest extends TestCase
     /**
      * @return \Twig_Node
      */
-    private function getNode()
+    private function getNode(): \Twig_Node
     {
         /** @var \Twig_Node $node */
         $node = $this->getMockBuilder('Twig_Node')->getMock();
@@ -66,7 +66,7 @@ class HasRightsNodeVisitorTest extends TestCase
     /**
      * @return \Twig_Environment
      */
-    private function getEnv()
+    private function getEnv(): \Twig_Environment
     {
         $loader = new ArrayLoader(['index' => 'foo']);
         $env = new \Twig_Environment($loader, ['debug' => true, 'cache' => false]);

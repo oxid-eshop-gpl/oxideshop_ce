@@ -42,7 +42,7 @@ class UrlExtension extends AbstractExtension
      *
      * @return TwigFunction[]
      */
-    public function getFunctions()
+    public function getFunctions(): array
     {
         return [
             new TwigFunction('seo_url', [$this, 'getSeoUrl'], ['is_safe' => ['html']])
@@ -54,7 +54,7 @@ class UrlExtension extends AbstractExtension
      *
      * @return TwigFilter[]
      */
-    public function getFilters()
+    public function getFilters(): array
     {
         return [
             new TwigFilter('add_url_parameters', [$this, 'addUrlParameters'], ['is_safe' => ['html']])
@@ -68,7 +68,7 @@ class UrlExtension extends AbstractExtension
      *
      * @return null|string
      */
-    public function getSeoUrl(array $parameters)
+    public function getSeoUrl(array $parameters): ?string
     {
         $url = $this->seoUrlLogic->seoUrl($parameters);
 
@@ -88,7 +88,7 @@ class UrlExtension extends AbstractExtension
      *
      * @return string
      */
-    public function addUrlParameters($url, $dynamicParameters)
+    public function addUrlParameters(string $url, string $dynamicParameters): string
     {
         return $this->addUrlParametersLogic->addUrlParameters($url, $dynamicParameters);
     }

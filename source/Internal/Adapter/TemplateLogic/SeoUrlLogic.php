@@ -19,9 +19,9 @@ class SeoUrlLogic
      *
      * @param array $params
      *
-     * @return null|string
+     * @return string
      */
-    public function seoUrl($params)
+    public function seoUrl(array $params): string
     {
         $sOxid = isset($params['oxid']) ? $params['oxid'] : null;
         $sType = isset($params['type']) ? $params['type'] : null;
@@ -56,6 +56,6 @@ class SeoUrlLogic
             }
         }
 
-        return $sUrl;
+        return $sUrl ?: '';
     }
 }

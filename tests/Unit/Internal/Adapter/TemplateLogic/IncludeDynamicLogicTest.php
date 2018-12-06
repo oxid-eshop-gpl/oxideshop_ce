@@ -20,7 +20,7 @@ class IncludeDynamicLogicTest extends TestCase
     /** @var IncludeDynamicLogic */
     private $includeDynamicLogic;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->includeDynamicLogic = new IncludeDynamicLogic();
     }
@@ -32,7 +32,7 @@ class IncludeDynamicLogicTest extends TestCase
      * @covers       IncludeExtension::includeDynamicPrefix
      * @dataProvider getIncludeDynamicPrefixTests
      */
-    public function testIncludeDynamicPrefix(array $parameters, array $expected)
+    public function testIncludeDynamicPrefix(array $parameters, array $expected): void
     {
         $this->assertEquals($this->includeDynamicLogic->includeDynamicPrefix($parameters), $expected);
     }
@@ -44,7 +44,7 @@ class IncludeDynamicLogicTest extends TestCase
      * @covers       IncludeExtension::renderForCache
      * @dataProvider getRenderForCacheTests
      */
-    public function testRenderForCache(array $parameters, $expected)
+    public function testRenderForCache(array $parameters, string $expected): void
     {
         $this->assertEquals($this->includeDynamicLogic->renderForCache($parameters), $expected);
     }
@@ -52,7 +52,7 @@ class IncludeDynamicLogicTest extends TestCase
     /**
      * @return array
      */
-    public function getIncludeDynamicPrefixTests()
+    public function getIncludeDynamicPrefixTests(): array
     {
         return [
             [[], []],
@@ -67,7 +67,7 @@ class IncludeDynamicLogicTest extends TestCase
     /**
      * @return array
      */
-    public function getRenderForCacheTests()
+    public function getRenderForCacheTests(): array
     {
         return [
             [[], '<oxid_dynamic></oxid_dynamic>'],

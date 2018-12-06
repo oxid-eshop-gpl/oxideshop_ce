@@ -23,7 +23,7 @@ class TruncateLogic
      *
      * @return string
      */
-    public function truncate($sString, $iLength = 80, $sSufix = '...', $blBreakWords = false, $middle = false)
+    public function truncate(string $sString = null, int $iLength = 80, string $sSufix = '...', bool $blBreakWords = false, bool $middle = false): string
     {
         if ($iLength == 0) {
             return '';
@@ -41,6 +41,6 @@ class TruncateLogic
             return str_replace(["'", '"'], ['&#039;', '&quot;'], $sString);
         }
 
-        return $sString;
+        return $sString ?: '';
     }
 }

@@ -22,7 +22,7 @@ class AddUrlParametersLogic
      *
      * @return string
      */
-    public function addUrlParameters($sUrl, $sDynParams)
+    public function addUrlParameters(string $sUrl, string $sDynParams): string
     {
         $oStr = getStr();
         // removing empty parameters

@@ -24,7 +24,7 @@ class TemplateLoaderNameParser
      *
      * @return bool
      */
-    public function isValidName($name)
+    public function isValidName(string $name): bool
     {
         return count(explode('::', $name)) == 3;
     }
@@ -37,7 +37,7 @@ class TemplateLoaderNameParser
      *
      * @return string
      */
-    public function getLoaderName($name)
+    public function getLoaderName(string $name): string
     {
         return $this->getNamePart($name, 0);
     }
@@ -50,7 +50,7 @@ class TemplateLoaderNameParser
      *
      * @return string
      */
-    public function getKey($name)
+    public function getKey(string $name): string
     {
         return $this->getNamePart($name, 1);
     }
@@ -63,7 +63,7 @@ class TemplateLoaderNameParser
      *
      * @return string
      */
-    public function getValue($name)
+    public function getValue(string $name): string
     {
         return $this->getNamePart($name, 2);
     }
@@ -76,7 +76,7 @@ class TemplateLoaderNameParser
      *
      * @return array
      */
-    public function getParameters($name)
+    public function getParameters(string $name): array
     {
         $parameters = [];
 
@@ -98,7 +98,7 @@ class TemplateLoaderNameParser
      *
      * @return string
      */
-    private function getNamePart($name, $index)
+    private function getNamePart(string $name, int $index): string
     {
         if (!$this->isValidName($name)) {
             throw new \Exception("Invalid template name.");

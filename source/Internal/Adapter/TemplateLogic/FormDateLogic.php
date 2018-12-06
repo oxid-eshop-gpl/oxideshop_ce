@@ -21,7 +21,7 @@ class FormDateLogic
      *
      * @return string
      */
-    public function formdate($oConvObject, $sFieldType = null, $blPassedValue = false)
+    public function formdate($oConvObject, string $sFieldType = null, bool $blPassedValue = false): ?string
     {
         // creating fake bject
         if ($blPassedValue || is_string($oConvObject)) {

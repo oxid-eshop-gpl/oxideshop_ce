@@ -20,7 +20,7 @@ class MultiLangLogic
      *
      * @return string
      */
-    public function multiLang($sIdent, $args = []): string
+    public function multiLang(string $sIdent, $args = []): string
     {
         if (!isset($sIdent)) {
             $sIdent = 'IDENT MISSING';

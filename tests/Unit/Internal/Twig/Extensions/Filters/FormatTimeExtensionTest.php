@@ -13,7 +13,7 @@ use PHPUnit\Framework\TestCase;
 class FormatTimeExtensionTest extends TestCase
 {
 
-    public function provider()
+    public function provider(): array
     {
         return [
             [0, '00:00:00'],
@@ -23,38 +23,16 @@ class FormatTimeExtensionTest extends TestCase
     }
 
     /**
-     * @param int $seconds
+     * @param int    $seconds
      * @param string $expectedTime
      *
      * @dataProvider provider
      */
-    public function testFormatTime($seconds, $expectedTime)
+    public function testFormatTime(int $seconds, string $expectedTime): void
     {
         $formatTimeLogic = new FormatTimeLogic();
         $formatTimeExtension = new FormatTimeExtension($formatTimeLogic);
         $formattedTime = $formatTimeExtension->formatTime($seconds);
         $this->assertEquals($expectedTime, $formattedTime);
     }
-
-    public function incorrectDataProvider()
-    {
-        return [
-            ['error']
-        ];
-    }
-
-    /**
-     * @param int $seconds
-     *
-     * @dataProvider incorrectDataProvider
-     * @expectedException \Twig_Error
-     */
-    public function testFormatTimeError($seconds)
-    {
-        $formatTimeLogic = new FormatTimeLogic();
-        $formatTimeExtension = new FormatTimeExtension($formatTimeLogic);
-        $formatTimeExtension->formatTime($seconds);
-    }
-
-
 }

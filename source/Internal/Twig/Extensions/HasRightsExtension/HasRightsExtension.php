@@ -19,7 +19,7 @@ class HasRightsExtension extends AbstractExtension
     /**
      * @return array|\Twig_TokenParserInterface[]
      */
-    public function getTokenParsers()
+    public function getTokenParsers(): array
     {
         return [new HasRightsParser()];
     }
@@ -27,7 +27,7 @@ class HasRightsExtension extends AbstractExtension
     /**
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return 'hasrights';
     }
@@ -35,7 +35,7 @@ class HasRightsExtension extends AbstractExtension
     /**
      * @return array|\Twig_NodeVisitorInterface[]
      */
-    public function getNodeVisitors()
+    public function getNodeVisitors(): array
     {
         return [new HasRightsVisitor()];
     }

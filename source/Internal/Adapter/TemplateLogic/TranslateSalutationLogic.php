@@ -19,7 +19,7 @@ class TranslateSalutationLogic
      *
      * @return string
      */
-    public function translateSalutation($sIdent): ?string
+    public function translateSalutation(string $sIdent = null): string
     {
         $oLang = \OxidEsales\Eshop\Core\Registry::getLang();
         $iLang = $oLang->getTplLanguage();
@@ -37,6 +37,6 @@ class TranslateSalutationLogic
             // is thrown in debug mode and has to be caught here, as smarty hangs otherwise!
         }
 
-        return $sTranslation;
+        return $sTranslation ?: '';
     }
 }

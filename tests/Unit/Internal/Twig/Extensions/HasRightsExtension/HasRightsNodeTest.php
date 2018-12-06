@@ -18,7 +18,7 @@ class HasRightsNodeTest extends TestCase
      */
     private $hasRightsNode;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $data = 'foo';
         $params = new \Twig_Node_Text($data, 0);
@@ -30,7 +30,7 @@ class HasRightsNodeTest extends TestCase
     /**
      * @covers \OxidEsales\EshopCommunity\Internal\Twig\Extensions\HasRightsExtension\HasRightsNode:compile
      */
-    public function testCompile()
+    public function testCompile(): void
     {
         $env = $this->getEnv();
         $compiler = new \Twig_Compiler($env);
@@ -41,7 +41,7 @@ class HasRightsNodeTest extends TestCase
     /**
      * @return \Twig_Environment
      */
-    private function getEnv()
+    private function getEnv(): \Twig_Environment
     {
         $loader = new ArrayLoader(['index' => 'foo']);
         $env = new \Twig_Environment($loader, ['debug' => true, 'cache' => false]);

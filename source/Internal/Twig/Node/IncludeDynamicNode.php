@@ -20,8 +20,10 @@ class IncludeDynamicNode extends IncludeNode
 
     /**
      * @param Compiler $compiler
+     *
+     * @return void
      */
-    public function compile(Compiler $compiler)
+    public function compile(Compiler $compiler): void
     {
         $this->preCompile($compiler);
 
@@ -46,8 +48,10 @@ class IncludeDynamicNode extends IncludeNode
 
     /**
      * @param Compiler $compiler
+     *
+     * @return void
      */
-    private function preCompile(Compiler $compiler)
+    private function preCompile(Compiler $compiler): void
     {
         $compiler->addDebugInfo($this);
 
@@ -60,8 +64,10 @@ class IncludeDynamicNode extends IncludeNode
 
     /**
      * @param Compiler $compiler
+     *
+     * @return void
      */
-    private function ifRender4Cache(Compiler $compiler)
+    private function ifRender4Cache(Compiler $compiler): void
     {
         $compiler->write("echo \$this");
         $compiler->raw("->extensions['" . IncludeExtension::class . "']");
@@ -74,8 +80,10 @@ class IncludeDynamicNode extends IncludeNode
 
     /**
      * @param Compiler $compiler
+     *
+     * @return void
      */
-    private function ifNotRender4Cache(Compiler $compiler)
+    private function ifNotRender4Cache(Compiler $compiler): void
     {
         if ($this->hasNode('variables')) {
             $compiler->write("\$parameters = \$this");
@@ -88,8 +96,10 @@ class IncludeDynamicNode extends IncludeNode
 
     /**
      * @param Compiler $compiler
+     *
+     * @return void
      */
-    private function includeTemplate(Compiler $compiler)
+    private function includeTemplate(Compiler $compiler): void
     {
         $this->addGetTemplate($compiler);
 
@@ -102,8 +112,10 @@ class IncludeDynamicNode extends IncludeNode
 
     /**
      * @param Compiler $compiler
+     *
+     * @return void
      */
-    protected function addTemplateArguments(Compiler $compiler)
+    protected function addTemplateArguments(Compiler $compiler): void
     {
         if (!$this->hasNode('variables')) {
             $compiler->raw(false === $this->getAttribute('only') ? '$context' : '[]');
@@ -116,8 +128,10 @@ class IncludeDynamicNode extends IncludeNode
 
     /**
      * @param Compiler $compiler
+     *
+     * @return void
      */
-    private function postCompile(Compiler $compiler)
+    private function postCompile(Compiler $compiler): void
     {
         if ($this->getAttribute('ignore_missing')) {
             $compiler

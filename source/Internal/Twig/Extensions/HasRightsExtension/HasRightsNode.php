@@ -17,19 +17,21 @@ class HasRightsNode extends \Twig_Node
     /**
      * HasRightsNode constructor.
      *
-     * @param array $params
-     * @param int   $lineno
-     * @param null  $tag
+     * @param \Twig_Node $params
+     * @param int        $lineno
+     * @param string     $tag
      */
-    public function __construct($params, $lineno = 0, $tag = null)
+    public function __construct(\Twig_Node $params, int $lineno = 0, string $tag = null)
     {
         parent::__construct(['HasRightsParams' => $params], [], $lineno, $tag);
     }
 
     /**
      * @param \Twig_Compiler $compiler
+     *
+     * @return void
      */
-    public function compile(\Twig_Compiler $compiler)
+    public function compile(\Twig_Compiler $compiler): void
     {
         $count = count($this->getNode('HasRightsParams'));
 

@@ -36,7 +36,7 @@ class FormatPriceExtension extends AbstractExtension
     /**
      * @return array|\Twig_Function[]
      */
-    public function getFunctions()
+    public function getFunctions(): array
     {
         return [
             new TwigFunction('formatPrice', [$this, 'formatPrice']) //todo fix names also coverter fml.
@@ -48,7 +48,7 @@ class FormatPriceExtension extends AbstractExtension
      *
      * @return string
      */
-    public function formatPrice($params)
+    public function formatPrice(array $params): string
     {
         return $this->formatPriceLogic->formatPrice($params);
     }

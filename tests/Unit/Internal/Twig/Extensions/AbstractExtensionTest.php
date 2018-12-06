@@ -17,7 +17,7 @@ abstract class AbstractExtensionTest extends UnitTestCase
      *
      * @return \Twig_Template
      */
-    protected function getTemplate($template)
+    protected function getTemplate(string $template): \Twig_Template
     {
         $loader = new ArrayLoader(['index' => $template]);
 

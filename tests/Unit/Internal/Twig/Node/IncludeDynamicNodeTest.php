@@ -22,7 +22,7 @@ use Twig\Test\NodeTestCase;
 class IncludeDynamicNodeTest extends NodeTestCase
 {
 
-    public function testConstructor()
+    public function testConstructor(): void
     {
         $expr = new ConstantExpression('foo.twig', 1);
         $node = new IncludeDynamicNode($expr, null, false, false, 1);
@@ -37,7 +37,7 @@ class IncludeDynamicNodeTest extends NodeTestCase
         $this->assertTrue($node->getAttribute('only'));
     }
 
-    public function getTests()
+    public function getTests(): array
     {
         $includeExtensionClass = IncludeExtension::class;
 

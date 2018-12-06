@@ -18,7 +18,7 @@ use OxidEsales\EshopCommunity\Internal\Twig\Extensions\Filters\FormDateFilterExt
 class FormDateFilterExtensionTest extends AbstractExtensionTest
 {
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
         $this->extension = new FormDateFilterExtension(new FormDateLogic());
@@ -27,7 +27,7 @@ class FormDateFilterExtensionTest extends AbstractExtensionTest
     /**
      * @covers FormDateFilterExtension::formdate
      */
-    public function testFormDateWithDatetime()
+    public function testFormDateWithDatetime(): void
     {
         $template = "{{ '01.08.2007 11.56.25'|formdate('datetime', true) }}";
         $expected = "2007-08-01 11:56:25";
@@ -38,7 +38,7 @@ class FormDateFilterExtensionTest extends AbstractExtensionTest
     /**
      * @covers FormDateFilterExtension::formdate
      */
-    public function testFormDateWithTimestamp()
+    public function testFormDateWithTimestamp(): void
     {
         $template = "{{ '20070801115625'|formdate('timestamp', true) }}";
         $expected = "2007-08-01 11:56:25";
@@ -49,7 +49,7 @@ class FormDateFilterExtensionTest extends AbstractExtensionTest
     /**
      * @covers FormDateFilterExtension::formdate
      */
-    public function testFormDateWithDate()
+    public function testFormDateWithDate(): void
     {
         $template = "{{ '2007-08-01 11:56:25'|formdate('date', true) }}";
         $expected = "2007-08-01";
@@ -60,7 +60,7 @@ class FormDateFilterExtensionTest extends AbstractExtensionTest
     /**
      * @covers FormDateFilterExtension::formdate
      */
-    public function testFormDateUsingObject()
+    public function testFormDateUsingObject(): void
     {
         $template = "{{ field|formdate('datetime') }}";
         $expected = "2007-08-01 11:56:25";

@@ -22,7 +22,7 @@ class FormatPriceLogic
      *
      * @return string
      */
-    public function formatPrice($params)
+    public function formatPrice(array $params): string
     {
         $output = '';
         $inputPrice = $params['price'];
@@ -39,7 +39,7 @@ class FormatPriceLogic
      *
      * @return string
      */
-    private function calculatePrice($inputPrice, $params)
+    private function calculatePrice($inputPrice, array $params): string
     {
         $config = Registry::getConfig();
         $price = ($inputPrice instanceof \OxidEsales\Eshop\Core\Price) ? $inputPrice->getPrice() : floatval($inputPrice);
@@ -59,7 +59,7 @@ class FormatPriceLogic
      *
      * @return string
      */
-    private function getFormattedPrice($currency, $price)
+    private function getFormattedPrice($currency, $price): string
     {
         $output = '';
         $decimalSeparator = isset($currency->dec) ? $currency->dec : ',';

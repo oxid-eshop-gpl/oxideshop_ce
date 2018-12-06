@@ -37,7 +37,7 @@ class AssignAdvancedExtension extends AbstractExtension
     /**
      * @return array|\Twig_Function[]
      */
-    public function getFunctions()
+    public function getFunctions(): array
     {
         return [new TwigFunction('assignAdvanced', [$this, 'assignAdvanced'])];
     }
@@ -49,7 +49,7 @@ class AssignAdvancedExtension extends AbstractExtension
      *
      * @return mixed
      */
-    public function assignAdvanced($value)
+    public function assignAdvanced(string $value): string
     {
         /** @var AssignAdvancedLogic $oxgetseourlLogic */
         $assignAdvancedLogic = ContainerFactory::getInstance()->getContainer()->get(AssignAdvancedLogic::class);
