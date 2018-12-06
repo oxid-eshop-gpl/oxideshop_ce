@@ -31,7 +31,7 @@ class ScriptExtension extends AbstractExtension
      *
      * @return TwigFunction[]
      */
-    public function getFunctions()
+    public function getFunctions(): array
     {
         return [
             new TwigFunction('script', [$this, 'script'], ['is_safe' => ['html']]),
@@ -43,7 +43,7 @@ class ScriptExtension extends AbstractExtension
      *
      * @return string
      */
-    public function script(array $parameters = [])
+    public function script(array $parameters = []): string
     {
         $isDynamic = isset($parameters["dynamic"]) ? (bool) $parameters["dynamic"] : false;
         $priority = !empty($parameters['priority']) ? $parameters['priority'] : 3;

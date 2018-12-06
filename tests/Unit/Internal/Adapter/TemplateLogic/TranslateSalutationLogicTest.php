@@ -20,7 +20,7 @@ class TranslateSalutationLogicTest extends UnitTestCase
     /** @var TranslateSalutationLogic */
     private $translateSalutationLogic;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->translateSalutationLogic = new TranslateSalutationLogic();
     }
@@ -47,7 +47,7 @@ class TranslateSalutationLogicTest extends UnitTestCase
      *
      * @dataProvider translateSalutationProvider
      */
-    public function testTranslateSalutation($ident, $languageId, $expected)
+    public function testTranslateSalutation(string $ident, int $languageId, string $expected): void
     {
         $this->setLanguage($languageId);
         $this->assertEquals($expected, $this->translateSalutationLogic->translateSalutation($ident));

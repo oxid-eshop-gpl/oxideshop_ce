@@ -15,7 +15,7 @@ class EncloseFilterTest extends TestCase
     /**
      * @covers \OxidEsales\EshopCommunity\Internal\Twig\Extensions\Filters\EncloseExtension::enclose
      */
-    public function testEnclose()
+    public function testEnclose(): void
     {
         $string = "foo";
         $encloser = "*";
@@ -27,7 +27,7 @@ class EncloseFilterTest extends TestCase
     /**
      * @covers \OxidEsales\EshopCommunity\Internal\Twig\Extensions\Filters\EncloseExtension::enclose
      */
-    public function testEncloseNoEncloder()
+    public function testEncloseNoEncloder(): void
     {
         $string = "foo";
         $encloseFilter = new EncloseExtension();

@@ -18,7 +18,7 @@ class FormatPriceExtensionTest extends TestCase
      */
     private $formatPriceExtension;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
         $formatPriceLogic = new FormatPriceLogic();
@@ -28,7 +28,7 @@ class FormatPriceExtensionTest extends TestCase
     /**
      * @covers \OxidEsales\EshopCommunity\Internal\Twig\Extensions\FormatPriceExtension::formatPrice
      */
-    public function testFormatPrice()
+    public function testFormatPrice(): void
     {
         $price = $this->formatPriceExtension->formatPrice(['price' => 100]);
         $this->assertEquals('100,00 €', $price);

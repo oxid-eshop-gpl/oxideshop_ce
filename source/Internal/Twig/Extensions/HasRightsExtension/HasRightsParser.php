@@ -20,7 +20,7 @@ class HasRightsParser extends \Twig_TokenParser
      * @return HasRightsNode|\Twig_Node
      * @throws \Twig_Error_Syntax
      */
-    public function parse(\Twig_Token $token)
+    public function parse(\Twig_Token $token): HasRightsNode
     {
         $lineno = $token->getLine();
         $stream = $this->parser->getStream();
@@ -52,7 +52,7 @@ class HasRightsParser extends \Twig_TokenParser
      *
      * @return array
      */
-    protected function getInlineParams()
+    protected function getInlineParams(): array
     {
         $stream = $this->parser->getStream();
         $params = array();
@@ -72,7 +72,7 @@ class HasRightsParser extends \Twig_TokenParser
      *
      * @return bool
      */
-    public function decideMyTagFork(\Twig_Token $token)
+    public function decideMyTagFork(\Twig_Token $token): bool
     {
         return $token->test(['endhasrights']);
     }
@@ -83,7 +83,7 @@ class HasRightsParser extends \Twig_TokenParser
      *
      * @return string
      */
-    public function getTag()
+    public function getTag(): string
     {
         return 'hasrights';
     }

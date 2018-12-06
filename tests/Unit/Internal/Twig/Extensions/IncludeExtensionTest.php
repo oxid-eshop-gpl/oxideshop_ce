@@ -21,7 +21,7 @@ class IncludeExtensionTest extends TestCase
     /** @var IncludeExtension */
     private $includeExtension;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->includeExtension = new IncludeExtension(new IncludeDynamicLogic());
     }
@@ -33,7 +33,7 @@ class IncludeExtensionTest extends TestCase
      * @covers       IncludeExtension::includeDynamicPrefix
      * @dataProvider getIncludeDynamicPrefixTests
      */
-    public function testIncludeDynamicPrefix(array $parameters, array $expected)
+    public function testIncludeDynamicPrefix(array $parameters, array $expected): void
     {
         $this->assertEquals($this->includeExtension->includeDynamicPrefix($parameters), $expected);
     }
@@ -45,7 +45,7 @@ class IncludeExtensionTest extends TestCase
      * @covers       IncludeExtension::renderForCache
      * @dataProvider getRenderForCacheTests
      */
-    public function testRenderForCache(array $parameters, $expected)
+    public function testRenderForCache(array $parameters, string $expected): void
     {
         $this->assertEquals($this->includeExtension->renderForCache($parameters), $expected);
     }
@@ -53,7 +53,7 @@ class IncludeExtensionTest extends TestCase
     /**
      * @return array
      */
-    public function getIncludeDynamicPrefixTests()
+    public function getIncludeDynamicPrefixTests(): array
     {
         return [
             [[], []],
@@ -68,7 +68,7 @@ class IncludeExtensionTest extends TestCase
     /**
      * @return array
      */
-    public function getRenderForCacheTests()
+    public function getRenderForCacheTests(): array
     {
         return [
             [[], '<oxid_dynamic></oxid_dynamic>'],

@@ -20,7 +20,7 @@ class HasRightsVisitor implements \Twig_NodeVisitorInterface
      *
      * @return \Twig_Node
      */
-    public function enterNode(\Twig_Node $node, \Twig_Environment $env)
+    public function enterNode(\Twig_Node $node, \Twig_Environment $env): \Twig_Node
     {
         if ($node instanceof HasRightsNode) {
             //todo convert EE version of oxhasrights
@@ -35,7 +35,7 @@ class HasRightsVisitor implements \Twig_NodeVisitorInterface
      *
      * @return false|\Twig_Node
      */
-    public function leaveNode(\Twig_Node $node, \Twig_Environment $env)
+    public function leaveNode(\Twig_Node $node, \Twig_Environment $env): \Twig_Node
     {
         if ($node instanceof HasRightsNode) {
             //todo convert EE version of oxhasrights
@@ -47,7 +47,7 @@ class HasRightsVisitor implements \Twig_NodeVisitorInterface
     /**
      * @return int
      */
-    public function getPriority()
+    public function getPriority(): int
     {
         return 0;
     }

@@ -32,7 +32,7 @@ class ScriptLogicTest extends TestCase
      * Sets up the fixture, for example, open a network connection.
      * This method is called before a test is executed.
      */
-    public function setUp()
+    public function setUp(): void
     {
         $this->config = Registry::getConfig();
         $this->oldIDebug = $this->config->getConfigParam("iDebug");
@@ -45,7 +45,7 @@ class ScriptLogicTest extends TestCase
      * Tears down the fixture, for example, close a network connection.
      * This method is called after a test is executed.
      */
-    protected function tearDown()
+    protected function tearDown(): void
     {
         $this->config->setConfigParam("iDebug", $this->oldIDebug);
     }
@@ -55,7 +55,7 @@ class ScriptLogicTest extends TestCase
      *
      * @expectedException PHPUnit\Framework\Error\Warning
      */
-    public function testIncludeFileNotExists()
+    public function testIncludeFileNotExists(): void
     {
         $this->scriptLogic->include('somescript.js');
     }
@@ -63,7 +63,7 @@ class ScriptLogicTest extends TestCase
     /**
      * @covers ScriptLogic::include
      */
-    public function testIncludeFileExists()
+    public function testIncludeFileExists(): void
     {
         $includes = $this->config->getGlobalParameter('includes');
 
@@ -77,7 +77,7 @@ class ScriptLogicTest extends TestCase
     /**
      * @covers ScriptLogic::add
      */
-    public function testAddNotDynamic()
+    public function testAddNotDynamic(): void
     {
         $scripts = $this->config->getGlobalParameter('scripts');
 
@@ -90,7 +90,7 @@ class ScriptLogicTest extends TestCase
     /**
      * @covers ScriptLogic::add
      */
-    public function testAddDynamic()
+    public function testAddDynamic(): void
     {
         $scripts = $this->config->getGlobalParameter('scripts_dynamic');
 
@@ -107,7 +107,7 @@ class ScriptLogicTest extends TestCase
      * @covers       ScriptLogic::render
      * @dataProvider addWidgetProvider
      */
-    public function testRenderAddWidget($script, $output)
+    public function testRenderAddWidget(string $script, string $output): void
     {
         $scripts = $this->config->getGlobalParameter('scripts');
 
@@ -122,7 +122,7 @@ class ScriptLogicTest extends TestCase
     /**
      * @return array
      */
-    public function addWidgetProvider()
+    public function addWidgetProvider(): array
     {
         return [
             ['oxidadd', 'oxidadd'],
@@ -136,7 +136,7 @@ class ScriptLogicTest extends TestCase
     /**
      * @covers ScriptLogic::render
      */
-    public function testRenderIncludeWidget()
+    public function testRenderIncludeWidget(): void
     {
         $includes = $this->config->getGlobalParameter('includes');
 

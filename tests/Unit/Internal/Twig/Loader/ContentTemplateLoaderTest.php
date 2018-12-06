@@ -11,6 +11,7 @@ use OxidEsales\EshopCommunity\Internal\Adapter\TemplateLogic\ContentFactory;
 use OxidEsales\EshopCommunity\Internal\Twig\Loader\ContentTemplateLoader;
 use OxidEsales\EshopCommunity\Internal\Twig\TemplateLoaderNameParser;
 use PHPUnit\Framework\MockObject\MockBuilder;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -30,7 +31,7 @@ class ContentTemplateLoaderTest extends TestCase
     /**
      * {@inheritdoc}
      */
-    public function setUp()
+    public function setUp(): void
     {
         $this->contentMockBuilder = $this->getMockBuilder(Content::class)->setMethods(['getLanguage']);
 
@@ -82,7 +83,7 @@ class ContentTemplateLoaderTest extends TestCase
     /**
      * @throws \Twig\Error\LoaderError
      */
-    public function testGetSourceContext()
+    public function testGetSourceContext(): void
     {
         $this->assertEquals(
             "Template code (DE)",
@@ -103,7 +104,7 @@ class ContentTemplateLoaderTest extends TestCase
     /**
      * testExists
      */
-    public function testExists()
+    public function testExists(): void
     {
         $this->assertTrue($this->contentTemplateLoader->exists('content::ident::valid'));
         $this->assertTrue($this->contentTemplateLoader->exists('content::oxid::english'));
@@ -116,7 +117,7 @@ class ContentTemplateLoaderTest extends TestCase
     /**
      * @throws \Twig\Error\LoaderError
      */
-    public function testIsFresh()
+    public function testIsFresh(): void
     {
         $time = strtotime('2018-10-09 09:37:16');
         $this->assertTrue($this->contentTemplateLoader->isFresh('content::ident::valid', $time));
@@ -129,7 +130,7 @@ class ContentTemplateLoaderTest extends TestCase
     /**
      * @throws \Twig\Error\LoaderError
      */
-    public function testGetCacheKey()
+    public function testGetCacheKey(): void
     {
         $this->assertEquals(
             'content::ident::valid(0)',
@@ -151,9 +152,9 @@ class ContentTemplateLoaderTest extends TestCase
      * @param int   $language
      * @param array $fields
      *
-     * @return \PHPUnit\Framework\MockObject\MockObject
+     * @return MockObject
      */
-    private function prepareContentMock($language, array $fields)
+    private function prepareContentMock(int $language, array $fields): MockObject
     {
         $mock = $this->contentMockBuilder->getMock();
         $mock->method('getLanguage')->willReturn($language);

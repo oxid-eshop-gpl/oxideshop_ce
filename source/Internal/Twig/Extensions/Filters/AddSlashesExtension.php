@@ -20,7 +20,7 @@ class AddSlashesExtension extends AbstractExtension
     /**
      * @return array|\Twig_Filter[]
      */
-    public function getFilters()
+    public function getFilters(): array
     {
         return [new \Twig_Filter('addslashes', 'addslashes')];
     }

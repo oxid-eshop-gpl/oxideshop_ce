@@ -22,7 +22,7 @@ class IncludeDynamicTokenParser extends IncludeTokenParser
      *
      * @return IncludeDynamicNode|\Twig_Node|\Twig_Node_Include
      */
-    public function parse(\Twig_Token $token)
+    public function parse(\Twig_Token $token): IncludeDynamicNode
     {
         $expr = $this->parser->getExpressionParser()->parseExpression();
 
@@ -34,7 +34,7 @@ class IncludeDynamicTokenParser extends IncludeTokenParser
     /**
      * @return string
      */
-    public function getTag()
+    public function getTag(): string
     {
         return 'include_dynamic';
     }

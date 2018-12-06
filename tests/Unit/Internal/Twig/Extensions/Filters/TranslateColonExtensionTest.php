@@ -20,7 +20,7 @@ class TranslateColonFilterTest extends TestCase
     /**
      * @covers \OxidEsales\EshopCommunity\Internal\Twig\Extensions\Filters\TranslateColonExtension::getTranslatedColon
      */
-    public function testGetTranslatedColon()
+    public function testGetTranslatedColon(): void
     {
         $translateColonFilter = new TranslateColonExtension();
         $translatedColon = $translateColonFilter->getTranslatedColon('foo');

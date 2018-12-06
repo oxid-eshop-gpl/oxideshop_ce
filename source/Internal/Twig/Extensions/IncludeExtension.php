@@ -33,7 +33,7 @@ class IncludeExtension extends AbstractExtension
     /**
      * @return TokenParserInterface[]
      */
-    public function getTokenParsers()
+    public function getTokenParsers(): array
     {
         return [new IncludeDynamicTokenParser()];
     }
@@ -43,7 +43,7 @@ class IncludeExtension extends AbstractExtension
      *
      * @return string
      */
-    public function renderForCache(array $parameters)
+    public function renderForCache(array $parameters): string
     {
         return $this->includeDynamicLogic->renderForCache($parameters);
     }
@@ -53,7 +53,7 @@ class IncludeExtension extends AbstractExtension
      *
      * @return array
      */
-    public function includeDynamicPrefix(array $parameters)
+    public function includeDynamicPrefix(array $parameters): array
     {
         return $this->includeDynamicLogic->includeDynamicPrefix($parameters);
     }

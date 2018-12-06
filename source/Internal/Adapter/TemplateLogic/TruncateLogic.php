@@ -23,7 +23,7 @@ class TruncateLogic
      *
      * @return string
      */
-    public function truncate($sString, $iLength = 80, $sSufix = '...', $blBreakWords = false, $middle = false)
+    public function truncate(string $sString, int $iLength = 80, string $sSufix = '...', bool $blBreakWords = false, bool $middle = false): string
     {
         if ($iLength == 0) {
             return '';

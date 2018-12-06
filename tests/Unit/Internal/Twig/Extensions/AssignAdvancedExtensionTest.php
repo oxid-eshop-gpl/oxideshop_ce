@@ -18,14 +18,14 @@ class AssignAdvancedExtensionTest extends TestCase
      */
     private $assignAdvancedExtension;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
         $assignAdvancedLogic = new AssignAdvancedLogic();
         $this->assignAdvancedExtension = new AssignAdvancedExtension($assignAdvancedLogic);
     }
 
-    public function testAssignAdvanced()
+    public function testAssignAdvanced(): void
     {
         $a = $this->assignAdvancedExtension->assignAdvanced('foo');
         $this->assertEquals('foo', $a);

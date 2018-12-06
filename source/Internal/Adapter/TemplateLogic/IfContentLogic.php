@@ -20,7 +20,7 @@ class IfContentLogic
      *
      * @return array
      */
-    public function getContent($sIdent, $sOxid)
+    public function getContent(string $sIdent, string $sOxid)
     {
         static $aContentCache = [];
 

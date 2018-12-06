@@ -28,7 +28,7 @@ class IfContentTokenParser extends AbstractTokenParser
      *
      * @return IfContentNode A Twig_Node instance
      */
-    public function parse(Token $token)
+    public function parse(Token $token): IfContentNode
     {
         $lineno = $token->getLine();
         $stream = $this->parser->getStream();
@@ -66,7 +66,7 @@ class IfContentTokenParser extends AbstractTokenParser
      *
      * @return bool
      */
-    public function decideBlockEnd(Token $token)
+    public function decideBlockEnd(Token $token): bool
     {
         return $token->test('endifcontent');
     }
@@ -76,7 +76,7 @@ class IfContentTokenParser extends AbstractTokenParser
      *
      * @return string The tag name
      */
-    public function getTag()
+    public function getTag(): string
     {
         return 'ifcontent';
     }

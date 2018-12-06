@@ -48,7 +48,7 @@ class ContentTemplateLoader implements LoaderInterface
      *
      * @throws LoaderError When $name is not found
      */
-    public function getSourceContext($name)
+    public function getSourceContext($name): Source
     {
         $key = $this->nameParser->getKey($name);
         $value = $this->nameParser->getValue($name);
@@ -80,7 +80,7 @@ class ContentTemplateLoader implements LoaderInterface
      *
      * @throws LoaderError When $name is not found
      */
-    public function getCacheKey($name)
+    public function getCacheKey($name): string
     {
         $content = $this->getContent($name);
 
@@ -99,7 +99,7 @@ class ContentTemplateLoader implements LoaderInterface
      *
      * @throws LoaderError When $name is not found
      */
-    public function isFresh($name, $time)
+    public function isFresh($name, $time): bool
     {
         $contentTime = strtotime($this->getContent($name)->oxcontents__oxtimestamp->value);
 
@@ -113,7 +113,7 @@ class ContentTemplateLoader implements LoaderInterface
      *
      * @return bool If the template source code is handled by this loader or not
      */
-    public function exists($name)
+    public function exists($name): bool
     {
         if (!$this->nameParser->isValidName($name)) {
             return false;
@@ -134,7 +134,7 @@ class ContentTemplateLoader implements LoaderInterface
      *
      * @throws LoaderError
      */
-    private function getContent($name)
+    private function getContent(string $name): Content
     {
         if (!$this->nameParser->isValidName($name)) {
             throw new LoaderError("Cannot load template. Name is invalid.");

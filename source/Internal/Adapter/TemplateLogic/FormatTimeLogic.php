@@ -20,7 +20,7 @@ class FormatTimeLogic
      *
      * @return string
      */
-    public function getFormattedTime($seconds)
+    public function getFormattedTime(int $seconds): string
     {
         $hours = floor($seconds / 3600);
         $minutes = floor($seconds % 3600 / 60);

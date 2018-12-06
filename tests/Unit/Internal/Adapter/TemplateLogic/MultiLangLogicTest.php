@@ -16,7 +16,7 @@ class MultiLangLogicTest extends UnitTestCase
     /** @var MultiLangLogic */
     private $multiLangLogic;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
         $this->multiLangLogic = new MultiLangLogic();
@@ -45,7 +45,7 @@ class MultiLangLogicTest extends UnitTestCase
      *
      * @dataProvider provider
      */
-    public function testSimpleAssignments($ident, $languageId, $result)
+    public function testSimpleAssignments(string $ident, int $languageId, string $result): void
     {
         $this->setLanguage($languageId);
         $this->assertEquals($result, $this->multiLangLogic->multiLang($ident));
@@ -76,7 +76,7 @@ class MultiLangLogicTest extends UnitTestCase
      *
      * @dataProvider withArgumentsProvider
      */
-    public function testAssignmentsWithArguments($ident, $languageId, $arguments, $result)
+    public function testAssignmentsWithArguments(string $ident, int $languageId, $arguments, string $result): void
     {
         $this->setLanguage($languageId);
         $this->assertEquals($result, $this->multiLangLogic->multiLang($ident, $arguments));
@@ -110,7 +110,7 @@ class MultiLangLogicTest extends UnitTestCase
      *
      * @dataProvider missingTranslationProviderFrontend
      */
-    public function testTranslateFrontend_isMissingTranslation($isProductiveMode, $ident, $translation)
+    public function testTranslateFrontend_isMissingTranslation(bool $isProductiveMode, string $ident, string $translation): void
     {
         $this->setAdminMode(false);
         $this->setLanguage(1);
@@ -143,7 +143,7 @@ class MultiLangLogicTest extends UnitTestCase
      *
      * @dataProvider missingTranslationProviderAdmin
      */
-    public function testTranslateAdmin_isMissingTranslation($ident, $translation)
+    public function testTranslateAdmin_isMissingTranslation(string $ident, string $translation): void
     {
         $this->setLanguage(1);
         $this->setAdminMode(true);

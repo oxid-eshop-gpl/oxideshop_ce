@@ -9,7 +9,7 @@ class MailtoExtensionTest extends AbstractExtensionTest
     /**
      * {@inheritdoc}
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
         $this->extension = new MailtoExtension();
@@ -22,7 +22,7 @@ class MailtoExtensionTest extends AbstractExtensionTest
      *
      * @dataProvider getMailtoTests
      */
-    public function testMailto($template, $expected, array $variables = [])
+    public function testMailto(string $template, string $expected, array $variables = []): void
     {
         $this->assertEquals($expected, $this->getTemplate($template)->render($variables));
     }
@@ -34,7 +34,7 @@ class MailtoExtensionTest extends AbstractExtensionTest
      *
      * @dataProvider getOxmailtoTests
      */
-    public function testOxmailto($template, $expected, array $variables = [])
+    public function testOxmailto(string $template, string $expected, array $variables = []): void
     {
         $this->assertEquals($expected, $this->getTemplate($template)->render($variables));
     }
@@ -42,7 +42,7 @@ class MailtoExtensionTest extends AbstractExtensionTest
     /**
      * @return array
      */
-    public function getMailtoTests()
+    public function getMailtoTests(): array
     {
         return [
             [
@@ -87,7 +87,7 @@ class MailtoExtensionTest extends AbstractExtensionTest
     /**
      * @return array
      */
-    public function getOxmailtoTests()
+    public function getOxmailtoTests(): array
     {
         $oxcmpShop = (object)[
             'oxshops__oxinfoemail' => (object)['value' => "info@myoxideshop.com"]

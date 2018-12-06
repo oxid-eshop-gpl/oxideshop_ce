@@ -20,20 +20,20 @@ class ScriptExtensionTest extends AbstractExtensionTest
     /**
      * {@inheritdoc}
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
         $this->extension = new ScriptExtension(new ScriptLogic());
     }
 
     /**
-     * @param $template
-     * @param $expected
+     * @param string $template
+     * @param string $expected
      *
      * @covers ScriptExtension::script
      * @dataProvider getScriptTests
      */
-    public function testScript($template, $expected)
+    public function testScript(string $template, string $expected): void
     {
         $this->assertEquals($expected, $this->getTemplate($template)->render([]));
     }
@@ -41,7 +41,7 @@ class ScriptExtensionTest extends AbstractExtensionTest
     /**
      * @return array
      */
-    public function getScriptTests()
+    public function getScriptTests(): array
     {
         return [
             // Empty buffer

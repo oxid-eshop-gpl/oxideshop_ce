@@ -18,25 +18,25 @@ class FormatPriceLogicTest extends TestCase
      */
     private $formatPriceLogic;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->formatPriceLogic = new FormatPriceLogic();
         parent::setUp();
     }
 
     /**
-     * @param $params
-     * @param $expected
+     * @param array  $params
+     * @param string $expected
      *
      * @dataProvider getFormatPriceProvider
      */
-    public function testFormatPrice($params, $expected)
+    public function testFormatPrice(array $params, string $expected): void
     {
         $price = $this->formatPriceLogic->formatPrice($params);
         $this->assertEquals($expected, $price);
     }
 
-    public function getFormatPriceProvider()
+    public function getFormatPriceProvider(): array
     {
         return [
             [
@@ -51,12 +51,12 @@ class FormatPriceLogicTest extends TestCase
     }
 
     /**
-     * @param $inputPrice
-     * @param $expected
+     * @param mixed  $inputPrice
+     * @param string $expected
      *
      * @dataProvider getCalculatePriceProvider
      */
-    public function testCalculatePrice($inputPrice, $expected)
+    public function testCalculatePrice($inputPrice, string $expected): void
     {
         $params['price'] = $inputPrice;
         $calculatedOxPrice = $this->formatPriceLogic->formatPrice($params);
@@ -66,7 +66,7 @@ class FormatPriceLogicTest extends TestCase
     /**
      * @return array
      */
-    public function getCalculatePriceProvider()
+    public function getCalculatePriceProvider(): array
     {
         $incorrectPriceObj = new \OxidEsales\Eshop\Core\Price();
         $incorrectPriceObj->setPrice(false);
@@ -93,13 +93,13 @@ class FormatPriceLogicTest extends TestCase
     }
 
     /**
-     * @param $currency
-     * @param $price
-     * @param $expected
+     * @param mixed  $currency
+     * @param int    $price
+     * @param string $expected
      *
      * @dataProvider getFormattedPriceProvider
      */
-    public function testGetFormattedPrice($currency, $price, $expected)
+    public function testGetFormattedPrice($currency, int $price, string $expected): void
     {
         $params['currency'] = $currency;
         $params['price'] = $price;
@@ -110,7 +110,7 @@ class FormatPriceLogicTest extends TestCase
     /**
      * @return array
      */
-    public function getFormattedPriceProvider()
+    public function getFormattedPriceProvider(): array
     {
         $price = 10000;
 
@@ -143,11 +143,11 @@ class FormatPriceLogicTest extends TestCase
     }
 
     /**
-     * @param $currency_array
+     * @param array $currency_array
      *
      * @return \stdClass
      */
-    private function getCurrencyWithSeparator($currency_array)
+    private function getCurrencyWithSeparator(array $currency_array): \stdClass
     {
         $currency = new \stdClass();
         foreach ($currency_array as $key => $value) {

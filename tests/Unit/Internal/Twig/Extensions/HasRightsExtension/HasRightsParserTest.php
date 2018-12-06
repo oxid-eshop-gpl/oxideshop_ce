@@ -19,7 +19,7 @@ class HasRightsParserTest extends TestCase
      */
     private $hasRightsParser;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $env = $this->getEnv();
         $parser = new \Twig_Parser($env);
@@ -31,7 +31,7 @@ class HasRightsParserTest extends TestCase
     /**
      * @covers \OxidEsales\EshopCommunity\Internal\Twig\Extensions\HasRightsExtension\HasRightsParser:getTag
      */
-    public function testGetTag()
+    public function testGetTag(): void
     {
         $this->assertEquals('hasrights', $this->hasRightsParser->getTag());
     }
@@ -39,7 +39,7 @@ class HasRightsParserTest extends TestCase
     /**
      * @covers \OxidEsales\EshopCommunity\Internal\Twig\Extensions\HasRightsExtension\HasRightsParser:decideMyTagFork
      */
-    public function testDecideMyTagForkIncorrect()
+    public function testDecideMyTagForkIncorrect(): void
     {
         $token = new \Twig_Token(\Twig_Token::TEXT_TYPE, 1, 1);
         $this->assertEquals(false, $this->hasRightsParser->decideMyTagFork($token));
@@ -48,7 +48,7 @@ class HasRightsParserTest extends TestCase
     /**
      * @covers \OxidEsales\EshopCommunity\Internal\Twig\Extensions\HasRightsExtension\HasRightsParser:decideMyTagFork
      */
-    public function testDecideMyTagForkCorrect()
+    public function testDecideMyTagForkCorrect(): void
     {
         $token = new \Twig_Token(5, 'endhasrights', 1);
         $this->assertEquals(true, $this->hasRightsParser->decideMyTagFork($token));
@@ -57,7 +57,7 @@ class HasRightsParserTest extends TestCase
     /**
      * @covers \OxidEsales\EshopCommunity\Internal\Twig\Extensions\HasRightsExtension\HasRightsParser:parse
      */
-    public function testParse()
+    public function testParse(): void
     {
         /**
          * @var \Twig_LoaderInterface $loader
@@ -80,7 +80,7 @@ class HasRightsParserTest extends TestCase
      * @covers \OxidEsales\EshopCommunity\Internal\Twig\Extensions\HasRightsExtension\HasRightsParser:parse
      * @expectedException \Twig_Error_Syntax
      */
-    public function testParseException()
+    public function testParseException(): void
     {
         /**
          * @var \Twig_LoaderInterface $loader
@@ -98,7 +98,7 @@ class HasRightsParserTest extends TestCase
     /**
      * @return \Twig_Environment
      */
-    private function getEnv()
+    private function getEnv(): \Twig_Environment
     {
         $loader = new ArrayLoader(['tokens' => 'foo']);
         $env = new \Twig_Environment($loader, ['debug' => false, 'cache' => false]);
@@ -110,7 +110,7 @@ class HasRightsParserTest extends TestCase
         return $env;
     }
 
-    protected function tearDown()
+    protected function tearDown(): void
     {
         parent::tearDown();
     }

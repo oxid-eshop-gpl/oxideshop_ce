@@ -20,7 +20,7 @@ class TruncateLogicTest extends TestCase
     /** @var TruncateLogic */
     private $truncateLogic;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->truncateLogic = new TruncateLogic();
     }
@@ -32,7 +32,7 @@ class TruncateLogicTest extends TestCase
      *
      * @dataProvider truncateProvider
      */
-    public function testTruncate($string, $expected, $parameters = [])
+    public function testTruncate(string $string, string $expected, array $parameters = []): void
     {
         $length = isset($parameters['length']) ? $parameters['length'] : 80;
         $suffix = isset($parameters['suffix']) ? $parameters['suffix'] : '...';
@@ -69,7 +69,7 @@ class TruncateLogicTest extends TestCase
      *
      * @dataProvider truncateProviderWithLength
      */
-    public function testTruncateWithLength($string, $expected, $parameters = [])
+    public function testTruncateWithLength(string $string, string $expected, array $parameters = []): void
     {
         $length = isset($parameters['length']) ? $parameters['length'] : 80;
         $suffix = isset($parameters['suffix']) ? $parameters['suffix'] : '...';
@@ -109,7 +109,7 @@ class TruncateLogicTest extends TestCase
      *
      * @dataProvider truncateProviderWithSuffix
      */
-    public function testTruncateWithSuffix($string, $expected, $parameters = [])
+    public function testTruncateWithSuffix(string $string, string $expected, array $parameters = []): void
     {
         $length = isset($parameters['length']) ? $parameters['length'] : 80;
         $suffix = isset($parameters['suffix']) ? $parameters['suffix'] : '...';
@@ -139,7 +139,7 @@ class TruncateLogicTest extends TestCase
      *
      * @dataProvider truncateProviderWithBreakWords
      */
-    public function testTruncateWithBreakWords($string, $expected, $parameters = [])
+    public function testTruncateWithBreakWords(string $string, string $expected, array $parameters = []): void
     {
         $length = isset($parameters['length']) ? $parameters['length'] : 80;
         $suffix = isset($parameters['suffix']) ? $parameters['suffix'] : '...';

@@ -19,15 +19,15 @@ interface TwigContextInterface
     /**
      * @return array
      */
-    public function getTemplateDirectories();
+    public function getTemplateDirectories(): array;
 
     /**
      * @return boolean
      */
-    public function getIsDebug();
+    public function getIsDebug(): bool;
 
     /**
      * @return string
      */
-    public function getCacheDir();
+    public function getCacheDir(): string;
 }

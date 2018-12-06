@@ -21,7 +21,7 @@ class FormDateLogicTest extends TestCase
     /** @var FormDateLogic */
     private $formDateLogic;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
         $this->formDateLogic = new FormDateLogic();
@@ -30,7 +30,7 @@ class FormDateLogicTest extends TestCase
     /**
      * @covers FormDateLogic::formdate
      */
-    public function testFormdateWithDatetime()
+    public function testFormdateWithDatetime(): void
     {
         $input = '01.08.2007 11.56.25';
         $expected = "2007-08-01 11:56:25";
@@ -41,7 +41,7 @@ class FormDateLogicTest extends TestCase
     /**
      * @covers FormDateLogic::formdate
      */
-    public function testFormdateWithTimestamp()
+    public function testFormdateWithTimestamp(): void
     {
         $input = '20070801115625';
         $expected = "2007-08-01 11:56:25";
@@ -52,7 +52,7 @@ class FormDateLogicTest extends TestCase
     /**
      * @covers FormDateLogic::formdate
      */
-    public function testFormdateWithDate()
+    public function testFormdateWithDate(): void
     {
         $input = '2007-08-01 11:56:25';
         $expected = "2007-08-01";
@@ -63,7 +63,7 @@ class FormDateLogicTest extends TestCase
     /**
      * @covers FormDateLogic::formdate
      */
-    public function testFormdateUsingObject()
+    public function testFormdateUsingObject(): void
     {
         $expected = "2007-08-01 11:56:25";
 

@@ -36,7 +36,7 @@ class FormatTimeExtension extends AbstractExtension
     /**
      * @return array|\Twig_Filter[]
      */
-    public function getFilters()
+    public function getFilters(): array
     {
         return [new \Twig_Filter('formatTime', [$this, 'formatTime'])];
     }
@@ -46,11 +46,8 @@ class FormatTimeExtension extends AbstractExtension
      *
      * @return string
      */
-    public function formatTime($seconds)
+    public function formatTime(int $seconds): string
     {
-        if (!is_int($seconds)) {
-            throw new \Twig_Error('Given argument is not an integer');
-        }
         $formattedTime = $this->formatTimeLogic->getFormattedTime($seconds);
 
         return $formattedTime;

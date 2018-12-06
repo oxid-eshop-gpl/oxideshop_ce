@@ -19,7 +19,7 @@ class IncludeDynamicLogic
      *
      * @return string
      */
-    public function renderForCache(array $parameters)
+    public function renderForCache(array $parameters): string
     {
         $content = "<oxid_dynamic>";
 
@@ -37,7 +37,7 @@ class IncludeDynamicLogic
      *
      * @return array
      */
-    public function includeDynamicPrefix(array $parameters)
+    public function includeDynamicPrefix(array $parameters): array
     {
         $prefix = "_";
         if (array_key_exists('type', $parameters)) {

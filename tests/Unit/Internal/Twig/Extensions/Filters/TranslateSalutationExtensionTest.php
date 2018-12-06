@@ -21,7 +21,7 @@ class TranslateSalutationExtensionTest extends AbstractExtensionTest
     /** @var TranslateSalutationExtension */
     protected $extension;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
         $this->extension = new TranslateSalutationExtension(new TranslateSalutationLogic());
@@ -41,7 +41,7 @@ class TranslateSalutationExtensionTest extends AbstractExtensionTest
      *
      * @dataProvider translateSalutationProvider
      */
-    public function testTranslateSalutation($template, $expected)
+    public function testTranslateSalutation(string $template, string $expected): void
     {
         $this->assertEquals($expected, $this->getTemplate($template)->render([]));
     }

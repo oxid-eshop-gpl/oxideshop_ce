@@ -19,5 +19,5 @@ interface TemplateEngineConfigurationInterface
     /**
      * @return array
      */
-    public function getParameters();
+    public function getParameters(): array;
 }

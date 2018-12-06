@@ -36,7 +36,7 @@ class TwigEngineConfiguration implements TemplateEngineConfigurationInterface
      *
      * @return array
      */
-    public function getParameters()
+    public function getParameters(): array
     {
         return [
             'debug' => $this->context->getIsDebug(),

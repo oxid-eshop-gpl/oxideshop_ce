@@ -27,7 +27,7 @@ class IfContentNode extends Node
      * @param int    $lineno
      * @param string $tag
      */
-    public function __construct(Node $body, array $reference, Node $variable, $lineno, $tag = 'ifcontent')
+    public function __construct(Node $body, array $reference, Node $variable, int $lineno, string $tag = 'ifcontent')
     {
         $nodes = [
             'body' => $body,
@@ -39,8 +39,10 @@ class IfContentNode extends Node
 
     /**
      * @param Compiler $compiler
+     *
+     * @return void
      */
-    public function compile(Compiler $compiler)
+    public function compile(Compiler $compiler): void
     {
         $compiler->addDebugInfo($this);
 

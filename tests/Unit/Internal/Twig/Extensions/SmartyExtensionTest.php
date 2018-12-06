@@ -16,7 +16,7 @@ class SmartyExtensionTest extends AbstractExtensionTest
      * Sets up the fixture, for example, open a network connection.
      * This method is called before a test is executed.
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
         $this->extension = new SmartyExtension();
@@ -29,7 +29,7 @@ class SmartyExtensionTest extends AbstractExtensionTest
      *
      * @dataProvider getStaticCycle
      */
-    public function testStaticCycle($template, $expected, array $variables = [])
+    public function testStaticCycle(string $template, string $expected, array $variables = []): void
     {
         $this->assertEquals($expected, $this->getTemplate($template)->render($variables));
     }
@@ -37,7 +37,7 @@ class SmartyExtensionTest extends AbstractExtensionTest
     /**
      * @return array
      */
-    public function getStaticCycle()
+    public function getStaticCycle(): array
     {
         return [
             [

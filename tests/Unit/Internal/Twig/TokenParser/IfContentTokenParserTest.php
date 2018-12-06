@@ -29,7 +29,7 @@ class IfContentTokenParserTest extends TestCase
     /**
      * Set up
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         /** @var LoaderInterface $loader */
         $loader = $this->getMockBuilder('Twig_LoaderInterface')->getMock();
@@ -44,7 +44,7 @@ class IfContentTokenParserTest extends TestCase
     /**
      * @covers IfContentTokenParser::getTag
      */
-    public function testGetTag()
+    public function testGetTag(): void
     {
         $this->assertEquals('ifcontent', $this->ifContentParser->getTag());
     }
@@ -52,7 +52,7 @@ class IfContentTokenParserTest extends TestCase
     /**
      * @covers IfContentTokenParser::parse
      */
-    public function testParse()
+    public function testParse(): void
     {
         $source = "{% ifcontent ident \"oxsomething\" set myVar %}Lorem Ipsum{% endifcontent %}";
 
@@ -73,7 +73,7 @@ class IfContentTokenParserTest extends TestCase
     /**
      * @covers IfContentTokenParser::decideBlockEnd
      */
-    public function testDecideBlockEnd()
+    public function testDecideBlockEnd(): void
     {
         $token = new Token(Token::NAME_TYPE, 'foo', 1);
         $this->assertEquals(false, $this->ifContentParser->decideBlockEnd($token));

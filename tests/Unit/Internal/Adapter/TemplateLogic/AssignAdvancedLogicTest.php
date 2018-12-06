@@ -17,25 +17,25 @@ class AssignAdvancedLogicTest extends TestCase
      */
     private $assignAdvancedLogic;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
         $this->assignAdvancedLogic = new AssignAdvancedLogic();
     }
 
-    public function testFormatValueString()
+    public function testFormatValueString(): void
     {
         $formattedValue = $this->assignAdvancedLogic->formatValue('foo');
         $this->assertEquals('foo', $formattedValue);
     }
 
-    public function testFormatValueArray()
+    public function testFormatValueArray(): void
     {
         $formattedValue = $this->assignAdvancedLogic->formatValue('array("foo" => "bar")');
         $this->assertEquals(['foo' => 'bar'], $formattedValue);
     }
 
-    public function testFormatValueRange()
+    public function testFormatValueRange(): void
     {
         $formattedValue = $this->assignAdvancedLogic->formatValue('range(1,3)');
         $this->assertEquals([1, 2, 3], $formattedValue);

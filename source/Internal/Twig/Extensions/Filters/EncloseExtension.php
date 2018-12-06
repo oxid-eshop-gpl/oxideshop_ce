@@ -20,7 +20,7 @@ class EncloseExtension extends AbstractExtension
     /**
      * @return array|\Twig_Filter[]
      */
-    public function getFilters()
+    public function getFilters(): array
     {
         return [new \Twig_Filter('enclose', [$this, 'enclose'])];
     }
@@ -31,7 +31,7 @@ class EncloseExtension extends AbstractExtension
      *
      * @return string
      */
-    public function enclose($string, $encloser = "")
+    public function enclose(string $string, string $encloser = ""): string
     {
         return $encloser . $string . $encloser;
     }

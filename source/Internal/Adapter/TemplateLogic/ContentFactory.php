@@ -23,7 +23,7 @@ class ContentFactory
      * @return null|Content
      * @throws \Exception
      */
-    public function getContent($key, $value)
+    public function getContent(string $key, string $value): ?Content
     {
         $content = oxNew("oxcontent");
 

@@ -24,7 +24,7 @@ class IfContentNodeTest extends NodeTestCase
     /**
      * Test constructor
      */
-    public function testConstructor()
+    public function testConstructor(): void
     {
         $body = new TextNode('Lorem Ipsum', 1);
         $variable = new AssignNameExpression('foo', 1);
@@ -47,7 +47,7 @@ class IfContentNodeTest extends NodeTestCase
     /**
      * @return array
      */
-    public function getTests()
+    public function getTests(): array
     {
         $ifContentExtensionClass = IfContentExtension::class;
 

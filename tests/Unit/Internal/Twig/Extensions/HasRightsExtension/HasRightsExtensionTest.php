@@ -19,7 +19,7 @@ class HasRightsExtensionTest extends TestCase
      */
     private $hasRightsExtension;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->hasRightsExtension = new HasRightsExtension();
         parent::setUp();
@@ -28,7 +28,7 @@ class HasRightsExtensionTest extends TestCase
     /**
      * @covers \OxidEsales\EshopCommunity\Internal\Twig\Extensions\HasRightsExtension\HasRightsExtension::getTokenParsers
      */
-    public function testGetTokenParsers()
+    public function testGetTokenParsers(): void
     {
         $tokenParser = $this->hasRightsExtension->getTokenParsers();
         $this->assertInstanceOf(HasRightsParser::class, $tokenParser[0]);
@@ -37,7 +37,7 @@ class HasRightsExtensionTest extends TestCase
     /**
      * @covers \OxidEsales\EshopCommunity\Internal\Twig\Extensions\HasRightsExtension\HasRightsExtension::getNodeVisitors
      */
-    public function testGetNodeVisitors()
+    public function testGetNodeVisitors(): void
     {
         $nodeVisitors = $this->hasRightsExtension->getNodeVisitors();
         $this->assertInstanceOf(HasRightsVisitor::class, $nodeVisitors[0]);
@@ -46,7 +46,7 @@ class HasRightsExtensionTest extends TestCase
     /**
      * @covers \OxidEsales\EshopCommunity\Internal\Twig\Extensions\HasRightsExtension\HasRightsExtension::getGetName
      */
-    public function testGetName()
+    public function testGetName(): void
     {
         $this->assertEquals('hasrights', $this->hasRightsExtension->getName());
     }

@@ -18,7 +18,7 @@ class ScriptLogic
      * @param string $script
      * @param bool   $isDynamic
      */
-    public function add($script, $isDynamic = false)
+    public function add(string $script, bool $isDynamic = false): void
     {
         $register = oxNew(\OxidEsales\Eshop\Core\ViewHelper\JavaScriptRegistrator::class);
         $register->addSnippet($script, $isDynamic);
@@ -29,7 +29,7 @@ class ScriptLogic
      * @param int    $priority
      * @param bool   $isDynamic
      */
-    public function include($file, $priority = 3, $isDynamic = false)
+    public function include(string $file, int $priority = 3, bool $isDynamic = false): void
     {
         $register = oxNew(\OxidEsales\Eshop\Core\ViewHelper\JavaScriptRegistrator::class);
         $register->addFile($file, $priority, $isDynamic);
@@ -42,7 +42,7 @@ class ScriptLogic
      *
      * @return string
      */
-    public function render($widget, $forceRender = false, $isDynamic = false)
+    public function render(string $widget, bool $forceRender = false, bool $isDynamic = false): string
     {
         $renderer = oxNew(\OxidEsales\Eshop\Core\ViewHelper\JavaScriptRenderer::class);
 

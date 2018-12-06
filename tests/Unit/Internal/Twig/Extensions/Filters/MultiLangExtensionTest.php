@@ -22,7 +22,7 @@ class MultiLangExtensionTest extends AbstractExtensionTest
     /** @var MultiLangExtension */
     protected $extension;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->extension = new MultiLangExtension(new MultiLangLogic());
     }
@@ -50,7 +50,7 @@ class MultiLangExtensionTest extends AbstractExtensionTest
      *
      * @dataProvider simpleTranslatingProvider
      */
-    public function testSimpleTranslating($template, $languageId, $expected)
+    public function testSimpleTranslating(string $template, int $languageId, string $expected): void
     {
         $this->setLanguage($languageId);
         $this->assertEquals($expected, $this->getTemplate($template)->render([]));
@@ -80,7 +80,7 @@ class MultiLangExtensionTest extends AbstractExtensionTest
      *
      * @dataProvider withArgumentsProvider
      */
-    public function testTranslatingWithArguments($template, $languageId, $expected)
+    public function testTranslatingWithArguments(string $template, int $languageId, string $expected): void
     {
         $this->setLanguage($languageId);
         $this->assertEquals($expected, $this->getTemplate($template)->render([]));
@@ -106,7 +106,7 @@ class MultiLangExtensionTest extends AbstractExtensionTest
      *
      * @dataProvider missingTranslationProviderFrontend
      */
-    public function testTranslateFrontend_isMissingTranslation($isProductiveMode, $template, $expected)
+    public function testTranslateFrontend_isMissingTranslation(bool $isProductiveMode, string $template, string $expected): void
     {
         $this->setAdminMode(false);
         $this->setLanguage(1);
@@ -136,7 +136,7 @@ class MultiLangExtensionTest extends AbstractExtensionTest
      *
      * @dataProvider missingTranslationProviderAdmin
      */
-    public function testTranslateAdmin_isMissingTranslation($template, $expected)
+    public function testTranslateAdmin_isMissingTranslation(string $template, string $expected): void
     {
         $this->setLanguage(1);
         $this->setAdminMode(true);

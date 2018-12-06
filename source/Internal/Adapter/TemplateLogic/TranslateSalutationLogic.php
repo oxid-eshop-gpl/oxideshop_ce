@@ -19,7 +19,7 @@ class TranslateSalutationLogic
      *
      * @return string
      */
-    public function translateSalutation($sIdent): ?string
+    public function translateSalutation(string $sIdent): ?string
     {
         $oLang = \OxidEsales\Eshop\Core\Registry::getLang();
         $iLang = $oLang->getTplLanguage();

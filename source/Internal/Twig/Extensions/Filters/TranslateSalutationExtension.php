@@ -48,7 +48,7 @@ class TranslateSalutationExtension extends AbstractExtension
      *
      * @return string
      */
-    public function translateSalutation($ident): string
+    public function translateSalutation(string $ident): string
     {
         return $this->translateSalutationLogic->translateSalutation($ident);
     }
