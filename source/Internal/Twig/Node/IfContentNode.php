@@ -39,6 +39,8 @@ class IfContentNode extends Node
 
     /**
      * @param Compiler $compiler
+     *
+     * @return void
      */
     public function compile(Compiler $compiler): void
     {

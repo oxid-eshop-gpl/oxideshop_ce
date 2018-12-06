@@ -20,6 +20,8 @@ class IncludeDynamicNode extends IncludeNode
 
     /**
      * @param Compiler $compiler
+     *
+     * @return void
      */
     public function compile(Compiler $compiler): void
     {
@@ -46,6 +48,8 @@ class IncludeDynamicNode extends IncludeNode
 
     /**
      * @param Compiler $compiler
+     *
+     * @return void
      */
     private function preCompile(Compiler $compiler): void
     {
@@ -60,6 +64,8 @@ class IncludeDynamicNode extends IncludeNode
 
     /**
      * @param Compiler $compiler
+     *
+     * @return void
      */
     private function ifRender4Cache(Compiler $compiler): void
     {
@@ -74,6 +80,8 @@ class IncludeDynamicNode extends IncludeNode
 
     /**
      * @param Compiler $compiler
+     *
+     * @return void
      */
     private function ifNotRender4Cache(Compiler $compiler): void
     {
@@ -88,6 +96,8 @@ class IncludeDynamicNode extends IncludeNode
 
     /**
      * @param Compiler $compiler
+     *
+     * @return void
      */
     private function includeTemplate(Compiler $compiler): void
     {
@@ -102,6 +112,8 @@ class IncludeDynamicNode extends IncludeNode
 
     /**
      * @param Compiler $compiler
+     *
+     * @return void
      */
     protected function addTemplateArguments(Compiler $compiler): void
     {
@@ -116,6 +128,8 @@ class IncludeDynamicNode extends IncludeNode
 
     /**
      * @param Compiler $compiler
+     *
+     * @return void
      */
     private function postCompile(Compiler $compiler): void
     {
