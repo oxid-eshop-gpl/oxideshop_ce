@@ -53,3 +53,7 @@ services:
 
   OxidEsales\EshopCommunity\Internal\Adapter\TemplateLogic\WordWrapLogic:
     class: OxidEsales\EshopCommunity\Internal\Adapter\TemplateLogic\WordWrapLogic
+
+  OxidEsales\EshopCommunity\Internal\Adapter\TemplateLogic\IncludeWidgetLogic:
+    class: OxidEsales\EshopCommunity\Internal\Adapter\TemplateLogic\IncludeWidgetLogic
+

@@ -220,3 +220,9 @@ services:
     arguments:
       - '@OxidEsales\EshopCommunity\Internal\Adapter\TemplateLogic\WordWrapLogic'
     tags: ['twig.extension']
+
+  OxidEsales\EshopCommunity\Internal\Twig\Extensions\IncludeWidgetExtension:
+    class: OxidEsales\EshopCommunity\Internal\Twig\Extensions\IncludeWidgetExtension
+    arguments:
+      - '@OxidEsales\EshopCommunity\Internal\Adapter\TemplateLogic\IncludeWidgetLogic'
+    tags: ['twig.extension']
