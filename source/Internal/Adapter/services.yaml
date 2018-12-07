@@ -72,4 +72,8 @@ services:
   OxidEsales\EshopCommunity\Internal\Adapter\TemplateLogic\SmartWordWrapLogic:
     class: OxidEsales\EshopCommunity\Internal\Adapter\TemplateLogic\SmartWordWrapLogic
 
+  OxidEsales\EshopCommunity\Internal\Adapter\TemplateLogic\InputHelpLogic:
+    class: OxidEsales\EshopCommunity\Internal\Adapter\TemplateLogic\InputHelpLogic
+
+
 

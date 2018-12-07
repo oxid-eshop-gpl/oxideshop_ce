@@ -4,6 +4,9 @@
  * See LICENSE file for license details.
  */
 
+use OxidEsales\EshopCommunity\Internal\Adapter\TemplateLogic\InputHelpLogic;
+use OxidEsales\EshopCommunity\Internal\Application\ContainerFactory;
+
 /**
  * Smarty function
  * -------------------------------------------------------------
@@ -18,17 +21,14 @@
  */
 function smarty_function_oxinputhelp($params, &$smarty)
 {
-    $sIdent = $params['ident'];
-    $oLang = \OxidEsales\Eshop\Core\Registry::getLang();
-    $iLang  = $oLang->getTplLanguage();
+    $container = ContainerFactory::getInstance()->getContainer();
+    /** @var InputHelpLogic $oxinputhelpLogic */
+    $inputHelpLogic = $container->get(InputHelpLogic::class);
 
-    try {
-        $sTranslation = $oLang->translateString( $sIdent, $iLang, $blAdmin );
-    } catch (\OxidEsales\Eshop\Core\Exception\LanguageException $oEx ) {
-        // is thrown in debug mode and has to be caught here, as smarty hangs otherwise!
-    }
+    $sTranslation = $inputHelpLogic->getTranslation($params);
+    $sIdent = $inputHelpLogic->getIdent($params);
 
-    if ( !$sTranslation || $sTranslation == $sIdent  ) {
+    if (!$sTranslation || $sTranslation == $sIdent) {
         //no translation, return empty string
         return '';
     }
@@ -36,8 +36,8 @@ function smarty_function_oxinputhelp($params, &$smarty)
     //name of template file where is stored message text
     $sTemplate = 'inputhelp.tpl';
 
-    $smarty->assign( 'sHelpId', $sIdent );
-    $smarty->assign( 'sHelpText', $sTranslation );
+    $smarty->assign('sHelpId', $sIdent);
+    $smarty->assign('sHelpText', $sTranslation);
 
-    return $smarty->fetch( $sTemplate );
+    return $smarty->fetch($sTemplate);
 }
