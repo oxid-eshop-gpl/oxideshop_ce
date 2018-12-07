@@ -7,19 +7,19 @@
 namespace OxidEsales\EshopCommunity\Tests\Unit\Internal\Adapter\TemplateLogic;
 
 use OxidEsales\Eshop\Core\Field;
-use OxidEsales\EshopCommunity\Internal\Adapter\TemplateLogic\MultiLangLogic;
+use OxidEsales\EshopCommunity\Internal\Adapter\TemplateLogic\TranslateLogic;
 use OxidEsales\TestingLibrary\UnitTestCase;
 
-class MultiLangLogicTest extends UnitTestCase
+class translateLogicTest extends UnitTestCase
 {
 
-    /** @var MultiLangLogic */
-    private $multiLangLogic;
+    /** @var TranslateLogic */
+    private $translateLogic;
 
     protected function setUp(): void
     {
         parent::setUp();
-        $this->multiLangLogic = new MultiLangLogic();
+        $this->translateLogic = new TranslateLogic();
     }
 
     /**
@@ -48,7 +48,7 @@ class MultiLangLogicTest extends UnitTestCase
     public function testSimpleAssignments(string $ident, int $languageId, string $result): void
     {
         $this->setLanguage($languageId);
-        $this->assertEquals($result, $this->multiLangLogic->multiLang($ident));
+        $this->assertEquals($result, $this->translateLogic->translate($ident));
     }
 
     /**
@@ -79,7 +79,7 @@ class MultiLangLogicTest extends UnitTestCase
     public function testAssignmentsWithArguments(string $ident, int $languageId, $arguments, string $result): void
     {
         $this->setLanguage($languageId);
-        $this->assertEquals($result, $this->multiLangLogic->multiLang($ident, $arguments));
+        $this->assertEquals($result, $this->translateLogic->translate($ident, $arguments));
     }
 
     /**
@@ -119,7 +119,7 @@ class MultiLangLogicTest extends UnitTestCase
         $oShop->oxshops__oxproductive = new Field($isProductiveMode);
         $oShop->save();
 
-        $this->assertEquals($translation, $this->multiLangLogic->multiLang($ident));
+        $this->assertEquals($translation, $this->translateLogic->translate($ident));
     }
 
     /**
@@ -148,7 +148,7 @@ class MultiLangLogicTest extends UnitTestCase
         $this->setLanguage(1);
         $this->setAdminMode(true);
 
-        $this->assertEquals($translation, $this->multiLangLogic->multiLang($ident));
+        $this->assertEquals($translation, $this->translateLogic->translate($ident));
     }
 
 }

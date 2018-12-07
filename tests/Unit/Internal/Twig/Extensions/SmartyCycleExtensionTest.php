@@ -2,14 +2,14 @@
 
 namespace OxidEsales\EshopCommunity\Tests\Unit\Internal\Twig\Extensions;
 
-use OxidEsales\EshopCommunity\Internal\Twig\Extensions\SmartyExtension;
+use OxidEsales\EshopCommunity\Internal\Twig\Extensions\SmartyCycleExtension;
 
 /**
- * Class SmartyExtensionTest
+ * Class SmartyCycleExtensionTest
  *
  * @author Tomasz Kowalewski (t.kowalewski@createit.pl)
  */
-class SmartyExtensionTest extends AbstractExtensionTest
+class SmartyCycleExtensionTest extends AbstractExtensionTest
 {
 
     /**
@@ -19,7 +19,7 @@ class SmartyExtensionTest extends AbstractExtensionTest
     protected function setUp(): void
     {
         parent::setUp();
-        $this->extension = new SmartyExtension();
+        $this->extension = new SmartyCycleExtension();
     }
 
     /**

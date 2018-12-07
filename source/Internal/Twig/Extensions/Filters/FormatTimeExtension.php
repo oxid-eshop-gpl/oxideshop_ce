@@ -38,7 +38,7 @@ class FormatTimeExtension extends AbstractExtension
      */
     public function getFilters(): array
     {
-        return [new \Twig_Filter('formatTime', [$this, 'formatTime'])];
+        return [new \Twig_Filter('format_time', [$this, 'formatTime'])];
     }
 
     /**

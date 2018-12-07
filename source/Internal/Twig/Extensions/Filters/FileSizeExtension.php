@@ -38,7 +38,7 @@ class FileSizeExtension extends AbstractExtension
      */
     public function getFilters(): array
     {
-        return [new \Twig_Filter('fileSize', [$this, 'fileSize'])];
+        return [new \Twig_Filter('file_size', [$this, 'fileSize'])];
     }
 
     /**

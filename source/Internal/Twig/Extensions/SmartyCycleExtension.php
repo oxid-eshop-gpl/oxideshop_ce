@@ -7,9 +7,9 @@ use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
 
 /**
- * Class SmartyExtension
+ * Class SmartyCycleExtension
  */
-class SmartyExtension extends AbstractExtension
+class SmartyCycleExtension extends AbstractExtension
 {
 
     private $cycleVars;

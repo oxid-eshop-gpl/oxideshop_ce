@@ -21,7 +21,7 @@ class TranslateColonExtension extends AbstractExtension
      */
     public function getFilters(): array
     {
-        return [new \Twig_Filter('getTranslatedColon', [$this, 'getTranslatedColon'])];
+        return [new \Twig_Filter('get_translated_colon', [$this, 'getTranslatedColon'])];
     }
 
     /**

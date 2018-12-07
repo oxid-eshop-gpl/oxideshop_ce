@@ -4,7 +4,7 @@
  * See LICENSE file for license details.
  */
 
-use OxidEsales\EshopCommunity\Internal\Adapter\TemplateLogic\MultiLangLogic;
+use OxidEsales\EshopCommunity\Internal\Adapter\TemplateLogic\TranslateLogic;
 use OxidEsales\EshopCommunity\Internal\Application\ContainerFactory;
 
 /**
@@ -21,8 +21,8 @@ use OxidEsales\EshopCommunity\Internal\Application\ContainerFactory;
  */
 function smarty_modifier_oxmultilangassign( $sIdent, $args = null )
 {
-    /** @var MultiLangLogic $multiLangLogic */
-    $multiLangLogic = ContainerFactory::getInstance()->getContainer()->get(MultiLangLogic::class);
+    /** @var TranslateLogic $multiLangLogic */
+    $translateLogic = ContainerFactory::getInstance()->getContainer()->get(TranslateLogic::class);
 
-    return $multiLangLogic->multiLang($sIdent, $args);
+    return $translateLogic->translate($sIdent, $args);
 }

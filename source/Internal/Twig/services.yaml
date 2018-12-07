@@ -113,8 +113,8 @@ services:
       - '@OxidEsales\EshopCommunity\Internal\Adapter\TemplateLogic\IncludeDynamicLogic'
     tags: ['twig.extension']
 
-  OxidEsales\EshopCommunity\Internal\Twig\Extensions\SmartyExtension:
-    class: OxidEsales\EshopCommunity\Internal\Twig\Extensions\SmartyExtension
+  OxidEsales\EshopCommunity\Internal\Twig\Extensions\SmartyCycleExtension:
+    class: OxidEsales\EshopCommunity\Internal\Twig\Extensions\SmartyCycleExtension
     tags: ['twig.extension']
 
   OxidEsales\EshopCommunity\Internal\Twig\Extensions\MailtoExtension:
@@ -184,10 +184,10 @@ services:
       - '@OxidEsales\EshopCommunity\Internal\Adapter\TemplateLogic\FormDateLogic'
     tags: ['twig.extension']
 
-  OxidEsales\EshopCommunity\Internal\Twig\Extensions\Filters\MultiLangExtension:
-    class: OxidEsales\EshopCommunity\Internal\Twig\Extensions\Filters\MultiLangExtension
+  OxidEsales\EshopCommunity\Internal\Twig\Extensions\Filters\TranslateExtension:
+    class: OxidEsales\EshopCommunity\Internal\Twig\Extensions\Filters\TranslateExtension
     arguments:
-      - '@OxidEsales\EshopCommunity\Internal\Adapter\TemplateLogic\MultiLangLogic'
+      - '@OxidEsales\EshopCommunity\Internal\Adapter\TemplateLogic\TranslateLogic'
     tags: ['twig.extension']
 
   OxidEsales\EshopCommunity\Internal\Twig\Extensions\Filters\FormatTimeExtension:
