@@ -4,6 +4,9 @@
  * See LICENSE file for license details.
  */
 
+use OxidEsales\EshopCommunity\Internal\Application\ContainerFactory;
+use OxidEsales\EshopCommunity\Internal\Adapter\TemplateLogic\IncludeWidgetLogic;
+
 /**
  * Smarty function
  * -------------------------------------------------------------
@@ -18,15 +21,7 @@
  */
 function smarty_function_oxid_include_widget($params, &$oSmarty)
 {
-    $class = isset($params['cl']) ? strtolower($params['cl']) : '';
-    unset($params['cl']);
-
-    $parentViews = null;
-    if (!empty($params["_parent"])) {
-        $parentViews = explode("|", $params["_parent"]);
-        unset($params["_parent"]);
-    }
-
-    $widgetControl = \OxidEsales\Eshop\Core\Registry::get(\OxidEsales\Eshop\Core\WidgetControl::class);
-    return $widgetControl->start($class, null, $params, $parentViews);
+    /** @var IncludeWidgetLogic $oxgetseourlLogic */
+    $assignAdvancedLogic = ContainerFactory::getInstance()->getContainer()->get(IncludeWidgetLogic::class);
+    return $assignAdvancedLogic->renderWidget($params);
 }
