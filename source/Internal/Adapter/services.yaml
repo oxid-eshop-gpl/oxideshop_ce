@@ -42,8 +42,8 @@ services:
   OxidEsales\EshopCommunity\Internal\Adapter\TemplateLogic\FormDateLogic:
     class: OxidEsales\EshopCommunity\Internal\Adapter\TemplateLogic\FormDateLogic
 
-  OxidEsales\EshopCommunity\Internal\Adapter\TemplateLogic\MultiLangLogic:
-    class: OxidEsales\EshopCommunity\Internal\Adapter\TemplateLogic\MultiLangLogic
+  OxidEsales\EshopCommunity\Internal\Adapter\TemplateLogic\TranslateLogic:
+    class: OxidEsales\EshopCommunity\Internal\Adapter\TemplateLogic\TranslateLogic
 
   OxidEsales\EshopCommunity\Internal\Adapter\TemplateLogic\FormatTimeLogic:
     class: OxidEsales\EshopCommunity\Internal\Adapter\TemplateLogic\FormatTimeLogic

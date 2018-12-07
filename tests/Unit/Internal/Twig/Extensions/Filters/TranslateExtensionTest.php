@@ -7,24 +7,24 @@
 namespace OxidEsales\EshopCommunity\Tests\Unit\Internal\Twig\Extensions\Filters;
 
 use OxidEsales\Eshop\Core\Field;
-use OxidEsales\EshopCommunity\Internal\Adapter\TemplateLogic\MultiLangLogic;
-use OxidEsales\EshopCommunity\Internal\Twig\Extensions\Filters\MultiLangExtension;
+use OxidEsales\EshopCommunity\Internal\Adapter\TemplateLogic\TranslateLogic;
+use OxidEsales\EshopCommunity\Internal\Twig\Extensions\Filters\TranslateExtension;
 use OxidEsales\EshopCommunity\Tests\Unit\Internal\Twig\Extensions\AbstractExtensionTest;
 
 /**
- * Class MultiLangExtensionTest
+ * Class TranslateExtensionTest
  *
  * @author Tomasz Kowalewski (t.kowalewski@createit.pl)
  */
-class MultiLangExtensionTest extends AbstractExtensionTest
+class TranslateExtensionTest extends AbstractExtensionTest
 {
 
-    /** @var MultiLangExtension */
+    /** @var TranslateExtension */
     protected $extension;
 
     public function setUp(): void
     {
-        $this->extension = new MultiLangExtension(new MultiLangLogic());
+        $this->extension = new TranslateExtension(new TranslateLogic());
     }
 
     /**
@@ -35,9 +35,9 @@ class MultiLangExtensionTest extends AbstractExtensionTest
     public function simpleTranslatingProvider(): array
     {
         return [
-            ["{{ 'FIRST_NAME'|multi_lang }}", 0, 'Vorname'],
-            ["{{ 'FIRST_NAME'|multi_lang }}", 1, 'First name'],
-            ["{{ 'VAT'|multi_lang }}", 1, 'VAT']
+            ["{{ 'FIRST_NAME'|translate }}", 0, 'Vorname'],
+            ["{{ 'FIRST_NAME'|translate }}", 1, 'First name'],
+            ["{{ 'VAT'|translate }}", 1, 'VAT']
         ];
     }
 
@@ -64,10 +64,10 @@ class MultiLangExtensionTest extends AbstractExtensionTest
     public function withArgumentsProvider(): array
     {
         return [
-            ["{{ 'MANUFACTURER_S'|multi_lang('Opel') }}", 0, '| Hersteller: Opel'],
-            ["{{ 'MANUFACTURER_S'|multi_lang('Opel') }}", 1, 'Manufacturer: Opel'],
-            ["{{ 'INVITE_TO_SHOP'|multi_lang(['Admin', 'OXID Shop']) }}", 0, 'Eine Einladung von Admin OXID Shop zu besuchen.'],
-            ["{{ 'INVITE_TO_SHOP'|multi_lang(['Admin', 'OXID Shop']) }}", 1, 'An invitation from Admin to visit OXID Shop']
+            ["{{ 'MANUFACTURER_S'|translate('Opel') }}", 0, '| Hersteller: Opel'],
+            ["{{ 'MANUFACTURER_S'|translate('Opel') }}", 1, 'Manufacturer: Opel'],
+            ["{{ 'INVITE_TO_SHOP'|translate(['Admin', 'OXID Shop']) }}", 0, 'Eine Einladung von Admin OXID Shop zu besuchen.'],
+            ["{{ 'INVITE_TO_SHOP'|translate(['Admin', 'OXID Shop']) }}", 1, 'An invitation from Admin to visit OXID Shop']
         ];
     }
 
@@ -94,8 +94,8 @@ class MultiLangExtensionTest extends AbstractExtensionTest
     public function missingTranslationProviderFrontend(): array
     {
         return [
-            [true, "{{ 'MY_MISING_TRANSLATION'|multi_lang }}", 'MY_MISING_TRANSLATION'],
-            [false, "{{ 'MY_MISING_TRANSLATION'|multi_lang }}", 'ERROR: Translation for MY_MISING_TRANSLATION not found!'],
+            [true, "{{ 'MY_MISING_TRANSLATION'|translate }}", 'MY_MISING_TRANSLATION'],
+            [false, "{{ 'MY_MISING_TRANSLATION'|translate }}", 'ERROR: Translation for MY_MISING_TRANSLATION not found!'],
         ];
     }
 
@@ -126,7 +126,7 @@ class MultiLangExtensionTest extends AbstractExtensionTest
     public function missingTranslationProviderAdmin(): array
     {
         return [
-            ["{{ 'MY_MISING_TRANSLATION'|multi_lang }}", 'ERROR: Translation for MY_MISING_TRANSLATION not found!'],
+            ["{{ 'MY_MISING_TRANSLATION'|translate }}", 'ERROR: Translation for MY_MISING_TRANSLATION not found!'],
         ];
     }
 
