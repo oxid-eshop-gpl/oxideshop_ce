@@ -243,3 +243,9 @@ services:
     arguments:
       - '@OxidEsales\EshopCommunity\Internal\Adapter\TemplateLogic\SmartWordWrapLogic'
     tags: ['twig.extension']
+
+  OxidEsales\EshopCommunity\Internal\Twig\Extensions\InputHelpExtension:
+    class: OxidEsales\EshopCommunity\Internal\Twig\Extensions\InputHelpExtension
+    arguments:
+      - '@OxidEsales\EshopCommunity\Internal\Adapter\TemplateLogic\InputHelpLogic'
+    tags: ['twig.extension']
