@@ -6,6 +6,7 @@
 
 namespace OxidEsales\EshopCommunity\Core\Controller;
 
+use OxidEsales\Eshop\Core\Registry;
 use OxidEsales\EshopCommunity\Core\ShopVersion;
 use Psr\Container\ContainerInterface;
 
@@ -515,9 +516,17 @@ class BaseController extends \OxidEsales\Eshop\Core\Base
      * @param string $sFunction name of function to execute
      *
      * @throws \OxidEsales\Eshop\Core\Exception\SystemComponentException system component exception
+     *
+     * @return bool|null
      */
     public function executeFunction($sFunction)
     {
+        if (null !== $sFunction &&
+            false === Registry::getSession()->checkSessionChallenge()
+        ) {
+            return false;
+        }
+
         // execute
         if ($sFunction && !self::$_blExecuted) {
             if (method_exists($this, $sFunction)) {
@@ -532,7 +541,7 @@ class BaseController extends \OxidEsales\Eshop\Core\Base
                 if (!$this->_blIsComponent) {
                     /** @var \OxidEsales\Eshop\Core\Exception\SystemComponentException $oEx */
                     $oEx = oxNew(\OxidEsales\Eshop\Core\Exception\SystemComponentException::class);
-                    $oEx->setMessage('ERROR_MESSAGE_SYSTEMCOMPONENT_FUNCTIONNOTFOUND'. ' ' . $sFunction);
+                    $oEx->setMessage('ERROR_MESSAGE_SYSTEMCOMPONENT_FUNCTIONNOTFOUND' . ' ' . $sFunction);
                     $oEx->setComponent($sFunction);
                     throw $oEx;
                 }
@@ -569,7 +578,7 @@ class BaseController extends \OxidEsales\Eshop\Core\Base
             if (false === class_exists($realClassName)) {
                 //If redirect tries to use a not existing class throw an exception.
                 //we'll be redirected to start page directly.
-                $exception =  new \OxidEsales\Eshop\Core\Exception\SystemComponentException();
+                $exception = new \OxidEsales\Eshop\Core\Exception\SystemComponentException();
                 /** Use setMessage here instead of passing it in constructor in order to test exception message */
                 $exception->setMessage('ERROR_MESSAGE_SYSTEMCOMPONENT_CLASSNOTFOUND' . ' ' . $className);
                 $exception->setComponent($className);
