@@ -6,9 +6,9 @@
 
 namespace OxidEsales\EshopCommunity\Core;
 
-use \OxidEsales\Eshop\Application\Model\Basket;
-use \OxidEsales\Eshop\Application\Model\BasketItem;
-use \OxidEsales\Eshop\Application\Model\User;
+use OxidEsales\Eshop\Application\Model\Basket;
+use OxidEsales\Eshop\Application\Model\BasketItem;
+use OxidEsales\Eshop\Application\Model\User;
 
 /**
  * Session manager.
@@ -291,7 +291,7 @@ class Session extends \OxidEsales\Eshop\Core\Base
     {
         $sToken = $this->getSessionChallengeToken();
 
-        return $sToken && ($sToken == $this->getRequestChallengeToken());
+        return $sToken && hash_equals($sToken, $this->getRequestChallengeToken());
     }
 
     /**
@@ -299,7 +299,16 @@ class Session extends \OxidEsales\Eshop\Core\Base
      */
     protected function _initNewSessionChallenge()
     {
-        $this->setVariable('sess_stoken', sprintf('%X', crc32(\OxidEsales\Eshop\Core\Registry::getUtilsObject()->generateUID())));
+        try {
+            $token = md5(random_int(0, PHP_INT_MAX));
+        } catch (\Throwable $throwable) {
+            $logger = \OxidEsales\Eshop\Core\Registry::getLogger();
+            $logger->error('Could not generate cryptographically secure token');
+
+            $token = sprintf('%X', crc32(\OxidEsales\Eshop\Core\Registry::getUtilsObject()->generateUID()));
+        }
+
+        $this->setVariable('sess_stoken', $token);
     }
 
     /**
