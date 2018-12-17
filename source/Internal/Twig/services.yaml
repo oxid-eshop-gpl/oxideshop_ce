@@ -94,6 +94,13 @@ services:
     class: OxidEsales\EshopCommunity\Internal\Twig\Escaper\UrlPathInfoEscaper
     tags: ['twig.escaper']
 
+  # Token parsers
+
+  OxidEsales\EshopCommunity\Internal\Twig\TokenParser\HasRightsTokenParser:
+    class: OxidEsales\EshopCommunity\Internal\Twig\TokenParser\HasRightsTokenParser
+    arguments:
+      - 'OxidEsales\EshopCommunity\Internal\Twig\Node\HasRightsNode'
+
   # Extensions
 
   OxidEsales\EshopCommunity\Internal\Twig\Extensions\MathExtension:
@@ -131,12 +138,10 @@ services:
     class: Twig_Extension_StringLoader
     tags: ['twig.extension']
 
-  OxidEsales\EshopCommunity\Internal\Twig\Extensions\HasRightsExtension\HasRightsParser:
-    class: OxidEsales\EshopCommunity\Internal\Twig\Extensions\HasRightsExtension\HasRightsParser
-    tags: ['twig.parser']
-
-  OxidEsales\EshopCommunity\Internal\Twig\Extensions\HasRightsExtension\HasRightsExtension:
-    class: OxidEsales\EshopCommunity\Internal\Twig\Extensions\HasRightsExtension\HasRightsExtension
+  OxidEsales\EshopCommunity\Internal\Twig\Extensions\HasRightsExtension:
+    class: OxidEsales\EshopCommunity\Internal\Twig\Extensions\HasRightsExtension
+    arguments:
+      - '@OxidEsales\EshopCommunity\Internal\Twig\TokenParser\HasRightsTokenParser'
     tags: ['twig.extension']
 
   OxidEsales\EshopCommunity\Internal\Twig\Extensions\IfContentExtension:
