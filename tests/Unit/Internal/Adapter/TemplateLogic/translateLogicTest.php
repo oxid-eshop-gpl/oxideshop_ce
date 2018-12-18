@@ -7,19 +7,19 @@
 namespace OxidEsales\EshopCommunity\Tests\Unit\Internal\Adapter\TemplateLogic;
 
 use OxidEsales\Eshop\Core\Field;
-use OxidEsales\EshopCommunity\Internal\Adapter\TemplateLogic\TranslateFilterLogic;
+use OxidEsales\EshopCommunity\Internal\Adapter\TemplateLogic\TranslateLogic;
 use OxidEsales\TestingLibrary\UnitTestCase;
 
-class TranslateFilterLogicTest extends UnitTestCase
+class translateLogicTest extends UnitTestCase
 {
 
-    /** @var TranslateFilterLogic */
-    private $multiLangFilterLogic;
+    /** @var TranslateLogic */
+    private $translateLogic;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
-        $this->multiLangFilterLogic = new TranslateFilterLogic();
+        $this->translateLogic = new TranslateLogic();
     }
 
     /**
@@ -45,10 +45,10 @@ class TranslateFilterLogicTest extends UnitTestCase
      *
      * @dataProvider provider
      */
-    public function testSimpleAssignments($ident, $languageId, $result)
+    public function testSimpleAssignments(string $ident, int $languageId, string $result): void
     {
         $this->setLanguage($languageId);
-        $this->assertEquals($result, $this->multiLangFilterLogic->multiLang($ident));
+        $this->assertEquals($result, $this->translateLogic->translate($ident));
     }
 
     /**
@@ -76,10 +76,10 @@ class TranslateFilterLogicTest extends UnitTestCase
      *
      * @dataProvider withArgumentsProvider
      */
-    public function testAssignmentsWithArguments($ident, $languageId, $arguments, $result)
+    public function testAssignmentsWithArguments(string $ident, int $languageId, $arguments, string $result): void
     {
         $this->setLanguage($languageId);
-        $this->assertEquals($result, $this->multiLangFilterLogic->multiLang($ident, $arguments));
+        $this->assertEquals($result, $this->translateLogic->translate($ident, $arguments));
     }
 
     /**
@@ -110,7 +110,7 @@ class TranslateFilterLogicTest extends UnitTestCase
      *
      * @dataProvider missingTranslationProviderFrontend
      */
-    public function testTranslateFrontend_isMissingTranslation($isProductiveMode, $ident, $translation)
+    public function testTranslateFrontend_isMissingTranslation(bool $isProductiveMode, string $ident, string $translation): void
     {
         $this->setAdminMode(false);
         $this->setLanguage(1);
@@ -119,7 +119,7 @@ class TranslateFilterLogicTest extends UnitTestCase
         $oShop->oxshops__oxproductive = new Field($isProductiveMode);
         $oShop->save();
 
-        $this->assertEquals($translation, $this->multiLangFilterLogic->multiLang($ident));
+        $this->assertEquals($translation, $this->translateLogic->translate($ident));
     }
 
     /**
@@ -143,12 +143,12 @@ class TranslateFilterLogicTest extends UnitTestCase
      *
      * @dataProvider missingTranslationProviderAdmin
      */
-    public function testTranslateAdmin_isMissingTranslation($ident, $translation)
+    public function testTranslateAdmin_isMissingTranslation(string $ident, string $translation): void
     {
         $this->setLanguage(1);
         $this->setAdminMode(true);
 
-        $this->assertEquals($translation, $this->multiLangFilterLogic->multiLang($ident));
+        $this->assertEquals($translation, $this->translateLogic->translate($ident));
     }
 
 }

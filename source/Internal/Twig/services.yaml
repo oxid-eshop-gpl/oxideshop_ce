@@ -187,13 +187,7 @@ services:
   OxidEsales\EshopCommunity\Internal\Twig\Extensions\Filters\TranslateExtension:
     class: OxidEsales\EshopCommunity\Internal\Twig\Extensions\Filters\TranslateExtension
     arguments:
-      - '@OxidEsales\EshopCommunity\Internal\Adapter\TemplateLogic\TranslateFilterLogic'
-    tags: ['twig.extension']
-
-  OxidEsales\EshopCommunity\Internal\Twig\Extensions\TranslateExtension:
-    class: OxidEsales\EshopCommunity\Internal\Twig\Extensions\TranslateExtension
-    arguments:
-      - '@OxidEsales\EshopCommunity\Internal\Adapter\TemplateLogic\TranslateFunctionLogic'
+      - '@OxidEsales\EshopCommunity\Internal\Adapter\TemplateLogic\TranslateLogic'
     tags: ['twig.extension']
 
   OxidEsales\EshopCommunity\Internal\Twig\Extensions\Filters\FormatTimeExtension:

@@ -7,7 +7,7 @@
 namespace OxidEsales\EshopCommunity\Tests\Unit\Internal\Twig\Extensions\Filters;
 
 use OxidEsales\Eshop\Core\Field;
-use OxidEsales\EshopCommunity\Internal\Adapter\TemplateLogic\TranslateFilterLogic;
+use OxidEsales\EshopCommunity\Internal\Adapter\TemplateLogic\TranslateLogic;
 use OxidEsales\EshopCommunity\Internal\Twig\Extensions\Filters\TranslateExtension;
 use OxidEsales\EshopCommunity\Tests\Unit\Internal\Twig\Extensions\AbstractExtensionTest;
 
@@ -22,9 +22,9 @@ class TranslateExtensionTest extends AbstractExtensionTest
     /** @var TranslateExtension */
     protected $extension;
 
-    public function setUp()
+    public function setUp(): void
     {
-        $this->extension = new TranslateExtension(new TranslateFilterLogic());
+        $this->extension = new TranslateExtension(new TranslateLogic());
     }
 
     /**
@@ -50,7 +50,7 @@ class TranslateExtensionTest extends AbstractExtensionTest
      *
      * @dataProvider simpleTranslatingProvider
      */
-    public function testSimpleTranslating(string $template, int $languageId, string $expected)
+    public function testSimpleTranslating(string $template, int $languageId, string $expected): void
     {
         $this->setLanguage($languageId);
         $this->assertEquals($expected, $this->getTemplate($template)->render([]));
@@ -80,7 +80,7 @@ class TranslateExtensionTest extends AbstractExtensionTest
      *
      * @dataProvider withArgumentsProvider
      */
-    public function testTranslatingWithArguments(string $template, int $languageId, string $expected)
+    public function testTranslatingWithArguments(string $template, int $languageId, string $expected): void
     {
         $this->setLanguage($languageId);
         $this->assertEquals($expected, $this->getTemplate($template)->render([]));
@@ -106,7 +106,7 @@ class TranslateExtensionTest extends AbstractExtensionTest
      *
      * @dataProvider missingTranslationProviderFrontend
      */
-    public function testTranslateFrontend_isMissingTranslation(bool $isProductiveMode, string $template, string $expected)
+    public function testTranslateFrontend_isMissingTranslation(bool $isProductiveMode, string $template, string $expected): void
     {
         $this->setAdminMode(false);
         $this->setLanguage(1);
@@ -136,7 +136,7 @@ class TranslateExtensionTest extends AbstractExtensionTest
      *
      * @dataProvider missingTranslationProviderAdmin
      */
-    public function testTranslateAdmin_isMissingTranslation(string $template, string $expected)
+    public function testTranslateAdmin_isMissingTranslation(string $template, string $expected): void
     {
         $this->setLanguage(1);
         $this->setAdminMode(true);
