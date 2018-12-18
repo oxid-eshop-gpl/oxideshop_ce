@@ -7,11 +7,11 @@
 namespace OxidEsales\EshopCommunity\Internal\Adapter\TemplateLogic;
 
 /**
- * Class TranslateLogic
+ * Class TranslateFilterLogic
  *
  * @author Tomasz Kowalewski (t.kowalewski@createit.pl)
  */
-class TranslateLogic
+class TranslateFilterLogic
 {
 
     /**
@@ -20,7 +20,7 @@ class TranslateLogic
      *
      * @return string
      */
-    public function translate(string $sIdent, $args = []): string
+    public function multiLang($sIdent, $args = []): string
     {
         if (!isset($sIdent)) {
             $sIdent = 'IDENT MISSING';
