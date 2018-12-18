@@ -2,7 +2,7 @@
 
 namespace OxidEsales\EshopCommunity\Internal\Twig\Extensions\Filters;
 
-use OxidEsales\EshopCommunity\Internal\Adapter\TemplateLogic\TranslateLogic;
+use OxidEsales\EshopCommunity\Internal\Adapter\TemplateLogic\TranslateFilterLogic;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;
 use Twig\TwigFunction;
@@ -15,17 +15,17 @@ use Twig\TwigFunction;
 class TranslateExtension extends AbstractExtension
 {
 
-    /** @var TranslateLogic */
-    private $translateLogic;
+    /** @var TranslateFilterLogic */
+    private $multiLangFilterLogic;
 
     /**
      * TranslateExtension constructor.
      *
-     * @param TranslateLogic $translateLogic
+     * @param TranslateFilterLogic $multiLangFilterLogic
      */
-    public function __construct(TranslateLogic $translateLogic)
+    public function __construct(TranslateFilterLogic $multiLangFilterLogic)
     {
-        $this->translateLogic = $translateLogic;
+        $this->multiLangFilterLogic = $multiLangFilterLogic;
     }
 
     /**
@@ -48,6 +48,6 @@ class TranslateExtension extends AbstractExtension
      */
     public function translate($ident, $arguments = null): string
     {
-        return $this->translateLogic->translate($ident, $arguments);
+        return $this->multiLangFilterLogic->multiLang($ident, $arguments);
     }
 }
