@@ -15,15 +15,15 @@ class WordWrapLogic
 {
 
     /**
-     * @param string  $sString
-     * @param integer $iLength
-     * @param string  $sWraper
-     * @param bool    $blCut
+     * @param string  $string
+     * @param integer $length
+     * @param string  $wrapper
+     * @param bool    $cut
      *
      * @return string
      */
-    public function wordWrap($sString, $iLength = 80, $sWraper = "\n", $blCut = false)
+    public function wordWrap(string $string, int $length = 80, string $wrapper = "\n", bool $cut = false): string
     {
-        return getStr()->wordwrap($sString, $iLength, $sWraper, $blCut);
+        return getStr()->wordwrap($string, $length, $wrapper, $cut);
     }
 }
