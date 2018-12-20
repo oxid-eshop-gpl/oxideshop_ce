@@ -18,7 +18,7 @@ class IfContentLogic
      * @param string $sIdent
      * @param string $sOxid
      *
-     * @return array
+     * @return mixed
      */
     public function getContent(string $sIdent = null, string $sOxid = null)
     {

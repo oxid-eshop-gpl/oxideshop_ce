@@ -44,7 +44,7 @@ class IfContentExtension extends AbstractExtension
      * @param string $sIdent
      * @param string $sOxid
      *
-     * @return array
+     * @return mixed
      */
     public function getContent(string $sIdent, string $sOxid)
     {
