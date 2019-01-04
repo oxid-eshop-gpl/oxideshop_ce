@@ -38,8 +38,8 @@ class InputHelpExtension extends AbstractExtension
     public function getFunctions()
     {
         return [
-            new TwigFunction('getSHelpId', [$this, 'getSHelpId']),
-            new TwigFunction('getSHelpText', [$this, 'getSHelpText'])
+            new TwigFunction('getHelpId', [$this, 'getHelpId']),
+            new TwigFunction('getHelpText', [$this, 'getHelpText'])
         ];
     }
 
@@ -48,7 +48,7 @@ class InputHelpExtension extends AbstractExtension
      *
      * @return mixed
      */
-    public function getSHelpId($params)
+    public function getHelpId($params)
     {
         return $this->inputHelpLogic->getIdent($params);
     }
@@ -58,7 +58,7 @@ class InputHelpExtension extends AbstractExtension
      *
      * @return mixed
      */
-    public function getSHelpText($params)
+    public function getHelpText($params)
     {
         return $this->inputHelpLogic->getTranslation($params);
     }
