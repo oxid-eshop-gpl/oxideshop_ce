@@ -39,7 +39,7 @@ class FormDateFilterExtension extends AbstractExtension
 
     /**
      * @param object $convObject
-     * @param string   $fieldType
+     * @param string $fieldType
      * @param bool   $passedValue
      *
      * @return string
