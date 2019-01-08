@@ -20,7 +20,7 @@ class IncludeWidgetLogic
      *
      * @return mixed
      */
-    public function renderWidget($params)
+    public function renderWidget(array $params)
     {
         $class = '';
         if (isset($params['cl'])) {
