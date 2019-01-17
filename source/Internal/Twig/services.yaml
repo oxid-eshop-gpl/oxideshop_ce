@@ -256,16 +256,20 @@ services:
     class: OxidEsales\EshopCommunity\Internal\Twig\Extensions\Filters\PhpFunctionsExtension
     tags: ['twig.extension']
 
-  OxidEsales\EshopCommunity\Internal\Twig\Extensions\Filters\DateFormatExtension:
-    class: OxidEsales\EshopCommunity\Internal\Twig\Extensions\Filters\DateFormatExtension
-    arguments:
-      - '@OxidEsales\EshopCommunity\Internal\Adapter\TemplateLogic\DateFormatHelper'
-    tags: ['twig.extension']
-
   OxidEsales\EshopCommunity\Internal\Twig\Extensions\Filters\RegexReplaceExtension:
     class: OxidEsales\EshopCommunity\Internal\Twig\Extensions\Filters\RegexReplaceExtension
     tags: ['twig.extension']
 
   OxidEsales\EshopCommunity\Internal\Twig\Extensions\CaptureExtension:
     class: OxidEsales\EshopCommunity\Internal\Twig\Extensions\CaptureExtension
+    tags: ['twig.extension']
+
+  OxidEsales\EshopCommunity\Internal\Twig\Extensions\InsertNewBasketItemExtension:
+    class: OxidEsales\EshopCommunity\Internal\Twig\Extensions\InsertNewBasketItemExtension
+    arguments:
+      - '@OxidEsales\EshopCommunity\Internal\Adapter\TemplateLogic\InsertNewBasketItemLogicTwig'
+    tags: ['twig.extension']
+
+  OxidEsales\EshopCommunity\Internal\Twig\Extensions\InsertTrackerExtension:
+    class: OxidEsales\EshopCommunity\Internal\Twig\Extensions\InsertTrackerExtension
     tags: ['twig.extension']
