@@ -249,3 +249,11 @@ services:
     arguments:
       - '@OxidEsales\EshopCommunity\Internal\Adapter\TemplateLogic\InputHelpLogic'
     tags: ['twig.extension']
+
+  OxidEsales\EshopCommunity\Internal\Twig\Extensions\PhpFunctionsExtension:
+    class: OxidEsales\EshopCommunity\Internal\Twig\Extensions\PhpFunctionsExtension
+    tags: ['twig.extension']
+
+  OxidEsales\EshopCommunity\Internal\Twig\Extensions\Filters\PhpFunctionsExtension:
+    class: OxidEsales\EshopCommunity\Internal\Twig\Extensions\Filters\PhpFunctionsExtension
+    tags: ['twig.extension']
