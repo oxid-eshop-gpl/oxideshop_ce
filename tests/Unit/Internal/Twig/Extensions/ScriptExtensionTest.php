@@ -8,6 +8,8 @@ namespace OxidEsales\EshopCommunity\Tests\Unit\Internal\Twig\Extensions;
 
 use OxidEsales\EshopCommunity\Internal\Adapter\TemplateLogic\ScriptLogic;
 use OxidEsales\EshopCommunity\Internal\Twig\Extensions\ScriptExtension;
+use Twig\Environment;
+use Twig\Loader\ArrayLoader;
 
 /**
  * Class ScriptExtensionTest
@@ -108,5 +110,21 @@ HTML
                 "<script type='text/javascript'>window.addEventListener('load', function() { WidgetsHandler.registerFunction('alert();', 'somewidget'); }, false )</script>"
             ]
         ];
+    }
+
+    /**
+     * @param string $template
+     *
+     * @return \Twig_Template
+     */
+    protected function getTemplate(string $template): \Twig_Template
+    {
+        $loader = new ArrayLoader(['index' => $template]);
+
+        $twig = new Environment($loader, ['debug' => true, 'cache' => false]);
+        $twig->addGlobal('__oxid_include_dynamic', true);
+        $twig->addExtension($this->extension);
+
+        return $twig->loadTemplate('index');
     }
 }

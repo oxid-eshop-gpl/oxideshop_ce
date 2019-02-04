@@ -33,19 +33,19 @@ class ScriptExtension extends AbstractExtension
      */
     public function getFunctions(): array
     {
-        return [
-            new TwigFunction('script', [$this, 'script'], ['is_safe' => ['html']]),
-        ];
+        return [new TwigFunction('script', [$this, 'script'], ['needs_context' => true, 'is_safe' => ['html']])];
     }
 
     /**
+     * @param array $context
      * @param array $parameters
      *
      * @return string
+     * @throws Error
      */
-    public function script(array $parameters = []): string
+    public function script(array $context = [], array $parameters = []): string
     {
-        $isDynamic = isset($parameters["dynamic"]) ? (bool) $parameters["dynamic"] : false;
+        $isDynamic = isset($context['__oxid_include_dynamic']) ? (bool) $context['__oxid_include_dynamic'] : false;
         $priority = !empty($parameters['priority']) ? $parameters['priority'] : 3;
         $widget = !empty($parameters['widget']) ? $parameters['widget'] : '';
         $isInWidget = !empty($parameters['inWidget']) ? $parameters['inWidget'] : false;
