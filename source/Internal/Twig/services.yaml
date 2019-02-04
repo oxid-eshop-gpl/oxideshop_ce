@@ -261,3 +261,7 @@ services:
     arguments:
       - '@OxidEsales\EshopCommunity\Internal\Adapter\TemplateLogic\DateFormatHelper'
     tags: ['twig.extension']
+
+  OxidEsales\EshopCommunity\Internal\Twig\Extensions\Filters\RegexReplaceExtension:
+    class: OxidEsales\EshopCommunity\Internal\Twig\Extensions\Filters\RegexReplaceExtension
+    tags: ['twig.extension']
