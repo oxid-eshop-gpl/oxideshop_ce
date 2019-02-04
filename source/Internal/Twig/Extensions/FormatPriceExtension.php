@@ -7,6 +7,7 @@
 namespace OxidEsales\EshopCommunity\Internal\Twig\Extensions;
 
 use OxidEsales\EshopCommunity\Internal\Adapter\TemplateLogic\FormatPriceLogic;
+use phpDocumentor\Reflection\Types\Integer;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
 
@@ -39,17 +40,20 @@ class FormatPriceExtension extends AbstractExtension
     public function getFunctions(): array
     {
         return [
-            new TwigFunction('format_price', [$this, 'formatPrice']) //todo fix names also coverter fml.
+            new TwigFunction('format_price', [$this, 'formatPrice'])
         ];
     }
 
     /**
-     * @param array|object $params
+     * @param int   $price
+     * @param array $params
      *
      * @return string
      */
-    public function formatPrice($params): string
+    public function formatPrice(int $price, array $params = []): string
     {
-        return $this->formatPriceLogic->formatPrice((array)$params);
+        $params['price'] = $price;
+
+        return $this->formatPriceLogic->formatPrice($params);
     }
 }

@@ -43,7 +43,7 @@ class FormatPriceLogic
     {
         $config = Registry::getConfig();
         $price = ($inputPrice instanceof \OxidEsales\Eshop\Core\Price) ? $inputPrice->getPrice() : floatval($inputPrice);
-        $currency = isset($params['currency']) ? $params['currency'] : $config->getActShopCurrencyObject();
+        $currency = isset($params['currency']) ? (object) $params['currency'] : $config->getActShopCurrencyObject();
         $output = '';
 
         if (is_numeric($price)) {
