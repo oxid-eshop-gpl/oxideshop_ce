@@ -2,30 +2,30 @@
 
 namespace OxidEsales\EshopCommunity\Internal\Twig\Extensions\Filters;
 
-use OxidEsales\EshopCommunity\Internal\Adapter\TemplateLogic\WordWrapLogic;
+use OxidEsales\EshopCommunity\Internal\Adapter\TemplateLogic\WordwrapLogic;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;
 use Twig\TwigFunction;
 
 /**
- * Class WordWrapExtension
+ * Class WordwrapExtension
  *
  * @author Tomasz Kowalewski (t.kowalewski@createit.pl)
  */
-class WordWrapExtension extends AbstractExtension
+class WordwrapExtension extends AbstractExtension
 {
 
-    /** @var WordWrapLogic */
-    private $wordWrapLogic;
+    /** @var WordwrapLogic */
+    private $wordwrapLogic;
 
     /**
-     * WordWrapExtension constructor.
+     * WordwrapExtension constructor.
      *
-     * @param WordWrapLogic $wordWrapLogic
+     * @param WordwrapLogic $wordwrapLogic
      */
-    public function __construct(WordWrapLogic $wordWrapLogic)
+    public function __construct(WordwrapLogic $wordwrapLogic)
     {
-        $this->wordWrapLogic = $wordWrapLogic;
+        $this->wordwrapLogic = $wordwrapLogic;
     }
 
     /**
@@ -36,7 +36,7 @@ class WordWrapExtension extends AbstractExtension
     public function getFilters(): array
     {
         return [
-            new TwigFilter('word_wrap', [$this, 'wordWrap'], ['is_safe' => ['html']]),
+            new TwigFilter('wordwrap', [$this, 'wordwrap'], ['is_safe' => ['html']]),
         ];
     }
 
@@ -50,6 +50,6 @@ class WordWrapExtension extends AbstractExtension
      */
     public function wordWrap($string, $length = 80, $wrapper = "\n", $cut = false): string
     {
-        return $this->wordWrapLogic->wordWrap($string, $length, $wrapper, $cut);
+        return $this->wordwrapLogic->wordwrap($string, $length, $wrapper, $cut);
     }
 }

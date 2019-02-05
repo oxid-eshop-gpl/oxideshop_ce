@@ -10,7 +10,7 @@ use OxidEsales\Eshop\Core\Field;
 use OxidEsales\EshopCommunity\Internal\Adapter\TemplateLogic\TranslateFilterLogic;
 use OxidEsales\TestingLibrary\UnitTestCase;
 
-class TranslateFilterLogicTest extends UnitTestCase
+class TranslateLogicTest extends UnitTestCase
 {
 
     /** @var TranslateFilterLogic */

@@ -7,11 +7,11 @@
 namespace OxidEsales\EshopCommunity\Internal\Adapter\TemplateLogic;
 
 /**
- * Class FormdateLogic
+ * Class FormatDateLogic
  *
  * @author Tomasz Kowalewski (t.kowalewski@createit.pl)
  */
-class FormDateLogic
+class FormatDateLogic
 {
 
     /**

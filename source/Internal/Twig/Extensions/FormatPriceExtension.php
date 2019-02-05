@@ -44,12 +44,12 @@ class FormatPriceExtension extends AbstractExtension
     }
 
     /**
-     * @param array $params
+     * @param array|object $params
      *
      * @return string
      */
-    public function formatPrice(array $params): string
+    public function formatPrice($params): string
     {
-        return $this->formatPriceLogic->formatPrice($params);
+        return $this->formatPriceLogic->formatPrice((array)$params);
     }
 }

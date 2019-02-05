@@ -9,11 +9,11 @@ namespace OxidEsales\EshopCommunity\Internal\Adapter\TemplateLogic;
 use stdClass;
 
 /**
- * Class NumberFormatLogic
+ * Class FormatCurrencyLogic
  *
  * @author Tomasz Kowalewski (t.kowalewski@createit.pl)
  */
-class NumberFormatLogic
+class FormatCurrencyLogic
 {
 
     /**

@@ -6,23 +6,23 @@
 
 namespace OxidEsales\EshopCommunity\Tests\Unit\Internal\Adapter\TemplateLogic;
 
-use OxidEsales\EshopCommunity\Internal\Adapter\TemplateLogic\NumberFormatLogic;
+use OxidEsales\EshopCommunity\Internal\Adapter\TemplateLogic\FormatCurrencyLogic;
 use OxidEsales\TestingLibrary\UnitTestCase;
 
 /**
- * Class NumberFormatLogicTest
+ * Class FormatCurrencyLogicTest
  *
  * @author Tomasz Kowalewski (t.kowalewski@createit.pl)
  */
-class NumberFormatLogicTest extends UnitTestCase
+class FormatCurrencyLogicTest extends UnitTestCase
 {
 
-    /** @var NumberFormatLogic */
+    /** @var FormatCurrencyLogic */
     private $numberFormatLogic;
 
     protected function setUp()
     {
-        $this->numberFormatLogic = new NumberFormatLogic();
+        $this->numberFormatLogic = new FormatCurrencyLogic();
         parent::setUp();
     }
 

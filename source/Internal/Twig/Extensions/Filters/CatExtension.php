@@ -21,7 +21,7 @@ class CatExtension extends AbstractExtension
      */
     public function getFilters(): array
     {
-        return [new \Twig_Filter('cat', [$this, 'cat'])];
+        return [new \Twig_Filter('cat', [$this, 'cat'], ['deprecated' => true, 'alternative' => '~'])];
     }
 
     /**
@@ -30,7 +30,7 @@ class CatExtension extends AbstractExtension
      *
      * @return string
      */
-    public function cat(string $string, string $cat): string
+    public function cat(string $string, string $cat = null): string
     {
         return $string . $cat;
     }

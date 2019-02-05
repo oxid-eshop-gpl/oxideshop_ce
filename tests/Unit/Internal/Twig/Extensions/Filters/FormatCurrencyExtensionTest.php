@@ -6,29 +6,29 @@
 
 namespace OxidEsales\EshopCommunity\Tests\Unit\Internal\Twig\Extensions\Filters;
 
-use OxidEsales\EshopCommunity\Internal\Adapter\TemplateLogic\NumberFormatLogic;
-use OxidEsales\EshopCommunity\Internal\Twig\Extensions\Filters\NumberFormatExtension;
+use OxidEsales\EshopCommunity\Internal\Adapter\TemplateLogic\FormatCurrencyLogic;
+use OxidEsales\EshopCommunity\Internal\Twig\Extensions\Filters\FormatCurrencyExtension;
 use OxidEsales\EshopCommunity\Tests\Unit\Internal\Twig\Extensions\AbstractExtensionTest;
 
 /**
- * Class NumberFormatExtensionTest
+ * Class FormatCurrencyExtensionTest
  *
  * @author Tomasz Kowalewski (t.kowalewski@createit.pl)
  */
-class NumberFormatExtensionTest extends AbstractExtensionTest
+class FormatCurrencyExtensionTest extends AbstractExtensionTest
 {
 
-    /** @var NumberFormatExtension */
+    /** @var FormatCurrencyExtension */
     protected $extension;
 
     public function setUp()
     {
-        $this->extension = new NumberFormatExtension(new NumberFormatLogic());
+        $this->extension = new FormatCurrencyExtension(new FormatCurrencyLogic());
     }
 
     public function testNumberFormat()
     {
-        $template = "{{ 'EUR@ 1.00@ .@ ,@ EUR@ 2'|number_format(25000000.5584) }}";
+        $template = "{{ 'EUR@ 1.00@ .@ ,@ EUR@ 2'|format_currency(25000000.5584) }}";
         $expected = '25,000,000.56';
 
         $this->assertEquals($expected, $this->getTemplate($template)->render([]));

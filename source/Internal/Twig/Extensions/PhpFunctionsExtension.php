@@ -25,9 +25,9 @@ class PhpFunctionsExtension extends AbstractExtension
     public function getFunctions(): array
     {
         return [
-            new TwigFunction('count', 'count'),
-            new TwigFunction('empty', 'empty'),
-            new TwigFunction('isset', [$this, 'twigIsset'])
+            new TwigFunction('count', 'count', ['deprecated' => true, 'alternative' => 'length']),
+            new TwigFunction('empty', 'empty', ['deprecated' => true, 'alternative' => 'length']),
+            new TwigFunction('isset', [$this, 'twigIsset', ['deprecated' => true, 'alternative' => 'is defined']])
         ];
     }
 

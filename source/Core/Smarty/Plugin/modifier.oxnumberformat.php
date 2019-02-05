@@ -4,7 +4,7 @@
  * See LICENSE file for license details.
  */
 
-use OxidEsales\EshopCommunity\Internal\Adapter\TemplateLogic\NumberFormatLogic;
+use OxidEsales\EshopCommunity\Internal\Adapter\TemplateLogic\FormatCurrencyLogic;
 use OxidEsales\EshopCommunity\Internal\Application\ContainerFactory;
 
 /**
@@ -22,8 +22,8 @@ use OxidEsales\EshopCommunity\Internal\Application\ContainerFactory;
  */
 function smarty_modifier_oxnumberformat( $sFormat = "EUR@ 1.00@ ,@ .@ EUR@ 2", $sValue = 0)
 {
-    /** @var NumberFormatLogic $numberFormatLogic */
-    $numberFormatLogic = ContainerFactory::getInstance()->getContainer()->get(NumberFormatLogic::class);
+    /** @var FormatCurrencyLogic $numberFormatLogic */
+    $numberFormatLogic = ContainerFactory::getInstance()->getContainer()->get(FormatCurrencyLogic::class);
 
     return $numberFormatLogic->numberFormat($sFormat, $sValue);
 }

@@ -39,8 +39,8 @@ services:
   OxidEsales\EshopCommunity\Internal\Adapter\TemplateLogic\ScriptLogic:
     class: OxidEsales\EshopCommunity\Internal\Adapter\TemplateLogic\ScriptLogic
 
-  OxidEsales\EshopCommunity\Internal\Adapter\TemplateLogic\FormDateLogic:
-    class: OxidEsales\EshopCommunity\Internal\Adapter\TemplateLogic\FormDateLogic
+  OxidEsales\EshopCommunity\Internal\Adapter\TemplateLogic\FormatDateLogic:
+    class: OxidEsales\EshopCommunity\Internal\Adapter\TemplateLogic\FormatDateLogic
 
   OxidEsales\EshopCommunity\Internal\Adapter\TemplateLogic\TranslateFilterLogic:
     class: OxidEsales\EshopCommunity\Internal\Adapter\TemplateLogic\TranslateFilterLogic
@@ -63,17 +63,17 @@ services:
   OxidEsales\EshopCommunity\Internal\Adapter\TemplateLogic\TranslateSalutationLogic:
     class: OxidEsales\EshopCommunity\Internal\Adapter\TemplateLogic\TranslateSalutationLogic
 
-  OxidEsales\EshopCommunity\Internal\Adapter\TemplateLogic\NumberFormatLogic:
-    class: OxidEsales\EshopCommunity\Internal\Adapter\TemplateLogic\NumberFormatLogic
+  OxidEsales\EshopCommunity\Internal\Adapter\TemplateLogic\FormatCurrencyLogic:
+    class: OxidEsales\EshopCommunity\Internal\Adapter\TemplateLogic\FormatCurrencyLogic
 
-  OxidEsales\EshopCommunity\Internal\Adapter\TemplateLogic\WordWrapLogic:
-    class: OxidEsales\EshopCommunity\Internal\Adapter\TemplateLogic\WordWrapLogic
+  OxidEsales\EshopCommunity\Internal\Adapter\TemplateLogic\WordwrapLogic:
+    class: OxidEsales\EshopCommunity\Internal\Adapter\TemplateLogic\WordwrapLogic
 
   OxidEsales\EshopCommunity\Internal\Adapter\TemplateLogic\IncludeWidgetLogic:
     class: OxidEsales\EshopCommunity\Internal\Adapter\TemplateLogic\IncludeWidgetLogic
 
-  OxidEsales\EshopCommunity\Internal\Adapter\TemplateLogic\SmartWordWrapLogic:
-    class: OxidEsales\EshopCommunity\Internal\Adapter\TemplateLogic\SmartWordWrapLogic
+  OxidEsales\EshopCommunity\Internal\Adapter\TemplateLogic\SmartWordwrapLogic:
+    class: OxidEsales\EshopCommunity\Internal\Adapter\TemplateLogic\SmartWordwrapLogic
 
   OxidEsales\EshopCommunity\Internal\Adapter\TemplateLogic\InputHelpLogic:
     class: OxidEsales\EshopCommunity\Internal\Adapter\TemplateLogic\InputHelpLogic

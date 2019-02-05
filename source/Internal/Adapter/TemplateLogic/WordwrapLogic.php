@@ -7,11 +7,11 @@
 namespace OxidEsales\EshopCommunity\Internal\Adapter\TemplateLogic;
 
 /**
- * Class WordWrapLogic
+ * Class WordwrapLogic
  *
  * @author Tomasz Kowalewski (t.kowalewski@createit.pl)
  */
-class WordWrapLogic
+class WordwrapLogic
 {
 
     /**
@@ -22,7 +22,7 @@ class WordWrapLogic
      *
      * @return string
      */
-    public function wordWrap(string $string, int $length = 80, string $wrapper = "\n", bool $cut = false): string
+    public function wordwrap(string $string, int $length = 80, string $wrapper = "\n", bool $cut = false): string
     {
         return getStr()->wordwrap($string, $length, $wrapper, $cut);
     }

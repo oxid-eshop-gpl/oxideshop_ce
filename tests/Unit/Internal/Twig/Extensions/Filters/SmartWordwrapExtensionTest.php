@@ -6,12 +6,12 @@
 
 namespace OxidEsales\EshopCommunity\Tests\Unit\Internal\Twig\Extensions\Filters;
 
-use OxidEsales\EshopCommunity\Internal\Adapter\TemplateLogic\SmartWordWrapLogic;
-use OxidEsales\EshopCommunity\Internal\Twig\Extensions\Filters\SmartWordWrapExtension;
+use OxidEsales\EshopCommunity\Internal\Adapter\TemplateLogic\SmartWordwrapLogic;
+use OxidEsales\EshopCommunity\Internal\Twig\Extensions\Filters\SmartWordwrapExtension;
 use OxidEsales\EshopCommunity\Tests\Unit\Application\Controller\contentTest_oxUtilsView;
 use PHPUnit\Framework\TestCase;
 
-class SmartWordWrapExtensionTest extends TestCase
+class SmartWordwrapExtensionTest extends TestCase
 {
 
     public function provider()
@@ -111,13 +111,13 @@ adipi[...]'
      * @param array $params
      * @param string $expectedString
      *
-     * @covers       \OxidEsales\EshopCommunity\Internal\Twig\Extensions\Filters\SmartWordWrapExtension::smartWordWrap
+     * @covers       \OxidEsales\EshopCommunity\Internal\Twig\Extensions\Filters\SmartWordwrapExtension::smartWordWrap
      * @dataProvider provider
      */
     public function testSmartWordWrap($params, $expectedString)
     {
-        $smartWordWrapLogic = new SmartWordWrapLogic();
-        $smartWordWrapExtension = new SmartWordWrapExtension($smartWordWrapLogic);
+        $smartWordWrapLogic = new SmartWordwrapLogic();
+        $smartWordWrapExtension = new SmartWordwrapExtension($smartWordWrapLogic);
         $string = $params['string'];
         $length = isset($params['length']) ? $params['length'] : 80;
         $break = isset($params['break']) ? $params['break'] : "\n";
@@ -125,7 +125,7 @@ adipi[...]'
         $tolerance = isset($params['tolerance']) ? $params['tolerance'] : 0;
         $etc = isset($params['etc']) ? $params['etc'] : '...';
 
-        $actualString = $smartWordWrapExtension->smartWordWrap($string, $length, $break, $cutRows, $tolerance, $etc);
+        $actualString = $smartWordWrapExtension->smartWordwrap($string, $length, $break, $cutRows, $tolerance, $etc);
         $this->assertEquals($expectedString, $actualString);
 
     }

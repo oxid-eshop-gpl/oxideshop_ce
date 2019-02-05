@@ -4,7 +4,7 @@
  * See LICENSE file for license details.
  */
 
-use OxidEsales\EshopCommunity\Internal\Adapter\TemplateLogic\FormDateLogic;
+use OxidEsales\EshopCommunity\Internal\Adapter\TemplateLogic\FormatDateLogic;
 use OxidEsales\EshopCommunity\Internal\Application\ContainerFactory;
 
 /**
@@ -23,8 +23,8 @@ use OxidEsales\EshopCommunity\Internal\Application\ContainerFactory;
  */
 function smarty_modifier_oxformdate( $oConvObject, $sFieldType = null, $blPassedValue = false)
 {
-    /** @var FormDateLogic $formDateLogic */
-    $formDateLogic = ContainerFactory::getInstance()->getContainer()->get(FormDateLogic::class);
+    /** @var FormatDateLogic $formDateLogic */
+    $formDateLogic = ContainerFactory::getInstance()->getContainer()->get(FormatDateLogic::class);
 
     return $formDateLogic->formdate($oConvObject, $sFieldType, $blPassedValue);
 }

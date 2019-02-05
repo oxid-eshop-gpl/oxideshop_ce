@@ -18,6 +18,8 @@
  * @param string $string String to add colon to.
  *
  * @return string
+ *
+ * @deprecated
  */
 function smarty_modifier_colon($string)
 {

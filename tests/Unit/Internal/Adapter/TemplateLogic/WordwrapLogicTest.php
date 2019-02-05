@@ -6,24 +6,24 @@
 
 namespace OxidEsales\EshopCommunity\Tests\Unit\Internal\Adapter\TemplateLogic;
 
-use OxidEsales\EshopCommunity\Internal\Adapter\TemplateLogic\WordWrapLogic;
+use OxidEsales\EshopCommunity\Internal\Adapter\TemplateLogic\WordwrapLogic;
 use OxidEsales\TestingLibrary\UnitTestCase;
 
 /**
- * Class WordWrapLogicTest
+ * Class WordwrapLogicTest
  *
  * @author Tomasz Kowalewski (t.kowalewski@createit.pl)
  */
-class WordWrapLogicTest extends UnitTestCase
+class WordwrapLogicTest extends UnitTestCase
 {
 
-    /** @var WordWrapLogic */
+    /** @var WordwrapLogic */
     private $wordWrapLogic;
 
     protected function setUp()
     {
         parent::setUp();
-        $this->wordWrapLogic = new WordWrapLogic();
+        $this->wordWrapLogic = new WordwrapLogic();
     }
 
     /**

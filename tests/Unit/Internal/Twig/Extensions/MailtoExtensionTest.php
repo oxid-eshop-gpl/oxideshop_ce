@@ -28,18 +28,6 @@ class MailtoExtensionTest extends AbstractExtensionTest
     }
 
     /**
-     * @param $template
-     * @param $expected
-     * @param array $variables
-     *
-     * @dataProvider getOxmailtoTests
-     */
-    public function testOxmailto(string $template, string $expected, array $variables = []): void
-    {
-        $this->assertEquals($expected, $this->getTemplate($template)->render($variables));
-    }
-
-    /**
      * @return array
      */
     public function getMailtoTests(): array
@@ -80,37 +68,6 @@ class MailtoExtensionTest extends AbstractExtensionTest
                 "{document.write(String.fromCharCode(60,97,32,104,114,101,102,61,34,109,97,105,108,116,111,58,109,101,64,101,120,97,109,112,108,101,46,99,111,109,34,32,62,109,101,64,101,120,97,109,112,108,101,46,99,111,109,60,47,97,62))}\n" .
                 "//-->\n" .
                 "</script>"
-            ]
-        ];
-    }
-
-    /**
-     * @return array
-     */
-    public function getOxmailtoTests(): array
-    {
-        $oxcmpShop = (object)[
-            'oxshops__oxinfoemail' => (object)['value' => "info@myoxideshop.com"]
-        ];
-
-        return [
-            [
-                "{{ oxmailto('me@example.com') }}",
-                "<a href=\"mailto:me@example.com\" >me@example.com</a>"
-            ],
-            [
-                "{{ oxmailto(oxcmp_shop.oxshops__oxinfoemail.value) }}",
-                "<a href=\"mailto:info@myoxideshop.com\" >info@myoxideshop.com</a>",
-                ['oxcmp_shop' => $oxcmpShop]
-            ],
-            [
-                "{{ oxmailto(oxcmp_shop.oxshops__oxinfoemail.value, { encode: \"javascript\" }) }}",
-                "<script type=\"text/javascript\">eval(decodeURIComponent('%64%6f%63%75%6d%65%6e%74%2e%77%72%69%74%65%28%27%3c%61%20%68%72%65%66%3d%22%6d%61%69%6c%74%6f%3a%69%6e%66%6f%40%6d%79%6f%78%69%64%65%73%68%6f%70%2e%63%6f%6d%22%20%3e%69%6e%66%6f%40%6d%79%6f%78%69%64%65%73%68%6f%70%2e%63%6f%6d%3c%2f%61%3e%27%29%3b'))</script>",
-                ['oxcmp_shop' => $oxcmpShop]
-            ],
-            [
-                "{{ oxmailto('me@example.com', { subject: 'Subject of email', extra: \"class='email'\" }) }}",
-                "<a href=\"mailto:me@example.com?subject=Subject%20of%20email\" class='email'>me@example.com</a>"
             ]
         ];
     }

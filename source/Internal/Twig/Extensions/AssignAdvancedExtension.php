@@ -39,7 +39,13 @@ class AssignAdvancedExtension extends AbstractExtension
      */
     public function getFunctions(): array
     {
-        return [new TwigFunction('assign_advanced', [$this, 'assignAdvanced'])];
+        return [
+            new TwigFunction(
+                'assign_advanced',
+                [$this, 'assignAdvanced'],
+                ['deprecated' => true, 'alternative' => 'Twig array syntax']
+            )
+        ];
     }
 
     /**

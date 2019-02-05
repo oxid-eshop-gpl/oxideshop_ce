@@ -19,8 +19,7 @@ class MailtoExtension extends AbstractExtension
     public function getFunctions(): array
     {
         return [
-            new TwigFunction('mailto', [$this, 'mailto'], ['is_safe' => ['html']]),
-            new TwigFunction('oxmailto', [$this, 'oxmailto'], ['is_safe' => ['html']])
+            new TwigFunction('mailto', [$this, 'mailto'], ['is_safe' => ['html']])
         ];
     }
 
@@ -57,29 +56,6 @@ class MailtoExtension extends AbstractExtension
             default:
                 // no encoding
                 return "<a href=\"mailto:$address\" $extra>$text</a>";
-        }
-    }
-
-    /**
-     * @param string $address
-     * @param array  $parameters
-     *
-     * @return string
-     */
-    public function oxmailto(string $address, array $parameters = []): string
-    {
-        if (isset($parameters['encode']) && $parameters['encode'] == 'javascript') {
-            $text = isset($parameters['text']) ? $parameters['text'] : $address;
-            $extra = isset($parameters['extra']) ? $parameters['extra'] : '';
-
-            $address .= $this->prepareMailParametersString($parameters);
-
-            $string = "document.write('<a href=\"mailto:$address\" $extra>$text</a>');";
-            $encodedString = "%" . wordwrap(current(unpack("H*", $string)), 2, "%", true);
-
-            return "<script type=\"text/javascript\">eval(decodeURIComponent('$encodedString'))</script>";
-        } else {
-            return $this->mailto($address, $parameters);
         }
     }
 

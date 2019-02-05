@@ -6,29 +6,29 @@
 
 namespace OxidEsales\EshopCommunity\Internal\Twig\Extensions\Filters;
 
-use OxidEsales\EshopCommunity\Internal\Adapter\TemplateLogic\SmartWordWrapLogic;
+use OxidEsales\EshopCommunity\Internal\Adapter\TemplateLogic\SmartWordwrapLogic;
 use Twig\Extension\AbstractExtension;
 
 /**
- * Class SmartWordWrapExtension
+ * Class SmartWordwrapExtension
  *
  * @package OxidEsales\EshopCommunity\Internal\Twig\Extensions\Filters
  * @author  Jędrzej Skoczek
  */
-class SmartWordWrapExtension extends AbstractExtension
+class SmartWordwrapExtension extends AbstractExtension
 {
 
     /**
-     * @var SmartWordWrapLogic
+     * @var SmartWordwrapLogic
      */
     private $smartWordWrapLogic;
 
     /**
-     * SmartWordWrapExtension constructor.
+     * SmartWordwrapExtension constructor.
      *
-     * @param SmartWordWrapLogic $smartWordWrapLogic
+     * @param SmartWordwrapLogic $smartWordWrapLogic
      */
-    public function __construct(SmartWordWrapLogic $smartWordWrapLogic)
+    public function __construct(SmartWordwrapLogic $smartWordWrapLogic)
     {
         $this->smartWordWrapLogic = $smartWordWrapLogic;
     }
@@ -38,7 +38,7 @@ class SmartWordWrapExtension extends AbstractExtension
      */
     public function getFilters()
     {
-        return [new \Twig_Filter('smart_word_wrap', [$this, 'smartWordWrap'], array('is_safe' => array('html')))];
+        return [new \Twig_Filter('smart_wordwrap', [$this, 'smartWordwrap'], array('is_safe' => array('html')))];
     }
 
     /**
@@ -51,7 +51,7 @@ class SmartWordWrapExtension extends AbstractExtension
      *
      * @return string
      */
-    public function smartWordWrap($string, $length = 80, $break = "\n", $cutRows = 0, $tolerance = 0, $etc = '...')
+    public function smartWordwrap($string, $length = 80, $break = "\n", $cutRows = 0, $tolerance = 0, $etc = '...')
     {
         return $this->smartWordWrapLogic->wrapWords($string, $length, $break, $cutRows, $tolerance, $etc);
     }

@@ -160,14 +160,6 @@ services:
     class: OxidEsales\EshopCommunity\Internal\Twig\Extensions\Filters\CatExtension
     tags: ['twig.extension']
 
-  OxidEsales\EshopCommunity\Internal\Twig\Extensions\Filters\TranslateColonExtension:
-    class: OxidEsales\EshopCommunity\Internal\Twig\Extensions\Filters\TranslateColonExtension
-    tags: ['twig.extension']
-
-  OxidEsales\EshopCommunity\Internal\Twig\Extensions\Filters\AddSlashesExtension:
-    class: OxidEsales\EshopCommunity\Internal\Twig\Extensions\Filters\AddSlashesExtension
-    tags: ['twig.extension']
-
   OxidEsales\EshopCommunity\Internal\Twig\Extensions\Filters\EncloseExtension:
     class: OxidEsales\EshopCommunity\Internal\Twig\Extensions\Filters\EncloseExtension
     tags: ['twig.extension']
@@ -178,10 +170,10 @@ services:
       - '@OxidEsales\EshopCommunity\Internal\Adapter\TemplateLogic\ScriptLogic'
     tags: ['twig.extension']
 
-  OxidEsales\EshopCommunity\Internal\Twig\Extensions\Filters\FormDateFilterExtension:
-    class: OxidEsales\EshopCommunity\Internal\Twig\Extensions\Filters\FormDateFilterExtension
+  OxidEsales\EshopCommunity\Internal\Twig\Extensions\Filters\FormatDateExtension:
+    class: OxidEsales\EshopCommunity\Internal\Twig\Extensions\Filters\FormatDateExtension
     arguments:
-      - '@OxidEsales\EshopCommunity\Internal\Adapter\TemplateLogic\FormDateLogic'
+      - '@OxidEsales\EshopCommunity\Internal\Adapter\TemplateLogic\FormatDateLogic'
     tags: ['twig.extension']
 
   OxidEsales\EshopCommunity\Internal\Twig\Extensions\Filters\TranslateExtension:
@@ -226,14 +218,14 @@ services:
       - '@OxidEsales\EshopCommunity\Internal\Adapter\TemplateLogic\TranslateSalutationLogic'
     tags: ['twig.extension']
 
-  OxidEsales\EshopCommunity\Internal\Twig\Extensions\Filters\NumberFormatExtension:
-    class: OxidEsales\EshopCommunity\Internal\Twig\Extensions\Filters\NumberFormatExtension
+  OxidEsales\EshopCommunity\Internal\Twig\Extensions\Filters\FormatCurrencyExtension:
+    class: OxidEsales\EshopCommunity\Internal\Twig\Extensions\Filters\FormatCurrencyExtension
     arguments:
-      - '@OxidEsales\EshopCommunity\Internal\Adapter\TemplateLogic\NumberFormatLogic'
+      - '@OxidEsales\EshopCommunity\Internal\Adapter\TemplateLogic\FormatCurrencyLogic'
     tags: ['twig.extension']
 
-  OxidEsales\EshopCommunity\Internal\Twig\Extensions\Filters\WordWrapExtension:
-    class: OxidEsales\EshopCommunity\Internal\Twig\Extensions\Filters\WordWrapExtension
+  OxidEsales\EshopCommunity\Internal\Twig\Extensions\Filters\WordwrapExtension:
+    class: OxidEsales\EshopCommunity\Internal\Twig\Extensions\Filters\WordwrapExtension
     arguments:
       - '@OxidEsales\EshopCommunity\Internal\Adapter\TemplateLogic\WordWrapLogic'
     tags: ['twig.extension']
@@ -244,8 +236,8 @@ services:
       - '@OxidEsales\EshopCommunity\Internal\Adapter\TemplateLogic\IncludeWidgetLogic'
     tags: ['twig.extension']
 
-  OxidEsales\EshopCommunity\Internal\Twig\Extensions\Filters\SmartWordWrapExtension:
-    class: OxidEsales\EshopCommunity\Internal\Twig\Extensions\Filters\SmartWordWrapExtension
+  OxidEsales\EshopCommunity\Internal\Twig\Extensions\Filters\SmartWordwrapExtension:
+    class: OxidEsales\EshopCommunity\Internal\Twig\Extensions\Filters\SmartWordwrapExtension
     arguments:
       - '@OxidEsales\EshopCommunity\Internal\Adapter\TemplateLogic\SmartWordWrapLogic'
     tags: ['twig.extension']

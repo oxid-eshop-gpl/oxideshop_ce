@@ -30,7 +30,9 @@ class PhpFunctionsExtension extends AbstractExtension
             new TwigFilter('parse_url', 'parse_url'),
             new TwigFilter('oxNew', 'oxNew'),
             new TwigFilter('strtotime', 'strtotime'),
-            new TwigFilter('is_array', 'is_array')
+            new TwigFilter('is_array', 'is_array'),
+            new TwigFilter('urlencode', 'urlencode'),
+            new TwigFilter('addslashes', 'addslashes')
         ];
     }
 }

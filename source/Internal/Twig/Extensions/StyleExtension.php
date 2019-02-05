@@ -38,7 +38,7 @@ class StyleExtension extends AbstractExtension
      */
     public function getFunctions()
     {
-        return [new TwigFunction('style', [$this, 'style'], ['needs_environment' => true])];
+        return [new TwigFunction('style', [$this, 'style'], ['needs_environment' => true, 'is_safe' => ['html']])];
     }
 
     /**
@@ -47,7 +47,7 @@ class StyleExtension extends AbstractExtension
      *
      * @return string
      */
-    public function style(\Twig_Environment $env, $params)
+    public function style(\Twig_Environment $env, $params = [])
     {
         $globals = $env->getGlobals();
         $isDynamic = false;

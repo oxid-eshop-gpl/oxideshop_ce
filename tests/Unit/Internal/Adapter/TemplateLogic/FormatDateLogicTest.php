@@ -7,28 +7,28 @@
 namespace OxidEsales\EshopCommunity\Tests\Unit\Internal\Adapter\TemplateLogic;
 
 use OxidEsales\Eshop\Core\Field;
-use OxidEsales\EshopCommunity\Internal\Adapter\TemplateLogic\FormDateLogic;
+use OxidEsales\EshopCommunity\Internal\Adapter\TemplateLogic\FormatDateLogic;
 use PHPUnit\Framework\TestCase;
 
 /**
- * Class FormDateLogicTest
+ * Class FormatDateLogicTest
  *
  * @author Tomasz Kowalewski (t.kowalewski@createit.pl)
  */
-class FormDateLogicTest extends TestCase
+class FormatDateLogicTest extends TestCase
 {
 
-    /** @var FormDateLogic */
+    /** @var FormatDateLogic */
     private $formDateLogic;
 
     protected function setUp(): void
     {
         parent::setUp();
-        $this->formDateLogic = new FormDateLogic();
+        $this->formDateLogic = new FormatDateLogic();
     }
 
     /**
-     * @covers FormDateLogic::formdate
+     * @covers FormatDateLogic::formdate
      */
     public function testFormdateWithDatetime(): void
     {
@@ -39,7 +39,7 @@ class FormDateLogicTest extends TestCase
     }
 
     /**
-     * @covers FormDateLogic::formdate
+     * @covers FormatDateLogic::formdate
      */
     public function testFormdateWithTimestamp(): void
     {
@@ -50,7 +50,7 @@ class FormDateLogicTest extends TestCase
     }
 
     /**
-     * @covers FormDateLogic::formdate
+     * @covers FormatDateLogic::formdate
      */
     public function testFormdateWithDate(): void
     {
@@ -61,7 +61,7 @@ class FormDateLogicTest extends TestCase
     }
 
     /**
-     * @covers FormDateLogic::formdate
+     * @covers FormatDateLogic::formdate
      */
     public function testFormdateUsingObject(): void
     {
