@@ -77,7 +77,7 @@ EOF
         $node = new IncludeDynamicNode($expr, $vars, false, false, 1);
         $tests[] = [$node, <<<EOF
 // line 1
-\$parameters = array("foo" => true);
+\$parameters = ["foo" => true];
 if (!empty(\$context["_render4cache"])) {
     echo \$this->extensions['$includeExtensionClass']->renderForCache(\$parameters);
 } else {
@@ -90,7 +90,7 @@ EOF
         $node = new IncludeDynamicNode($expr, $vars, true, false, 1);
         $tests[] = [$node, <<<EOF
 // line 1
-\$parameters = array("foo" => true);
+\$parameters = ["foo" => true];
 if (!empty(\$context["_render4cache"])) {
     echo \$this->extensions['$includeExtensionClass']->renderForCache(\$parameters);
 } else {
@@ -104,7 +104,7 @@ EOF
         $tests[] = [$node, <<<EOF
 // line 1
 try {
-    \$parameters = array("foo" => true);
+    \$parameters = ["foo" => true];
     if (!empty(\$context["_render4cache"])) {
         echo \$this->extensions['$includeExtensionClass']->renderForCache(\$parameters);
     } else {
