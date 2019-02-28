@@ -33,14 +33,6 @@ class TwigEngine implements BaseEngineInterface
     protected $parser;
 
     /**
-     * Array of global parameters
-     *
-     * @var array
-     */
-    private $globals = [];
-
-
-    /**
      * TwigEngine constructor.
      *
      * @param Environment                 $engine
@@ -108,7 +100,7 @@ class TwigEngine implements BaseEngineInterface
      */
     public function addGlobal($name, $value): void
     {
-        $this->globals[$name] = $value;
+        $this->engine->addGlobal($name, $value);
     }
 
     /**
@@ -116,7 +108,7 @@ class TwigEngine implements BaseEngineInterface
      */
     public function getGlobals(): array
     {
-        return $this->globals;
+        return $this->engine->getGlobals();
     }
 
     /**

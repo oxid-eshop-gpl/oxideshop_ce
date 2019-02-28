@@ -30,6 +30,11 @@ services:
       - '@twig.loader'
       - "@=service('OxidEsales\\\\EshopCommunity\\\\Internal\\\\Twig\\\\TemplateEngineConfigurationInterface').getParameters()"
     public: false
+    calls:
+      - method: addGlobal
+        arguments:
+          - 'twig'
+          - capture: []
 
   OxidEsales\EshopCommunity\Internal\Twig\TwigEngine:
     class: OxidEsales\EshopCommunity\Internal\Twig\TwigEngine
