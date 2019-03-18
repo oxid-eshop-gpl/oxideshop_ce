@@ -7,7 +7,7 @@
 namespace OxidEsales\EshopCommunity\Application\Controller\Admin;
 
 use OxidEsales\Eshop\Core\Registry;
-use OxidEsales\EshopCommunity\Internal\Templating\EngineInterface;
+use OxidEsales\EshopCommunity\Internal\Templating\TraditionalEngineInterface;
 
 /**
  * Checks Version of System files.
@@ -88,7 +88,7 @@ class DiagnosticsMain extends \OxidEsales\Eshop\Application\Controller\Admin\Adm
 
         $this->_sShopDir = \OxidEsales\Eshop\Core\Registry::getConfig()->getConfigParam('sShopDir');
         $this->_oOutput = oxNew(\OxidEsales\Eshop\Application\Model\DiagnosticsOutput::class);
-        $this->_oRenderer = $this->getContainer()->get(EngineInterface::class);
+        $this->_oRenderer = $this->getContainer()->get(TraditionalEngineInterface::class);
     }
 
     /**

@@ -6,7 +6,7 @@
 
 namespace OxidEsales\EshopCommunity\Internal\Smarty;
 
-use OxidEsales\EshopCommunity\Internal\Templating\BaseEngineInterface;
+use OxidEsales\EshopCommunity\Internal\Templating\EngineInterface;
 use Symfony\Component\Templating\TemplateNameParserInterface;
 
 /**
@@ -14,7 +14,7 @@ use Symfony\Component\Templating\TemplateNameParserInterface;
  *
  * @package OxidEsales\EshopCommunity\Internal\Smarty
  */
-class SmartyEngine implements BaseEngineInterface
+class SmartyEngine implements EngineInterface
 {
     /**
      * @var string
@@ -29,11 +29,6 @@ class SmartyEngine implements BaseEngineInterface
     private $engine;
 
     /**
-     * @var TemplateNameParserInterface
-     */
-    protected $parser;
-
-    /**
      * Array of global parameters
      *
      * @var array
@@ -43,22 +38,32 @@ class SmartyEngine implements BaseEngineInterface
     /**
      * Constructor.
      *
-     * @param \Smarty                     $engine
-     * @param TemplateNameParserInterface $parser
+     * @param \Smarty $engine
      */
-    public function __construct(\Smarty $engine, TemplateNameParserInterface $parser)
+    public function __construct(\Smarty $engine)
     {
         $this->engine = $engine;
-        $this->parser = $parser;
     }
 
     /**
-     * Render the template.
-     *
-     * @param string $name       The name of the template
-     * @param array  $parameters Parameters to assign
+     * Returns the template file extension.
      *
      * @return string
+     */
+    public function getDefaultFileExtension()
+    {
+        return 'tpl';
+    }
+
+    /**
+     * Renders a template.
+     *
+     * @param string $name       A template name
+     * @param array  $parameters An array of parameters to pass to the template
+     *
+     * @return string The evaluated template as a string
+     *
+     * @throws \RuntimeException if the template cannot be rendered
      */
     public function render($name, array $parameters = array())
     {
@@ -84,7 +89,7 @@ class SmartyEngine implements BaseEngineInterface
     }
 
     /**
-     * Returns the assigned globals.
+     * Returns assigned globals.
      *
      * @return array
      */
@@ -94,12 +99,13 @@ class SmartyEngine implements BaseEngineInterface
     }
 
     /**
-     * Checks whether the specified template exists.
-     * It can accept either a path to the template on the filesystem or a resource string specifying the template.
+     * Returns true if the template exists.
      *
      * @param string $name A template name
      *
-     * @return bool True if the template exists, false otherwise
+     * @return bool true if the template exists, false otherwise
+     *
+     * @throws \RuntimeException if the engine cannot handle the template name
      */
     public function exists($name)
     {
@@ -112,20 +118,6 @@ class SmartyEngine implements BaseEngineInterface
     public function setCacheId($cacheId)
     {
         $this->cacheId = $cacheId;
-    }
-
-    /**
-     * Returns true if this class is able to render the given template.
-     *
-     * @param string $name A template name
-     *
-     * @return Boolean True if this class supports the given resource, false otherwise
-     */
-    public function supports($name)
-    {
-        $template = $this->parser->parse($name);
-
-        return in_array($template->get('engine'), array('smarty', 'tpl'), true);
     }
 
     /**

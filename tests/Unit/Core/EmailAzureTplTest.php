@@ -8,7 +8,7 @@ namespace OxidEsales\EshopCommunity\Tests\Unit\Core;
 use \oxField;
 use OxidEsales\Eshop\Core\Registry;
 use OxidEsales\Eshop\Core\UtilsView;
-use OxidEsales\EshopCommunity\Internal\Templating\EngineInterface;
+use OxidEsales\EshopCommunity\Internal\Templating\TraditionalEngineInterface;
 use \oxPrice;
 use \stdClass;
 use \oxDb;
@@ -874,8 +874,8 @@ class EmailAzureTplTest extends \OxidTestCase
 
         oxTestModules::addModuleObject("oxShop", $this->_oShop);
 
-        $templateEngine = $this->getMockBuilder(EngineInterface::class)
-            ->setMethods(['renderTemplate', 'addFallBackEngine', 'render', 'exists', 'supports'])
+        $templateEngine = $this->getMockBuilder(TraditionalEngineInterface::class)
+            ->setMethods(['renderTemplate', 'getEngine', 'exists'])
             ->disableOriginalConstructor()
             ->getMock();
         $templateEngine->expects($this->any())->method('renderTemplate')->will($this->returnValue("body"));

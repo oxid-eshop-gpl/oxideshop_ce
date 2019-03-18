@@ -7,34 +7,18 @@
 namespace OxidEsales\EshopCommunity\Internal\Templating;
 
 /**
- * Interface EngineInterface
+ * Interface TraditionalEngineInterface
  */
-interface EngineInterface
+interface TraditionalEngineInterface
 {
     /**
-     * @param string $name
-     * @param mixed  $value
-     */
-    public function addGlobal($name, $value);
-
-    /**
-     * Returns assigned globals.
-     *
-     * @return array
-     */
-    public function getGlobals();
-
-    /**
-     * @param string $cacheId
-     */
-    public function setCacheId($cacheId);
-
-    /**
-     * Returns the template file extension.
+     * @param string $template The template name
+     * @param array  $viewData An array of parameters to pass to the template
+     * @param string $cacheId  The id for template caching
      *
      * @return string
      */
-    public function getDefaultFileExtension();
+    public function renderTemplate(string $template, array $viewData = [], $cacheId = null);
 
     /**
      * Renders a template.
@@ -46,7 +30,12 @@ interface EngineInterface
      *
      * @throws \RuntimeException if the template cannot be rendered
      */
-    public function render($name, array $parameters = []);
+   // public function render($name, array $parameters = []);
+
+    /**
+     * @return EngineInterface
+     */
+    public function getEngine();
 
     /**
      * Returns true if the template exists.

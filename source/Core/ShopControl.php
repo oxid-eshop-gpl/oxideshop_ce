@@ -11,7 +11,7 @@ use OxidEsales\Eshop\Core\Exception\DatabaseConnectionException;
 use OxidEsales\Eshop\Core\Exception\RoutingException;
 use OxidEsales\Eshop\Core\Exception\StandardException;
 use OxidEsales\Eshop\Core\Cache\DynamicContent\ContentCache;
-use OxidEsales\EshopCommunity\Internal\Templating\EngineInterface;
+use OxidEsales\EshopCommunity\Internal\Templating\TraditionalEngineInterface;
 use oxOutput;
 use oxSystemComponentException;
 use PHPMailer\PHPMailer\PHPMailer;
@@ -507,11 +507,11 @@ class ShopControl extends \OxidEsales\Eshop\Core\Base
     /**
      * @internal
      *
-     * @return EngineInterface
+     * @return TraditionalEngineInterface
      */
     protected function getTemplating()
     {
-        return $this->getContainer()->get(EngineInterface::class);
+        return $this->getContainer()->get(TraditionalEngineInterface::class);
     }
 
     /**

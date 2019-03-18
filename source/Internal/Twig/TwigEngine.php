@@ -8,18 +8,15 @@
 
 namespace OxidEsales\EshopCommunity\Internal\Twig;
 
-use OxidEsales\EshopCommunity\Internal\Templating\BaseEngineInterface;
-
+use OxidEsales\EshopCommunity\Internal\Templating\EngineInterface;
 use OxidEsales\EshopCommunity\Internal\Twig\Escaper\EscaperInterface;
-use Symfony\Component\Templating\TemplateNameParserInterface;
-use Symfony\Component\Templating\TemplateReferenceInterface;
 use Twig\Environment;
 use Twig\Extension\CoreExtension;
 
 /**
  * Class TwigEngine
  */
-class TwigEngine implements BaseEngineInterface
+class TwigEngine implements EngineInterface
 {
 
     /**
@@ -28,20 +25,13 @@ class TwigEngine implements BaseEngineInterface
     private $engine;
 
     /**
-     * @var TemplateNameParserInterface
-     */
-    protected $parser;
-
-    /**
      * TwigEngine constructor.
      *
-     * @param Environment                 $engine
-     * @param TemplateNameParserInterface $parser
+     * @param Environment $engine
      */
-    public function __construct(Environment $engine, TemplateNameParserInterface $parser)
+    public function __construct(Environment $engine)
     {
         $this->engine = $engine;
-        $this->parser = $parser;
 
         if ($this->engine->isDebug()) {
             $this->engine->addExtension(new \Twig_Extension_Debug());
@@ -49,12 +39,24 @@ class TwigEngine implements BaseEngineInterface
     }
 
     /**
+     * Returns the template file extension.
+     *
+     * @return string
+     */
+    public function getDefaultFileExtension(): string
+    {
+        return 'html.twig';
+    }
+
+    /**
      * Renders a template.
      *
-     * @param string $name       A template name or a TemplateReferenceInterface instance
+     * @param string $name       A template name
      * @param array  $parameters An array of parameters to pass to the template
      *
      * @return string The evaluated template as a string
+     *
+     * @throws \RuntimeException if the template cannot be rendered
      */
     public function render($name, array $parameters = array()): string
     {
@@ -64,27 +66,15 @@ class TwigEngine implements BaseEngineInterface
     /**
      * Returns true if the template exists.
      *
-     * @param string $name A template name or a TemplateReferenceInterface instance
+     * @param string $name A template name
      *
      * @return bool true if the template exists, false otherwise
+     *
+     * @throws \RuntimeException if the engine cannot handle the template name
      */
     public function exists($name): bool
     {
         return $this->engine->getLoader()->exists($name);
-    }
-
-    /**
-     * Returns true if this class is able to render the given template.
-     *
-     * @param string|TemplateReferenceInterface $name A template name or a TemplateReferenceInterface instance
-     *
-     * @return bool true if this class supports the given template, false otherwise
-     */
-    public function supports($name): bool
-    {
-        $template = $this->parser->parse($name);
-
-        return 'twig' === $template->get('engine');
     }
 
     /**
@@ -104,6 +94,8 @@ class TwigEngine implements BaseEngineInterface
     }
 
     /**
+     * Returns assigned globals.
+     *
      * @return array
      */
     public function getGlobals(): array

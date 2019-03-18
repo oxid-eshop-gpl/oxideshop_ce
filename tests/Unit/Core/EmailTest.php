@@ -8,7 +8,7 @@ namespace OxidEsales\EshopCommunity\Tests\Unit\Core;
 
 use oxDb;
 use oxField;
-use OxidEsales\EshopCommunity\Internal\Templating\EngineInterface;
+use OxidEsales\EshopCommunity\Internal\Templating\TraditionalEngineInterface;
 use OxidEsales\Eshop\Application\Model\BasketItem;
 use OxidEsales\Eshop\Application\Model\Shop;
 use OxidEsales\Eshop\Core\Price;
@@ -1076,8 +1076,8 @@ class EmailTest extends \OxidTestCase
      */
     public function testSendOrderEmailToOwnerCorrectSenderReceiver()
     {
-        $templateEngine = $this->getMockBuilder(EngineInterface::class)
-            ->setMethods(['renderTemplate', 'addFallBackEngine', 'render', 'exists', 'supports'])
+        $templateEngine = $this->getMockBuilder(TraditionalEngineInterface::class)
+            ->setMethods(['renderTemplate', 'getEngine', 'exists'])
             ->disableOriginalConstructor()
             ->getMock();
         $templateEngine->expects($this->any())->method('renderTemplate')->will($this->returnValue(true));
@@ -1109,8 +1109,8 @@ class EmailTest extends \OxidTestCase
      */
     public function testSendSuggestMailCorrectSender()
     {
-        $templateEngine = $this->getMockBuilder(EngineInterface::class)
-            ->setMethods(['renderTemplate', 'addFallBackEngine', 'render', 'exists', 'supports'])
+        $templateEngine = $this->getMockBuilder(TraditionalEngineInterface::class)
+            ->setMethods(['renderTemplate', 'getEngine', 'exists'])
             ->disableOriginalConstructor()
             ->getMock();
         $templateEngine->expects($this->any())->method('renderTemplate')->will($this->returnValue(true));

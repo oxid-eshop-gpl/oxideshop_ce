@@ -6,6 +6,7 @@
 
 namespace OxidEsales\EshopCommunity\Tests\Unit\Internal\Twig\Extension;
 
+use OxidEsales\Eshop\Core\Registry;
 use OxidEsales\EshopCommunity\Internal\Adapter\TemplateLogic\FormatPriceLogic;
 use OxidEsales\EshopCommunity\Internal\Twig\Extensions\FormatPriceExtension;
 use PHPUnit\Framework\TestCase;

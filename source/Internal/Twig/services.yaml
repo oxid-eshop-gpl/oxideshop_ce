@@ -20,10 +20,6 @@ services:
       - '@OxidEsales\EshopCommunity\Internal\Twig\TwigContextInterface'
     public: true
 
-  Symfony\Component\Templating\TemplateNameParserInterface:
-    class: Symfony\Component\Templating\TemplateNameParser
-    public: false
-
   twig:
     class: Twig\Environment
     arguments:
@@ -40,7 +36,6 @@ services:
     class: OxidEsales\EshopCommunity\Internal\Twig\TwigEngine
     arguments:
       - '@twig'
-      - '@Symfony\Component\Templating\TemplateNameParserInterface'
     public: false
 
   OxidEsales\EshopCommunity\Internal\Twig\TemplateLoaderNameParser:

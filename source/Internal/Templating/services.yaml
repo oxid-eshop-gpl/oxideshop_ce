@@ -1,11 +1,14 @@
 services:
-  OxidEsales\EshopCommunity\Internal\Templating\EngineInterface:
-    class: OxidEsales\EshopCommunity\Internal\Templating\DelegatingEngine
+  OxidEsales\EshopCommunity\Internal\Templating\TraditionalEngineInterface:
+    class: OxidEsales\EshopCommunity\Internal\Templating\TraditionalEngine
     arguments:
-      - ['@OxidEsales\EshopCommunity\Internal\Smarty\SmartyEngine', '@OxidEsales\EshopCommunity\Internal\Twig\TwigEngine']
-    calls:
-      - method: addFallBackEngine
-        arguments:
-          - '@OxidEsales\EshopCommunity\Internal\Smarty\SmartyEngine'
+      - '@OxidEsales\EshopCommunity\Internal\Smarty\SmartyEngine'
+      - '@OxidEsales\EshopCommunity\Internal\Templating\TemplateNameResolverInterface'
     public: true
     tags: ['templating']
+  OxidEsales\EshopCommunity\Internal\Templating\TemplateNameResolverInterface:
+    class: OxidEsales\EshopCommunity\Internal\Templating\LegacyTemplateNameResolver
+    arguments:
+      - '@OxidEsales\EshopCommunity\Internal\Templating\TemplateNameResolver'
+  OxidEsales\EshopCommunity\Internal\Templating\TemplateNameResolver:
+    class: OxidEsales\EshopCommunity\Internal\Templating\TemplateNameResolver

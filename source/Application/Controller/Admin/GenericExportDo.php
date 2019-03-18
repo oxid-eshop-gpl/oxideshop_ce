@@ -73,11 +73,11 @@ class GenericExportDo extends \OxidEsales\Eshop\Application\Controller\Admin\Dyn
     /**
      * @internal
      *
-     * @return \OxidEsales\EshopCommunity\Internal\Templating\EngineInterface
+     * @return \OxidEsales\EshopCommunity\Internal\Templating\TraditionalEngineInterface
      */
     protected function getTemplating()
     {
-        return $this->getContainer()->get(\OxidEsales\EshopCommunity\Internal\Templating\EngineInterface::class);
+        return $this->getContainer()->get(\OxidEsales\EshopCommunity\Internal\Templating\TraditionalEngineInterface::class);
     }
 
     /**

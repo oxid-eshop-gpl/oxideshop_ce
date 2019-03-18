@@ -46,9 +46,6 @@ class SmartyEngineTests extends \PHPUnit\Framework\TestCase
 
     private function getEngine()
     {
-        /** @var TemplateNameParserInterface $parser */
-        $parser = $this->getMockBuilder('Symfony\Component\Templating\TemplateNameParserInterface')->getMock();
-
-        return new SmartyEngine(new \Smarty(), $parser);
+        return new SmartyEngine(new \Smarty());
     }
 }
