@@ -52,7 +52,6 @@ class ContainerBuilder
         $symfonyContainer->addCompilerPass(new RegisterListenersPass(EventDispatcherInterface::class));
         $symfonyContainer->addCompilerPass(new GraphQlTypePass());
         $symfonyContainer->addCompilerPass(new AddConsoleCommandPass());
-        $symfonyContainer->addCompilerPass(new RegisterListenersPass());
 
         try {
             $symfonyContainer

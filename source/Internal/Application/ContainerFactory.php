@@ -48,17 +48,6 @@ class ContainerFactory
     }
 
     /**
-     * Reads the container definition again and writes
-     * new cache file
-     */
-    public function resetContainer()
-    {
-        $cacheFilePath = $this->getCacheFilePath();
-        $this->getCompiledSymfonyContainer();
-        $this->saveContainerToCache($cacheFilePath);
-    }
-
-    /**
      * Loads container from cache if available, otherwise
      * create the container from scratch.
      */
@@ -101,7 +90,7 @@ class ContainerFactory
     private function saveContainerToCache($cachefile)
     {
         $dumper = new PhpDumper($this->symfonyContainer);
-        file_put_contents($cachefile, $dumper->dump(), LOCK_EX);
+        file_put_contents($cachefile, $dumper->dump());
     }
 
     /**
