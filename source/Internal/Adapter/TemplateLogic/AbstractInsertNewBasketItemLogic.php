@@ -55,7 +55,7 @@ abstract class AbstractInsertNewBasketItemLogic
 
         // returning generated message content
         if ($render && $correctMessageType) {
-            $renderedTemplate = $this->renderTemplate($templateEngine, $templateName);
+            $renderedTemplate = $this->renderTemplate($templateName, $templateEngine);
         }
 
         return $renderedTemplate;
