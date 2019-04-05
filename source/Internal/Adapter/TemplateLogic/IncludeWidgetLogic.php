@@ -6,6 +6,8 @@
 
 namespace OxidEsales\EshopCommunity\Internal\Adapter\TemplateLogic;
 
+use OxidEsales\EshopCommunity\Core\WidgetControl;
+
 /**
  * Class IncludeWidgetLogic
  *
@@ -34,6 +36,9 @@ class IncludeWidgetLogic
             unset($params["_parent"]);
         }
 
+        /**
+         * @var WidgetControl $widgetControl
+         */
         $widgetControl = \OxidEsales\Eshop\Core\Registry::get(\OxidEsales\Eshop\Core\WidgetControl::class);
 
         return $widgetControl->start($class, null, $params, $parentViews);

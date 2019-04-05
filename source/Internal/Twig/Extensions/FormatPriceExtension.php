@@ -45,12 +45,12 @@ class FormatPriceExtension extends AbstractExtension
     }
 
     /**
-     * @param int   $price
+     * @param mixed $price
      * @param array $params
      *
      * @return string
      */
-    public function formatPrice(int $price, array $params = []): string
+    public function formatPrice($price, array $params = []): string
     {
         $params['price'] = $price;
 

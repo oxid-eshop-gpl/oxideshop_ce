@@ -32,7 +32,8 @@ class PhpFunctionsExtension extends AbstractExtension
             new TwigFilter('strtotime', 'strtotime'),
             new TwigFilter('is_array', 'is_array'),
             new TwigFilter('urlencode', 'urlencode'),
-            new TwigFilter('addslashes', 'addslashes')
+            new TwigFilter('addslashes', 'addslashes'),
+            new TwigFilter('getimagesize', 'getimagesize')
         ];
     }
 }

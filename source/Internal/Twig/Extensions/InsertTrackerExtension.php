@@ -32,7 +32,7 @@ class InsertTrackerExtension extends AbstractExtension
      *
      * @return string
      */
-    public function insertTracker(\Twig_Environment $env, $params): string
+    public function insertTracker(\Twig_Environment $env = NULL, $params = []): string
     {
         return '';
     }

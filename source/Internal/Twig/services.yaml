@@ -27,10 +27,9 @@ services:
       - "@=service('OxidEsales\\\\EshopCommunity\\\\Internal\\\\Twig\\\\TemplateEngineConfigurationInterface').getParameters()"
     public: false
     calls:
-      - method: addGlobal
-        arguments:
-          - 'twig'
-          - capture: []
+      - [addGlobal, ['twig', {capture: {}}]]
+      - [addGlobal, ['oView', {}]]
+
 
   OxidEsales\EshopCommunity\Internal\Twig\TwigEngine:
     class: OxidEsales\EshopCommunity\Internal\Twig\TwigEngine
@@ -174,6 +173,12 @@ services:
     class: OxidEsales\EshopCommunity\Internal\Twig\Extensions\Filters\FormatDateExtension
     arguments:
       - '@OxidEsales\EshopCommunity\Internal\Adapter\TemplateLogic\FormatDateLogic'
+    tags: ['twig.extension']
+
+  OxidEsales\EshopCommunity\Internal\Twig\Extensions\Filters\DateFormatExtension:
+    class: OxidEsales\EshopCommunity\Internal\Twig\Extensions\Filters\DateFormatExtension
+    arguments:
+      - '@OxidEsales\EshopCommunity\Internal\Adapter\TemplateLogic\DateFormatHelper'
     tags: ['twig.extension']
 
   OxidEsales\EshopCommunity\Internal\Twig\Extensions\Filters\TranslateExtension:

@@ -26,13 +26,13 @@ class RegexReplaceExtension extends AbstractExtension
     }
 
     /**
-     * @param string $subject
+     * @param mixed $subject
      * @param string $pattern
      * @param string $replacement
      *
      * @return string|string[]|null
      */
-    public function regexReplace(string $subject, string $pattern, string $replacement)
+    public function regexReplace($subject, string $pattern, string $replacement)
     {
         return preg_replace($pattern, $replacement, $subject);
     }
