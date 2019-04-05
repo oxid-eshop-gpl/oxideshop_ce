@@ -33,7 +33,7 @@ class FormatDateExtension extends AbstractExtension
     public function getFilters(): array
     {
         return [
-            new TwigFilter('format_date', [$this, 'formatDate'], ['is_safe' => ['html']]),
+            new TwigFilter('date_format', [$this, 'formatDate'], ['is_safe' => ['html']]),
         ];
     }
 
