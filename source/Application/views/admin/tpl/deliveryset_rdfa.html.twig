@@ -1,0 +1,81 @@
+{% if shopid != "1" or readonly %}
+    {% set readonly = "readonly disabled" %}
+{% else %}
+    {% set readonly = "" %}
+{% endif %}
+{% include "headitem.html.twig" with {title: "GENERAL_ADMIN_TITLE"|translate} %}
+
+{% set aAllRDFaDeliveries = oView.getAllRDFaDeliveries() %}
+<form name="transfer" id="transfer" action="{{ oViewConf.getSelfLink() }}" method="post">
+    {{ oViewConf.getHiddenSid() }}
+    <input type="hidden" name="oxid" value="{{ oxid }}">
+    <input type="hidden" name="cl" value="deliveryset_rdfa">
+    <input type="hidden" name="editlanguage" value="{{ editlanguage }}">
+</form>
+
+<form name="myedit" id="myedit" action="{{ oViewConf.getSelfLink() }}" method="post">
+{{ oViewConf.getHiddenSid() }}
+<input type="hidden" name="cl" value="deliveryset_rdfa">
+<input type="hidden" name="fnc" value="">
+<input type="hidden" name="oxid" value="{{ oxid }}">
+<input type="hidden" name="editval[oxobject2delivery__oxdeliveryid]" value="{{ oxid }}">
+<input type="hidden" name="editval[oxobject2delivery__oxtype]" value="rdfadeliveryset">
+
+<strong>{{ translate({ ident: "DELIVERY_RDFA_ASIGN_DELIVERY" }) }}</strong><br>
+    {% set oxDeliverySet = edit.oxpayments__oxdesc.value %}{{ translate({ ident: "DELIVERY_RDFA_ADVICE", args: oxDeliverySet }) }}.
+<table cellspacing="0" cellpadding="0" border="0" width="98%">
+<tr>
+    <td valign="top" class="edittext">
+        <b>{{ translate({ ident: "DELIVERY_RDFA_GENERAL" }) }}</b>
+        <table cellspacing="0" cellpadding="0" border="0">
+        {% block admin_payment_main_form %}
+            {% for key, oDelivery in aAllRDFaDeliveries %}
+                {% set name = oDelivery.name %}
+                {% set ident = DELIVERY_RDFA_$name %}
+                {% set ident = ident|upper %}
+                {% if oDelivery.type == 0 %}
+                <tr>
+                    <td class="edittext" width="70">
+                    {{ translate({ ident: ident }) }}
+                    </td>
+                    <td class="edittext">
+                    <input type="checkbox" class="edittext" name="ardfadeliveries[]" value="{{ oDelivery.name }}" {% if oDelivery.checked %}checked{% endif %} {{ readonly }}>
+                    </td>
+                </tr>
+                {% endif %}
+            {% endfor %}
+        {% endblock %}
+        </table>
+    </td>
+    <td valign="top" class="edittext" align="left" width="50%">
+        <b>{{ translate({ ident: "DELIVERY_RDFA_PARCELSERVICE" }) }}</b>
+        <table cellspacing="0" cellpadding="0" border="0">
+        {% block admin_payment_main_form %}
+            {% for key, oDelivery in aAllRDFaDeliveries %}
+                {% set name = oDelivery.name %}
+                {% set ident = DELIVERY_RDFA_$name %}
+                {% set ident = ident|upper %}
+                {% if oDelivery.type == 1 %}
+                <tr>
+                    <td class="edittext" width="70">
+                    {{ translate({ ident: ident }) }}
+                    </td>
+                    <td class="edittext">
+                    <input type="checkbox" class="edittext" name="ardfadeliveries[]" value="{{ oDelivery.name }}" {% if oDelivery.checked %}checked{% endif %} {{ readonly }}>
+                    </td>
+                </tr>
+                {% endif %}
+            {% endfor %}
+        {% endblock %}
+        </table>
+    </td>
+
+    </tr>
+</table>
+
+<input type="submit" class="edittext" name="save" value="{{ translate({ ident: "GENERAL_SAVE" }) }}" onClick="Javascript:document.myedit.fnc.value='save'" {{ readonly }}>
+
+</form>
+
+{% include "bottomnaviitem.html.twig" %}
+{% include "bottomitem.html.twig" %}
