@@ -27,8 +27,8 @@ function editThis(sID)
 
 {% set _clear_ = smarty_cycle(["", "2"]) %}
 
-<form name="transfer" id="transfer" action="{{ oViewConf.getSelfLink() }}" method="post">
-    {{ oViewConf.getHiddenSid() }}
+<form name="transfer" id="transfer" action="{{ oViewConf.getSelfLink()|raw }}" method="post">
+    {{ oViewConf.getHiddenSid()|raw }}
     <input type="hidden" name="oxid" value="{{ oxid }}">
     <input type="hidden" name="cl" value="shop_seo">
     <input type="hidden" name="fnc" value="">
@@ -37,8 +37,8 @@ function editThis(sID)
     <input type="hidden" name="editlanguage" value="{{ editlanguage }}">
 </form>
 
-<form name="myedit" id="myedit" action="{{ oViewConf.getSelfLink() }}" method="post">
-    {{ oViewConf.getHiddenSid() }}
+<form name="myedit" id="myedit" action="{{ oViewConf.getSelfLink()|raw }}" method="post">
+    {{ oViewConf.getHiddenSid()|raw }}
     <input type="hidden" name="cl" value="shop_seo">
     <input type="hidden" name="fnc" value="">
     <input type="hidden" name="oxid" value="{{ oxid }}">
@@ -206,7 +206,7 @@ function editThis(sID)
             {% for lang, olang in languages %}
             <tr class="conftext{{ smarty_cycle() }}">
              <td>
-              <input type=text class="confinput" style="width:270px;" name="aStaticUrl[oxseo__oxseourl][{{ lang }}]" value="{{ aSeoUrls.$lang.1 }}" {{ readonly }}>
+              <input type=text class="confinput" style="width:270px;" name="aStaticUrl[oxseo__oxseourl][{{ lang }}]" value="{{ aSeoUrls['lang'][1] }}" {{ readonly }}>
              </td>
              <td>
               {{ olang.name }}

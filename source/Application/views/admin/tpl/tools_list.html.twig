@@ -11,8 +11,8 @@ window.onload = function ()
 }
 //-->
 </script>
-<form name="search" id="search" action="{{ oViewConf.getSelfLink() }}" method="post">
-    {{ oViewConf.getHiddenSid() }}
+<form name="search" id="search" action="{{ oViewConf.getSelfLink()|raw }}" method="post">
+    {{ oViewConf.getHiddenSid()|raw }}
     <input type="hidden" name="actedit" value="{{ actedit }}">
     <input type="hidden" name="cl" value="tools_list">
     <input type="hidden" name="oxid" value="x">
@@ -44,10 +44,10 @@ window.onload = function ()
     <br>
     <table cellspacing="0" cellpadding="0" border="0" width="100%" class="editnavigation">
     {% for key, query in aQueries %}
-        {% set sQuery = aQueries.$key %}
-        {% set sAffectedRows = aAffectedRows.$key %}
-        {% set sErrorMsg = aErrorMessages.$key %}
-        {% set iErrorNum = aErrorNumbers.$key %}
+        {% set sQuery = aQueries['key'] %}
+        {% set sAffectedRows = aAffectedRows['key'] %}
+        {% set sErrorMsg = aErrorMessages['key'] %}
+        {% set iErrorNum = aErrorNumbers['key'] %}
         {% if sQuery %}
         <tr valign="top"><td>{{ translate({ ident: "TOOLS_LIST_SQLQUERY" }) }} ({{ key + 1 }}) : </td><td>{{ sQuery|wordwrap(100, "<br>", true) }}</td></tr>
         {% endif %}
@@ -73,7 +73,7 @@ window.onload = function ()
 
 <script type="text/javascript">
 if (parent.parent)
-{   parent.parent.sShopTitle   = "{{ actshopobj.oxshops__oxname.getRawValue()|add_slashes }}";
+{   parent.parent.sShopTitle   = "{{ actshopobj.oxshops__oxname.getRawValue()|addslashes }}";
     parent.parent.sMenuItem    = "{{ translate({ ident: "TOOLS_LIST_MENUITEM" }) }}";
     parent.parent.sMenuSubItem = "{{ translate({ ident: "TOOLS_LIST_MENUSUBITEM" }) }}";
     parent.parent.sWorkArea    = "{{ _act }}";

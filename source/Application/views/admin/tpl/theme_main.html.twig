@@ -1,7 +1,7 @@
 {% include "headitem.html.twig" with {title: "GENERAL_ADMIN_TITLE"|translate, box: "box"} %}
 
-<form name="transfer" id="transfer" action="{{ oViewConf.getSelfLink() }}" method="post">
-    {{ oViewConf.getHiddenSid() }}
+<form name="transfer" id="transfer" action="{{ oViewConf.getSelfLink()|raw }}" method="post">
+    {{ oViewConf.getHiddenSid()|raw }}
     <input type="hidden" name="oxid" value="{{ oxid }}">
     <input type="hidden" name="cl" value="theme_main">
     <input type="hidden" name="editlanguage" value="{{ editlanguage }}">
@@ -19,12 +19,12 @@
                 <strong>{{ translate({ ident: "THEME_PARENT_THEME_TITLE" }) }}: </strong>
                 {% set _oParent = oTheme.getParent() %}
                 {% if _oParent %}
-                    <a class="themetitle" href="{{ oViewConf.getSelfLink() }}&amp;cl=theme_main&amp;oxid={{ oTheme.getInfo('parentTheme') }}&amp;updatelist=1">{{ _oParent.getInfo('title') }}</a>
+                    <a class="themetitle" href="{{ oViewConf.getSelfLink()|raw }}&amp;cl=theme_main&amp;oxid={{ oTheme.getInfo('parentTheme') }}&amp;updatelist=1">{{ _oParent.getInfo('title') }}</a>
                 {% else %}
                     <span class="error">{{ oTheme.getInfo('parentTheme') }}</span>
                 {% endif %}
                 <br>
-                <strong>{{ translate({ ident: "THEME_PARENT_VERSIONS" }) }}: </strong> {{ ', '|implode(oTheme.getInfo('parentVersions')) }}
+                <strong>{{ translate({ ident: "THEME_PARENT_VERSIONS" }) }}: </strong> {{ oTheme.getInfo('parentVersions')|join(', ') }}
             {% endif %}
             <hr>
             <p style="color:#aaa;">
@@ -39,9 +39,9 @@
             <td width="19%" valign="top">
                 {% set _sError = oTheme.checkForActivationErrors() %}
                 {% if not _sError %}
-                    <form name="myedit" id="myedit" action="{{ oViewConf.getSelfLink() }}" method="post">
+                    <form name="myedit" id="myedit" action="{{ oViewConf.getSelfLink()|raw }}" method="post">
                         <p>
-                        {{ oViewConf.getHiddenSid() }}
+                        {{ oViewConf.getHiddenSid()|raw }}
                         <input type="hidden" name="cl" value="theme_main">
                         <input type="hidden" name="fnc" value="setTheme">
                         <input type="hidden" name="updatelist" value="1">

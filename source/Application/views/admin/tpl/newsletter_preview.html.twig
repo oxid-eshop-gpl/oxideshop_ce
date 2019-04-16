@@ -9,8 +9,8 @@
 
 <div id="box">
 
-    <form name="transfer" id="transfer" action="{{ oViewConf.getSelfLink() }}" method="post">
-        {{ oViewConf.getHiddenSid() }}
+    <form name="transfer" id="transfer" action="{{ oViewConf.getSelfLink()|raw }}" method="post">
+        {{ oViewConf.getHiddenSid()|raw }}
         <input type="hidden" name="oxid" value="{{ oxid }}">
         <input type="hidden" name="cl" value="newsletter_preview">
         <input type="hidden" name="editlanguage" value="{{ editlanguage }}">

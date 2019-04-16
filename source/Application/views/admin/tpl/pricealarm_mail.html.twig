@@ -6,8 +6,8 @@
     {% set readonly = "" %}
 {% endif %}
 
-<form name="transfer" id="transfer" action="{{ oViewConf.getSelfLink() }}" method="post">
-    {{ oViewConf.getHiddenSid() }}
+<form name="transfer" id="transfer" action="{{ oViewConf.getSelfLink()|raw }}" method="post">
+    {{ oViewConf.getHiddenSid()|raw }}
     <input type="hidden" name="oxid" value="{{ oxid }}">
     <input type="hidden" name="cl" value="payment_main">
 </form>
@@ -18,7 +18,7 @@
 {{ translate({ ident: "PRICEALARM_MAIL_OPENEMAILS1" }) }} {{ iAllCnt }} {{ translate({ ident: "PRICEALARM_MAIL_OPENEMAILS2" }) }}
 <br><br>
 {% if iAllCnt and not readonly %}
-{{ translate({ ident: "PRICEALARM_MAIL_SENDPRICEALARMEMAIL1" }) }} <a href="{{ oViewConf.getSelfLink() }}&cl=pricealarm_send" class="edittext" target="list" {% if readonly %}onclick="JavaScript:return false;"{% endif %}><b>{{ translate({ ident: "PRICEALARM_MAIL_SENDPRICEALARMEMAIL2" }) }}</b></a>
+{{ translate({ ident: "PRICEALARM_MAIL_SENDPRICEALARMEMAIL1" }) }} <a href="{{ oViewConf.getSelfLink()|raw }}&cl=pricealarm_send" class="edittext" target="list" {% if readonly %}onclick="JavaScript:return false;"{% endif %}><b>{{ translate({ ident: "PRICEALARM_MAIL_SENDPRICEALARMEMAIL2" }) }}</b></a>
 {% endif %}
 
 {% include "bottomnaviitem.html.twig" %}

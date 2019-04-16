@@ -51,11 +51,11 @@
     {% block admin_navigation_menustructure %}
         {% set mh = 0 %}
         {% for menuholder in menustructure %}
-        {% if menuholder.nodeType == "XML_ELEMENT_NODE" and menuholder.childNodes.length %}
+        {% if menuholder.nodeType == constant("XML_ELEMENT_NODE") and menuholder.childNodes.length %}
             {% set mh = mh+1 %}
             {% set mn = 0 %}
             <h2>
-                {% if menuholder.getAttribute('url') %}<a href="{{ oViewConf.getSelfLink() }}&cl=navigation&amp;fnc=exturl&amp;url={{ menuholder.getAttribute('url')|escape('url') }}" target="basefrm" >{% endif %}
+                {% if menuholder.getAttribute('url') %}<a href="{{ oViewConf.getSelfLink()|raw }}&cl=navigation&amp;fnc=exturl&amp;url={{ menuholder.getAttribute('url')|escape('url') }}" target="basefrm" >{% endif %}
                 {{ translate({ ident: menuholder.getAttribute('name')|default(menuholder.getAttribute('id')), noerror: true }) }}
                 {% if menuholder.getAttribute('url') %}</a>{% endif %}
             </h2>
@@ -63,7 +63,7 @@
             {% spaceless %}
                 {% for menuitem in menuholder.childNodes %}
                 {% set actClass = menuitem.childNodes.length %}
-                {% if menuitem.nodeType == "XML_ELEMENT_NODE" %}
+                {% if menuitem.nodeType == constant("XML_ELEMENT_NODE") %}
                     {% set mn = mn+1 %}
                     {% set sm = 0 %}
                     <li class="{% if menuitem.getAttribute('active') %}exp{% set sNavExpId = "nav-`$mh`-`$mn`" %}{% endif %}" id="nav-{{ mh }}-{{ mn }}">
@@ -77,11 +77,11 @@
                         {% if menuitem.childNodes.length %}
                         <ul>
                             {% for submenuitem in menuitem.childNodes %}
-                            {% if submenuitem.nodeType == "XML_ELEMENT_NODE" %}
+                            {% if submenuitem.nodeType == constant("XML_ELEMENT_NODE") %}
                                 {% set sm = sm+1 %}
                                 {% if submenuitem.getAttribute('linkicon') %} {% set linkicon = submenuitem.getAttribute('linkicon') %}{% endif %}
                                 <li class="{% if submenuitem.getAttribute('active') %}act{% set sNavActId = "nav-`$mh`-`$mn`-`$sm`" %}{% endif %}" id="nav-{{ mh }}-{{ mn }}-{{ sm }}" name="nav_{{ submenuitem.getAttribute('cl') }}" rel="nav-{{ mh }}-{{ mn }}">
-                                    <a href="{% if submenuitem.getAttribute('url') %}{{ submenuitem.getAttribute('url') }}{% else %}{{ submenuitem.getAttribute('link') }}{% endif %}" onclick="_navAct(this);" target="basefrm" class="rc"><b>{% if linkicon %}<span class="{{ linkicon }}">{% endif %}{{ translate({ ident: submenuitem.getAttribute('name')|default(submenuitem.getAttribute('id')), noerror: true }) }}{% if linkicon %}</span>{% endif %}</b></a>
+                                    <a href="{% if submenuitem.getAttribute('url') %}{{ submenuitem.getAttribute('url')|raw }}{% else %}{{ submenuitem.getAttribute('link')|raw }}{% endif %}" onclick="_navAct(this);" target="basefrm" class="rc"><b>{% if linkicon %}<span class="{{ linkicon }}">{% endif %}{{ translate({ ident: submenuitem.getAttribute('name')|default(submenuitem.getAttribute('id')), noerror: true }) }}{% if linkicon %}</span>{% endif %}</b></a>
                                 </li>
                                 {% set linkicon = '' %}
                             {% endif %}
@@ -106,7 +106,7 @@
                 {% set mn = 1 %}
                 {% set sm = 0 %}
                 <li id="nav-{{ mh }}-{{ mn }}" class="{% if blOpenHistory %}exp{% set sHistoryId = "nav-`$mh`-`$mn`" %}{% endif %}">
-                    <a class="rc" name="_hist" href="{{ oViewConf.getSelfLink() }}&cl=navigation&item=navigation.tpl&openHistory=1&{{ smarty.now }}#_hist"><b>{{ translate({ ident: "NAVIGATION_HISTORY", noerror: true }) }}</b></a>
+                    <a class="rc" name="_hist" href="{{ oViewConf.getSelfLink()|raw }}&cl=navigation&item=navigation.tpl&openHistory=1&{{ smarty.now }}#_hist"><b>{{ translate({ ident: "NAVIGATION_HISTORY", noerror: true }) }}</b></a>
 
                     <ul>
                         {% for submenuitem in menuhistory %}
@@ -131,7 +131,7 @@
                 {% set sm = 0 %}
                 <li id="nav-{{ mh }}-{{ mn }}">
                     <a class="rc" onclick="_navExp(this);return false;" href="#" ><b>{{ translate({ ident: "NAVIGATION_FAVORITES", noerror: true }) }}</b></a>
-                    <a class="ed" href="{{ oViewConf.getSelfLink() }}&cl=navigation&amp;item=favorites.tpl" target="basefrm" >{{ translate({ ident: "NAVIGATION_FAVORITES_EDIT", noerror: true }) }}</a>
+                    <a class="ed" href="{{ oViewConf.getSelfLink()|raw }}&cl=navigation&amp;item=favorites.tpl" target="basefrm" >{{ translate({ ident: "NAVIGATION_FAVORITES_EDIT", noerror: true }) }}</a>
                     <ul>
                         {% for submenuitem in menufavorites %}
                             {% if submenuitem.nodeType == "XML_ELEMENT_NODE" %}

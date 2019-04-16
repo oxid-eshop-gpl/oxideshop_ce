@@ -2,8 +2,8 @@
 
 <div id="container">
 
-    <form name="transfer" id="transfer" action="{{ oViewConf.getSelfLink() }}" method="post">
-        {{ oViewConf.getHiddenSid() }}
+    <form name="transfer" id="transfer" action="{{ oViewConf.getSelfLink()|raw }}" method="post">
+        {{ oViewConf.getHiddenSid()|raw }}
         <input type="hidden" name="oxid" value="{{ oxid }}">
         <input type="hidden" name="cl" value="module_main">
         <input type="hidden" name="editlanguage" value="{{ editlanguage }}">
@@ -26,22 +26,24 @@
                             <td class="listheader">{{ translate({ ident: "MODULE_PROBLEMATIC_FILES" }) }}</td>
                         </tr>
                         {% for sModuleId, aModules in aDeletedExt %}
-                            {% set listclass = listitem$blWhite %}
+                            {% set listclass = 'listitem' ~ blWhite %}
                             <tr>
                                 <td valign="top" class="{{ listclass }}">{{ sModuleId }}</td>
                                 <td valign="top" class="{{ listclass }}">
                                     <ul>
                                         {% for sClassName, mFile in aModules.extensions %}
-                                            {% if is_array(mFile) %}
+                                            {% set is_int = sClassName > 0 or sClassName < 0 or sClassName is same as(0) %}
+                                            {% if mFile is iterable %}
                                                 {% for sFile in mFile %}
-                                                    <li>{% if not is_int(sClassName) %}{{ sClassName }} =&gt; {% endif %}{{ sFile }}</li>
+                                                    <li>{% if not is_int %}{{ sClassName }} =&gt; {% endif %}{{ sFile }}</li>
                                                 {% endfor %}
                                             {% else %}
-                                                <li>{% if not is_int(sClassName) %}{{ sClassName }} =&gt; {% endif %}{{ mFile }}</li>
+                                                <li>{% if not is_int %}{{ sClassName }} =&gt; {% endif %}{{ mFile }}</li>
                                             {% endif %}
                                         {% endfor %}
                                         {% for sClassName, sFile in aModules.files %}
-                                            <li>{% if not is_int(sClassName) %}{{ sClassName }} =&gt; {% endif %}{{ sFile }}</li>
+                                            {% set is_int = sClassName > 0 or sClassName < 0 or sClassName is same as(0) %}
+                                            <li>{% if not is_int %}{{ sClassName }} =&gt; {% endif %}{{ sFile }}</li>
                                         {% endfor %}
                                     </ul>
                                 </td>
@@ -56,8 +58,8 @@
                 </div>
 
                 <div>
-                    <form name="remove" action="{{ oViewConf.getSelfLink() }}" method="post">
-                        {{ oViewConf.getHiddenSid() }}
+                    <form name="remove" action="{{ oViewConf.getSelfLink()|raw }}" method="post">
+                        {{ oViewConf.getHiddenSid()|raw }}
                         <input type="hidden" name="cl" value="module_sortlist">
                         <input type="hidden" name="fnc" value="remove">
                         <input type="hidden" name="oxid" value="{{ oxid }}">
@@ -79,7 +81,7 @@
                             <span>{{ sClassName|replace('-- - ', '&#92;') }}</span>
                             <ul class="sortable2" id="{{ sClassName }}_modules">
                                 {% for sModule in aModuleNames %}
-                                    {% if is_array(aDisabledModules) and in_array($sModule, aDisabledModules) %}
+                                    {% if aDisabledModules is iterable and sModule in aDisabledModules %}
                                         {% set cssDisabled = "disabled" %}
                                     {% else %}
                                         {% set cssDisabled = "" %}
@@ -108,8 +110,8 @@
 {% if not aDeletedExt and aExtClasses %}
     <div id="footerBox">
         <div class="buttonsBox">
-            <form name="myedit" id="myedit" action="{{ oViewConf.getSelfLink() }}" method="post">
-                {{ oViewConf.getHiddenSid() }}
+            <form name="myedit" id="myedit" action="{{ oViewConf.getSelfLink()|raw }}" method="post">
+                {{ oViewConf.getHiddenSid()|raw }}
                 <input type="hidden" name="cl" value="module_sortlist">
                 <input type="hidden" name="fnc" value="save">
                 <input type="hidden" name="oxid" value="{{ oxid }}">

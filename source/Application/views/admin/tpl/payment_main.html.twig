@@ -6,15 +6,15 @@
 
 {% include "headitem.html.twig" with {title: "GENERAL_ADMIN_TITLE"|translate} %}
 
-<form name="transfer" id="transfer" action="{{ oViewConf.getSelfLink() }}" method="post">
-    {{ oViewConf.getHiddenSid() }}
+<form name="transfer" id="transfer" action="{{ oViewConf.getSelfLink()|raw }}" method="post">
+    {{ oViewConf.getHiddenSid()|raw }}
     <input type="hidden" name="oxid" value="{{ oxid }}">
     <input type="hidden" name="cl" value="payment_main">
     <input type="hidden" name="editlanguage" value="{{ editlanguage }}">
 </form>
 
-<form name="myedit" id="myedit" action="{{ oViewConf.getSelfLink() }}" method="post" onSubmit="copyLongDesc( 'oxpayments__oxlongdesc' );">
-{{ oViewConf.getHiddenSid() }}
+<form name="myedit" id="myedit" action="{{ oViewConf.getSelfLink()|raw }}" method="post" onSubmit="copyLongDesc( 'oxpayments__oxlongdesc' );">
+{{ oViewConf.getHiddenSid()|raw }}
 <input type="hidden" name="cl" value="payment_main">
 <input type="hidden" name="fnc" value="">
 <input type="hidden" name="oxid" value="{{ oxid }}">
@@ -75,13 +75,13 @@
                 <td class="edittext">
                   <table cellspacing="0" cellpadding="0" border="0">
                     <tr>
-                        <td><input type="checkbox" name="oxpayments__oxaddsumrules[]" value="1" {% if not edit.oxpayments__oxaddsumrules.value or edit.oxpayments__oxaddsumrules.value & 1 %}checked{% endif %} {{ readonly }}> {{ translate({ ident: "PAYMENT_MAIN_ADDSUMRULES_ALLGOODS" }) }}</td>
+                        <td><input type="checkbox" name="oxpayments__oxaddsumrules[]" value="1" {% if not edit.oxpayments__oxaddsumrules.value or edit.oxpayments__oxaddsumrules.value b-and 1 %}checked{% endif %} {{ readonly }}> {{ translate({ ident: "PAYMENT_MAIN_ADDSUMRULES_ALLGOODS" }) }}</td>
                         <td rowspan="5" valign="top">{% include "inputhelp.html.twig" with {'sHelpId': help_id("HELP_PAYMENT_MAIN_ADDSUMRULES"), 'sHelpText': help_text("HELP_PAYMENT_MAIN_ADDSUMRULES")} %}</td>
                     </tr>
-                    <tr><td><input type="checkbox" name="oxpayments__oxaddsumrules[]" value="2" {% if not edit.oxpayments__oxaddsumrules.value or edit.oxpayments__oxaddsumrules.value & 2 %}checked{% endif %} {{ readonly }}> {{ translate({ ident: "PAYMENT_MAIN_ADDSUMRULES_DISCOUNTS" }) }}</td></tr>
-                    <tr><td><input type="checkbox" name="oxpayments__oxaddsumrules[]" value="4" {% if not edit.oxpayments__oxaddsumrules.value or edit.oxpayments__oxaddsumrules.value & 4 %}checked{% endif %} {{ readonly }}> {{ translate({ ident: "PAYMENT_MAIN_ADDSUMRULES_VOUCHERS" }) }}</td></tr>
-                    <tr><td><input type="checkbox" name="oxpayments__oxaddsumrules[]" value="8" {% if not edit.oxpayments__oxaddsumrules.value or edit.oxpayments__oxaddsumrules.value & 8 %}checked{% endif %} {{ readonly }}> {{ translate({ ident: "PAYMENT_MAIN_ADDSUMRULES_SHIPCOSTS" }) }}</td></tr>
-                    <tr><td><input type="checkbox" name="oxpayments__oxaddsumrules[]" value="16" {% if edit.oxpayments__oxaddsumrules.value & 16 %}checked{% endif %} {{ readonly }}> {{ translate({ ident: "PAYMENT_MAIN_ADDSUMRULES_GIFTS" }) }}</td></tr>
+                    <tr><td><input type="checkbox" name="oxpayments__oxaddsumrules[]" value="2" {% if not edit.oxpayments__oxaddsumrules.value or edit.oxpayments__oxaddsumrules.value b-and 2 %}checked{% endif %} {{ readonly }}> {{ translate({ ident: "PAYMENT_MAIN_ADDSUMRULES_DISCOUNTS" }) }}</td></tr>
+                    <tr><td><input type="checkbox" name="oxpayments__oxaddsumrules[]" value="4" {% if not edit.oxpayments__oxaddsumrules.value or edit.oxpayments__oxaddsumrules.value b-and 4 %}checked{% endif %} {{ readonly }}> {{ translate({ ident: "PAYMENT_MAIN_ADDSUMRULES_VOUCHERS" }) }}</td></tr>
+                    <tr><td><input type="checkbox" name="oxpayments__oxaddsumrules[]" value="8" {% if not edit.oxpayments__oxaddsumrules.value or edit.oxpayments__oxaddsumrules.value b-and 8 %}checked{% endif %} {{ readonly }}> {{ translate({ ident: "PAYMENT_MAIN_ADDSUMRULES_SHIPCOSTS" }) }}</td></tr>
+                    <tr><td><input type="checkbox" name="oxpayments__oxaddsumrules[]" value="16" {% if edit.oxpayments__oxaddsumrules.value b-and 16 %}checked{% endif %} {{ readonly }}> {{ translate({ ident: "PAYMENT_MAIN_ADDSUMRULES_GIFTS" }) }}</td></tr>
                   </table>
                 </td>
             </tr>

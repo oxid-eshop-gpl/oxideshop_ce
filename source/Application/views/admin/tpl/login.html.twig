@@ -16,10 +16,10 @@
 
     <div id="shopLogo"><img src="{{ oViewConf.getImageUrl('logo_dark.svg') }}" /></div>
 
-    <form action="{{ oViewConf.getSelfLink() }}" target="_top" method="post" name="login" id="login">
+    <form action="{{ oViewConf.getSelfLink()|raw }}" target="_top" method="post" name="login" id="login">
 
         {% block admin_login_form %}
-            {{ oViewConf.getHiddenSid() }}
+            {{ oViewConf.getHiddenSid()|raw }}
 
             <input type="hidden" name="fnc" value="checklogin">
             <input type="hidden" name="cl" value="login">

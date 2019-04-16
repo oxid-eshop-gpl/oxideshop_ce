@@ -19,8 +19,8 @@ function _groupExp(el) {
 
 
 
-<form name="transfer" id="transfer" action="{{ oViewConf.getSelfLink() }}" method="post">
-    {{ oViewConf.getHiddenSid() }}
+<form name="transfer" id="transfer" action="{{ oViewConf.getSelfLink()|raw }}" method="post">
+    {{ oViewConf.getHiddenSid()|raw }}
     <input type="hidden" name="oxid" value="{{ oModule.getInfo('id') }}">
     <input type="hidden" name="cl" value="module_config">
     <input type="hidden" name="fnc" value="">
@@ -29,8 +29,8 @@ function _groupExp(el) {
     <input type="hidden" name="editlanguage" value="{{ editlanguage }}">
 </form>
 
-<form name="module_configuration" id="moduleConfiguration" action="{{ oViewConf.getSelfLink() }}" method="post">
-{{ oViewConf.getHiddenSid() }}
+<form name="module_configuration" id="moduleConfiguration" action="{{ oViewConf.getSelfLink()|raw }}" method="post">
+{{ oViewConf.getHiddenSid()|raw }}
 <input type="hidden" name="cl" value="module_config">
 <input type="hidden" name="fnc" value="save">
 <input type="hidden" name="oxid" value="{{ oModule.getInfo('id') }}">

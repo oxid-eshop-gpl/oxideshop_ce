@@ -19,7 +19,7 @@
     //-->
 </script>
 <div id="liste">
-    <form name="search" id="search" action="{{ oViewConf.getSelfLink() }}" method="post">
+    <form name="search" id="search" action="{{ oViewConf.getSelfLink()|raw }}" method="post">
         {% include "_formparams.html.twig" with {cl: "category_list", lstrt: lstrt, actedit: actedit, oxid: oxid, fnc: "", language: actlang, editlanguage: actlang} %}
         <table cellspacing="0" cellpadding="0" border="0" width="100%">
             <colgroup>
@@ -52,7 +52,7 @@
                                 </div>
 
                                 <select name="where[oxcategories][oxparentid]" class="editinput" onChange="Javascript:document.search.submit();">
-                                    {% for pcat in cattree.aList %}
+                                    {% for pcat in cattree.__get('aList') %}
                                         <option value="{{ pcat.oxcategories__oxid.value }}" {% if pcat.selected %}SELECTED{% endif %}>{{ pcat.oxcategories__oxtitle.getRawValue() }}</option>
                                     {% endfor %}
                                 </select>
@@ -80,7 +80,7 @@
                         {% if listitem.blacklist == 1 %}
                             {% set listclass = "listitem3" %}
                         {% else %}
-                            {% set listclass = listitem$blWhite %}
+                            {% set listclass = 'listitem' ~ blWhite %}
                         {% endif %}
                         {% if listitem.getId() == oxid %}
                             {% set listclass = "listitem4" %}
@@ -111,7 +111,7 @@
 
 <script type="text/javascript">
     if (parent.parent)
-    {   parent.parent.sShopTitle   = "{{ actshopobj.oxshops__oxname.getRawValue()|add_slashes }}";
+    {   parent.parent.sShopTitle   = "{{ actshopobj.oxshops__oxname.getRawValue()|addslashes }}";
         parent.parent.sMenuItem    = "{{ translate({ ident: "GENERAL_MENUITEM" }) }}";
         parent.parent.sMenuSubItem = "{{ translate({ ident: "CATEGORY_LIST_MENUSUBITEM" }) }}";
         parent.parent.sWorkArea    = "{{ _act }}";

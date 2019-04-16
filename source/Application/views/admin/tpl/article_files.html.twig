@@ -38,8 +38,8 @@ function _groupExp(el) {
 //-->
 </script>
 
-<form name="transfer" id="transfer" action="{{ oViewConf.getSelfLink() }}" method="post">
-    {{ oViewConf.getHiddenSid() }}
+<form name="transfer" id="transfer" action="{{ oViewConf.getSelfLink()|raw }}" method="post">
+    {{ oViewConf.getHiddenSid()|raw }}
     <input type="hidden" name="oxid" value="{{ oxid }}">
     <input type="hidden" name="cl" value="article_files">
     <input type="hidden" name="editlanguage" value="{{ editlanguage }}">
@@ -54,9 +54,9 @@ function _groupExp(el) {
     {% endif %}
      <tr>
         <td valign="top" class="edittext" {% if count( oFiles ) > 0 %}align="left"{% endif %}>
-          <form name="newFileUpload" id="newFileUpload" action="{{ oViewConf.getSelfLink() }}" enctype="multipart/form-data" method="post">
+          <form name="newFileUpload" id="newFileUpload" action="{{ oViewConf.getSelfLink()|raw }}" enctype="multipart/form-data" method="post">
           <input type="hidden" name="MAX_FILE_SIZE" value="{{ iMaxUploadFileSize }}">
-          {{ oViewConf.getHiddenSid() }}
+          {{ oViewConf.getHiddenSid()|raw }}
           <input type="hidden" name="cl" value="article_files">
           <input type="hidden" name="fnc" value="">
           <input type="hidden" name="oxid" value="{{ oxid }}">
@@ -139,8 +139,8 @@ function _groupExp(el) {
           <table cellspacing="0" cellpadding="0" border="0" width="98%">
               <tr>
                   <td valign="top" class="edittext">
-                      <form name="myedit" id="myedit" action="{{ oViewConf.getSelfLink() }}" method="post">
-                          {{ oViewConf.getHiddenSid() }}
+                      <form name="myedit" id="myedit" action="{{ oViewConf.getSelfLink()|raw }}" method="post">
+                          {{ oViewConf.getHiddenSid()|raw }}
                           <input type="hidden" name="cl" value="article_files">
                           <input type="hidden" name="fnc" value="">
                           <input type="hidden" name="oxid" value="{{ oxid }}">
@@ -173,7 +173,7 @@ function _groupExp(el) {
                                         {% block admin_article_downloads_filelist %}
                                             <div class="groupExp">
                                                 <div>
-                                                    <a class="delete" href="{{ oViewConf.getSelfLink() }}&cl=article_files&amp;fileid={{ oArticleFile.getId() }}&amp;fnc=deletefile&amp;oxid={{ oxid }}&amp;editlanguage={{ editlanguage }}" onClick='return confirm("{{ translate({ ident: "GENERAL_YOUWANTTODELETE" }) }}")'></a>
+                                                    <a class="delete" href="{{ oViewConf.getSelfLink()|raw }}&cl=article_files&amp;fileid={{ oArticleFile.getId() }}&amp;fnc=deletefile&amp;oxid={{ oxid }}&amp;editlanguage={{ editlanguage }}" onClick='return confirm("{{ translate({ ident: "GENERAL_YOUWANTTODELETE" }) }}")'></a>
                                                     <a href="#" onclick="_groupExp(this);return false;" class="rc"><b>{{ oArticleFile.oxfiles__oxfilename.value }}</b></a>
                                                     <dl style="padding-top:5px;">
                                                         <table cellspacing="0" cellpadding="0" border="0">

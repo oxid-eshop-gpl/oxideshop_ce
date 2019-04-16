@@ -4,8 +4,8 @@
     {{ script({ add: "top.oxid.admin.reloadNavigation('`$shopid`');", priority: 10, dynamic: __oxid_include_dynamic }) }}
 {% endif %}
 
-<form name="transfer" id="transfer" action="{{ oViewConf.getSelfLink() }}" method="post">
-    {{ oViewConf.getHiddenSid() }}
+<form name="transfer" id="transfer" action="{{ oViewConf.getSelfLink()|raw }}" method="post">
+    {{ oViewConf.getHiddenSid()|raw }}
     <input type="hidden" name="oxid" value="{{ oxid }}">
     <input type="hidden" name="cl" value="module_main">
     <input type="hidden" name="editlanguage" value="{{ editlanguage }}">
@@ -67,9 +67,9 @@
                 {% endif %}
                 {% if not _sError %}
                     {% if oModule.hasMetadata() or oModule.isRegistered() %}
-                        <form name="myedit" id="myedit" action="{{ oViewConf.getSelfLink() }}" method="post">
+                        <form name="myedit" id="myedit" action="{{ oViewConf.getSelfLink()|raw }}" method="post">
                             <div>
-                                {{ oViewConf.getHiddenSid() }}
+                                {{ oViewConf.getHiddenSid()|raw }}
                                 <input type="hidden" name="cl" value="module_main">
                                 <input type="hidden" name="updatelist" value="1">
                                 <input type="hidden" name="oxid" value="{{ oModule.getId() }}">

@@ -17,16 +17,16 @@ function ThisDate( sID)
 
 {% set oCurr = edit.getOrderCurrency() %}
 
-<form name="transfer" id="transfer" action="{{ oViewConf.getSelfLink() }}" method="post">
-    {{ oViewConf.getHiddenSid() }}
+<form name="transfer" id="transfer" action="{{ oViewConf.getSelfLink()|raw }}" method="post">
+    {{ oViewConf.getHiddenSid()|raw }}
     <input type="hidden" name="cur" value="{{ oCurr.id }}">
     <input type="hidden" name="oxid" value="{{ oxid }}">
     <input type="hidden" name="cl" value="order_main">
 </form>
 
 
-<form name="myedit" id="myedit" action="{{ oViewConf.getSelfLink() }}" method="post">
-{{ oViewConf.getHiddenSid() }}
+<form name="myedit" id="myedit" action="{{ oViewConf.getSelfLink()|raw }}" method="post">
+{{ oViewConf.getHiddenSid()|raw }}
 <input type="hidden" name="cur" value="{{ oCurr.id }}">
 <input type="hidden" name="cl" value="order_main">
 <input type="hidden" name="fnc" value="save">
@@ -239,8 +239,8 @@ function ThisDate( sID)
     <!-- Anfang rechte Seite -->
     <td class="edittext" align="left" valign="bottom">
         {% block admin_order_main_send_download_links %}
-            <form name="senddownloadlinks" id="senddownloadlinks" action="{{ oViewConf.getSelfLink() }}" method="post">
-                {{ oViewConf.getHiddenSid() }}
+            <form name="senddownloadlinks" id="senddownloadlinks" action="{{ oViewConf.getSelfLink()|raw }}" method="post">
+                {{ oViewConf.getHiddenSid()|raw }}
                 <input type="hidden" name="cur" value="{{ oCurr.id }}">
                 <input type="hidden" name="cl" value="order_main">
                 <input type="hidden" name="fnc" value="senddownloadlinks">
@@ -250,8 +250,8 @@ function ThisDate( sID)
             </form>
         {% endblock %}
         {% block admin_order_main_reset_order %}
-            <form name="resetorder" id="resetorder" action="{{ oViewConf.getSelfLink() }}" method="post">
-                {{ oViewConf.getHiddenSid() }}
+            <form name="resetorder" id="resetorder" action="{{ oViewConf.getSelfLink()|raw }}" method="post">
+                {{ oViewConf.getHiddenSid()|raw }}
                 <input type="hidden" name="cur" value="{{ oCurr.id }}">
                 <input type="hidden" name="cl" value="order_main">
                 <input type="hidden" name="fnc" value="resetorder">
@@ -260,8 +260,8 @@ function ThisDate( sID)
             </form>
         {% endblock %}
         {% block admin_order_main_send_order %}
-            <form name="sendorder" id="sendorder" action="{{ oViewConf.getSelfLink() }}" method="post">
-                {{ oViewConf.getHiddenSid() }}
+            <form name="sendorder" id="sendorder" action="{{ oViewConf.getSelfLink()|raw }}" method="post">
+                {{ oViewConf.getHiddenSid()|raw }}
                 <input type="hidden" name="cur" value="{{ oCurr.id }}">
                 <input type="hidden" name="cl" value="order_main">
                 <input type="hidden" name="fnc" value="sendorder">

@@ -13,7 +13,7 @@ window.onload = function ()
 </script>
     <body>
 
-        <form name="search" id="search" action="{{ oViewConf.getSelfLink() }}" method="post">
+        <form name="search" id="search" action="{{ oViewConf.getSelfLink()|raw }}" method="post">
             {% include "_formparams.html.twig" with {cl: "pricealarm_list", lstrt: lstrt, actedit: actedit, oxid: oView.getEditObjectId(), fnc: "", language: actlang, editlanguage: actlang} %}
         </form>
 

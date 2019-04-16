@@ -11,7 +11,7 @@
 <body>
 
 <script type="text/javascript">
-    parent.sShopTitle = "{{ actshop|add_slashes }}";
+    parent.sShopTitle = "{{ actshop|addslashes }}";
     parent.setTitle();
 </script>
 
@@ -25,7 +25,7 @@
     <div class="messagebox">
         {{ translate({ ident: "MAIN_INFO" }) }}:<br>
         {% for class, sMessage in aMessage %}
-            <p class="{{ class }}">{{ sMessage }}</p>
+            <p class="{{ class }}">{{ sMessage|raw }}</p>
         {% endfor %}
     </div>
     <hr>
@@ -37,18 +37,18 @@
     {% set shMen = 1 %}
 
     {% for menuholder in menustructure %}
-    {% if shMen and menuholder.nodeType == "XML_ELEMENT_NODE" and menuholder.childNodes.length %}
+    {% if shMen and menuholder.nodeType == constant("XML_ELEMENT_NODE") and menuholder.childNodes.length %}
 
         {% set nrCol = 1 %}
         {% set ttCol = 1 %}
         {% set mxCol = 3 %}
-        {% set inCol = menuholder.childNodes.length/$mxCol|round %}
+        {% set inCol = (menuholder.childNodes.length/mxCol)|round %}
         {% set shMen = 0 %}
         {% set mn = 1 %}
             <tr>
             <td valign="top" width="30%">
             {% for menuitem in menuholder.childNodes %}
-            {% if menuitem.nodeType == "XML_ELEMENT_NODE" and menuitem.childNodes.length %}
+            {% if menuitem.nodeType == constant("XML_ELEMENT_NODE") and menuitem.childNodes.length %}
                 {% set sb = 1 %}
                 <dl {% if nrCol == 1 %}class="first"{% endif %}>
                     <dt>{{ translate({ ident: menuitem.getAttribute('name')|default(menuitem.getAttribute('id')) }) }}</dt>
@@ -56,9 +56,9 @@
                         <ul>
                         {% spaceless %}
                         {% for submenuitem in menuitem.childNodes %}
-                        {% if submenuitem.nodeType == "XML_ELEMENT_NODE" %}
+                        {% if submenuitem.nodeType == constant("XML_ELEMENT_NODE") %}
                             <li>
-                                <a href="{{ submenuitem.getAttribute('link') }}" onclick="_homeExpAct('nav-1-{{ mn }}','nav-1-{{ mn }}-{{ sb }}');" target="basefrm"><b>{{ translate({ ident: submenuitem.getAttribute('name')|default(submenuitem.getAttribute('id')) }) }}</b></a>
+                                <a href="{{ submenuitem.getAttribute('link')|raw }}" onclick="_homeExpAct('nav-1-{{ mn }}','nav-1-{{ mn }}-{{ sb }}');" target="basefrm"><b>{{ translate({ ident: submenuitem.getAttribute('name')|default(submenuitem.getAttribute('id')) }) }}</b></a>
                             </li>
                             {% set sb = sb+1 %}
                         {% endif %}
@@ -68,7 +68,7 @@
                     </dd>
                 </dl>
                 {% set mn = mn+1 %}
-                {% if nrCol == inCol and ttCol<$mxCol %}
+                {% if nrCol == inCol and ttCol<mxCol %}
                     </td><td width="5%"></td><td valign="top" width="30%">
                     {% set nrCol = 1 %}
                     {% set ttCol = ttCol+1 %}

@@ -22,8 +22,8 @@ window.onload = function ()
 
 <div id="liste">
 
-<form name="search" id="search" action="{{ oViewConf.getSelfLink() }}" method="post">
-    {{ oViewConf.getHiddenSid() }}
+<form name="search" id="search" action="{{ oViewConf.getSelfLink()|raw }}" method="post">
+    {{ oViewConf.getHiddenSid()|raw }}
     <input type="hidden" name="cl" value="module_list">
     <input type="hidden" name="lstrt" value="{{ lstrt }}">
     <input type="hidden" name="sort" value="{{ sort }}">
@@ -93,7 +93,7 @@ window.onload = function ()
 
 <script type="text/javascript">
 if (parent.parent)
-{   parent.parent.sShopTitle   = "{{ actshopobj.oxshops__oxname.getRawValue()|add_slashes }}";
+{   parent.parent.sShopTitle   = "{{ actshopobj.oxshops__oxname.getRawValue()|addslashes }}";
     parent.parent.sMenuItem    = "{{ translate({ ident: "mxextensions" }) }}";
     parent.parent.sMenuSubItem = "{{ translate({ ident: "mxmodule" }) }}";
     parent.parent.sWorkArea    = "{{ _act }}";

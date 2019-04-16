@@ -22,7 +22,7 @@ window.onload = function ()
 
 <div id="liste">
 
-<form name="search" id="search" action="{{ oViewConf.getSelfLink() }}" method="post">
+<form name="search" id="search" action="{{ oViewConf.getSelfLink()|raw }}" method="post">
 {% include "_formparams.html.twig" with {cl: "actions_list", lstrt: lstrt, actedit: actedit, oxid: oxid, fnc: "", language: actlang, editlanguage: actlang} %}
 <table cellspacing="0" cellpadding="0" border="0" width="100%">
     <colgroup>
@@ -81,7 +81,7 @@ window.onload = function ()
     {% if listitem.blacklist == 1 %}
         {% set listclass = "listitem3" %}
     {% else %}
-        {% set listclass = listitem$blWhite %}
+        {% set listclass = 'listitem' ~ blWhite %}
     {% endif %}
     {% if listitem.getId() == oxid %}
         {% set listclass = "listitem4" %}
@@ -120,7 +120,7 @@ window.onload = function ()
 
 <script type="text/javascript">
 if (parent.parent)
-{   parent.parent.sShopTitle   = "{{ actshopobj.oxshops__oxname.getRawValue()|add_slashes }}";
+{   parent.parent.sShopTitle   = "{{ actshopobj.oxshops__oxname.getRawValue()|addslashes }}";
     parent.parent.sMenuItem    = "{{ translate({ ident: "ACTIONS_LIST_MENUITEM" }) }}";
     parent.parent.sMenuSubItem = "{{ translate({ ident: "ACTIONS_LIST_MENUSUBITEM" }) }}";
     parent.parent.sWorkArea    = "{{ _act }}";

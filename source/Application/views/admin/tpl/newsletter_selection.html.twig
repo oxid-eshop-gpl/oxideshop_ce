@@ -6,15 +6,15 @@
     {% set readonly = "" %}
 {% endif %}
 
-<form name="transfer" id="transfer" action="{{ oViewConf.getSelfLink() }}" method="post">
-    {{ oViewConf.getHiddenSid() }}
+<form name="transfer" id="transfer" action="{{ oViewConf.getSelfLink()|raw }}" method="post">
+    {{ oViewConf.getHiddenSid()|raw }}
     <input type="hidden" name="oxid" value="{{ oxid }}">
     <input type="hidden" name="cl" value="newsletter_selection">
     <input type="hidden" name="editlanguage" value="{{ editlanguage }}">
 </form>
 
-<form name="myedit" id="myedit" action="{{ oViewConf.getSelfLink() }}" method="post">
-    {{ oViewConf.getHiddenSid() }}
+<form name="myedit" id="myedit" action="{{ oViewConf.getSelfLink()|raw }}" method="post">
+    {{ oViewConf.getHiddenSid()|raw }}
     <input type="hidden" name="cl" value="newsletter_selection">
     <input type="hidden" name="fnc" value="">
     <input type="hidden" name="oxid" value="{{ oxid }}">
@@ -31,7 +31,7 @@
                 <b>{{ translate({ ident: "NEWSLETTER_SELECTION_SELMAILRESAVER" }) }}:</b> <b id="_newsletterusercnt">{{ oView.getUserCount() }}</b>
                 <br><br>
                 <div id="_newsletterbtn"{% if not oView.getUserCount() %}style="display:none"{% endif %}>
-                    <a href="{{ oViewConf.getSelfLink() }}&amp;cl=newsletter_send&amp;oxid={{ oxid }}&amp;iStart=0" class="edittext" target="list" {% if readonly %}onclick="JavaScript:return false;"{% endif %}><b>{{ translate({ ident: "NEWSLETTER_SELECTION_SENDNEWS" }) }}</b></a>
+                    <a href="{{ oViewConf.getSelfLink()|raw }}&amp;cl=newsletter_send&amp;oxid={{ oxid }}&amp;iStart=0" class="edittext" target="list" {% if readonly %}onclick="JavaScript:return false;"{% endif %}><b>{{ translate({ ident: "NEWSLETTER_SELECTION_SENDNEWS" }) }}</b></a>
                 </div>
             </td>
         </tr>

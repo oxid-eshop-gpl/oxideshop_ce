@@ -35,7 +35,7 @@
             </td>
             <td class="edittext" colspan="2">
                 <select name="editval[oxcategories__oxparentid]" class="editinput" {{ readonly }}>
-                    {% for pcat in cattree.aList %}
+                    {% for pcat in cattree.__get('aList') %}
                         <option value="{% if pcat.oxcategories__oxid.value %}{{ pcat.oxcategories__oxid.value }}{% else %}oxrootid{% endif %}" {% if pcat.selected %}SELECTED{% endif %}>{{ pcat.oxcategories__oxtitle.getRawValue()|truncate(33, "..", true) }}</option>
                     {% endfor %}
                 </select>
@@ -126,9 +126,9 @@
                 <select name="editval[oxcategories__oxdefsort]" class="editinput" onChange="JavaScript:SchnellSortManager(this);">
                     <option value="">{{ translate({ ident: "CATEGORY_MAIN_NONE" }) }}</option>
                     {% for field, desc in sortableFields %}
-                        {% set ident = GENERAL_ARTICLE_$desc %}
+                        {% set ident = 'GENERAL_ARTICLE_' ~ desc %}
                         {% set ident = ident|upper %}
-                        <option value="{{ desc }}" {% if defsort == desc %}SELECTED{% endif %}>{{ translate({ oxtruncate:20:"..":true: oxtruncate:20:"..":true, ident: ident }) }}</option>
+                        <option value="{{ desc }}" {% if defsort == desc %}SELECTED{% endif %}>{{ translate({ ident: ident })|truncate(20, '..', true) }}</option>
                     {% endfor %}
                 </select>
                 <input type="radio" class="editinput" name="editval[oxcategories__oxdefsortmode]" {% if not defsort %}disabled{% endif %} value="0" {% if edit.oxcategories__oxdefsortmode.value=="0" %}checked{% endif %}>{{ translate({ ident: "CATEGORY_MAIN_ASC" }) }}
