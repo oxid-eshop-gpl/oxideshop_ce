@@ -98,7 +98,7 @@ function ThisDate( sID)
                                     {{ translate({ ident: "ORDER_MAIN_PAYMENT_INFORMATION" }) }}
                                 </td>
                             </tr>
-    
+
                             {% if edit.blIsPaid %}
                             <tr>
                                 <td class="edittext" valign="middle">
@@ -110,12 +110,12 @@ function ThisDate( sID)
                                 <td class="edittext"></td>
                             </tr>
                             {% endif %}
-    
+
                             <tr>
                                 <td class="edittext">
                                     {{ translate({ ident: "ORDER_MAIN_PAIDON" }) }}
                                 </td>
-                                <td class="edittext">{% set date = edit.oxorder__oxpaid.value|replace("0000-00-00) %}
+                                <td class="edittext">{% set date = edit.oxorder__oxpaid.value|replace({"0000-00-00 00:00:00": ""}) %}
                                     <input type="text" class="editinput" size="25" name="editval[oxorder__oxpaid]" value="{{ edit.oxorder__oxpaid|format_date }}" {% include "help.html.twig" with {helpid: "article_vonbis"} %} {{ readonly }}>&nbsp;<a href="Javascript:ThisDate('{{ sNowValue|format_date('datetime', true) }}');" class="edittext" {% if readonly %}onclick="JavaScript:return false;"{% endif %}><u>{{ translate({ ident: "ORDER_MAIN_CURRENT_DATE" }) }}</u></a>
                                     {% include "inputhelp.html.twig" with {'sHelpId': help_id("HELP_ORDER_MAIN_PAIDON"), 'sHelpText': help_text("HELP_ORDER_MAIN_PAIDON")} %}
                                 </td>
@@ -142,8 +142,8 @@ function ThisDate( sID)
                     <br />
                     <table cellspacing="0" cellpadding="0" border="0">
                         {% block admin_order_main_form_dynvalues %}
-                            {% if paymentType.aDynValues %}
-                                {% for value in paymentType.aDynValues %}
+                            {% if paymentType.__get('aDynValues') %}
+                                {% for value in paymentType.__get('aDynValues') %}
                                 {% set ident = 'ORDER_OVERVIEW_'|cat(value.name) %}
                                 {% set ident = ident|upper %}
                                     <tr>

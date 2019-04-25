@@ -28,7 +28,7 @@
 {% set blWhite = "" %}
 {% for listitem in oArticlelist %}
 <tr>
-    {% set listclass = listitem$blWhite %}
+    {% set listclass = 'listitem' ~ blWhite %}
     <td valign="top" class="{{ listclass }}">{{ listitem.oxorderarticles__oxamount.value }}</td>
     <td valign="top" class="{{ listclass }}" height="15">{{ listitem.oxorderarticles__oxartnum.value }}</td>
     <td valign="top" class="{{ listclass }}">{{ listitem.oxorderarticles__oxtitle.value|truncate(30, "")|striptags }}</td>

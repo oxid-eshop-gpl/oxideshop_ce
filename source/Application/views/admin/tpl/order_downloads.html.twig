@@ -36,7 +36,7 @@
         {% for listfile in edit %}
         <tr id="file.{{ loop.index }}">
             {% block admin_order_downloads_filelist %}
-            {% set listclass = listitem$blWhite %}
+            {% set listclass = 'listitem' ~ blWhite %}
             <td valign="top" class="{{ listclass }}">{{ listfile.oxorderfiles__oxarticleartnum.value }}</td>
             <td valign="top" class="{{ listclass }}">{{ listfile.oxorderfiles__oxarticletitle.value }}</td>
             <td valign="top" class="{{ listclass }}">{{ listfile.oxorderfiles__oxfilename.value }}</td>

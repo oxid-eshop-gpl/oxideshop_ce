@@ -100,16 +100,16 @@
                 </tr>
                 <tr>
                     <td class="edittext">{{ translate({ ident: "ORDER_OVERVIEW_DELTYPE" }) }}: </td>
-                    <td class="edittext"><b>{{ deliveryType.oxdeliveryset__oxtitle.value }}</b><br></td>
+                    <td class="edittext"><b>{{ deliveryType.oxdeliveryset__oxtitle.value|raw }}</b><br></td>
                 </tr>
             {% endblock %}
             </table>
 
             <br>
-            {% if paymentType.aDynValues %}
+            {% if paymentType.__get('aDynValues') %}
                 <table cellspacing="0" cellpadding="0" border="0">
                 {% block admin_order_overview_dynamic %}
-                    {% for value in paymentType.aDynValues %}
+                    {% for value in paymentType.__get('aDynValues') %}
                     {% set ident = 'ORDER_OVERVIEW_'|cat(value.name) %}
                     {% set ident = ident|upper %}
                     <tr>

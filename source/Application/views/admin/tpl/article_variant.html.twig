@@ -68,7 +68,7 @@ function editThis( sID )
 </form>
 
 {% set blWhite = "" %}
-{% set listclass = listitem$blWhite %}
+{% set listclass = 'listitem' ~ blWhite %}
   <table border="0">
     <tr>
       {% block admin_article_variant_selectlist %}
@@ -189,7 +189,7 @@ function editThis( sID )
           {% set _cnt1 = _cnt1+1 %}
           <tr id="test_variant.{{ _cnt1 }}">
             {% block admin_article_variant_listitem %}
-            {% set listclass = listitem$blWhite %}
+            {% set listclass = 'listitem' ~ blWhite %}
             {% set hasvariants = true %}
             <td class="{{ listclass }}"><a href="Javascript:editThis('{{ listitem.oxarticles__oxid.value }}');" class="{{ listclass }}" {% include "help.html.twig" with {helpid: "editvariant"} %}><img src="{{ oViewConf.getImageUrl() }}/editvariant.gif" width="15" height="15" alt="" border="0" align="absmiddle"></a></td>
             <td class="{{ listclass }}" align="center"><input class="edittext" type="checkbox" name="editval[{{ listitem.oxarticles__oxid.value }}][oxarticles__oxactive]" value='1' {% if listitem.oxarticles__oxactive.value == 1 %}checked{% endif %} {{ readonly }}></td>
@@ -236,7 +236,7 @@ function editThis( sID )
 
           <tr>
 
-            {% set listclass = listitem$blWhite %}
+            {% set listclass = 'listitem' ~ blWhite %}
             <form name="myedit4" id="myedit4" action="{{ oViewConf.getSelfLink()|raw }}" method="post">
             {{ oViewConf.getHiddenSid()|raw }}
             <input type="hidden" name="editlanguage" value="{{ editlanguage }}">

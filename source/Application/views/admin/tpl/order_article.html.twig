@@ -113,7 +113,7 @@ function StornoThisArticle( sID)
         {% if listitem.oxorderarticles__oxstorno.value == 1 %}
             {% set listclass = "listitem3" %}
         {% else %}
-            {% set listclass = listitem$blWhite %}
+            {% set listclass = 'listitem' ~ blWhite %}
         {% endif %}
         <td valign="top" class="{{ listclass }}">{% if listitem.oxorderarticles__oxstorno.value != 1 and not listitem.isBundle() %}<input type="text" name="aOrderArticles[{{ listitem.getId() }}][oxamount]" value="{{ listitem.oxorderarticles__oxamount.value }}" class="listedit">{% else %}{{ listitem.oxorderarticles__oxamount.value }}{% endif %}</td>
         <td valign="top" class="{{ listclass }}" height="15">{% if listitem.oxarticles__oxid.value %}<a href="Javascript:editThis('{{ listitem.oxarticles__oxid.value }}');" class="{{ listclass }}">{% endif %}{{ listitem.oxorderarticles__oxartnum.value }}</a></td>

@@ -73,7 +73,7 @@
                 <input type="text" class="editinput" size="15" maxlength="{{ edit.oxuserpayments__oxvalue.fldmax_length }}" name="editval[oxuserpayments__oxvalue]" value="{{ edit.oxuserpayments__oxvalue.value }}">
                 </td>
             </tr-->
-            {% for value in edit.aDynValues %}
+            {% for value in edit.__get('aDynValues') %}
             {% set ident = 'ORDER_OVERVIEW_'|cat(value.name) %}
             {% set ident = ident|upper %}
             <tr>
