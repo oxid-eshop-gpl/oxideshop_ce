@@ -13,7 +13,7 @@
                                                       {% endspaceless %}
                                                       {% set sSep = "," %}
                                                       {% endfor %} ],
-                                                    '{{ oViewConf.getAjaxLink() }}cmpid=container1&container=usergroup_main&synchoxid={{ oxid }}'
+                                                    '{{ oViewConf.getAjaxLink()|raw }}cmpid=container1&container=usergroup_main&synchoxid={{ oxid }}'
                                                     );
 
         {% set sSep = "" %}
@@ -28,7 +28,7 @@
                                                       {% endspaceless %}
                                                       {% set sSep = "," %}
                                                       {% endfor %} ],
-                                                    '{{ oViewConf.getAjaxLink() }}cmpid=container2&container=usergroup_main&oxid={{ oxid }}'
+                                                    '{{ oViewConf.getAjaxLink()|raw }}cmpid=container2&container=usergroup_main&oxid={{ oxid }}'
                                                     );
 
         YAHOO.oxid.container1.getDropAction = function()

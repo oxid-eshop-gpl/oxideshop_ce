@@ -14,7 +14,7 @@
                                                       {% endspaceless %}
                                                       {% set sSep = "," %}
                                                       {% endfor %} ],
-                                                    '{{ oViewConf.getAjaxLink() }}cmpid=container1&container=article_bundle&synchoxid={{ oxid }}',
+                                                    '{{ oViewConf.getAjaxLink()|raw }}cmpid=container1&container=article_bundle&synchoxid={{ oxid }}',
                                                      { selectionMode: "single" }
                                                     );
 
@@ -53,7 +53,7 @@
                 oParam = YAHOO.oxid.container1.getRecord(aSelRows[0]);
                 sRequest = '&oxbundleid=' + oParam._oData._6;
             }
-            YAHOO.util.Connect.asyncRequest( 'GET', '{{ oViewConf.getAjaxLink() }}&cmpid=container1&container=article_bundle&fnc=addarticlebundle&oxid={{ oxid }}'+sRequest, callback );
+            YAHOO.util.Connect.asyncRequest( 'GET', '{{ oViewConf.getAjaxLink()|raw }}&cmpid=container1&container=article_bundle&fnc=addarticlebundle&oxid={{ oxid }}'+sRequest, callback );
 
         }
         YAHOO.oxid.container1.onRemove = function()
@@ -71,7 +71,7 @@
                 failure: YAHOO.oxid.container1.onFailure,
                 scope:   YAHOO.oxid.container1
             };
-            YAHOO.util.Connect.asyncRequest( 'GET', '{{ oViewConf.getAjaxLink() }}&cmpid=container1&container=article_bundle&fnc=removearticlebundle&oxid={{ oxid }}', callback );
+            YAHOO.util.Connect.asyncRequest( 'GET', '{{ oViewConf.getAjaxLink()|raw }}&cmpid=container1&container=article_bundle&fnc=removearticlebundle&oxid={{ oxid }}', callback );
 
         }
         // subscribint event listeners on buttons
@@ -92,7 +92,7 @@
         <tr>
             <td style="padding-left:4px;padding-right:10px">
                 <select name="artcat" id="artcat" style="width:100%;" class="editinput">
-                {% for pcat in artcattree.aList %}
+                {% for pcat in artcattree.__get('aList') %}
                 <option value="{{ pcat.oxcategories__oxid.value }}">{{ pcat.oxcategories__oxtitle.value }}</option>
                 {% endfor %}
                 </select>

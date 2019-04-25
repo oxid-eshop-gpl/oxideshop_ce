@@ -281,24 +281,6 @@ function editThis( sID )
                 <div class="spacer"></div>
             </dl>
 
-            {% if not isdemoshop %}
-            <dl>
-                <dt>
-                    <select name=confstrs[iSmartyPhpHandling] {{ readonly }}>
-                        <option value="{{ smarty.const.SMARTY_PHP_PASSTHRU }}"  {% if confstrs.iSmartyPhpHandling==$smarty.const.SMARTY_PHP_PASSTHRU %}selected{% endif %}>{{ translate({ ident: "SHOP_SYSTEM_SMARTYPHPHANDLING_REMOVE" }) }}</option>
-                        <option value="{{ smarty.const.SMARTY_PHP_QUOTE }}"  {% if confstrs.iSmartyPhpHandling==$smarty.const.SMARTY_PHP_QUOTE %}selected{% endif %}>{{ translate({ ident: "SHOP_SYSTEM_SMARTYPHPHANDLING_PASSTHRU" }) }}</option>
-                        <option value="{{ smarty.const.SMARTY_PHP_REMOVE }}"  {% if confstrs.iSmartyPhpHandling==$smarty.const.SMARTY_PHP_REMOVE %}selected{% endif %}>{{ translate({ ident: "SHOP_SYSTEM_SMARTYPHPHANDLING_QUOTE" }) }}</option>
-                        <option value="{{ smarty.const.SMARTY_PHP_ALLOW }}"  {% if confstrs.iSmartyPhpHandling==$smarty.const.SMARTY_PHP_ALLOW %}selected{% endif %}>{{ translate({ ident: "SHOP_SYSTEM_SMARTYPHPHANDLING_ALLOW" }) }}</option>
-                    </select>
-                    {% include "inputhelp.html.twig" with {'sHelpId': help_id("HELP_SHOP_SYSTEM_SMARTYPHPHANDLING"), 'sHelpText': help_text("HELP_SHOP_SYSTEM_SMARTYPHPHANDLING")} %}
-                </dt>
-                <dd>
-                    {{ translate({ ident: "SHOP_SYSTEM_SMARTYPHPHANDLING" }) }}
-                </dd>
-                <div class="spacer"></div>
-            </dl>
-            {% endif %}
-
             <dl>
                 <dt>
                     <input type=text class="txt" style="width: 430px;" name=confstrs[sUtilModule] value="{{ confstrs.sUtilModule }}" {{ readonly }}>

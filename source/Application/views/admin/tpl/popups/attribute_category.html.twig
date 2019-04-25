@@ -14,7 +14,7 @@
                                                       {% endspaceless %}
                                                       {% set sSep = "," %}
                                                       {% endfor %} ],
-                                                    '{{ oViewConf.getAjaxLink() }}cmpid=container1&container=attribute_category&synchoxid={{ oxid }}'
+                                                    '{{ oViewConf.getAjaxLink()|raw }}cmpid=container1&container=attribute_category&synchoxid={{ oxid }}'
                                                     );
 
         {% set sSep = "" %}
@@ -30,7 +30,7 @@
                                                       {% endspaceless %}
                                                       {% set sSep = "," %}
                                                       {% endfor %} ],
-                                                    '{{ oViewConf.getAjaxLink() }}cmpid=container2&container=attribute_category&oxid={{ oxid }}',
+                                                    '{{ oViewConf.getAjaxLink()|raw }}cmpid=container2&container=attribute_category&oxid={{ oxid }}',
                                                     { selectionMode:'single' }
                                                     );
 
@@ -99,7 +99,7 @@
                                                    formatter: YAHOO.oxid.aoc.custFormatter
                                                    {% endif %}},
                                                   {% endfor %} ],
-                                                '{{ oViewConf.getAjaxLink() }}cmpid=container1&container=attribute_order&oxid='+sOxid,
+                                                '{{ oViewConf.getAjaxLink()|raw }}cmpid=container1&container=attribute_order&oxid='+sOxid,
                                                 { selectionMode:'single' }
                                                 )
                 //

@@ -14,7 +14,7 @@
                                                       {% endspaceless %}
                                                       {% set sSep = "," %}
                                                       {% endfor %} ],
-                                                    '{{ oViewConf.getAjaxLink() }}cmpid=container1&container=discount_articles&synchoxid={{ oxid }}'
+                                                    '{{ oViewConf.getAjaxLink()|raw }}cmpid=container1&container=discount_articles&synchoxid={{ oxid }}'
                                                     );
 
         {% set sSep = "" %}
@@ -30,7 +30,7 @@
                                                       {% endspaceless %}
                                                       {% set sSep = "," %}
                                                       {% endfor %} ],
-                                                    '{{ oViewConf.getAjaxLink() }}cmpid=container2&container=discount_articles&oxid={{ oxid }}'
+                                                    '{{ oViewConf.getAjaxLink()|raw }}cmpid=container2&container=discount_articles&oxid={{ oxid }}'
                                                     );
         YAHOO.oxid.container1.modRequest = function( sRequest )
         {
@@ -72,7 +72,7 @@
         <tr>
             <td class="oxid-aoc-category">
                 <select name="artcat" id="artcat">
-                {% for pcat in artcattree.aList %}
+                {% for pcat in artcattree.__get('aList') %}
                 <option value="{{ pcat.oxcategories__oxid.value }}">{{ pcat.oxcategories__oxtitle.value }}</option>
                 {% endfor %}
                 </select>
