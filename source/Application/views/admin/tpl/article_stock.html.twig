@@ -178,7 +178,7 @@ function editThis( sID )
             <table cellspacing="0" cellpadding="1" border="0" >
             {% set oddclass = "2" %}
             {% for amountprice in amountprices %}
-              {% if is_array(errorscaleprice) and in_array($amountprice.oxprice2article__oxid.value, errorscaleprice) %}
+              {% if errorscaleprice is iterable and amountprice.oxprice2article__oxid.value in errorscaleprice %}
               <tr>
                   <td colspan="3">
                       <div class="errorbox">{{ translate({ ident: "ARTICLE_STOCK_ERRORSCALEPRICE" }) }}</div>

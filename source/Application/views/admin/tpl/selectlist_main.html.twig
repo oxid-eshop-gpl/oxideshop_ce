@@ -106,7 +106,7 @@ function onSelect_aField(){
                 <td class="edittext">
                 <select name="aFields[]" id="aFields" size="12" multiple class="editinput" style="width: 150px;" onchange="javascript:onSelect_aField()">
                    {% for sField in edit.getFieldList() %}
-                    <option value="{{ loop.index }} - {{ sField.name }}{% if sField.price %},{{ sField.price }}{% endif %}</option>
+                    <option value="{{ loop.index }}__@@{{ sField.name }}__@@{{ sField.price }}">{{ loop.index }} - {{ sField.name }}{% if sField.price %},{{ sField.price }}{% endif %}</option>
                     {% endfor %}
                  </select>
                  {% include "inputhelp.html.twig" with {'sHelpId': help_id("HELP_SELECTLIST_MAIN_FIELDS"), 'sHelpText': help_text("HELP_SELECTLIST_MAIN_FIELDS")} %}

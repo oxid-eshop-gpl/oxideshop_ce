@@ -35,7 +35,7 @@
                 {{ translate({ ident: "GENERAL_NAME" }) }}
                 </td>
                 <td class="edittext" width="250">
-                <input type="text" class="editinput" size="50" maxlength="{{ edit.oxdeliveryset__oxtitle.fldmax_length }}" name="editval[oxdeliveryset__oxtitle]" value="{{ edit.oxdeliveryset__oxtitle.value }}" {{ readonly }}>
+                <input type="text" class="editinput" size="50" maxlength="{{ edit.oxdeliveryset__oxtitle.fldmax_length }}" name="editval[oxdeliveryset__oxtitle]" value="{{ edit.oxdeliveryset__oxtitle.value|raw }}" {{ readonly }}>
                 {% include "inputhelp.html.twig" with {'sHelpId': help_id("HELP_GENERAL_NAME"), 'sHelpText': help_text("HELP_GENERAL_NAME")} %}
                 </td>
             </tr>

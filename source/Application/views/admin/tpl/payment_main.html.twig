@@ -186,8 +186,8 @@
             {% hasrights { "field": "oxlongdesc", "object": "edit", "readonly": "readonly", } %}
                 <div>
                     <p>{{ translate({ ident: "PAYMENT_MAIN_LONGDESC" }) }}</p>
-                    {{ editor }}
-                    <div class="messagebox">{{ translate({ ident: "EDITOR_PLAINTEXT_HINT" }) }}</div>
+                    {{ editor|raw }}
+                    <div class="messagebox">{{ translate({ ident: "EDITOR_PLAINTEXT_HINT" })|raw }}</div>
                 </div>
             {% endhasrights %}
         {% endblock %}

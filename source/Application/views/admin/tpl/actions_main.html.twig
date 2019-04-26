@@ -90,7 +90,7 @@ function DeletePic(sField)
               {% if edit.oxactions__oxtype.value != 2 %}{% include "inputhelp.html.twig" with {'sHelpId': help_id("HELP_GENERAL_ACTIVFROMTILL"), 'sHelpText': help_text("HELP_GENERAL_ACTIVFROMTILL")} %}{% endif %}
               </td>
             </tr>
-            {% if oxid == " - 1" %}
+            {% if oxid == "-1" %}
             <tr>
                 <td class="edittext">
               {{ translate({ ident: "GENERAL_TYPE" }) }}&nbsp;
@@ -173,7 +173,7 @@ function DeletePic(sField)
                         <!-- Promotions editor -->
                         <tr>
                             <td class="edittext" width="100%" colspan="2">
-                                {{ editor }}
+                                {{ editor|raw }}
                             </td>
                         </tr>
                     {% endblock %}

@@ -199,9 +199,9 @@ function chkInsert()
                 {{ translate({ ident: "GENERAL_BIRTHDATE" }) }}
                 </td>
                 <td class="edittext">
-                  <input type="text" class="editinput" size="3" maxlength="2" name="editval[oxuser__oxbirthdate][day]" value="[{$edit->oxuser__oxbirthdate->value|regex_replace:"/^([0-9]{4})[-]([0-9]{1,2})[-]/":""}]" {{ readonly }}>
-                  <input type="text" class="editinput" size="3" maxlength="2" name="editval[oxuser__oxbirthdate][month]" value="[{$edit->oxuser__oxbirthdate->value|regex_replace:"/^([0-9]{4})[-]/":""|regex_replace:"/[-]([0-9]{1,2})$/":""}]" {{ readonly }}>
-                  <input type="text" class="editinput" size="8" maxlength="4" name="editval[oxuser__oxbirthdate][year]" value="[{$edit->oxuser__oxbirthdate->value|regex_replace:"/[-]([0-9]{1,2})[-]([0-9]{1,2})$/":""}]" {{ readonly }}>
+                  <input type="text" class="editinput" size="3" maxlength="2" name="editval[oxuser__oxbirthdate][day]" value="{{ edit.oxuser__oxbirthdate.value|regex_replace("/^([0-9]{4})[-]([0-9]{1,2})[-]/", "") }}" {{ readonly }}>
+                  <input type="text" class="editinput" size="3" maxlength="2" name="editval[oxuser__oxbirthdate][month]" value="{{ edit.oxuser__oxbirthdate.value|regex_replace("/^([0-9]{4})[-]/", "")|regex_replace("/[-]([0-9]{1,2})$/", "") }}" {{ readonly }}>
+                  <input type="text" class="editinput" size="8" maxlength="4" name="editval[oxuser__oxbirthdate][year]" value="{{ edit.oxuser__oxbirthdate.value|regex_replace("/[-]([0-9]{1,2})[-]([0-9]{1,2})$/", "") }}" {{ readonly }}>
                   {% include "inputhelp.html.twig" with {'sHelpId': help_id("HELP_GENERAL_BIRTHDATE"), 'sHelpText': help_text("HELP_GENERAL_BIRTHDATE")} %}
                 </td>
             </tr>
