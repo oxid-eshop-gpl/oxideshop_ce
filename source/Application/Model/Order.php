@@ -232,6 +232,8 @@ class Order extends \OxidEsales\Eshop\Core\Model\BaseModel
      */
     protected $_oOrderBasket = null;
 
+    public $blIsPaid;
+
     /**
      * Class constructor, initiates parent constructor (parent::oxBase()).
      */

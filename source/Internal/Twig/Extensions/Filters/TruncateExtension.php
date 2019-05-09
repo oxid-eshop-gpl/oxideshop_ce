@@ -49,7 +49,7 @@ class TruncateExtension extends AbstractExtension
      *
      * @return string
      */
-    public function truncate(string $string, int $length = 80, string $suffix = '...', bool $breakWords = false, bool $middle = false): string
+    public function truncate(string $string = null, int $length = 80, string $suffix = '...', bool $breakWords = false, bool $middle = false): string
     {
         return $this->truncateLogic->truncate($string, $length, $suffix, $breakWords, $middle);
     }

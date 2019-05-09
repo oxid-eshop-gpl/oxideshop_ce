@@ -44,22 +44,22 @@ class InputHelpExtension extends AbstractExtension
     }
 
     /**
-     * @param array $params
+     * @param array $ident
      *
      * @return mixed
      */
-    public function getHelpId($params)
+    public function getHelpId($ident)
     {
-        return $this->inputHelpLogic->getIdent($params);
+        return $this->inputHelpLogic->getIdent(['ident' => $ident]);
     }
 
     /**
-     * @param string $params
+     * @param array $ident
      *
      * @return mixed
      */
-    public function getHelpText($params)
+    public function getHelpText($ident)
     {
-        return $this->inputHelpLogic->getTranslation($params);
+        return $this->inputHelpLogic->getTranslation(['ident' => $ident]);
     }
 }

@@ -991,7 +991,7 @@ function editThis(sID)
 
             <dl>
                 <dt>
-                    <textarea class="txtfield" name=confarrs[aCurrencies] {{ readonly }}>{{ confarrs.aCurrencies }}</textarea>
+                    <textarea class="txtfield" name=confarrs[aCurrencies] {{ readonly }}>{{ confarrs.aCurrencies|raw }}</textarea>
                     {% include "inputhelp.html.twig" with {'sHelpId': help_id("HELP_SHOP_CONFIG_SETORDELETECURRENCY"), 'sHelpText': help_text("HELP_SHOP_CONFIG_SETORDELETECURRENCY")} %}
                 </dt>
                 <dd>

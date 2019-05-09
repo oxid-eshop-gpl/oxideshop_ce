@@ -1,4 +1,4 @@
-{% include "headitem.html.twig" with {box: "export ", title: "AUCTMASTER_DO_TITLE"|translate, meta_refresh_sec: refresh, meta_refresh_url: oViewConf.getSelfLink()|cat("&cl=`$sClassDo`&iStart=`$iStart`&fnc=run")} %}
+{% include "headitem.html.twig" with {box: "export ", title: "AUCTMASTER_DO_TITLE"|translate, meta_refresh_sec: refresh, meta_refresh_url: oViewConf.getSelfLink()|cat("&cl=" ~ sClassDo ~ "&iStart=" ~ iStart ~ "&fnc=run")} %}
 
 {% if not isset(refresh) %}
     {% if not isset(iError) %}
@@ -7,7 +7,7 @@
         {% if iError %}
             {% if iError == -2 %}
                 {{ translate({ ident: "AUCTMASTER_DO_EXPORTEND" }) }}
-            <b>{% set oxDownloadFile = sDownloadFile %}{{ translate({ ident: "DYNBASE_DO_SUCCESS", args: oxDownloadFile }) }}</b><br>
+            <b>{% set oxDownloadFile = sDownloadFile %}{{ translate({ ident: "DYNBASE_DO_SUCCESS", args: oxDownloadFile })|raw }}</b><br>
                 {{ translate({ ident: "DYNBASE_DO_LINK" }) }}<em>{{ sDownloadFile }}</em>
             {% endif %}
 
