@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 /**
  * Copyright © OXID eSales AG. All rights reserved.
  * See LICENSE file for license details.
@@ -7,7 +7,7 @@
 namespace OxidEsales\EshopCommunity\Internal\Templating;
 
 /**
- * Class DelegatingEngine
+ * Class TraditionalEngine
  */
 class TraditionalEngine implements TraditionalEngineInterface
 {
@@ -16,7 +16,7 @@ class TraditionalEngine implements TraditionalEngineInterface
     private $templateNameResolver;
 
     /**
-     * @param EngineInterface               $engine               An array of EngineInterface instances to add
+     * @param EngineInterface               $engine
      * @param TemplateNameResolverInterface $templateNameResolver
      */
     public function __construct($engine, TemplateNameResolverInterface $templateNameResolver)
@@ -32,7 +32,7 @@ class TraditionalEngine implements TraditionalEngineInterface
      *
      * @return string
      */
-    public function renderTemplate(string $template, array $viewData = [], $cacheId = null) : string
+    public function renderTemplate(string $template, array $viewData = [], $cacheId = null): string
     {
         $templateName = $this->getTemplateName($template);
         /** @var EngineInterface $templating */
@@ -43,13 +43,9 @@ class TraditionalEngine implements TraditionalEngineInterface
     }
 
     /**
-     * Return fallback engine.
-     *
-     * @throws \RuntimeException if no engine was defined.
-     *
      * @return EngineInterface
      */
-    public function getEngine() : EngineInterface
+    public function getEngine(): EngineInterface
     {
         if (isset($this->engine)) {
             return $this->engine;
@@ -63,18 +59,10 @@ class TraditionalEngine implements TraditionalEngineInterface
      *
      * @return string
      */
-    private function getTemplateName(string $template) : string
+    private function getTemplateName(string $template): string
     {
         return $this->templateNameResolver->resolve($template, $this->getEngine()->getDefaultFileExtension());
     }
-
-    /**
-     * {@inheritdoc}
-     */
- /*  public function render($name, array $parameters = array())
-    {
-        return $this->getEngine()->render($name, $parameters);
-    }*/
 
     /**
      * Returns true if the template exists.
@@ -82,10 +70,8 @@ class TraditionalEngine implements TraditionalEngineInterface
      * @param string $name A template name
      *
      * @return bool true if the template exists, false otherwise
-     *
-     * @throws \RuntimeException if the engine cannot handle the template name
      */
-    public function exists($name) : bool
+    public function exists($name): bool
     {
         $name = $this->getTemplateName($name);
         return $this->getEngine()->exists($name);

@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 /**
  * Copyright © OXID eSales AG. All rights reserved.
  * See LICENSE file for license details.
@@ -22,7 +22,7 @@ interface EngineInterface
      *
      * @return array
      */
-    public function getGlobals();
+    public function getGlobals(): array;
 
     /**
      * @param string $cacheId
@@ -34,7 +34,7 @@ interface EngineInterface
      *
      * @return string
      */
-    public function getDefaultFileExtension();
+    public function getDefaultFileExtension(): string;
 
     /**
      * Renders a template.
@@ -46,7 +46,7 @@ interface EngineInterface
      *
      * @throws \RuntimeException if the template cannot be rendered
      */
-    public function render($name, array $parameters = []);
+    public function render($name, array $parameters = []): string;
 
     /**
      * Returns true if the template exists.
@@ -57,5 +57,5 @@ interface EngineInterface
      *
      * @throws \RuntimeException if the engine cannot handle the template name
      */
-    public function exists($name);
+    public function exists($name): bool;
 }

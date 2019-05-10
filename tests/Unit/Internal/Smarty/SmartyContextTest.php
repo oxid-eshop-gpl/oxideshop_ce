@@ -105,12 +105,12 @@ class SmartyContextTest extends \PHPUnit\Framework\TestCase
         $config = $this->getConfigMock();
         $config->method('getConfigParam')
             ->with('iSmartyPhpHandling')
-            ->will($this->returnValue(true));
+            ->will($this->returnValue(1));
 
         $utilsView = $this->getUtilsViewMock();
 
         $smartyContext = new SmartyContext($config, $utilsView);
-        $this->assertSame(true, $smartyContext->getTemplatePhpHandlingMode());
+        $this->assertSame(1, $smartyContext->getTemplatePhpHandlingMode());
     }
 
     public function testGetShopTemplatePluginDirectory()
@@ -157,10 +157,10 @@ class SmartyContextTest extends \PHPUnit\Framework\TestCase
         $config = $this->getConfigMock();
         $utilsView = $this->getUtilsViewMock();
         $utilsView->method('getTemplateDirs')
-            ->will($this->returnValue('testTemplateDir'));
+            ->will($this->returnValue(['testTemplateDir']));
 
         $smartyContext = new SmartyContext($config, $utilsView);
-        $this->assertSame('testTemplateDir', $smartyContext->getTemplateDirectories());
+        $this->assertSame(['testTemplateDir'], $smartyContext->getTemplateDirectories());
     }
 
     public function testGetTemplateCompileId()

@@ -26,12 +26,7 @@ interface ContextInterface extends BasicContextInterface
     /**
      * @return string
      */
-    public function getContainerCacheFile(): string;
-
-    /**
-     * @return string
-     */
-    public function getLogLevel(): string;
+    public function getLogLevel();
 
     /**
      * @return string
@@ -47,24 +42,4 @@ interface ContextInterface extends BasicContextInterface
      * @return string
      */
     public function getConfigurationEncryptionKey(): string;
-
-    /**
-     * @return integer
-     */
-    public function getPasswordHashingBcryptCost(): int;
-
-    /**
-     * @return int
-     */
-    public function getPasswordHashingArgon2MemoryCost(): int;
-
-    /**
-     * @return int
-     */
-    public function getPasswordHashingArgon2TimeCost(): int;
-
-    /**
-     * @return int
-     */
-    public function getPasswordHashingArgon2Threads(): int;
 }

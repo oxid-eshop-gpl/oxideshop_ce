@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 /**
  * Copyright © OXID eSales AG. All rights reserved.
  * See LICENSE file for license details.
@@ -15,62 +15,62 @@ interface SmartyContextInterface
     /**
      * @return bool
      */
-    public function getTemplateEngineDebugMode();
+    public function getTemplateEngineDebugMode(): bool;
 
     /**
      * @return bool
      */
-    public function showTemplateNames();
+    public function showTemplateNames(): bool;
 
     /**
      * @return bool
      */
-    public function getTemplateSecurityMode();
+    public function getTemplateSecurityMode(): bool;
 
     /**
      * @return string
      */
-    public function getTemplateCompileDirectory();
+    public function getTemplateCompileDirectory(): string;
 
     /**
      * @return array
      */
-    public function getTemplateDirectories();
+    public function getTemplateDirectories(): array;
 
     /**
      * @return string
      */
-    public function getTemplateCompileId();
+    public function getTemplateCompileId(): string;
 
     /**
      * @return bool
      */
-    public function getTemplateCompileCheckMode();
+    public function getTemplateCompileCheckMode(): bool;
 
     /**
      * @return array
      */
-    public function getModuleTemplatePluginDirectories();
+    public function getModuleTemplatePluginDirectories(): array;
 
     /**
      * @return array
      */
-    public function getShopTemplatePluginDirectories();
+    public function getShopTemplatePluginDirectories(): array;
 
     /**
      * @return int
      */
-    public function getTemplatePhpHandlingMode();
+    public function getTemplatePhpHandlingMode(): int;
 
     /**
      * @return string
      */
-    public function getShopTemplatePluginDirectory();
+    public function getShopTemplatePluginDirectory(): string;
 
     /**
      * @param string $templateName
      *
      * @return string
      */
-    public function getTemplatePath($templateName);
+    public function getTemplatePath($templateName): string;
 }

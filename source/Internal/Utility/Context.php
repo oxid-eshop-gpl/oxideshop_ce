@@ -21,7 +21,6 @@ class Context extends BasicContext implements ContextInterface
 
     /**
      * Context constructor.
-     *
      * @param Config $config
      */
     public function __construct(Config $config)
@@ -40,9 +39,9 @@ class Context extends BasicContext implements ContextInterface
     /**
      * @return string
      */
-    public function getLogLevel(): string
+    public function getLogLevel()
     {
-        return $this->getConfigParameter('sLogLevel', '');
+        return $this->getConfigParameter('sLogLevel');
     }
 
     /**
@@ -58,7 +57,9 @@ class Context extends BasicContext implements ContextInterface
      */
     public function getRequiredContactFormFields(): array
     {
-        return $this->getConfigParameter('contactFormRequiredFields', []);
+        $contactFormRequiredFields = $this->getConfigParameter('contactFormRequiredFields');
+
+        return $contactFormRequiredFields === null ? [] : $contactFormRequiredFields;
     }
 
     /**
@@ -72,7 +73,7 @@ class Context extends BasicContext implements ContextInterface
     /**
      * @return string
      */
-    public function getContainerCacheFile(): string
+    public function getContainerCacheFile()
     {
         return $this->getConfigParameter('sCompileDir') . DIRECTORY_SEPARATOR . 'containercache.php';
     }
@@ -86,45 +87,11 @@ class Context extends BasicContext implements ContextInterface
     }
 
     /**
-     * @return integer
-     */
-    public function getPasswordHashingBcryptCost(): int
-    {
-        return $this->getConfigParameter('passwordHashingBcryptCost', PASSWORD_BCRYPT_DEFAULT_COST);
-    }
-
-    /**
-     * @return int
-     */
-    public function getPasswordHashingArgon2MemoryCost(): int
-    {
-        return $this->getConfigParameter('passwordHashingArgon2MemoryCost', PASSWORD_ARGON2_DEFAULT_MEMORY_COST);
-    }
-
-    /**
-     * @return int
-     */
-    public function getPasswordHashingArgon2TimeCost(): int
-    {
-        return $this->getConfigParameter('passwordHashingArgon2TimeCost', PASSWORD_ARGON2_DEFAULT_TIME_COST);
-    }
-
-    /**
-     * @return int
-     */
-    public function getPasswordHashingArgon2Threads(): int
-    {
-        return $this->getConfigParameter('passwordHashingArgon2Threads', PASSWORD_ARGON2_DEFAULT_THREADS);
-    }
-
-    /**
      * @param string $name
-     * @param null   $default
-     *
      * @return mixed
      */
-    private function getConfigParameter($name, $default = null)
+    private function getConfigParameter($name)
     {
-        return $this->config->getConfigParam($name, $default);
+        return $this->config->getConfigParam($name);
     }
 }

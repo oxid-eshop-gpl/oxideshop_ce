@@ -11,6 +11,7 @@ use OxidEsales\Eshop\Core\Exception\DatabaseConnectionException;
 use OxidEsales\Eshop\Core\Exception\RoutingException;
 use OxidEsales\Eshop\Core\Exception\StandardException;
 use OxidEsales\Eshop\Core\Cache\DynamicContent\ContentCache;
+use OxidEsales\EshopCommunity\Internal\Templating\TemplateLoaderInterface;
 use OxidEsales\EshopCommunity\Internal\Templating\TraditionalEngineInterface;
 use oxOutput;
 use oxSystemComponentException;
@@ -464,9 +465,14 @@ class ShopControl extends \OxidEsales\Eshop\Core\Base
         // render it
         $templateName = $view->render();
 
-        // check if template dir exists
-        $templateFile = \OxidEsales\Eshop\Core\Registry::getConfig()->getTemplatePath($templateName, $this->isAdmin());
-        if (!file_exists($templateFile)) {
+        // check if template exists
+        /** @var TemplateLoaderInterface $templateLoader */
+        $templateLoader = $this->getContainer()->get('oxid_esales.templating.template.loader');
+        if ($this->isAdmin()) {
+            $templateLoader = $this->getContainer()->get('oxid_esales.templating.admin.template.loader');
+        }
+
+        if (!$templateLoader->exists($templateName)) {
             $ex = oxNew(\OxidEsales\Eshop\Core\Exception\SystemComponentException::class);
             $ex->setMessage('EXCEPTION_SYSTEMCOMPONENT_TEMPLATENOTFOUND' . ' ' . $templateName);
             $ex->setComponent($templateName);
@@ -489,7 +495,6 @@ class ShopControl extends \OxidEsales\Eshop\Core\Base
         if (is_array($errors) && count($errors)) {
             \OxidEsales\Eshop\Core\Registry::getUtilsView()->passAllErrorsToView($viewData, $errors);
         }
-
 
         // passing current view object to smarty
         // TODO: check if it could be moved out

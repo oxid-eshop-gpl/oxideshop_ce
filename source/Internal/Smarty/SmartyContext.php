@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 /**
  * Copyright © OXID eSales AG. All rights reserved.
  * See LICENSE file for license details.
@@ -40,7 +40,7 @@ class SmartyContext implements SmartyContextInterface
     /**
      * @return bool
      */
-    public function getTemplateEngineDebugMode()
+    public function getTemplateEngineDebugMode(): bool
     {
         $debugMode = $this->getConfigParameter('iDebug');
         return ($debugMode == 1 || $debugMode == 3 || $debugMode == 4);
@@ -49,7 +49,7 @@ class SmartyContext implements SmartyContextInterface
     /**
      * @return bool
      */
-    public function showTemplateNames()
+    public function showTemplateNames(): bool
     {
         $debugMode = $this->getConfigParameter('iDebug');
         return ($debugMode == 8 && !$this->getBackendMode());
@@ -58,7 +58,7 @@ class SmartyContext implements SmartyContextInterface
     /**
      * @return bool
      */
-    public function getTemplateSecurityMode()
+    public function getTemplateSecurityMode(): bool
     {
         return (bool) $this->getDemoShopMode();
     }
@@ -66,7 +66,7 @@ class SmartyContext implements SmartyContextInterface
     /**
      * @return string
      */
-    public function getTemplateCompileDirectory()
+    public function getTemplateCompileDirectory(): string
     {
         return $this->utilsView->getSmartyDir();
     }
@@ -74,7 +74,7 @@ class SmartyContext implements SmartyContextInterface
     /**
      * @return array
      */
-    public function getTemplateDirectories()
+    public function getTemplateDirectories(): array
     {
         return $this->utilsView->getTemplateDirs();
     }
@@ -82,7 +82,7 @@ class SmartyContext implements SmartyContextInterface
     /**
      * @return string
      */
-    public function getTemplateCompileId()
+    public function getTemplateCompileId(): string
     {
         return $this->utilsView->getTemplateCompileId();
     }
@@ -90,7 +90,7 @@ class SmartyContext implements SmartyContextInterface
     /**
      * @return bool
      */
-    public function getTemplateCompileCheckMode()
+    public function getTemplateCompileCheckMode(): bool
     {
         return (bool) $this->getConfigParameter('blCheckTemplates');
     }
@@ -98,7 +98,7 @@ class SmartyContext implements SmartyContextInterface
     /**
      * @return array
      */
-    public function getModuleTemplatePluginDirectories()
+    public function getModuleTemplatePluginDirectories(): array
     {
         return $this->utilsView->getModuleSmartyPluginDirectories();
     }
@@ -106,7 +106,7 @@ class SmartyContext implements SmartyContextInterface
     /**
      * @return array
      */
-    public function getShopTemplatePluginDirectories()
+    public function getShopTemplatePluginDirectories(): array
     {
         return $this->utilsView->getShopSmartyPluginDirectories();
     }
@@ -114,15 +114,15 @@ class SmartyContext implements SmartyContextInterface
     /**
      * @return int
      */
-    public function getTemplatePhpHandlingMode()
+    public function getTemplatePhpHandlingMode(): int
     {
-        return $this->getConfigParameter('iSmartyPhpHandling');
+        return (int) $this->getConfigParameter('iSmartyPhpHandling');
     }
 
     /**
      * @return string
      */
-    public function getShopTemplatePluginDirectory()
+    public function getShopTemplatePluginDirectory(): string
     {
         $coreDirectory = $this->getConfigParameter('sCoreDir');
 
@@ -134,7 +134,7 @@ class SmartyContext implements SmartyContextInterface
      *
      * @return string
      */
-    public function getTemplatePath($templateName)
+    public function getTemplatePath($templateName): string
     {
         return $this->config->getTemplatePath($templateName, $this->getBackendMode());
     }

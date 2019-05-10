@@ -26,6 +26,13 @@ class_exists('Smarty');
 class ShopControlTest extends \OxidTestCase
 {
 
+    protected function tearDown()
+    {
+        parent::tearDown();
+        oxTestModules::addModuleObject("oxUtilsView", null);
+        modDB::getInstance()->cleanup();
+    }
+
     /**
      * Testing oxShopControl::start()
      *
@@ -273,7 +280,6 @@ class ShopControlTest extends \OxidTestCase
             ->disableOriginalConstructor()
             ->getMock();
         $templateEngine->expects($this->any())->method('renderTemplate')->with($this->equalTo("message/exception.tpl"));
-        $templateEngine->expects($this->any())->method('getEngine')->will($this->returnValue((object)[]));
 
         $oControl = $this->getMock(\OxidEsales\Eshop\Core\ShopControl::class, array("isAdmin", '_getOutputManager', '_isDebugMode', 'getTemplating'), array(), '', false);
         $oControl->expects($this->any())->method('isAdmin')->will($this->returnValue(false));
@@ -301,6 +307,7 @@ class ShopControlTest extends \OxidTestCase
             $this->markTestSkipped('This test is for Community/Professional edition only.');
         }
         $this->getConfig()->setConfigParam('sTheme', 'azure');
+        \OxidEsales\EshopCommunity\Internal\Application\ContainerFactory::getInstance()->resetContainer();
 
         $controllerClassName = 'content';
 
@@ -331,6 +338,7 @@ class ShopControlTest extends \OxidTestCase
             $this->markTestSkipped('This test is for Community/Professional edition only.');
         }
         $this->getConfig()->setConfigParam('sTheme', 'azure');
+        \OxidEsales\EshopCommunity\Internal\Application\ContainerFactory::getInstance()->resetContainer();
 
         $controllerClassName = 'content';
 
@@ -365,6 +373,7 @@ class ShopControlTest extends \OxidTestCase
             $this->markTestSkipped('This test is for Community/Professional edition only.');
         }
         $this->getConfig()->setConfigParam('sTheme', 'azure');
+        \OxidEsales\EshopCommunity\Internal\Application\ContainerFactory::getInstance()->resetContainer();
 
         $controllerClassName = 'content';
 
@@ -590,13 +599,6 @@ class ShopControlTest extends \OxidTestCase
         $control->start();
     }
 
-    protected function tearDown()
-    {
-        parent::tearDown();
-
-        modDB::getInstance()->cleanup();
-    }
-
     /**
      * Check that fetch method returns expected template name.
      * Could be useful as an integrational test to test that template from controller is set to Smarty
@@ -612,7 +614,6 @@ class ShopControlTest extends \OxidTestCase
             ->disableOriginalConstructor()
             ->getMock();
         $templateEngine->expects($this->any())->method('renderTemplate')->with($this->equalTo($expectedTemplate));
-        $templateEngine->expects($this->any())->method('getEngine')->will($this->returnValue((object)[]));
 
         return $templateEngine;
     }

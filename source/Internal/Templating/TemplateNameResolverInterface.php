@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 /**
  * Copyright © OXID eSales AG. All rights reserved.
  * See LICENSE file for license details.
@@ -17,5 +17,5 @@ interface TemplateNameResolverInterface
      *
      * @return string
      */
-    public function resolve(string $name, string $fileExtension);
+    public function resolve(string $name, string $fileExtension): string;
 }

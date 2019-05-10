@@ -6,17 +6,14 @@
 
 namespace OxidEsales\EshopCommunity\Tests\Unit\Internal\Smarty;
 
-use org\bovigo\vfs\vfsStream;
 use OxidEsales\EshopCommunity\Internal\Smarty\SmartyEngine;
-use Symfony\Component\Templating\TemplateNameParserInterface;
 
-class SmartyEngineTests extends \PHPUnit\Framework\TestCase
+class SmartyEngineTest extends \PHPUnit\Framework\TestCase
 {
 
     public function testExists()
     {
-        $templateDir = vfsStream::setup('testTemplateDir');
-        $template = vfsStream::newFile('testSmartyTemplate.tpl')->at($templateDir)->url();
+        $template = $this->getTemplateDirectory() . 'smartyTemplate.tpl';
 
         $engine = $this->getEngine();
 
@@ -32,20 +29,25 @@ class SmartyEngineTests extends \PHPUnit\Framework\TestCase
 
     public function testRender()
     {
-        $templateDir = vfsStream::setup('testTemplateDir');
-        $template = vfsStream::newFile('testSmartyTemplate.tpl')
-            ->at($templateDir)
-            ->setContent("The new contents of the file")
-            ->url();
+        $template = $this->getTemplateDirectory() . 'smartyTemplate.tpl';
 
         $engine = $this->getEngine();
 
         $this->assertTrue(file_exists($template));
-        $this->assertSame('foo', $engine->render($template));
+        $this->assertSame('Hello OXID!', $engine->render($template));
     }
 
     private function getEngine()
     {
-        return new SmartyEngine(new \Smarty());
+        $smarty = new \Smarty();
+        $smarty->compile_dir = sys_get_temp_dir();
+        $smarty->left_delimiter = '[{';
+        $smarty->right_delimiter = '}]';
+        return new SmartyEngine($smarty);
+    }
+
+    private function getTemplateDirectory()
+    {
+        return __DIR__ . '/Fixtures/';
     }
 }

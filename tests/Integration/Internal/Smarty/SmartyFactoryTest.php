@@ -62,7 +62,7 @@ class SmartyFactoryTest extends \PHPUnit\Framework\TestCase
             'compile_dir' => "testCompileDir",
             'cache_dir' => "testCompileDir",
             'compile_id' => "testCompileId",
-            'template_dir' => "testTemplateDir",
+            'template_dir' => ["testTemplateDir"],
             'debugging' => true,
             'compile_check' => true,
             'security_settings' => [
@@ -121,7 +121,7 @@ class SmartyFactoryTest extends \PHPUnit\Framework\TestCase
             'compile_dir' => "testCompileDir",
             'cache_dir' => "testCompileDir",
             'compile_id' => "testCompileId",
-            'template_dir' => "testTemplateDir",
+            'template_dir' => ["testTemplateDir"],
             'debugging' => true,
             'compile_check' => true,
             'plugins_dir' => [
@@ -200,7 +200,7 @@ class SmartyFactoryTest extends \PHPUnit\Framework\TestCase
             ->will($this->returnValue('testCompileDir'));
 
         $utilsViewMock->method('getTemplateDirs')
-            ->will($this->returnValue('testTemplateDir'));
+            ->will($this->returnValue(['testTemplateDir']));
 
         $utilsViewMock->method('getTemplateCompileId')
             ->will($this->returnValue('testCompileId'));

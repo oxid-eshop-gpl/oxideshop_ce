@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 /**
  * Copyright © OXID eSales AG. All rights reserved.
  * See LICENSE file for license details.
@@ -50,7 +50,7 @@ class SmartyEngine implements EngineInterface
      *
      * @return string
      */
-    public function getDefaultFileExtension()
+    public function getDefaultFileExtension(): string
     {
         return 'tpl';
     }
@@ -65,7 +65,7 @@ class SmartyEngine implements EngineInterface
      *
      * @throws \RuntimeException if the template cannot be rendered
      */
-    public function render($name, array $parameters = array())
+    public function render($name, array $parameters = array()): string
     {
         // attach the global variables
        // $parameters = array_replace($this->getGlobals(), $parameters);
@@ -93,7 +93,7 @@ class SmartyEngine implements EngineInterface
      *
      * @return array
      */
-    public function getGlobals()
+    public function getGlobals(): array
     {
         return $this->globals;
     }
@@ -107,7 +107,7 @@ class SmartyEngine implements EngineInterface
      *
      * @throws \RuntimeException if the engine cannot handle the template name
      */
-    public function exists($name)
+    public function exists($name): bool
     {
         return $this->engine->template_exists($name);
     }

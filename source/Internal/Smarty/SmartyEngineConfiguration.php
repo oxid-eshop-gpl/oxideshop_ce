@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 /**
  * Copyright © OXID eSales AG. All rights reserved.
  * See LICENSE file for license details.
@@ -35,7 +35,7 @@ class SmartyEngineConfiguration implements TemplateEngineConfigurationInterface
      *
      * @return array
      */
-    public function getOptions()
+    public function getOptions(): array
     {
         return [
             'caching' => false,
@@ -56,7 +56,7 @@ class SmartyEngineConfiguration implements TemplateEngineConfigurationInterface
      *
      * @return array
      */
-    public function getSecurityOptions()
+    public function getSecurityOptions(): array
     {
         $options = [
             'php_handling' => (int) $this->context->getTemplatePhpHandlingMode(),
@@ -78,7 +78,7 @@ class SmartyEngineConfiguration implements TemplateEngineConfigurationInterface
      *
      * @return array
      */
-    public function getPlugins()
+    public function getPlugins(): array
     {
         return array_merge(
             $this->context->getModuleTemplatePluginDirectories(),
@@ -91,7 +91,7 @@ class SmartyEngineConfiguration implements TemplateEngineConfigurationInterface
      *
      * @return array
      */
-    public function getPrefilterPlugin()
+    public function getPrefilterPlugin(): array
     {
         $shopSmartyPluginPath = $this->context->getShopTemplatePluginDirectory() ;
         $prefilter['smarty_prefilter_oxblock'] = $shopSmartyPluginPath . '/prefilter.oxblock.php';
@@ -107,7 +107,7 @@ class SmartyEngineConfiguration implements TemplateEngineConfigurationInterface
      *
      * @return array
      */
-    public function getResources()
+    public function getResources(): array
     {
         $resource = new CacheResourcePlugin($this->context);
         return ['ox' => [
@@ -125,7 +125,7 @@ class SmartyEngineConfiguration implements TemplateEngineConfigurationInterface
      *
      * @return array
      */
-    private function getSecuritySettings()
+    private function getSecuritySettings(): array
     {
         return [
             'IF_FUNCS' => ['XML_ELEMENT_NODE', 'is_int'],
@@ -146,7 +146,7 @@ class SmartyEngineConfiguration implements TemplateEngineConfigurationInterface
      *
      * @return array
      */
-    public function getParameters()
+    public function getParameters(): array
     {
         $params['options'] = $this->getOptions();
         $params['securityOptions'] = $this->getSecurityOptions();

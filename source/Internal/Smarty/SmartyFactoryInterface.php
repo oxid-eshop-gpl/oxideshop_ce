@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 /**
  * Copyright © OXID eSales AG. All rights reserved.
  * See LICENSE file for license details.
@@ -14,5 +14,5 @@ interface SmartyFactoryInterface
     /**
      * @return \Smarty
      */
-    public function getSmarty();
+    public function getSmarty(): \Smarty;
 }

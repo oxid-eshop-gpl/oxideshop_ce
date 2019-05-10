@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 /**
  * Copyright © OXID eSales AG. All rights reserved.
  * See LICENSE file for license details.
@@ -32,7 +32,7 @@ class LegacyTemplateNameResolver implements TemplateNameResolverInterface
      *
      * @return string
      */
-    public function resolve(string $name, string $fileExtension) : string
+    public function resolve(string $name, string $fileExtension): string
     {
         return $this->resolver->resolve($this->getFileNameWithoutExtension($name), $fileExtension);
     }
@@ -42,7 +42,7 @@ class LegacyTemplateNameResolver implements TemplateNameResolverInterface
      *
      * @return string
      */
-    private function getFileNameWithoutExtension(string $fileName) : string
+    private function getFileNameWithoutExtension(string $fileName): string
     {
         if (false !== $pos = strrpos($fileName, '.tpl')) {
             $fileName = substr($fileName, 0, $pos);

@@ -24,10 +24,10 @@ class SmartyEngineConfigurationTest extends \PHPUnit\Framework\TestCase
             'right_delimiter' => '}]',
             'compile_dir' => 'testCompileDir',
             'cache_dir' => 'testCompileDir',
-            'template_dir' => 'testTemplateDir',
+            'template_dir' => ['testTemplateDir'],
             'compile_id' => 'testCompileId',
             'default_template_handler_func' => [new SmartyDefaultTemplateHandler($smartyContextMock), 'handleTemplate'],
-            'debugging' => '2',
+            'debugging' => true,
             'compile_check' => true
         ];
 
@@ -53,7 +53,7 @@ class SmartyEngineConfigurationTest extends \PHPUnit\Framework\TestCase
         $options = [
             'php_handling' => SMARTY_PHP_REMOVE,
             'security' => true,
-            'secure_dir' => 'testTemplateDir',
+            'secure_dir' => ['testTemplateDir'],
             'security_settings' => [
                 'IF_FUNCS' => ['XML_ELEMENT_NODE', 'is_int'],
                 'MODIFIER_FUNCS' => ['round', 'floor', 'trim', 'implode', 'is_array', 'getimagesize'],
@@ -130,7 +130,7 @@ class SmartyEngineConfigurationTest extends \PHPUnit\Framework\TestCase
 
         $smartyContextMock
             ->method('getTemplateDirectories')
-            ->willReturn('testTemplateDir');
+            ->willReturn(['testTemplateDir']);
 
         $smartyContextMock
             ->method('getTemplateCompileId')
@@ -138,7 +138,7 @@ class SmartyEngineConfigurationTest extends \PHPUnit\Framework\TestCase
 
         $smartyContextMock
             ->method('getTemplateEngineDebugMode')
-            ->willReturn('2');
+            ->willReturn(true);
 
         $smartyContextMock
             ->method('getTemplateCompileCheckMode')

@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 /**
  * Copyright © OXID eSales AG. All rights reserved.
  * See LICENSE file for license details.
@@ -18,24 +18,12 @@ interface TraditionalEngineInterface
      *
      * @return string
      */
-    public function renderTemplate(string $template, array $viewData = [], $cacheId = null);
-
-    /**
-     * Renders a template.
-     *
-     * @param string $name       A template name
-     * @param array  $parameters An array of parameters to pass to the template
-     *
-     * @return string The evaluated template as a string
-     *
-     * @throws \RuntimeException if the template cannot be rendered
-     */
-   // public function render($name, array $parameters = []);
+    public function renderTemplate(string $template, array $viewData = [], $cacheId = null): string;
 
     /**
      * @return EngineInterface
      */
-    public function getEngine();
+    public function getEngine(): EngineInterface;
 
     /**
      * Returns true if the template exists.
@@ -43,8 +31,6 @@ interface TraditionalEngineInterface
      * @param string $name A template name
      *
      * @return bool true if the template exists, false otherwise
-     *
-     * @throws \RuntimeException if the engine cannot handle the template name
      */
-    public function exists($name);
+    public function exists($name): bool;
 }
