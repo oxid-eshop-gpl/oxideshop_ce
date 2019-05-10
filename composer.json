@@ -21,9 +21,7 @@
         "symfony/config": "~2.8|~3.0",
         "symfony/templating": "^4.1",
         "twig/twig": "^2.5",
-        "symfony/expression-language": "^4.1",
-      "oxid-esales/oxideshop-pe": "dev-twig",
-      "oxid-esales/oxideshop-ee": "dev-twig"
+        "symfony/expression-language": "^4.1"
     },
     "require-dev": {
         "oxid-esales/flow-theme": "^v3.0.2",
@@ -85,36 +83,6 @@
                 "shop_tests_path": "SHOP_TESTS_PATH",
                 "partial_module_paths": "PARTIAL_MODULE_PATHS"
             }
-        }
-    },
-  "repositories": {
-    "oxid-esales/oxideshop-ee": {
-      "type": "vcs",
-      "url": "https://github.com/OXID-eSales/oxideshop_ee"
-    },
-      "oxid-esales/varnish-module": {
-          "type": "vcs",
-          "url": "https://github.com/OXID-eSales/varnish-module"
-      },
-      "oxid-esales/codeception-module": {
-          "type": "vcs",
-          "url": "https://github.com/OXID-eSales/codeception-oxideshop-module"
-      },
-      "oxid-esales/codeception-page-object": {
-          "type": "vcs",
-          "url": "https://github.com/OXID-eSales/codeception-page-object"
-      },
-      "oxid-esales/geo-blocking-module": {
-          "type": "vcs",
-          "url": "https://github.com/OXID-eSales/geo-blocking-module"
-      },
-    "oxid-esales/oxideshop-pe": {
-      "type": "vcs",
-      "url": "https://github.com/OXID-eSales/oxideshop_pe"
-    },
-        "oxid-esales/wave-theme": {
-            "type": "vcs",
-            "url": "https://github.com/OXID-eSales/wave-theme"
         }
     }
 }
