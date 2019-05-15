@@ -65,7 +65,7 @@ class SmartyEngine implements EngineInterface
      *
      * @throws \RuntimeException if the template cannot be rendered
      */
-    public function render($name, array $parameters = array()): string
+    public function render(string $name, array $parameters = array()): string
     {
         // attach the global variables
        // $parameters = array_replace($this->getGlobals(), $parameters);
@@ -96,6 +96,30 @@ class SmartyEngine implements EngineInterface
     public function getGlobals(): array
     {
         return $this->globals;
+    }
+
+    /**
+     * Renders a fragment of the template.
+     *
+     * @param string $fragment   The template fragment to render
+     * @param array  $parameters An array of parameters to pass to the template
+     *
+     * @return string The evaluated template as a string
+     */
+    public function renderFragment(string $fragment, array $parameters = []): string
+    {
+        // save old tpl data
+        $tplVars = $this->engine->_tpl_vars;
+        $forceRecompile = $this->engine->force_compile;
+        $this->engine->force_compile = true;
+        foreach ($parameters as $key => $value) {
+            $this->engine->assign($key, $value);
+        }
+        $this->engine->oxidcache = new \OxidEsales\Eshop\Core\Field($fragment, \OxidEsales\Eshop\Core\Field::T_RAW);
+        $result =  $this->engine->fetch($this->cacheId);
+        $this->engine->_tpl_vars = $tplVars;
+        $this->engine->force_compile = $forceRecompile;
+        return $result;
     }
 
     /**

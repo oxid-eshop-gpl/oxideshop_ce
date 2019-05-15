@@ -24,6 +24,8 @@ class TwigEngine implements EngineInterface
      */
     private $engine;
 
+    private $cacheId;
+
     /**
      * TwigEngine constructor.
      *
@@ -58,7 +60,7 @@ class TwigEngine implements EngineInterface
      *
      * @throws \RuntimeException if the template cannot be rendered
      */
-    public function render($name, array $parameters = array()): string
+    public function render(string $name, array $parameters = array()): string
     {
         return $this->engine->render($name, $parameters);
     }
@@ -82,6 +84,21 @@ class TwigEngine implements EngineInterface
      */
     public function setCacheId($cacheId): void
     {
+        $this->cacheId = $cacheId;
+    }
+
+    /**
+     * Renders a fragment of the template.
+     *
+     * @param string $fragment   The template fragment to render
+     * @param array  $parameters An array of parameters to pass to the template
+     *
+     * @return string The evaluated template as a string
+     */
+    public function renderFragment(string $fragment, array $parameters = []): string
+    {
+        $template = $this->engine->createTemplate($fragment, $this->cacheId);
+        return $template->render($parameters);
     }
 
     /**

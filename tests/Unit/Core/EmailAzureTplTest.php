@@ -875,7 +875,7 @@ class EmailAzureTplTest extends \OxidTestCase
         oxTestModules::addModuleObject("oxShop", $this->_oShop);
 
         $templateEngine = $this->getMockBuilder(TraditionalEngineInterface::class)
-            ->setMethods(['renderTemplate', 'getEngine', 'exists'])
+            ->setMethods(['renderTemplate', 'getEngine', 'exists', 'renderFragment'])
             ->disableOriginalConstructor()
             ->getMock();
         $templateEngine->expects($this->any())->method('renderTemplate')->will($this->returnValue("body"));

@@ -276,7 +276,7 @@ class ShopControlTest extends \OxidTestCase
         $oOut->expects($this->any())->method('addVersionTags')->will($this->returnValue(true));
 
         $templateEngine = $this->getMockBuilder(TraditionalEngineInterface::class)
-            ->setMethods(['renderTemplate', 'getEngine', 'exists'])
+            ->setMethods(['renderTemplate', 'getEngine', 'exists', 'renderFragment'])
             ->disableOriginalConstructor()
             ->getMock();
         $templateEngine->expects($this->any())->method('renderTemplate')->with($this->equalTo("message/exception.tpl"));
@@ -610,7 +610,7 @@ class ShopControlTest extends \OxidTestCase
     private function getTemplateEngineMock($expectedTemplate)
     {
         $templateEngine = $this->getMockBuilder(TraditionalEngineInterface::class)
-            ->setMethods(['renderTemplate', 'getEngine', 'exists'])
+            ->setMethods(['renderTemplate', 'getEngine', 'exists', 'renderFragment'])
             ->disableOriginalConstructor()
             ->getMock();
         $templateEngine->expects($this->any())->method('renderTemplate')->with($this->equalTo($expectedTemplate));

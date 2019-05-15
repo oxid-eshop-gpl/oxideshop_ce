@@ -54,6 +54,14 @@ class TwigEngineTest extends \PHPUnit\Framework\TestCase
         $this->assertNotEquals('foo', $rendered);
     }
 
+    public function testRenderFragment()
+    {
+        $engine = $this->getEngine();
+        $engine->setCacheId('ox:testid');
+        $rendered = $engine->renderFragment("{{ 'twig' }}");
+        $this->assertEquals('twig', $rendered);
+    }
+
     private function getEngine($engine_type = 'twig')
     {
         /** @var TemplateEngineConfigurationInterface $configuration */

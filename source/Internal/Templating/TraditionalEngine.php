@@ -65,6 +65,24 @@ class TraditionalEngine implements TraditionalEngineInterface
     }
 
     /**
+     * Renders a fragment of the template.
+     *
+     * @param string $fragment The template fragment to render
+     * @param array  $viewData An array of parameters to pass to the template
+     * @param string $cacheId  The id for template caching
+     *
+     * @return string
+     */
+    public function renderFragment(string $fragment, array $viewData = [], $cacheId = null) : string
+    {
+        /** @var EngineInterface $templating */
+        $templating = clone $this->getEngine();
+        $templating->setCacheId($cacheId);
+
+        return $templating->renderFragment($fragment, $viewData);
+    }
+
+    /**
      * Returns true if the template exists.
      *
      * @param string $name A template name

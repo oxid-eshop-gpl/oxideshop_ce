@@ -43,10 +43,18 @@ interface EngineInterface
      * @param array  $parameters An array of parameters to pass to the template
      *
      * @return string The evaluated template as a string
-     *
-     * @throws \RuntimeException if the template cannot be rendered
      */
-    public function render($name, array $parameters = []): string;
+    public function render(string $name, array $parameters = []): string;
+
+    /**
+     * Renders a fragment of the template.
+     *
+     * @param string $fragment   The template fragment to render
+     * @param array  $parameters An array of parameters to pass to the template
+     *
+     * @return string The evaluated template as a string
+     */
+    public function renderFragment(string $fragment, array $parameters = []): string;
 
     /**
      * Returns true if the template exists.
@@ -54,8 +62,6 @@ interface EngineInterface
      * @param string $name A template name
      *
      * @return bool true if the template exists, false otherwise
-     *
-     * @throws \RuntimeException if the engine cannot handle the template name
      */
     public function exists($name): bool;
 }

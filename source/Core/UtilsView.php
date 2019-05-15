@@ -15,6 +15,7 @@ use OxidEsales\Eshop\Core\Module\ModuleTemplateBlockRepository;
 use OxidEsales\Eshop\Core\Module\ModuleVariablesLocator;
 use OxidEsales\Eshop\Core\Module\ModuleSmartyPluginDirectoryRepository;
 use OxidEsales\Eshop\Core\ShopIdCalculator as EshopShopIdCalculator;
+use OxidEsales\EshopCommunity\Internal\Smarty\SmartyEngine;
 use OxidEsales\EshopCommunity\Internal\Templating\TraditionalEngineInterface;
 
 /**
@@ -182,6 +183,66 @@ class UtilsView extends \OxidEsales\Eshop\Core\Base
     }
 
     /**
+     * Runs long description through template engine.
+     *
+     * @param string $description Description
+     * @param array  $parameter   View data to use its view data (optional)
+     * @param string $oxid        Current object id
+     *
+     * @return string
+     */
+    public function getRenderedContent(string $description, array $parameter, string $oxid = null) : string
+    {
+        if (\OxidEsales\Eshop\Core\Registry::getConfig()->isDemoShop()) {
+            return $description;
+        }
+
+        //For BC
+        if (strpos($description, "[{") !== false) {
+
+            startProfile("parseThroughSmarty");
+
+            $content = $this->getRenderedSmartyContent($description, $parameter, $oxid);
+
+            stopProfile("parseThroughSmarty");
+
+            return $content;
+
+        }
+
+        $activeLanguageId = \OxidEsales\Eshop\Core\Registry::getLang()->getTplLanguage();
+        $engine = $this->getContainer()->get(TraditionalEngineInterface::class);
+
+        return $engine->renderFragment(
+            $description,
+            $parameter,
+            "ox:" . $oxid . $activeLanguageId
+        );
+    }
+
+    /**
+     * Runs long description through template engine.
+     *
+     * @param string $description Description
+     * @param array  $parameter   View data to use its view data (optional)
+     * @param string $oxid        Current object id
+     *
+     * @return string
+     */
+    public function getRenderedSmartyContent(string $description, array $parameter, string $oxid = null) : string
+    {
+        $activeLanguageId = \OxidEsales\Eshop\Core\Registry::getLang()->getTplLanguage();
+
+        $smarty = clone $this->getContainer()->get(SmartyEngine::class);
+        $smarty->setCacheId("ox:" . $oxid . $activeLanguageId);
+
+        return $smarty->renderFragment(
+            $description,
+            $parameter
+        );
+    }
+
+    /**
      * Runs long description through smarty. If you pass array of data
      * to process, array will be returned, if you pass string - string
      * will be passed as result
@@ -196,53 +257,21 @@ class UtilsView extends \OxidEsales\Eshop\Core\Base
      */
     public function parseThroughSmarty($sDesc, $sOxid = null, $oActView = null, $blRecompile = false)
     {
-        if (\OxidEsales\Eshop\Core\Registry::getConfig()->isDemoShop()) {
+        if (!$sDesc) {
             return $sDesc;
         }
-
-        startProfile("parseThroughSmarty");
-
-        if (!is_array($sDesc) && strpos($sDesc, "[{") === false) {
-            stopProfile("parseThroughSmarty");
-
-            return $sDesc;
-        }
-
-        $activeLanguageId = \OxidEsales\Eshop\Core\Registry::getLang()->getTplLanguage();
-
-        // now parse it through smarty
-        $templating = $this->getContainer()->get(TraditionalEngineInterface::class);
-
-        // save old tpl data
-        $smarty = clone $templating->getEngine();
-        $tplVars = $smarty->_tpl_vars;
-        $forceRecompile = $smarty->force_compile;
-
-        $smarty->force_compile = $blRecompile;
-
         if (!$oActView) {
             $oActView = oxNew(\OxidEsales\Eshop\Application\Controller\FrontendController::class);
             $oActView->addGlobalParams();
         }
 
-        $viewData = $oActView->getViewData();
-
         if (is_array($sDesc)) {
             foreach ($sDesc as $name => $aData) {
-                $smarty->oxidcache = new \OxidEsales\Eshop\Core\Field($aData[1], \OxidEsales\Eshop\Core\Field::T_RAW);
-                $result[$name] = $smarty->render("ox:" . $aData[0] . $activeLanguageId, $viewData);
+                $result[$name] = $this->getRenderedContent($aData[1], $oActView->getViewData(), $sOxid);
             }
         } else {
-            $smarty->oxidcache = new \OxidEsales\Eshop\Core\Field($sDesc, \OxidEsales\Eshop\Core\Field::T_RAW);
-            $result = $smarty->render("ox:{$sOxid}{$activeLanguageId}", $viewData);
+            $result = $this->getRenderedContent($sDesc, $oActView->getViewData(), $sOxid);
         }
-
-        // restore tpl vars for continuing smarty processing if it is in one
-        $smarty->_tpl_vars = $tplVars;
-        $smarty->force_compile = $forceRecompile;
-
-        stopProfile("parseThroughSmarty");
-
         return $result;
     }
 

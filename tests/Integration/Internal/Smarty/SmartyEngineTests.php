@@ -4,8 +4,9 @@
  * See LICENSE file for license details.
  */
 
-namespace OxidEsales\EshopCommunity\Tests\Unit\Internal\Smarty;
+namespace OxidEsales\EshopCommunity\Tests\Integration\Internal\Smarty;
 
+use OxidEsales\EshopCommunity\Internal\Application\ContainerFactory;
 use OxidEsales\EshopCommunity\Internal\Smarty\SmartyEngine;
 
 class SmartyEngineTest extends \PHPUnit\Framework\TestCase
@@ -35,6 +36,17 @@ class SmartyEngineTest extends \PHPUnit\Framework\TestCase
 
         $this->assertTrue(file_exists($template));
         $this->assertSame('Hello OXID!', $engine->render($template));
+    }
+
+    public function testRenderFragment()
+    {
+        $fragment = '[{assign var=\'title\' value=$title|default:\'Hello OXID!\'}][{$title}]';
+
+        $factory = ContainerFactory::getInstance()->getContainer();
+        $engine = $factory->get(SmartyEngine::class);
+        $engine->setCacheId('ox:testid');
+
+        $this->assertSame('Hello OXID!', $engine->renderFragment($fragment));
     }
 
     private function getEngine()
