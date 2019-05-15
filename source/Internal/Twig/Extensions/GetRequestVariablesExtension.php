@@ -17,7 +17,6 @@ use Twig\TwigFunction;
  */
 class GetRequestVariablesExtension extends AbstractExtension
 {
-
     /**
      * @return array|\Twig_Function[]
      */
@@ -36,17 +35,22 @@ class GetRequestVariablesExtension extends AbstractExtension
      */
     public function getGlobalCookie(string $key)
     {
-        $cookie = NULL;
-        if(isset($_COOKIE[$key])){
+        $cookie = null;
+        if (isset($_COOKIE[$key])) {
             $cookie = $_COOKIE[$key];
         }
         return $cookie;
     }
 
+    /**
+     * @param string $key
+     *
+     * @return mixed|null
+     */
     public function getGlobalGet(string $key)
     {
-        $get = NULL;
-        if(isset($_GET[$key])){
+        $get = null;
+        if (isset($_GET[$key])) {
             $get = $_GET[$key];
         }
         return $get;

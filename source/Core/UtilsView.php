@@ -199,7 +199,6 @@ class UtilsView extends \OxidEsales\Eshop\Core\Base
 
         //For BC
         if (strpos($description, "[{") !== false) {
-
             startProfile("parseThroughSmarty");
 
             $content = $this->getRenderedSmartyContent($description, $parameter, $oxid);
@@ -207,7 +206,6 @@ class UtilsView extends \OxidEsales\Eshop\Core\Base
             stopProfile("parseThroughSmarty");
 
             return $content;
-
         }
 
         $activeLanguageId = \OxidEsales\Eshop\Core\Registry::getLang()->getTplLanguage();

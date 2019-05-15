@@ -26,7 +26,7 @@ class RegexReplaceExtension extends AbstractExtension
     }
 
     /**
-     * @param mixed $subject
+     * @param mixed  $subject
      * @param string $pattern
      * @param string $replacement
      *

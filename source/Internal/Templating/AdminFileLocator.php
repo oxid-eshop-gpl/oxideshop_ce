@@ -8,6 +8,10 @@ namespace OxidEsales\EshopCommunity\Internal\Templating;
 
 use OxidEsales\Eshop\Core\Config;
 
+/**
+ * Class AdminFileLocator
+ * @package OxidEsales\EshopCommunity\Internal\Templating
+ */
 class AdminFileLocator implements FileLocatorInterface
 {
     /**
@@ -25,11 +29,18 @@ class AdminFileLocator implements FileLocatorInterface
      */
     private $context;
 
+    /**
+     * AdminFileLocator constructor.
+     *
+     * @param Config                        $context
+     * @param TemplateNameResolverInterface $templateNameResolver
+     * @param EngineInterface               $templateEngine
+     */
     public function __construct(
         Config $context,
         TemplateNameResolverInterface $templateNameResolver,
-        EngineInterface $templateEngine)
-    {
+        EngineInterface $templateEngine
+    ) {
         $this->context = $context;
         $this->templateNameResolver = $templateNameResolver;
         $this->templateEngine = $templateEngine;

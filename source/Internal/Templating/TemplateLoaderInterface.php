@@ -6,6 +6,10 @@
 
 namespace OxidEsales\EshopCommunity\Internal\Templating;
 
+/**
+ * Interface TemplateLoaderInterface
+ * @package OxidEsales\EshopCommunity\Internal\Templating
+ */
 interface TemplateLoaderInterface
 {
     /**

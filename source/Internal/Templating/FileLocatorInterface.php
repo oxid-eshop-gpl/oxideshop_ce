@@ -6,7 +6,10 @@
 
 namespace OxidEsales\EshopCommunity\Internal\Templating;
 
-
+/**
+ * Interface FileLocatorInterface
+ * @package OxidEsales\EshopCommunity\Internal\Templating
+ */
 interface FileLocatorInterface
 {
     /**

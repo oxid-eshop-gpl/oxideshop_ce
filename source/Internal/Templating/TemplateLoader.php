@@ -8,6 +8,10 @@ namespace OxidEsales\EshopCommunity\Internal\Templating;
 
 use OxidEsales\Eshop\Core\Exception\SystemComponentException;
 
+/**
+ * Class TemplateLoader
+ * @package OxidEsales\EshopCommunity\Internal\Templating
+ */
 class TemplateLoader implements TemplateLoaderInterface
 {
     /**
@@ -92,5 +96,4 @@ class TemplateLoader implements TemplateLoaderInterface
         }
         return $file;
     }
-
 }
