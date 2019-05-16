@@ -26,5 +26,7 @@ $aModule = [
         'test_12_ajax_controller' => 'oxid/test12/controllers/test_12_ajax_controller.php'
     ],
     'templates'   =>  ['test_12_ajax_controller.tpl' => 'oxid/test12/views/tpl/test_12_ajax_controller.tpl',
-                       'test_12_popup.tpl' => 'oxid/test12/views/tpl/test_12_popup.tpl']
+                       'test_12_popup.tpl' => 'oxid/test12/views/tpl/test_12_popup.tpl',
+                       'test_12_ajax_controller.html.twig' => 'oxid/test12/views/tpl/test_12_ajax_controller.html.twig',
+                       'test_12_popup.html.twig' => 'oxid/test12/views/tpl/test_12_popup.html.twig']
 ];

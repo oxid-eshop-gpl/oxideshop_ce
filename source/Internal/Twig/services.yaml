@@ -44,7 +44,7 @@ services:
   # Loaders
 
   twig.loader.filesystem:
-    class: Twig\Loader\FilesystemLoader
+    class: OxidEsales\EshopCommunity\Internal\Twig\Loader\FilesystemLoader
     arguments: ["@=service('OxidEsales\\\\EshopCommunity\\\\Internal\\\\Twig\\\\TwigContextInterface').getTemplateDirectories()"]
     tags: ['twig.loader']
 
