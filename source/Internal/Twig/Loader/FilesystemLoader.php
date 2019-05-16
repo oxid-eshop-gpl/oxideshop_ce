@@ -8,6 +8,7 @@ namespace OxidEsales\EshopCommunity\Internal\Twig\Loader;
 
 use OxidEsales\Eshop\Core\Config;
 use OxidEsales\EshopCommunity\Core\Registry;
+use OxidEsales\EshopCommunity\Internal\Templating\TemplateLoaderInterface;
 use Twig\Error\LoaderError;
 use Twig\Loader\FilesystemLoader as TwigLoader;
 
@@ -22,17 +23,32 @@ class FilesystemLoader extends TwigLoader
     /** @var Config */
     private $config;
 
+    /** @var TemplateLoaderInterface */
+    private $loader;
+
+    /** @var TemplateLoaderInterface */
+    private $adminLoader;
+
     /**
      * FilesystemLoader constructor.
      *
-     * @param array       $paths
-     * @param string|null $rootPath
+     * @param array                   $paths
+     * @param string|null             $rootPath
+     * @param TemplateLoaderInterface $loader
+     * @param TemplateLoaderInterface $adminLoader
      */
-    public function __construct($paths = [], string $rootPath = null)
+    public function __construct(
+        $paths = [],
+        string $rootPath = null,
+        TemplateLoaderInterface $loader = null,
+        TemplateLoaderInterface $adminLoader = null
+    )
     {
         parent::__construct($paths, $rootPath);
 
         $this->config = Registry::getConfig();
+        $this->loader = $loader;
+        $this->adminLoader = $adminLoader;
     }
 
     /**
@@ -49,9 +65,14 @@ class FilesystemLoader extends TwigLoader
             if ($template) {
                 return $template;
             }
-        } catch (LoaderError $error) {};
+        } catch (LoaderError $error) {
+        }
 
-        $template = $this->config->getTemplatePath($name, $this->config->isAdmin());
+        if ($this->config->isAdmin()) {
+            $template = $this->adminLoader->getPath($name);
+        } else {
+            $template = $this->loader->getPath($name);
+        }
 
         if (!$template && isset($error)) {
             throw $error;
