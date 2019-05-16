@@ -21,7 +21,7 @@ class InputHelpExtensionTest extends \OxidTestCase
     {
         parent::setUp();
         $inputHelpLogic = new InputHelpLogic();
-        $this->InputHelpExtension = new InputHelpExtension($inputHelpLogic);
+        $this->inputHelpExtension = new InputHelpExtension($inputHelpLogic);
     }
 
     /**
@@ -30,8 +30,8 @@ class InputHelpExtensionTest extends \OxidTestCase
     public function getIdentProvider()
     {
         return array(
-            [[], 1, false, null],
-            [['ident' => 'FIRST_NAME'], 1, false, 'FIRST_NAME']
+            [null, 1, false, null],
+            ['FIRST_NAME', 1, false, 'FIRST_NAME']
         );
     }
 
@@ -48,7 +48,7 @@ class InputHelpExtensionTest extends \OxidTestCase
     {
         $this->setLanguage($iLang);
         $this->setAdminMode($blAdmin);
-        $this->assertEquals($expected, $this->InputHelpExtension->getHelpId($params));
+        $this->assertEquals($expected, $this->inputHelpExtension->getHelpId($params));
     }
 
     /**
@@ -57,12 +57,12 @@ class InputHelpExtensionTest extends \OxidTestCase
     public function getHelpTextProvider()
     {
         return array(
-            [[], 1, false, null],
-            [['ident' => 'FIRST_NAME'], 1, false, 'First name'],
-            [['ident' => 'FIRST_NAME'], 0, false, 'Vorname'],
-            [['ident' => 'GENERAL_SAVE'], 1, true, 'Save'],
-            [['ident' => 'GENERAL_SAVE'], 0, true, 'Speichern'],
-            [['ident' => 'VAT'], 1, false, 'VAT'],
+            [null, 1, false, null],
+            ['FIRST_NAME', 1, false, 'First name'],
+            ['FIRST_NAME', 0, false, 'Vorname'],
+            ['GENERAL_SAVE', 1, true, 'Save'],
+            ['GENERAL_SAVE', 0, true, 'Speichern'],
+            ['VAT', 1, false, 'VAT'],
         );
     }
 
@@ -79,7 +79,7 @@ class InputHelpExtensionTest extends \OxidTestCase
     {
         $this->setLanguage($iLang);
         $this->setAdminMode($blAdmin);
-        $this->assertEquals($expected, $this->InputHelpExtension->getHelpText($params));
+        $this->assertEquals($expected, $this->inputHelpExtension->getHelpText($params));
     }
 
 }
