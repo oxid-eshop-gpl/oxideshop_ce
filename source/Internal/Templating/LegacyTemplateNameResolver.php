@@ -46,6 +46,8 @@ class LegacyTemplateNameResolver implements TemplateNameResolverInterface
     {
         if (false !== $pos = strrpos($fileName, '.tpl')) {
             $fileName = substr($fileName, 0, $pos);
+        } elseif (false !== $pos = strrpos($fileName, '.html.twig')) {
+            $fileName = substr($fileName, 0, $pos);
         }
         return $fileName;
     }

@@ -1,0 +1,13 @@
+{% include "headitem.html.twig" with {title: "GENERAL_ADMIN_TITLE"|translate} %}
+
+<form name="transfer" id="transfer" action="{{ oViewConf.getSelfLink()|raw }}" method="post">
+    {{ oViewConf.getHiddenSid()|raw }}
+    <input type="hidden" name="oxid" value="{{ oxid }}">
+    <input type="hidden" name="cl" value="module_main">
+    <input type="hidden" name="editlanguage" value="{{ editlanguage }}">
+</form>
+
+<input type="button" value="CLICK_HERE" class="edittext" onclick="JavaScript:showDialog('&cl=test_11_ajax_controller&aoc=1]');">
+
+{% include "bottomnaviitem.html.twig" %}
+{% include "bottomitem.html.twig" %}
