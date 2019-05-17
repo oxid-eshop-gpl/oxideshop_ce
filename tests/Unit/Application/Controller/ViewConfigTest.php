@@ -245,7 +245,7 @@ class ViewConfigTest extends \OxidTestCase
         $oVC = $this->getMock(
             'oxviewconfig'
             , array('getConfig', 'getTopActionClassName', 'getActCatId', 'getActTplName', 'getActContentLoadId'
-                    , 'getActArticleId', 'getActSearchParam', 'getActSearchTag', 'getActListType', 'getActRecommendationId')
+                    , 'getActArticleId', 'getActSearchParam', 'getActSearchTag', 'getActListType', 'getActRecommendationId', 'getSessionChallengeToken')
         );
 
         $oVC->expects($this->any())
@@ -275,8 +275,11 @@ class ViewConfigTest extends \OxidTestCase
         $oVC->expects($this->once())
             ->method('getActListType')
             ->will($this->returnValue('listtype'));
+        $oVC->expects($this->once())
+            ->method('getSessionChallengeToken')
+            ->will($this->returnValue('csrftoken'));
 
-        $this->assertEquals('shopHomeUrl/cl=actionclass&amp;cnid=catid&amp;anid=anid&amp;searchparam=searchparam&amp;recommid=testrecomm&amp;listtype=listtype&amp;fnc=logout&amp;tpl=tpl&amp;oxloadid=oxloadid&amp;redirect=1', $oVC->getLogoutLink());
+        $this->assertEquals('shopHomeUrl/cl=actionclass&amp;cnid=catid&amp;anid=anid&amp;searchparam=searchparam&amp;recommid=testrecomm&amp;listtype=listtype&amp;fnc=logout&amp;tpl=tpl&amp;oxloadid=oxloadid&amp;redirect=1&amp;stoken=csrftoken', $oVC->getLogoutLink());
     }
 
     /**
@@ -297,7 +300,7 @@ class ViewConfigTest extends \OxidTestCase
         $oVC = $this->getMock(
             'oxviewconfig'
             , array('getConfig', 'getTopActionClassName', 'getActCatId', 'getActTplName', 'getActContentLoadId'
-                    , 'getActArticleId', 'getActSearchParam', 'getActSearchTag', 'getActListType', 'getActRecommendationId')
+                    , 'getActArticleId', 'getActSearchParam', 'getActSearchTag', 'getActListType', 'getActRecommendationId', 'getSessionChallengeToken')
         );
 
         $oVC->expects($this->any())
@@ -327,8 +330,11 @@ class ViewConfigTest extends \OxidTestCase
         $oVC->expects($this->once())
             ->method('getActListType')
             ->will($this->returnValue('listtype'));
+        $oVC->expects($this->once())
+            ->method('getSessionChallengeToken')
+            ->will($this->returnValue('csrftoken'));
 
-        $this->assertEquals('sslShopHomeUrl/cl=actionclass&amp;cnid=catid&amp;anid=anid&amp;searchparam=searchparam&amp;recommid=testrecomm&amp;listtype=listtype&amp;fnc=logout&amp;tpl=tpl&amp;oxloadid=oxloadid&amp;redirect=1', $oVC->getLogoutLink());
+        $this->assertEquals('sslShopHomeUrl/cl=actionclass&amp;cnid=catid&amp;anid=anid&amp;searchparam=searchparam&amp;recommid=testrecomm&amp;listtype=listtype&amp;fnc=logout&amp;tpl=tpl&amp;oxloadid=oxloadid&amp;redirect=1&amp;stoken=csrftoken', $oVC->getLogoutLink());
     }
 
     /**

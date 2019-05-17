@@ -179,7 +179,8 @@ class ViewConfig extends \OxidEsales\Eshop\Core\Base
                . "&amp;fnc=logout"
                . ($sTplName ? "&amp;tpl=" . basename($sTplName) : '')
                . ($sContentLoadId ? "&amp;oxloadid=" . $sContentLoadId : '')
-               . "&amp;redirect=1";
+               . "&amp;redirect=1"
+               . "&amp;stoken=" . $this->getSessionChallengeToken();
     }
 
     /**

@@ -5,6 +5,8 @@
  */
 namespace OxidEsales\EshopCommunity\Tests\Unit\Application\Controller;
 
+use OxidEsales\Eshop\Core\Registry;
+use OxidEsales\Eshop\Core\Session;
 use OxidEsales\Eshop\Core\ShopVersion;
 use oxSystemComponentException;
 use oxUtilsHelper;
@@ -291,6 +293,10 @@ class ViewTest extends \OxidTestCase
      */
     public function testExecuteFunction()
     {
+        $session = $this->getMock(Session::class, ['checkSessionChallenge']);
+        $session->method('checkSessionChallenge')->will($this->returnValue(true));
+        Registry::set(Session::class, $session);
+
         $oView = $this->getMock(\OxidEsales\EshopCommunity\Tests\Unit\Application\Controller\modOxView::class, array('xxx', '_executeNewAction'));
         $oView->expects($this->once())->method('xxx')->will($this->returnValue('xxx'));
         $oView->expects($this->once())->method('_executeNewAction')->with($this->equalTo('xxx'));
@@ -299,6 +305,10 @@ class ViewTest extends \OxidTestCase
 
     public function testExecuteFunctionExecutesComponentFunction()
     {
+        $session = $this->getMock(Session::class, array('checkSessionChallenge'));
+        $session->method('checkSessionChallenge')->will($this->returnValue(true));
+        Registry::set(Session::class, $session);
+
         $oCmp = $this->getMock(\OxidEsales\Eshop\Application\Component\CategoriesComponent::class, array('xxx'));
         $oCmp->expects($this->never())->method('xxx');
         $this->assertNull($oCmp->executeFunction('yyy'));
@@ -306,6 +316,10 @@ class ViewTest extends \OxidTestCase
 
     public function testExecuteFunctionThrowsExeption()
     {
+        $session = $this->getMock(Session::class, array('checkSessionChallenge'));
+        $session->method('checkSessionChallenge')->will($this->returnValue(true));
+        Registry::set(Session::class, $session);
+
         $oView = $this->getMock(\OxidEsales\EshopCommunity\Tests\Unit\Application\Controller\modOxView::class, array('xxx'));
         $oView->expects($this->never())->method('xxx');
 
@@ -323,6 +337,10 @@ class ViewTest extends \OxidTestCase
 
     public function testExecuteFunctionExecutesOnlyOnce()
     {
+        $session = $this->getMock(Session::class, array('checkSessionChallenge'));
+        $session->method('checkSessionChallenge')->will($this->returnValue(true));
+        Registry::set(Session::class, $session);
+
         $oCmp = $this->getMock(\OxidEsales\Eshop\Application\Component\CategoriesComponent::class, array('xxx'));
         $oCmp->expects($this->once())->method('xxx');
 
@@ -662,7 +680,7 @@ class ViewTest extends \OxidTestCase
         //other test case
         $sTest2 = "testValue2";
 
-        $oSession = $this->getMock(\OxidEsales\Eshop\Core\Session::class, array("setVariable"));
+        $oSession = $this->getMock(Session::class, array("setVariable"));
         $oSession->expects($this->once())->method("setVariable")->with($this->equalTo('belboon'));
 
         $this->getSession()->setVariable('belboon', false);
@@ -694,7 +712,7 @@ class ViewTest extends \OxidTestCase
 
     public function testGetSidForWidget()
     {
-        $oSession = $this->getMock(\OxidEsales\Eshop\Core\Session::class, array('isActualSidInCookie', 'getId'));
+        $oSession = $this->getMock(Session::class, array('isActualSidInCookie', 'getId'));
         $oSession->expects($this->once())->method('isActualSidInCookie')->will($this->returnValue(false));
         $oSession->expects($this->once())->method('getId')->will($this->returnValue('testSid'));
 
@@ -706,7 +724,7 @@ class ViewTest extends \OxidTestCase
 
     public function testGetSidForWidget_CookieInSessionMatchesActualSid_expectNull()
     {
-        $oSession = $this->getMock(\OxidEsales\Eshop\Core\Session::class, array('isActualSidInCookie', 'getId'));
+        $oSession = $this->getMock(Session::class, array('isActualSidInCookie', 'getId'));
         $oSession->expects($this->once())->method('isActualSidInCookie')->will($this->returnValue(true));
         $oSession->expects($this->never())->method('getId');
 
@@ -723,6 +741,10 @@ class ViewTest extends \OxidTestCase
     public function testExecuteFunctionForUnmatchedModuleController()
     {
         $toBeExecuted = 'viewtestmodulecontroller?fnc=doSomethingElse&someParameter=1';
+
+        $session = $this->getMock(Session::class, array('checkSessionChallenge'));
+        $session->method('checkSessionChallenge')->will($this->returnValue(true));
+        Registry::set(Session::class, $session);
 
         $view = $this->getMock(\OxidEsales\EshopCommunity\Tests\Unit\Application\Controller\modOxView::class, array('doSomething'));
         $view->expects($this->once())->method('doSomething')->will($this->returnValue($toBeExecuted));
@@ -750,7 +772,7 @@ class ViewTest extends \OxidTestCase
         $storageKey = \OxidEsales\Eshop\Core\Routing\Module\ClassProviderStorage::STORAGE_KEY;
         $this->getModuleVariableLocator()->setModuleVariable($storageKey, $controllers);
 
-        $this->assertEmpty(\OxidEsales\Eshop\Core\Registry::getSession()->getVariable('ViewTestModuleControllerResult'));
+        $this->assertEmpty(Registry::getSession()->getVariable('ViewTestModuleControllerResult'));
         $view = oxNew(\OxidEsales\EshopCommunity\Tests\Unit\Application\Controller\ViewTestFirstModuleController::class);
 
         $this->expectException(\Exception::class); $this->expectExceptionMessage( 'Bail out before redirect, all is well.');
