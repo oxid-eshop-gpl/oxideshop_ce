@@ -1,0 +1,33 @@
+{% set blFullwidth = oViewConf.getViewThemeParam('blFullwidthLayout') %}
+
+<div id="detailsMain">
+    {% include "page/details/inc/productmain.html.twig" %}
+</div>
+
+<div id="detailsRelated" class="detailsRelated clear">
+    <div class="relatedInfo{% if not oView.getSimilarProducts() and not oView.getCrossSelling() and not oView.getAccessoires() %} relatedInfoFull{% endif %}">
+        <div class="row">
+            <div class="col-xs-12">
+                {% include "page/details/inc/tabs.html.twig" %}
+
+                {% if oView.isReviewActive() %}
+                    <div class="spacer"></div>
+                    <div class="widgetBox reviews">
+                        <div class="h2 page-header">{{ translate({ ident: "WRITE_PRODUCT_REVIEW" }) }}</div>
+                        {% include "widget/reviews/reviews.html.twig" %}
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        {% if blFullwidth %}
+            <div class="col-xs-12"><hr></div>
+        {% else %}
+            <hr>
+        {% endif %}
+</div>
+
+{% include "page/details/inc/related_products.html.twig" %}
+</div>

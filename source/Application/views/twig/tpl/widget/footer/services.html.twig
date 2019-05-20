@@ -1,0 +1,47 @@
+{% block footer_services %}
+    <ul class="services list-unstyled">
+        {% block footer_services_items %}
+            <li><a href="{{ seo_url({ ident: oViewConf.getSelfLink()|cat("cl=contact") }) }}">{{ translate({ ident: "CONTACT" }) }}</a></li>
+            {% if oViewConf.getViewThemeParam('blFooterShowHelp') %}
+                <li><a href="{{ oViewConf.getHelpPageLink() }}">{{ translate({ ident: "HELP" }) }}</a></li>
+            {% endif %}
+            {% if oViewConf.getViewThemeParam('blFooterShowLinks') %}
+                <li><a href="{{ seo_url({ ident: oViewConf.getSelfLink()|cat("cl=links") }) }}">{{ translate({ ident: "LINKS" }) }}</a></li>
+            {% endif %}
+            {% if oView.isActive('Invitations') %}
+                <li><a href="{{ seo_url({ ident: oViewConf.getSelfLink()|cat("cl=invite") }) }}">{{ translate({ ident: "INVITE_YOUR_FRIENDS" }) }}</a></li>
+            {% endif %}
+            {% hasrights { "ident": "TOBASKET",} %}
+                <li>
+                    <a href="{{ seo_url({ ident: oViewConf.getBasketLink() }) }}">
+                        {{ translate({ ident: "CART" }) }}
+                    </a>
+                    {% if oxcmp_basket and oxcmp_basket.getItemsCount() > 0 %} <span class="badge">{{ oxcmp_basket.getItemsCount() }}</span>{% endif %}
+                </li>
+            {% endhasrights %}
+            <li><a href="{{ seo_url({ ident: oViewConf.getSelfLink()|cat("cl=account") }) }}">{{ translate({ ident: "ACCOUNT" }) }}</a></li>
+            <li>
+                <a href="{{ seo_url({ ident: oViewConf.getSelfLink()|cat("cl=account_noticelist") }) }}">
+                    {{ translate({ ident: "WISH_LIST" }) }}
+                </a>
+                {% if oxcmp_user and oxcmp_user.getNoticeListArtCnt() %} <span class="badge">{{ oxcmp_user.getNoticeListArtCnt() }}</span>{% endif %}
+            </li>
+            {% if oViewConf.getShowWishlist() %}
+                <li>
+                    <a href="{{ seo_url({ ident: oViewConf.getSelfLink()|cat("cl=account_wishlist") }) }}">
+                        {{ translate({ ident: "MY_GIFT_REGISTRY" }) }}
+                    </a>
+                    {% if oxcmp_user and oxcmp_user.getWishListArtCnt() %} <span class="badge">{{ oxcmp_user.getWishListArtCnt() }}</span>{% endif %}
+                </li>
+                <li>
+                    <a href="{{ seo_url({ ident: oViewConf.getSelfLink()|cat("cl=wishlist"), params: "wishid="|cat(oView.getWishlistUserId()) }) }}">
+                        {{ translate({ ident: "PUBLIC_GIFT_REGISTRIES" }) }}
+                    </a>
+                </li>
+            {% endif %}
+            {% if oView.isEnabledDownloadableFiles() %}
+                <li><a href="{{ seo_url({ ident: oViewConf.getSelfLink()|cat("cl=account_downloads") }) }}">{{ translate({ ident: "MY_DOWNLOADS" }) }}</a></li>
+            {% endif %}
+        {% endblock %}
+    </ul>
+{% endblock %}

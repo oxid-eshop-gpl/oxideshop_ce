@@ -1,0 +1,10 @@
+{% capture append = "oxidBlock_content" %}
+    {% set template_title = "MESSAGE_WELCOME_REGISTERED_USER"|translate %}
+    <h1 id="openAccHeader" class="page-header">{{ translate({ ident: "MESSAGE_WELCOME_REGISTERED_USER" }) }}</h1>
+    <div class="box info">
+      {{ translate({ ident: "MESSAGE_ACCOUNT_REGISTRATION_CONFIRMED" }) }}
+    </div>
+    {{ insert_tracker({title: template_title}) }}
+{% endcapture %}
+{% include "layout/page.html.twig" with {sidebar: "Left"} %}
+

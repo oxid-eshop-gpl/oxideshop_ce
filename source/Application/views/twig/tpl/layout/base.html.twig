@@ -1,0 +1,252 @@
+{# Important ! render page head and body to collect scripts and styles #}
+{% capture append = "oxidBlock_pageHead" %}
+    {% spaceless %}
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" id="Viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+        <meta http-equiv="Content-Type" content="text/html; charset={{ oView.getCharSet() }}">
+
+        {% set sPageTitle = oView.getPageTitle() %}
+        <title>{% block head_title %}{{ sPageTitle }}{% endblock %}</title>
+
+        {% block head_meta_robots %}
+            {% if oView.noIndex() == 1 %}
+                <meta name="ROBOTS" content="NOINDEX, NOFOLLOW">
+            {% elseif oView.noIndex() == 2 %}
+                <meta name="ROBOTS" content="NOINDEX, FOLLOW">
+            {% endif %}
+        {% endblock %}
+
+        {% block head_meta_description %}
+            {% if oView.getMetaDescription() %}
+                <meta name="description" content="{{ oView.getMetaDescription() }}">
+            {% endif %}
+        {% endblock %}
+
+        {% block head_meta_keywords %}
+            {% if oView.getMetaKeywords() %}
+                <meta name="keywords" content="{{ oView.getMetaKeywords() }}">
+            {% endif %}
+        {% endblock %}
+
+        {% block head_meta_open_graph %}
+            <meta property="og:site_name" content="{{ oViewConf.getBaseDir() }}">
+            <meta property="og:title" content="{{ sPageTitle }}">
+            <meta property="og:description" content="{{ oView.getMetaDescription() }}">
+            {% if oViewConf.getActiveClassName() == 'details' %}
+                <meta property="og:type" content="product">
+                <meta property="og:image" content="{{ oView.getActPicture() }}">
+                <meta property="og:url" content="{{ oView.getCanonicalUrl() }}">
+            {% else %}
+                <meta property="og:type" content="website">
+                <meta property="og:image" content="{{ oViewConf.getImageUrl('basket.png') }}">
+                <meta property="og:url" content="{{ oViewConf.getCurrentHomeDir() }}">
+            {% endif %}
+        {% endblock %}
+
+        {% set canonical_url = oView.getCanonicalUrl() %}
+        {% block head_link_canonical %}
+            {% if canonical_url %}
+                <link rel="canonical" href="{{ canonical_url }}">
+            {% endif %}
+        {% endblock %}
+
+        {% block head_link_hreflang %}
+            {% if oView.isLanguageLoaded() %}
+                {% set oConfig = oViewConf.getConfig() %}
+                {% for _lng in oxcmp_lang %}
+                    {% if _lng.id == oConfig.getConfigParam('sDefaultLang') %}
+                        <link rel="alternate" hreflang="x-default" href="{{ _lng.link }}"/>
+                    {% endif %}
+                    <link rel="alternate" hreflang="{{ _lng.abbr }}" href="{{ _lng.link|add_url_parameters(oView.getDynUrlParams()) }}"/>
+                {% endfor %}
+            {% endif %}
+        {% endblock %}
+
+        {% set oPageNavigation = oView.getPageNavigation() %}
+        {% if oPageNavigation %}
+            {% if oPageNavigation.previousPage %}
+                <link rel="prev" href="{{ oPageNavigation.previousPage }}">
+            {% endif %}
+            {% if oPageNavigation.nextPage %}
+                <link rel="next" href="{{ oPageNavigation.nextPage }}">
+            {% endif %}
+        {% endif %}
+
+        {% block head_link_favicon %}
+            {% set sFavicon512File = oViewConf.getViewThemeParam('sFavicon512File') %}
+            {% if sFavicon512File %}
+                <!-- iOS Homescreen Icon (version < 4.2)-->
+                <link rel="apple-touch-icon-precomposed" media="screen and (resolution: 163dpi)" href="{{ oViewConf.getImageUrl("favicons / " ~ sFavicon512File) }}" />
+                <!-- iOS Homescreen Icon -->
+                <link rel="apple-touch-icon-precomposed" href="{{ oViewConf.getImageUrl("favicons / " ~ sFavicon512File) }}" />
+
+                <!-- iPad Homescreen Icon (version < 4.2) -->
+                <link rel="apple-touch-icon-precomposed" media="screen and (resolution: 132dpi)" href="{{ oViewConf.getImageUrl("favicons / " ~ sFavicon512File) }}" />
+                <!-- iPad Homescreen Icon -->
+                <link rel="apple-touch-icon-precomposed" sizes="72x72" href="{{ oViewConf.getImageUrl("favicons / " ~ sFavicon512File) }}" />
+
+                <!-- iPhone 4 Homescreen Icon (version < 4.2) -->
+                <link rel="apple-touch-icon-precomposed" media="screen and (resolution: 326dpi)" href="{{ oViewConf.getImageUrl("favicons / " ~ sFavicon512File) }}" />
+                <!-- iPhone 4 Homescreen Icon -->
+                <link rel="apple-touch-icon-precomposed" sizes="114x114" href="{{ oViewConf.getImageUrl("favicons / " ~ sFavicon512File) }}" />
+
+                <!-- new iPad Homescreen Icon and iOS Version > 4.2 -->
+                <link rel="apple-touch-icon-precomposed" sizes="144x144" href="{{ oViewConf.getImageUrl("favicons / " ~ sFavicon512File) }}" />
+
+                <!-- Windows 8 -->
+                {% set sFaviconMSTileColor = oViewConf.getViewThemeParam('sFaviconMSTileColor') %}
+                {% if sFaviconMSTileColor %}
+                    <meta name="msapplication-TileColor" content="{{ sFaviconMSTileColor }}"> <!-- Kachel-Farbe -->
+                {% endif %}
+                <meta name="msapplication-TileImage" content="{{ oViewConf.getImageUrl("favicons / " ~ sFavicon512File) }}">
+
+                <!-- Fluid -->
+                <link rel="fluid-icon" href="{{ oViewConf.getImageUrl("favicons / " ~ sFavicon512File) }}" title="{{ sPageTitle }}" />
+            {% endif %}
+
+            <!-- Shortcut Icons -->
+            {% set sFaviconFile = oViewConf.getViewThemeParam('sFaviconFile') %}
+            {% set sFavicon16File = oViewConf.getViewThemeParam('sFavicon16File') %}
+            {% set sFavicon32File = oViewConf.getViewThemeParam('sFavicon32File') %}
+            {% set sFavicon48File = oViewConf.getViewThemeParam('sFavicon48File') %}
+            {% set sFavicon64File = oViewConf.getViewThemeParam('sFavicon64File') %}
+            {% set sFavicon128File = oViewConf.getViewThemeParam('sFavicon128File') %}
+
+            {% if sFaviconFile %}
+                <link rel="shortcut icon" href="{{ oViewConf.getImageUrl("favicons / " ~ sFaviconFile) }} ~ ?rand=1" type="image/x-icon" />
+            {% endif %}
+            {% if sFavicon16File %}
+                <link rel="icon" href="{{ oViewConf.getImageUrl("favicons / " ~ sFavicon16File) }}" sizes="16x16" />
+            {% endif %}
+            {% if sFavicon32File %}
+                <link rel="icon" href="{{ oViewConf.getImageUrl("favicons / " ~ sFavicon32File) }}" sizes="32x32" />
+            {% endif %}
+            {% if sFavicon48File %}
+                <link rel="icon" href="{{ oViewConf.getImageUrl("favicons / " ~ sFavicon48File) }}" sizes="48x48" />
+            {% endif %}
+            {% if sFavicon64File %}
+                <link rel="icon" href="{{ oViewConf.getImageUrl("favicons / " ~ sFavicon64File) }}" sizes="64x64" />
+            {% endif %}
+            {% if sFavicon128File %}
+                <link rel="icon" href="{{ oViewConf.getImageUrl("favicons / " ~ sFavicon128File) }}" sizes="128x128" />
+            {% endif %}
+        {% endblock %}
+
+        {% block base_style %}
+            {{ style({ include: "css/styles.min.css" }) }}
+        {% endblock %}
+
+        {% block base_fonts %}
+            <link href='https://fonts.googleapis.com/css?family=Raleway:200,400,700,600' rel='stylesheet' type='text/css'>
+        {% endblock %}
+
+        {% set rsslinks = oView.getRssLinks() %}
+        {% block head_link_rss %}
+            {% if rsslinks %}
+                {% for rssentry in rsslinks %}
+                    <link rel="alternate" type="application/rss+xml" title="{{ rssentry.title|striptags }}" href="{{ rssentry.link }}">
+                {% endfor %}
+            {% endif %}
+        {% endblock %}
+
+        {% block head_css %}
+            {% for _block in oxidBlock_head %}
+                {{ include(template_from_string(_block)) }}
+            {% endfor %}
+        {% endblock %}
+    {% endspaceless %}
+{% endcapture %}
+
+{% set blIsCheckout = oView.getIsOrderStep() %}
+{% set blFullwidth = oViewConf.getViewThemeParam('blFullwidthLayout') %}
+{% set sBackgroundColor = oViewConf.getViewThemeParam('sBackgroundColor') %}
+
+{# Fullpage Background #}
+{% if oViewConf.getViewThemeParam('blUseBackground') %}
+    {% set sBackgroundPath = oViewConf.getViewThemeParam('sBackgroundPath') %}
+    {% set sBackgroundUrl = oViewConf.getImageUrl("backgrounds/" ~ sBackgroundPath) %}
+    {% set sBackgroundRepeat = oViewConf.getViewThemeParam('sBackgroundRepeat') %}
+    {% set sBackgroundPosHorizontal = oViewConf.getViewThemeParam('sBackgroundPosHorizontal') %}
+    {% set sBackgroundPosVertical = oViewConf.getViewThemeParam('sBackgroundPosVertical') %}
+    {% set sBackgroundSize = oViewConf.getViewThemeParam('sBackgroundSize') %}
+    {% set blBackgroundAttachment = oViewConf.getViewThemeParam('blBackgroundAttachment') %}
+
+    {% if sBackgroundUrl %}
+        {% set sStyle = "background: " ~ sBackgroundColor ~ " url(" ~ sBackgroundUrl ~ ") " ~ sBackgroundRepeat ~ " " ~ sBackgroundPosHorizontal ~ " " ~ sBackgroundPosVertical ~ ";" %}
+
+
+        {% if sBackgroundSize %}
+            {% set sStyle = sStyle|cat("background-size, " ~ sBackgroundSize ~ ";") %}
+        {% endif %}
+
+        {% if blBackgroundAttachment %}
+            {% set sStyle = sStyle|cat("background-attachment, fixed;") %}
+        {% endif %}
+    {% else %}
+        {% set sStyle = "background: " ~ sBackgroundColor ~ ";" %}
+    {% endif %}
+{% elseif sBackgroundColor %}
+    {% set sStyle = "background: " ~ sBackgroundColor ~ ";" %}
+{% endif %}
+
+<!DOCTYPE html>
+<html lang="{{ oView.getActiveLangAbbr() }}" {% block head_html_namespace %}{% endblock %}>
+<head>
+    {% for _block in oxidBlock_pageHead %}
+        {{ include(template_from_string(_block)) }}
+    {% endfor %}
+    {{ style() }}
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body class="cl-{{ oView.getClassName() }}{% if get_global_get('plain') == '1' %} popup{% endif %}{% if blIsCheckout %} is-checkout{% endif %}{% if oxcmp_user and oxcmp_user.oxuser__oxpassword.value %} is-logged-in{% endif %}"{% if sStyle %} style="{{ sStyle }}"{% endif %}>
+
+{# Theme SVG icons block #}
+{% block theme_svg_icons %}{% endblock %}
+
+<div class="{% if blFullwidth %}fullwidth-container{% else %}container{% endif %}">
+    <div class="main-row">
+        {% for _block in oxidBlock_pageBody %}
+            {{ include(template_from_string(_block)) }}
+        {% endfor %}
+    </div>
+</div>
+
+{% for _block in oxidBlock_pagePopup %}
+    {{ include(template_from_string(_block)) }}
+{% endfor %}
+
+{% if oViewConf.getTopActiveClassName() == 'details' and oView.showZoomPics() %}
+    {% include "page/details/inc/photoswipe.html.twig" %}
+{% endif %}
+
+{% block base_js %}
+    {% include "i18n/js_vars.html.twig" %}
+
+    {{ script({ include: "js/libs/jquery.min.js", priority: 1, dynamic: __oxid_include_dynamic }) }}
+    {{ script({ include: "js/libs/jquery-ui.min.js", priority: 1, dynamic: __oxid_include_dynamic }) }}
+    {{ script({ include: "js/scripts.min.js", priority: 1, dynamic: __oxid_include_dynamic }) }}
+{% endblock %}
+
+{% if oViewConf.isTplBlocksDebugMode() %}
+    {{ script({ include: "js/widgets/oxblockdebug.min.js", dynamic: __oxid_include_dynamic }) }}
+    {{ script({ add: "$( 'body' ).oxBlockDebug();", dynamic: __oxid_include_dynamic }) }}
+{% endif %}
+
+<!--[if gte IE 9]><style type="text/css">.gradient {filter:none;}</style><![endif]-->
+{{ script({ dynamic: __oxid_include_dynamic }) }}
+
+{% if not oView.isDemoShop() %}
+    {% include_dynamic "widget/dynscript.html.twig" %}
+{% endif %}
+
+{% for _block in oxidBlock_pageScript %}
+    {{ include(template_from_string(_block)) }}
+{% endfor %}
+
+</body>
+</html>

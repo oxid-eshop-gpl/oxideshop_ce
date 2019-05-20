@@ -1,0 +1,225 @@
+{% block widget_product_listitem_line %}
+    {% set product = oView.getProduct() %}
+    {% set blDisableToCart = oView.getDisableToCart() %}
+    {% set iIndex = oView.getIndex() %}
+    {% set showMainLink = oView.getShowMainLink() %}
+
+    {% set currency = oView.getActCurrency() %}
+    {% if showMainLink %}
+        {% set _productLink = product.getMainLink() %}
+    {% else %}
+        {% set _productLink = product.getLink() %}
+    {% endif %}
+    {% set aVariantSelections = product.getVariantSelections("null", "null", 1) %}
+    {% set blShowToBasket = true %} {# tobasket or more info ? #}
+    {% if blDisableToCart or product.isNotBuyable() or (aVariantSelections and aVariantSelections.selections) or product.getVariants() or (oViewConf.showSelectListsInList() and product.getSelections(1)) %}
+        {% set blShowToBasket = false %}
+    {% endif %}
+
+    {{ script({ include: "js/widgets/oxlistremovebutton.min.js", priority: 10, dynamic: __oxid_include_dynamic }) }}
+    {{ script({ add: "$('button.removeButton').oxListRemoveButton();", dynamic: __oxid_include_dynamic }) }}
+
+    <form name="tobasket.{{ testid }}" {% if blShowToBasket %}action="{{ oViewConf.getSelfActionLink() }}" method="post"{% else %}action="{{ _productLink }}" method="get"{% endif %}  class="js-oxProductForm">
+        <div class="hidden">
+            {{ oViewConf.getNavFormParams() }}
+            {{ oViewConf.getHiddenSid()|raw() }}
+            <input type="hidden" name="pgNr" value="{{ oView.getActPage() }}">
+            {% if recommid %}
+                <input type="hidden" name="recommid" value="{{ recommid }}">
+            {% endif %}
+            {% if blShowToBasket %}
+                {% hasrights { "ident": "TOBASKET",} %}
+                    <input type="hidden" name="cl" value="{{ oViewConf.getTopActiveClassName() }}">
+                    {% if owishid %}
+                        <input type="hidden" name="owishid" value="{{ owishid }}">
+                    {% endif %}
+                    {% if toBasketFunction %}
+                        <input type="hidden" name="fnc" value="{{ toBasketFunction }}">
+                    {% else %}
+                        <input type="hidden" name="fnc" value="tobasket">
+                    {% endif %}
+                    <input type="hidden" name="aid" value="{{ product.oxarticles__oxid.value }}">
+                    {% if altproduct %}
+                        <input type="hidden" name="anid" value="{{ altproduct }}">
+                    {% else %}
+                        <input type="hidden" name="anid" value="{{ product.oxarticles__oxnid.value }}">
+                    {% endif %}
+                    <input id="am_{{ testid }}" type="hidden" name="am" value="1">
+                {% endhasrights %}
+            {% else %}
+                <input type="hidden" name="cl" value="details">
+                <input type="hidden" name="anid" value="{{ product.oxarticles__oxnid.value }}">
+            {% endif %}
+        </div>
+
+        <div class="row">
+            <div class="col-xs-12 col-sm-2">
+                <div class="picture">
+                    {% block widget_product_listitem_line_picturebox %}
+                        <a id="{{ testid }}" href="{{ _productLink }}" title="{{ product.oxarticles__oxtitle.value }} {{ product.oxarticles__oxvarselect.value }}">
+                            <img src="{{ oViewConf.getImageUrl('spinner.gif') }}" data-src="{{ product.getThumbnailUrl() }}" alt="{{ product.oxarticles__oxtitle.value }} {{ product.oxarticles__oxvarselect.value }}" class="img-responsive">
+                        </a>
+                    {% endblock %}
+                </div>
+            </div>
+            <div class="col-xs-6 col-sm-4">
+                {% block widget_product_listitem_line_titlebox %}
+                    <div class="title">
+                        <a id="{{ testid }}" href="{{ _productLink }}" title="{{ product.oxarticles__oxtitle.value }} {{ product.oxarticles__oxvarselect.value }}">{{ product.oxarticles__oxtitle.value }} {{ product.oxarticles__oxvarselect.value }}</a>
+                    </div>
+                {% endblock %}
+
+                {% block widget_product_listitem_line_description %}
+                    <div class="description">
+                        {% if recommid %}
+                            <p>{{ product.text }}</p>
+                        {% else %}
+                            {% hasrights { "ident": "SHOWSHORTDESCRIPTION",} %}
+                                {{ product.oxarticles__oxshortdesc.rawValue }}
+                            {% endhasrights %}
+                        {% endif %}
+                    </div>
+                {% endblock %}
+            </div>
+            <div class="col-xs-3 hidden-xs">
+                {% block widget_product_listitem_line_attributes %}
+                    <div class="attributes">
+                        {% set oAttributes = product.getAttributes() %}
+                        {% if oAttributes|length %}
+                            <strong>{{ translate({ ident: "SPECIFICATION" }) }}</strong>
+                            <ul class="list-unstyled attributes small">
+                                {% for oAttr in oAttributes %}
+                                    <li>
+                                        <strong>{{ oAttr.oxattribute__oxtitle.value }}{{ translate({ ident: "COLON" }) }}</strong>
+                                        <span>{{ oAttr.oxattribute__oxvalue.value }}</span>
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        {% endif %}
+                    </div>
+                {% endblock %}
+            </div>
+            <div class="col-xs-4 col-sm-3">
+                <div class="functions text-right">
+                    {% block widget_product_listitem_line_price %}
+                        {% hasrights { "ident": "SHOWARTICLEPRICE",} %}
+                        {% set oUnitPrice = product.getUnitPrice() %}
+                        {% set tprice = product.getTPrice() %}
+                        {% set price = product.getPrice() %}
+
+                        {% if tprice and tprice.getBruttoPrice() > price.getBruttoPrice() %}
+                            <span class="oldPrice text-muted">
+                                <del>{{ product.getFTPrice() }} {{ currency.sign }}</del>
+                            </span>
+                            <br/>
+                        {% endif %}
+
+                        {% block widget_product_listitem_line_price_value %}
+                            <span id="productPrice_{{ testid }}" class="lead price text-nowrap">
+                                {% if product.isRangePrice() %}
+                                    {{ translate({ ident: "PRICE_FROM" }) }}
+                                    {% if not product.isParentNotBuyable() %}
+                                        {{ product.getFMinPrice() }}
+                                    {% else %}
+                                        {{ product.getFVarMinPrice() }}
+                                    {% endif %}
+                                {% else %}
+                                    {% if not product.isParentNotBuyable() %}
+                                        {{ product.getFPrice() }}
+                                    {% else %}
+                                        {{ product.getFVarMinPrice() }}
+                                    {% endif %}
+                                {% endif %}
+                                {{ currency.sign }}
+                                {% if oView.isVatIncluded() %}
+                                    {% if not (product.hasMdVariants() or (oViewConf.showSelectListsInList() and product.getSelections(1)) or product.getVariants()) %}*{% endif %}
+                                {% endif %}
+                            </span><br/>
+                        {% endblock %}
+
+                        {% if oUnitPrice %}
+                            <span id="productPricePerUnit_{{ testid }}" class="pricePerUnit text-nowrap">{{ product.oxarticles__oxunitquantity.value }} {{ product.getUnitName() }} | {{ format_price(oUnitPrice, { currency: currency }) }}/{{ product.getUnitName() }}</span>
+                        {% elseif product.oxarticles__oxweight.value  %}
+                            <span id="productPricePerUnit_{{ testid }}" class="pricePerUnit text-nowrap">
+                                <span title="weight">{{ translate({ ident: "WEIGHT" }) }}</span>
+                                <span class="value">{{ product.oxarticles__oxweight.value }} {{ translate({ ident: "KG" }) }}</span>
+                            </span>
+                        {% endif %}
+                        {% endhasrights %}
+                    {% endblock %}
+
+                    {% if product.loadAmountPriceInfo() %}
+                        <div class="form-group">
+                            {% include "page/details/inc/priceinfo.html.twig" with {oDetailsProduct: product} %}
+                        </div>
+                    {% endif %}
+
+                    {% block widget_product_listitem_line_selections %}
+                        {% if aVariantSelections and aVariantSelections.selections  %}
+                            <div id="variantselector_{{ iIndex }}" class="selectorsBox js-fnSubmit clear">
+                                {% for iKey, oSelectionList in aVariantSelections.selections %}
+                                    {% include "widget/product/selectbox.html.twig" with {oSelectionList: oSelectionList, sJsAction: "js-fnSubmit", blHideLabel: true} %}
+                                {% endfor %}
+                            </div>
+                        {% elseif oViewConf.showSelectListsInList() %}
+                            {% set oSelections = product.getSelections(1) %}
+                            {% if oSelections %}
+                                <div id="selectlistsselector_{{ iIndex }}" class="selectorsBox js-fnSubmit clear">
+                                    {% for oList in oSelections %}
+                                        {% include "widget/product/selectbox.html.twig" with {oSelectionList: oList, sFieldName: "sel", iKey: loop.index0, blHideDefault: true, sSelType: "seldrop", sJsAction: "js-fnSubmit", blHideLabel: true} %}
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                        {% endif %}
+                    {% endblock %}
+
+                    {% block widget_product_listitem_line_tobasket %}
+                        {% if blShowToBasket %}
+                            {% hasrights { "ident": "TOBASKET",} %}
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <input id="amountToBasket_{{ testid }}" type="text" name="am" value="1" size="3" autocomplete="off" class="form-control amount">
+                                        <span class="input-group-btn">
+                                            <button id="toBasket_{{ testid }}" type="submit" class="btn btn-primary hasTooltip" title="{{ translate({ ident: "TO_CART" }) }}" data-container="body">
+                                                <i class="fa fa-shopping-cart"></i>
+                                            </button>
+                                            {% if removeFunction and (owishid and (owishid==$oxcmp_user.oxuser__oxid.value)) or (wishid==$oxcmp_user.oxuser__oxid.value)) or recommid) %}
+                                                <button triggerForm="remove_{{ removeFunction }}{{ testid }}" type="submit" class="btn btn-danger removeButton hasTooltip" title="{{ translate({ ident: "REMOVE" }) }}">
+                                                    <i class="fa fa-times"></i>
+                                                </button>
+                                            {% endif %}
+                                        </span>
+                                    </div>
+                                </div>
+                            {% endhasrights %}
+                        {% else %}
+                            <a class="btn btn-primary" href="{{ _productLink }}" >{{ translate({ ident: "MORE_INFO" }) }}</a>
+
+                            {% if removeFunction and (owishid and (owishid==$oxcmp_user.oxuser__oxid.value)) or (wishid==$oxcmp_user.oxuser__oxid.value)) or recommid) %}
+                                <button triggerForm="remove_{{ removeFunction }}{{ testid }}" type="submit" class="btn btn-danger btn-block removeButton">
+                                    <i class="fa fa-times"></i> {{ translate({ ident: "REMOVE" }) }}
+                                </button>
+                            {% endif %}
+                        {% endif %}
+                    {% endblock %}
+                </div>
+            </div>
+        </div>
+    </form>
+
+    {% if removeFunction and (owishid and (owishid==$oxcmp_user.oxuser__oxid.value)) or (wishid==$oxcmp_user.oxuser__oxid.value)) or recommid) %}
+        <form action="{{ oViewConf.getSelfActionLink() }}" method="post" id="remove_{{ removeFunction }}{{ testid }}" class="hidden">
+            <div>
+                {{ oViewConf.getHiddenSid()|raw() }}
+                <input type="hidden" name="cl" value="{{ oViewConf.getTopActiveClassName() }}">
+                <input type="hidden" name="fnc" value="{{ removeFunction }}">
+                <input type="hidden" name="aid" value="{{ product.oxarticles__oxid.value }}">
+                <input type="hidden" name="am" value="0">
+                <input type="hidden" name="itmid" value="{{ product.getItemKey() }}">
+                {% if recommid %}
+                    <input type="hidden" name="recommid" value="{{ recommid }}">
+                {% endif %}
+            </div>
+        </form>
+    {% endif %}
+{% endblock %}

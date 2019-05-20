@@ -12,6 +12,7 @@ use OxidEsales\EshopCommunity\Internal\Templating\EngineInterface;
 use OxidEsales\EshopCommunity\Internal\Twig\Escaper\EscaperInterface;
 use Twig\Environment;
 use Twig\Extension\CoreExtension;
+use Twig\Extension\DebugExtension;
 
 /**
  * Class TwigEngine
@@ -36,7 +37,9 @@ class TwigEngine implements EngineInterface
         $this->engine = $engine;
 
         if ($this->engine->isDebug()) {
-            $this->engine->addExtension(new \Twig_Extension_Debug());
+            if(!$this->engine->hasExtension(DebugExtension::class)) {
+                $this->engine->addExtension(new \Twig_Extension_Debug());
+            }
         }
     }
 

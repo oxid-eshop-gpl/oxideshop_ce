@@ -1,0 +1,18 @@
+{% if oxcmp_categories %}
+    {% set categories = oxcmp_categories %}
+    {% block footer_categories %}
+        <ul class="categories list-unstyled">
+            {% for _cat in categories %}
+                {% if _cat.getIsVisible() %}
+                    {% if _cat.getContentCats() %}
+                        {% for _oCont in _cat.getContentCats() %}
+                        <li><a href="{{ _oCont.getLink() }}"><i></i>{{ _oCont.oxcontents__oxtitle.value }}</a></li>
+                        {% endfor %}
+                    {% endif %}
+                    <li><a href="{{ _cat.getLink() }}" {% if _cat.expanded %}class="exp"{% endif %}>{{ _cat.oxcategories__oxtitle.value }} {% if oView.showCategoryArticlesCount() and ( _cat.getNrOfArticles() > 0 ) %} ({{ _cat.getNrOfArticles() }}){% endif %}</a></li>
+                {% endif %}
+            {% endfor %}
+        </ul>
+    {% endblock %}
+{% endif %}
+

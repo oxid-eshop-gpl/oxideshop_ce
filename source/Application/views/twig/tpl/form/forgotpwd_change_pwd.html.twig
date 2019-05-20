@@ -1,0 +1,34 @@
+{{ script({ include: "js/libs/jqBootstrapValidation.min.js", priority: 10, dynamic: __oxid_include_dynamic }) }}
+{{ script({ add: "$('input,select,textarea').not('[type=submit]').jqBootstrapValidation();", dynamic: __oxid_include_dynamic }) }}
+
+<form class="form-horizontal" action="{{ oViewConf.getSelfActionLink() }}" name="forgotpwd" method="post" role="form"  novalidate="novalidate">
+    {% set aErrors = oView.getFieldValidationErrors() %}
+    <div class="hidden">
+        {{ oViewConf.getHiddenSid()|raw() }}
+        {{ oViewConf.getNavFormParams() }}
+        <input type="hidden" name="fnc" value="updatePassword">
+        <input type="hidden" name="uid" value="{{ oView.getUpdateId() }}">
+        <input type="hidden" name="cl" value="forgotpwd">
+        <input type="hidden" id="passwordLength" value="{{ oViewConf.getPasswordLength() }}">
+    </div>
+
+    <div class="form-group{% if aErrors.oxuser__oxpassword %} oxInValid{% endif %}">
+        <label class="control-label col-sm-3">{{ translate({ ident: "NEW_PASSWORD" }) }}</label>
+        <div class="col-md-9">
+            <input type="password" name="password_new" class="form-control js-oxValidate js-oxValidate_notEmpty js-oxValidate_length js-oxValidate_match textbox">
+        </div>
+        <p class="help-block"></p>
+    </div>
+    <div class="form-group {% if aErrors.oxuser__oxpassword %} oxInValid{% endif %}">
+        <label class="control-label col-md-3">{{ translate({ ident: "CONFIRM_PASSWORD" }) }}</label>
+        <div class="col-md-9">
+            <input type="password" name="password_new_confirm" class="form-control js-oxValidate js-oxValidate_notEmpty js-oxValidate_length js-oxValidate_match textbox">
+        </div>
+        <p class="help-block"></p>
+    </div>
+    <div class="form-group">
+        <div class="col-md-9 col-md-offset-3">
+            <button class="btn btn-primary submitButton" type="submit" name="save" value="{{ translate({ ident: "CHANGE_PASSWORD" }) }}">{{ translate({ ident: "CHANGE_PASSWORD" }) }}</button>
+        </div>
+    </div>
+</form>

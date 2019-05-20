@@ -1,0 +1,77 @@
+{% if not blWorkaroundInclude %}
+    {% capture append = "oxidBlock_content" %}
+        {% if oxcmp_user %}
+            {% set force_sid = oView.getSidForWidget() %}
+        {% endif %}
+        {{ include_widget({ cl: "oxwArticleDetails", _parent: oView.getClassName(), nocookie: 1, force_sid: force_sid, _navurlparams: oViewConf.getNavUrlParams(), _object: oView.getProduct(), anid: oViewConf.getActArticleId(), iPriceAlarmStatus: oView.getPriceAlarmStatus(), sorting: oView.getSortingParameters(), skipESIforUser: 1 }) }}
+    {% endcapture %}
+    {% include "layout/page.html.twig" %}
+{% else %}
+    {% set oDetailsProduct = oView.getProduct() %}
+    {% set oPictureProduct = oView.getPicturesProduct() %}
+    {% set currency = oView.getActCurrency() %}
+    {% set sPageHeadTitle = oDetailsProduct.oxarticles__oxtitle.value|cat(' ')|cat(oDetailsProduct.oxarticles__oxvarselect.value) %}
+    {% set blFullwidth = oViewConf.getViewThemeParam('blFullwidthLayout') %}
+
+    {% if oView.getPriceAlarmStatus() == 1 %}
+        {% set _statusMessage1 = "PAGE_DETAILS_THANKYOUMESSAGE1"|translate|cat(" ")|cat(oxcmp_shop.oxshops__oxname.value) %}
+        {% set _statusMessage2 = "PAGE_DETAILS_THANKYOUMESSAGE2"|translate|cat(" ") %}
+        {% set _statusMessage3 = "PAGE_DETAILS_THANKYOUMESSAGE3"|translate|cat(" ")|cat(oView.getBidPrice())|cat(" ")|cat(currency.sign)|cat(" ") %}
+        {% set _statusMessage4 = "PAGE_DETAILS_THANKYOUMESSAGE4"|translate %}
+        {% include "message/success.html.twig" with {statusMessage:_statusMessage1 ~ _statusMessage2 ~ _statusMessage3 ~ _statusMessage4} %}
+    {% elseif oView.getPriceAlarmStatus() == 2 %}
+        {% set _statusMessage = "MESSAGE_WRONG_VERIFICATION_CODE"|translate %}
+        {% include "message/error.html.twig" with {statusMessage: _statusMessage} %}
+    {% elseif oView.getPriceAlarmStatus() is same as(0) %}
+        {% set _statusMessage1 = "MESSAGE_NOT_ABLE_TO_SEND_EMAIL"|translate|cat("<br>") %}
+        {% set _statusMessage2 = "MESSAGE_VERIFY_YOUR_EMAIL"|translate %}
+        {% include "message/error.html.twig" with {statusMessage:_statusMessage1 ~ _statusMessage2} %}
+    {% endif %}
+
+    <div id="details_container">
+        <div id="details">
+            {% if oView.getSearchTitle() %}
+                {% set detailsLocation = oView.getSearchTitle() %}
+            {% else %}
+                {% for oCatPath in oView.getCatTreePath() %}
+                    {% if loop.last %}
+                        {% set detailsLocation = oCatPath.oxcategories__oxtitle.value %}
+                    {% endif %}
+                {% endfor %}
+            {% endif %}
+
+            {# details locator #}
+            {% set actCategory = oView.getActiveCategory() %}
+            <div class="detailsParams listRefine bottomRound">
+                <div class="row refineParams clear" id="detailsItemsPager">
+                    <div class="col-xs-3 text-left pager-overview-link">
+                        <i class="fa fa-bars"></i> <a href="{{ actCategory.toListLink }}">{{ translate({ ident: "BACK_TO_OVERVIEW" }) }}</a>
+                    </div>
+                    <div class="col-xs-3 text-left pager-prev">
+                        {% if actCategory.prevProductLink %}
+                            <i class="fa fa-angle-left"></i> <a id="linkPrevArticle" class="" href="{{ actCategory.prevProductLink }}">{{ translate({ ident: "PREVIOUS_PRODUCT" }) }}</a>
+                        {% endif %}
+                    </div>
+                    <div class="col-xs-3 text-center pager-current-page">
+                        {% if actCategory.iProductPos %}
+                            {{ translate({ ident: "PRODUCT" }) }} {{ actCategory.iProductPos }} {{ translate({ ident: "OF" }) }} {{ actCategory.iCntOfProd }}
+                        {% endif %}
+                    </div>
+                    <div class="col-xs-3 text-right pager-next">
+                        {% if actCategory.nextProductLink %}
+                            <a id="linkNextArticle" href="{{ actCategory.nextProductLink }}">{{ translate({ ident: "NEXT_PRODUCT" }) }}</a> <i class="fa fa-angle-right"></i>
+                        {% endif %}
+                    </div>
+                </div>
+                {% if blFullwidth %}
+                    <hr>
+                {% endif %}
+            </div>
+
+            {# RDFa offering #}
+            <div id="productinfo">
+                {% include "page/details/inc/fullproductinfo.html.twig" %}
+            </div>
+        </div>
+    </div>
+{% endif %}

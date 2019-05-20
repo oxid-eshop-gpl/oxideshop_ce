@@ -1,0 +1,40 @@
+<div class="topPopList">
+    {% block widget_header_servicebox_flyoutbox %}
+        <span class="lead">{{ translate({ ident: "ACCOUNT" }) }}</span>
+        <div class="flyoutBox">
+            <ul id="services" class="list-unstyled">
+                {% block widget_header_servicebox_items %}
+                    <li>
+                        <a href="{{ seo_url({ ident: oViewConf.getSslSelfLink()|cat("cl=account") }) }}">{{ translate({ ident: "MY_ACCOUNT" }) }}</a>
+                    </li>
+                    {% if oViewConf.getShowCompareList() %}
+                        <li>
+                            <a href="{{ seo_url({ ident: oViewConf.getSelfLink()|cat("cl=compare") }) }}">{{ translate({ ident: "MY_PRODUCT_COMPARISON" }) }}</a> {% if oView.getCompareItemsCnt() %}<span class="badge">{{ oView.getCompareItemsCnt() }}</span>{% endif %}
+                        </li>
+                    {% endif %}
+                    <li>
+                        <a href="{{ seo_url({ ident: oViewConf.getSelfLink()|cat("cl=account_noticelist") }) }}"><span>{{ translate({ ident: "MY_WISH_LIST" }) }}</span></a>
+                        {% if oxcmp_user and oxcmp_user.getNoticeListArtCnt() %} <span class="badge">{{ oxcmp_user.getNoticeListArtCnt() }}</span>{% endif %}
+                    </li>
+                    {% if oViewConf.getShowWishlist() %}
+                        <li>
+                            <a href="{{ seo_url({ ident: oViewConf.getSelfLink()|cat("cl=account_wishlist") }) }}"><span>{{ translate({ ident: "MY_GIFT_REGISTRY" }) }}</span></a>
+                            {% if oxcmp_user and oxcmp_user.getWishListArtCnt() %} <span class="badge">{{ oxcmp_user.getWishListArtCnt() }}</span>{% endif %}
+                        </li>
+                    {% endif %}
+                    {% if oViewConf.getShowListmania() %}
+                        <li>
+                            <a href="{{ seo_url({ ident: oViewConf.getSelfLink()|cat("cl=account_recommlist") }) }}"><span>{{ translate({ ident: "MY_LISTMANIA" }) }}</span></a>
+                            {% if oxcmp_user and oxcmp_user.getRecommListsCount() %} <span class="badge">{{ oxcmp_user.getRecommListsCount() }}</span>{% endif %}
+                        </li>
+                    {% endif %}
+                    {% if oViewConf.isFunctionalityEnabled( "blEnableDownloads" ) %}
+                        <li>
+                            <a href="{{ seo_url({ ident: oViewConf.getSelfLink()|cat("cl=account_downloads") }) }}"><span>{{ translate({ ident: "MY_DOWNLOADS" }) }}</span></a>
+                        </li>
+                    {% endif %}
+                {% endblock %}
+            </ul>
+        </div>
+    {% endblock %}
+</div>

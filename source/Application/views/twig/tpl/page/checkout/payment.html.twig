@@ -1,0 +1,159 @@
+{% capture append = "oxidBlock_content" %}
+    {# ordering steps #}
+    {% include "page/checkout/inc/steps.html.twig" with {active: 3} %}
+
+    {% block checkout_payment_main %}
+        {% set currency = oView.getActCurrency() %}
+        {% block change_shipping %}
+            {% if oView.getAllSets() %}
+                {% set aErrors = oView.getFieldValidationErrors() %}
+                <form action="{{ oViewConf.getSslSelfLink() }}" name="shipping" id="shipping" method="post">
+                    <div class="hidden">
+                        {{ oViewConf.getHiddenSid()|raw() }}
+                        {{ oViewConf.getNavFormParams() }}
+                        <input type="hidden" name="cl" value="{{ oViewConf.getActiveClassName() }}">
+                        <input type="hidden" name="fnc" value="changeshipping">
+                    </div>
+
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">{% if oView.getAllSetsCnt() > 1 %}{{ translate({ ident: "SELECT_SHIPPING_METHOD" }) }}{% else %}{{ translate({ ident: "SELECTED_SHIPPING_CARRIER" }) }}{% endif %}</h3>
+                        </div>
+                        <div class="panel-body">
+                            {% block act_shipping %}
+                                <div class="form-group">
+                                    <select class="form-control selectpicker" name="sShipSet" onchange="this.form.submit();">
+                                        {% for sShipID, oShippingSet in oView.getAllSets() %}
+                                            <option value="{{ sShipID }}" {% if oShippingSet.blSelected %}SELECTED{% endif %}>{{ oShippingSet.oxdeliveryset__oxtitle.value }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                <noscript>
+                                    <div class="form-group">
+                                        <button type="submit" class="btn btn-success submitButton largeButton">{{ translate({ ident: "UPDATE_SHIPPING_CARRIER" }) }}</button>
+                                    </div>
+                                </noscript>
+                            {% endblock %}
+
+                            {% set oDeliveryCostPrice = oxcmp_basket.getDeliveryCost() %}
+                            {% if oDeliveryCostPrice and oDeliveryCostPrice.getPrice() > 0 %}
+                                {% if oViewConf.isFunctionalityEnabled('blShowVATForDelivery')  %}
+                                    <div id="shipSetCost">
+                                        <b>{{ translate({ ident: "CHARGES", suffix: "COLON" }) }} {{ format_price(oDeliveryCostPrice.getNettoPrice(), { currency: currency }) }}
+                                            ({{ translate({ ident: "PLUS_VAT" }) }} {{ format_price(oDeliveryCostPrice.getVatValue(), { currency: currency }) }})
+                                        </b>
+                                    </div>
+                                {% else %}
+                                    <div id="shipSetCost">
+                                        <b>{{ translate({ ident: "CHARGES", suffix: "COLON" }) }} {{ format_price(oDeliveryCostPrice.getBruttoPrice(), { currency: currency }) }}</b>
+                                    </div>
+                                {% endif %}
+                            {% endif %}
+                        </div>
+                    </div>
+                </form>
+            {% endif %}
+        {% endblock %}
+
+        {% block checkout_payment_errors %}
+            {% set iPayError = oView.getPaymentError() %}
+
+            {% if iPayError == 1 %}
+                <div class="alert alert-danger">{{ translate({ ident: "ERROR_MESSAGE_COMPLETE_FIELDS_CORRECTLY" }) }}</div>
+            {% elseif iPayError == 2 %}
+                <div class="alert alert-danger">{{ translate({ ident: "MESSAGE_PAYMENT_AUTHORIZATION_FAILED" }) }}</div>
+            {% elseif iPayError == 4 %}
+                <div class="alert alert-danger">{{ translate({ ident: "MESSAGE_UNAVAILABLE_SHIPPING_METHOD" }) }}</div>
+            {% elseif iPayError == 5 %}
+                <div class="alert alert-danger">{{ translate({ ident: "MESSAGE_PAYMENT_AUTHORIZATION_FAILED" }) }}</div>
+            {% elseif iPayError >= 6 %}
+                <!--Add custom error message here-->
+                <div class="alert alert-danger">{{ translate({ ident: "MESSAGE_PAYMENT_AUTHORIZATION_FAILED" }) }}</div>
+            {% elseif iPayError == -1 %}
+                <div class="alert alert-danger">{{ translate({ ident: "MESSAGE_PAYMENT_UNAVAILABLE_PAYMENT_ERROR" }) }} "{{ oView.getPaymentErrorText() }}").</div>
+            {% elseif iPayError == -2 %}
+                <div class="alert alert-danger">{{ translate({ ident: "MESSAGE_NO_SHIPPING_METHOD_FOUND" }) }}</div>
+            {% elseif iPayError == -3 %}
+                <div class="alert alert-danger">{{ translate({ ident: "MESSAGE_PAYMENT_SELECT_ANOTHER_PAYMENT" }) }}</div>
+            {% elseif iPayError == -4 %}
+                <div class="alert alert-danger">{{ translate({ ident: "MESSAGE_PAYMENT_BANK_CODE_INVALID" }) }}</div>
+            {% elseif iPayError == -5 %}
+                <div class="alert alert-danger">{{ translate({ ident: "MESSAGE_PAYMENT_ACCOUNT_NUMBER_INVALID" }) }}</div>
+            {% endif %}
+        {% endblock %}
+
+        {% block change_payment %}
+            {{ script({ include: "js/widgets/oxpayment.min.js", priority: 10, dynamic: __oxid_include_dynamic }) }}
+            {{ script({ include: "js/libs/jqBootstrapValidation.min.js", priority: 10, dynamic: __oxid_include_dynamic }) }}
+            {{ script({ add: "$( '#payment' ).oxPayment();", dynamic: __oxid_include_dynamic }) }}
+            {{ script({ add: "$('input,select,textarea').not('[type=submit]').jqBootstrapValidation();", dynamic: __oxid_include_dynamic }) }}
+            <form action="{{ oViewConf.getSslSelfLink() }}" class="form-horizontal js-oxValidate payment" id="payment" name="order" method="post" novalidate="novalidate">
+                <div class="hidden">
+                    {{ oViewConf.getHiddenSid()|raw() }}
+                    {{ oViewConf.getNavFormParams() }}
+                    <input type="hidden" name="cl" value="{{ oViewConf.getActiveClassName() }}">
+                    <input type="hidden" name="fnc" value="validatepayment">
+                </div>
+
+                {% if oView.getPaymentList() %}
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3 id="paymentHeader" class="panel-title">{{ translate({ ident: "PAYMENT_METHOD" }) }}</h3>
+                        </div>
+                        <div class="panel-body">
+                            {% set inptcounter = "-1" %}
+                            {% for sPaymentID, paymentmethod in oView.getPaymentList() %}
+                                {% set inptcounter = inptcounter+1 %}
+                                {% block select_payment %}
+                                    <div class="well well-sm">
+                                        {% if sPaymentID == "oxidcashondel" %}
+                                            {% include "page/checkout/inc/payment_oxidcashondel.html.twig" %}
+                                        {% elseif sPaymentID == "oxidcreditcard" %}
+                                            {% include "page/checkout/inc/payment_oxidcreditcard.html.twig" %}
+                                        {% elseif sPaymentID == "oxiddebitnote" %}
+                                            {% include "page/checkout/inc/payment_oxiddebitnote.html.twig" %}
+                                        {% else %}
+                                            {% include "page/checkout/inc/payment_other.html.twig" %}
+                                        {% endif %}
+                                    </div>
+                                {% endblock %}
+                            {% endfor %}
+
+                        </div>
+                    </div>
+
+                    {% block checkout_payment_nextstep %}
+                        {% if oView.isLowOrderPrice() %}
+                            <div class="alert alert-info">
+                                <b>{{ translate({ ident: "MIN_ORDER_PRICE" }) }} {{ oView.getMinOrderPrice() }} {{ currency.sign }}</b>
+                            </div>
+                        {% else %}
+                            <div class="well well-sm cart-buttons">
+                                <a href="{{ seo_url({ ident: oViewConf.getOrderLink() }) }}" class="btn btn-default pull-left prevStep submitButton largeButton" id="paymentBackStepBottom"><i class="fa fa-caret-left"></i> {{ translate({ ident: "PREVIOUS_STEP" }) }}</a>
+                                <button type="submit" name="userform" class="btn btn-primary pull-right submitButton nextStep largeButton" id="paymentNextStepBottom">{{ translate({ ident: "CONTINUE_TO_NEXT_STEP" }) }} <i class="fa fa-caret-right"></i></button>
+                                <div class="clearfix"></div>
+                            </div>
+                        {% endif %}
+                    {% endblock %}
+
+                {% elseif oView.getEmptyPayment() %}
+                    {% block checkout_payment_nopaymentsfound %}
+                        <div class="lineBlock"></div>
+                        <h3 id="paymentHeader" class="blockHead">{{ translate({ ident: "PAYMENT_INFORMATION" }) }}</h3>
+                        {% ifcontent ident "oxnopaymentmethod" set oCont %}
+                            {{ oCont.oxcontents__oxcontent.value }}
+                        {% endifcontent %}
+                        <input type="hidden" name="paymentid" value="oxempty">
+                        <div class="lineBox clear">
+                            <a href="{{ seo_url({ ident: oViewConf.getSelfLink()|cat("cl=user") }) }}" class="btn btn-default pull-left prevStep submitButton largeButton"><i class="fa fa-caret-left"></i> {{ translate({ ident: "PREVIOUS_STEP" }) }}</a>
+                            <button type="submit" name="userform" class="btn btn-primary pull-right submitButton nextStep largeButton" id="paymentNextStepBottom">{{ translate({ ident: "CONTINUE_TO_NEXT_STEP" }) }} <i class="fa fa-caret-right"></i></button>
+                        </div>
+                    {% endblock %}
+                {% endif %}
+            </form>
+        {% endblock %}
+    {% endblock %}
+    {{ insert_tracker({title: template_title}) }}
+{% endcapture %}
+
+{% include "layout/page.html.twig" %}

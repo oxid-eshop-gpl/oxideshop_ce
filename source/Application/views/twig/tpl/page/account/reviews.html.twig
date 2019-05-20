@@ -1,0 +1,89 @@
+{% capture append = "oxidBlock_content" %}
+
+    {{ script({ include: "js/widgets/oxlistremovebutton.min.js", priority: 10, dynamic: __oxid_include_dynamic }) }}
+
+    {% block account_reviewlist_header %}
+        {% set template_title = "MY_REVIEWS"|translate %}
+        <h1 class="page-header">{{ translate({ ident: "MY_REVIEWS" }) }}</h1>
+    {% endblock %}
+
+    {% block account_reviewlist_list %}
+        <div id="review">
+            {% if oView.getReviewAndRatingItemsCount()  %}
+                <div class="spacer"></div>
+                <div class="reviews-landscape">
+                    {% for review in oView.getReviewList() %}
+                        {% block account_reviewlist_item %}
+                            <div class="panel panel-default" id="reviewName_{{ loop.index }}" itemprop="review" itemscope itemtype="http://schema.org/Review">
+                                <div class="panel-heading">
+                                    <div class="row">
+                                        <div class="col-md-3 date">
+                                            <span>
+                                                <time itemprop="datePublished" datetime="{{ review.getCreatedAt()|date_format("%Y-%m- % d") }}">{{ review.getCreatedAt()|date_format("%d.%m. % Y") }}</time>
+                                            </span>
+                                        </div>
+                                        <div class="col-md-5 articleTitle">
+                                            <span itemprop="itemreviewed">{{ review.getObjectTitle()|truncate(60) }}</span>
+                                        </div>
+                                        <div class="col-md-3 rating text-right">
+                                            {% if review.getRating() %}
+                                                <div itemprop="reviewRating" itemscope itemtype="http://schema.org/Rating">
+                                                    {% for starRatings in 0..5 %}
+                                                        {% if review.getRating() >= loop.index %}
+                                                            <i class="fa fa-star"></i>
+                                                        {% else %}
+                                                            <i class="fa fa-star-o"></i>
+                                                        {% endif %}
+                                                    {% endfor %}
+                                                </div>
+                                            {% endif %}
+                                        </div>
+                                        {% block account_reviewlist_item_action %}
+                                            <div class="col-md-1 pull-right">
+                                                <div class="actions text-center">
+                                                    <div class="btn-group">
+                                                        <button
+                                                                type="submit"
+                                                                class="btn btn-danger btn-block hasTooltip"
+                                                                title="{{ translate({ ident: "DD_DELETE_REVIEW_AND_RATING" }) }}"
+                                                                data-toggle="modal"
+                                                                data-target="#delete_review_{{ loop.index }}"
+                                                        >
+                                                            <i class="fa fa-trash"></i>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        {% endblock %}
+                                    </div>
+                                    <div class="clearfix"></div>
+                                </div>
+                                {% if review.getReviewText() %}
+                                    <div class="panel-body" id="reviewText_{{ loop.index }}" itemprop="description">{{ review.getReviewText() }}</div>
+                                {% endif %}
+                            </div>
+                        {% endblock %}
+                        {% include "page/account/delete_review_confirmation.html.twig" with {reviewId: review.getReviewId(), ratingId: review.getRatingId(), reviewCounterIteration: loop.index} %}
+                    {% endfor %}
+                </div>
+            {% else %}
+                {% block account_reviewlist_no_reviews_available %}
+                    <div class="alert alert-info">
+                        {{ translate({ ident: "DD_REVIEWS_NOT_AVAILABLE" }) }}
+                    </div>
+                {% endblock %}
+            {% endif %}
+        </div>
+    {% endblock %}
+
+    {% block account_reviewlist_locator %}
+        {% include "widget/locator/listlocator.html.twig" with {locator: oView.getPageNavigation(), place: "bottom"} %}
+    {% endblock %}
+
+    {{ insert_tracker({title: template_title}) }}
+
+{% endcapture %}
+{% capture append = "oxidBlock_sidebar" %}
+    {% include "page/account/inc/account_menu.html.twig" with {active_link: "reviewlist"} %}
+{% endcapture %}
+{% include "layout/page.html.twig" with {sidebar: "Left"} %}

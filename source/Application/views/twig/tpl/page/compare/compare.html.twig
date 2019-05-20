@@ -1,0 +1,71 @@
+{% capture append = "oxidBlock_content" %}
+    {% set template_title = "COMPARE"|translate %}
+
+    {{ oView.setNoPaging() }}
+
+    {% set articleList = oView.getCompArtList() %}
+    {% set atributeList = oView.getAttributeList() %}
+
+    {{ script({ include: "js/pages/compare.min.js", dynamic: __oxid_include_dynamic }) }}
+
+    <h1 id="productComparisonHeader" class="page-header">{{ template_title }}</h1>
+    {% if oView.getCompareItemsCnt() >= 1 %}
+        <div id="comparePlayground">
+            <div id="compareLandscape">
+                <table class="table-bordered">
+                    <tbody>
+                        <tr class="products">
+                            {% for iProdNr, product in articleList %}
+                                {% if loop.first %}
+                                    <th class="attrib-title no-border" scope="row">&nbsp;</th>
+                                {% endif %}
+
+                                <td class="item-wrapper text-center">
+                                    <div class="move-controls btn-group">
+                                        {% if not product.hidePrev %}
+                                            <a id="compareLeft_{{ product.oxarticles__oxid.value }}" href="{{ seo_url({ ident: oViewConf.getSelfLink()|cat("cl=")|cat(oViewConf.getActiveClassName()), params: "fnc=moveleft&amp;aid=" ~ product.oxarticles__oxnid.value ~ "&amp;pgNr="|cat(oView.getActPage()) }) }}" class="btn btn-default movePrev">&laquo;</a>
+                                        {% endif %}
+
+                                        <a href="javascript:;" class="btn btn-default disabled">{{ translate({ ident: "MOVE" }) }}</a>
+
+                                        {% if not product.hideNext %}
+                                            <a id="compareRight_{{ product.oxarticles__oxid.value }}" href="{{ seo_url({ ident: oViewConf.getSelfLink()|cat("cl=")|cat(oViewConf.getActiveClassName()), params: "fnc=moveright&amp;aid=" ~ product.oxarticles__oxnid.value ~ "&amp;pgNr="|cat(oView.getActPage()) }) }}" class="btn btn-default moveNext">&raquo;</a>
+                                        {% endif %}
+                                    </div>
+                                    {% include "page/compare/inc/compareitem.html.twig" with {product: product, testid: loop.index} %}
+                                </td>
+                            {% endfor %}
+                        </tr>
+                        {% for iProdNr, oAttrib in atributeList %}
+                            <tr>
+                                <th class="attrib-title" scope="row">{{ oAttrib.title }}:</th>
+
+                                {% for iProdNr, product in articleList %}
+                                    <td class="attrib-text">
+                                        {% if oAttrib.aProd.iProdNr and oAttrib.aProd.iProdNr.value %}
+                                            {{ oAttrib.aProd.iProdNr.value }}
+                                        {% else %}
+                                            -
+                                        {% endif %}
+                                    </td>
+                                {% endfor %}
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    {% else %}
+        <p class="alert alert-danger">{{ translate({ ident: "MESSAGE_SELECT_AT_LEAST_ONE_PRODUCT" }) }}</p>
+    {% endif %}
+    {{ insert_tracker({title: template_title}) }}
+{% endcapture %}
+
+{% if not oxcmp_user.oxuser__oxpassword.value %}
+    {% include "layout/page.html.twig" %}
+{% else %}
+    {% capture append = "oxidBlock_sidebar" %}
+        {% include "page/account/inc/account_menu.html.twig" with {active_link: "compare"} %}
+    {% endcapture %}
+    {% include "layout/page.html.twig" with {sidebar: "Left"} %}
+{% endif %}

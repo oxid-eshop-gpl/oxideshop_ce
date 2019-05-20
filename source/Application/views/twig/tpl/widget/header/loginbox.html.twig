@@ -1,0 +1,57 @@
+{% set bIsError = 0 %}
+{% capture name = "loginErrors" %}
+    {% for key, oEr in Errors.loginBoxErrors %}
+        <p id="errorBadLogin" class="alert alert-danger">{{ oEr.getOxMessage() }}</p>
+        {% set bIsError = 1 %}
+    {% endfor %}
+{% endcapture %}
+{% if not oxcmp_user.oxuser__oxpassword.value %}
+    <form class="form" id="login" name="login" action="{{ oViewConf.getSslSelfLink() }}" method="post">
+        <div id="loginBox" class="loginBox" {% if bIsError %}style="display: block;"{% endif %}>
+            {{ oViewConf.getHiddenSid()|raw() }}
+            {{ oViewConf.getNavFormParams()|raw() }}
+            <input type="hidden" name="fnc" value="login_noredirect">
+            <input type="hidden" name="cl" value="{{ oViewConf.getTopActiveClassName() }}">
+            {% if oViewConf.getTopActiveClassName() == "content" %}
+                <input type="hidden" name="oxcid" value="{{ oViewConf.getContentId() }}">
+            {% endif %}
+            <input type="hidden" name="pgNr" value="{{ oView.getActPage() }}">
+            <input type="hidden" name="CustomError" value="loginBoxErrors">
+            {% if oViewConf.getActArticleId() %}
+                <input type="hidden" name="anid" value="{{ oViewConf.getActArticleId() }}">
+            {% endif %}
+
+            <span class="lead">{{ translate({ ident: "LOGIN" }) }}</span>
+
+            <div class="form-group">
+                <input id="loginEmail" type="email" name="lgn_usr" value="" class="form-control" placeholder="{{ translate({ ident: "EMAIL_ADDRESS" }) }}">
+            </div>
+
+            <div class="form-group">
+                <div class="input-group">
+                    <input id="loginPasword" type="password" name="lgn_pwd" class="form-control" value="" placeholder="{{ translate({ ident: "PASSWORD" }) }}">
+                    <span class="input-group-btn">
+                        <a class="forgotPasswordOpener btn btn-default" href="{{ seo_url({ ident: oViewConf.getSslSelfLink()|cat("cl=forgotpwd") }) }}" title="{{ translate({ ident: "FORGOT_PASSWORD" }) }}">?</a>
+                    </span>
+                </div>
+            </div>
+
+            {% if oViewConf.isFunctionalityEnabled( "blShowRememberMe" ) %}
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" class="checkbox" value="1" name="lgn_cook" id="remember"> {{ translate({ ident: "REMEMBER_ME" }) }}
+                    </label>
+                </div>
+            {% endif %}
+
+            <button type="submit" class="btn btn-primary">{{ translate({ ident: "LOGIN" }) }}</button>
+
+            {% if not oxcmp_user %}
+                <a class="btn" id="registerLink" role="button" href="{{ seo_url({ ident: oViewConf.getSslSelfLink()|cat("cl=register") }) }}" title="{{ translate({ ident: "REGISTER" }) }}">{{ translate({ ident: "REGISTER" }) }}</a>
+            {% endif %}
+
+            {% block thirdparty_login %}{% endblock %}
+
+        </div>
+    </form>
+{% endif %}

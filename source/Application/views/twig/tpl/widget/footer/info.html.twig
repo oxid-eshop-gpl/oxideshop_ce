@@ -1,0 +1,31 @@
+{% block footer_information %}
+    <ul class="information list-unstyled">
+        {% ifcontent ident "oximpressum" set _cont %}
+            <li><a href="{{ _cont.getLink() }}">{{ _cont.oxcontents__oxtitle.value }}</a></li>
+        {% endifcontent %}
+        {% ifcontent ident "oxagb" set _cont %}
+            <li><a href="{{ _cont.getLink() }}">{{ _cont.oxcontents__oxtitle.value }}</a></li>
+        {% endifcontent %}
+        {% ifcontent ident "oxsecurityinfo" set oCont %}
+            <li><a href="{{ oCont.getLink() }}">{{ oCont.oxcontents__oxtitle.value }}</a></li>
+        {% endifcontent %}
+        {% ifcontent ident "oxdeliveryinfo" set oCont %}
+            <li><a href="{{ oCont.getLink() }}">{{ oCont.oxcontents__oxtitle.value }}</a></li>
+        {% endifcontent %}
+        {% ifcontent ident "oxrightofwithdrawal" set oCont %}
+            <li><a href="{{ oCont.getLink() }}">{{ oCont.oxcontents__oxtitle.value }}</a></li>
+        {% endifcontent %}
+        {% ifcontent ident "oxorderinfo" set oCont %}
+            <li><a href="{{ oCont.getLink() }}">{{ oCont.oxcontents__oxtitle.value }}</a></li>
+        {% endifcontent %}
+        {% ifcontent ident "oxcredits" set oCont %}
+            <li><a href="{{ oCont.getLink() }}">{{ oCont.oxcontents__oxtitle.value }}</a></li>
+        {% endifcontent %}
+        {% if oViewConf.getViewThemeParam('blFooterShowNewsletter') %}
+            <li><a href="{{ seo_url({ ident: oViewConf.getSelfLink()|cat("cl=newsletter") }) }}">{{ translate({ ident: "NEWSLETTER" }) }}</a></li>
+        {% endif %}
+        {% if oViewConf.getViewThemeParam('blFooterShowNews') %}
+            <li><a href="{{ seo_url({ ident: oViewConf.getSelfLink()|cat("cl=news") }) }}">{{ translate({ ident: "NEWS" }) }}</a></li>
+        {% endif %}
+    </ul>
+{% endblock %}

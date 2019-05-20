@@ -1,0 +1,83 @@
+{% capture append = "oxidBlock_pageBody" %}
+    {% if oView.showRDFa() %}
+        {% include "rdfa/rdfa.html.twig" %}
+    {% endif %}
+
+    {% block layout_header %}
+        {% include "layout/header.html.twig" %}
+    {% endblock %}
+
+    {% set blFullwidth = oViewConf.getViewThemeParam('blFullwidthLayout') %}
+
+    <div id="wrapper" {% if sidebar %}class="sidebar{{ sidebar }}"{% endif %}>
+
+        <div class="{% if blFullwidth %}container{% else %}container-fluid{% endif %}">
+
+            <div class="underdog">
+
+                <div class="row">
+
+                    {% if oView.getClassName()=='start' and oView.getBanners() and not empty(oView.getBanners()) %}
+                        {% include "widget/promoslider.html.twig" %}
+                    {% endif %}
+
+                </div>
+
+                <div class="content-box">
+
+                    {% if oView.getClassName() != "start" and not blHideBreadcrumb %}
+                        {% block layout_breadcrumb %}
+                            {% include "widget/breadcrumb.html.twig" %}
+                        {% endblock %}
+                    {% endif %}
+
+                    {{ twig.capture.loginErrors }}
+
+                    <div class="row">
+                        {% if sidebar and sidebar != "Right" %}
+                            <div class="col-xs-12 col-md-3 {{ oView.getClassName() }}">
+                                <div id="sidebar">
+                                    {% include "layout/sidebar.html.twig" %}
+                                </div>
+                            </div>
+                        {% endif %}
+
+                        <div class="col-xs-12 {% if sidebar %}col-md-9{% endif %}">
+
+                            <div id="content">
+                                {% block content_main %}
+                                    {% include "message/errors.html.twig" %}
+
+                                    {% for _block in oxidBlock_content %}
+                                        {{ include(template_from_string(_block)) }}
+                                    {% endfor %}
+                                {% endblock %}
+                            </div>
+
+                        </div>
+
+                        {% if sidebar and sidebar == "Right" %}
+                            <div class="col-xs-12 col-md-3 {{ oView.getClassName() }}">
+                                <div id="sidebar">
+                                    {% include "layout/sidebar.html.twig" %}
+                                </div>
+                            </div>
+                        {% endif %}
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    {% include "layout/footer.html.twig" %}
+
+    {% block layout_init_social %}
+    {% endblock %}
+
+    <i class="fa fa-chevron-circle-up icon-4x" id="jumptotop"></i>
+{% endcapture %}
+{% include "layout/base.html.twig" %}

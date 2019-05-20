@@ -1,0 +1,161 @@
+{% if oxcmp_basket.getProductsCount() >= 5 %}
+    {% set blScrollable = true %}
+{% endif %}
+
+{% block widget_minibasket %}
+    {% if oxcmp_basket.getProductsCount() %}
+        {% hasrights { "ident": "TOBASKET",} %}
+            {% set currency = oView.getActCurrency() %}
+
+            {% if _prefix == 'modal' %}
+                <div class="modal fade basketFlyout" id="basketModal" tabindex="-1" role="dialog" aria-labelledby="basketModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            {% block widget_minibasket_modal_header %}
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal">
+                                    <span aria-hidden="true">&times;</span>
+                                    <span class="sr-only">{{ translate({ ident: "CLOSE" }) }}</span>
+                                </button>
+                                <h4 class="modal-title" id="basketModalLabel">{{ oxcmp_basket.getItemsCount() }} {{ translate({ ident: "ITEMS_IN_BASKET" }) }}</h4>
+                            </div>
+                            {% endblock %}
+                            {% block widget_minibasket_modal_content %}
+                            <div class="modal-body">
+                                {% if oxcmp_basket.getProductsCount() %}
+                                    {% hasrights { "ident": "TOBASKET",} %}
+                                        <div id="{{ _prefix }}basketFlyout" class="basketFlyout">
+                                            <div class="">
+                                                <table class="table table-striped">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>{{ translate({ ident: "DD_MINIBASKET_MODAL_TABLE_TITLE" }) }}</th>
+                                                            <th class="text-right">{{ translate({ ident: "DD_MINIBASKET_MODAL_TABLE_PRICE" }) }}</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        {% for _product in oxcmp_basket.getContents() %}
+                                                            {% block modal_widget_minibasket_product %}
+                                                                {% set minibasketItemTitle = _product.getTitle() %}
+                                                                <tr>
+                                                                    <td>
+                                                                        <a href="{{ _product.getLink() }}" title="{{ minibasketItemTitle|striptags }}">
+                                                                            <span class="item">
+                                                                                {% if _product.getAmount() > 1 %}
+                                                                                    {{ _product.getAmount() }} &times;
+                                                                                {% endif %}
+                                                                                {{ minibasketItemTitle|striptags }}
+                                                                            </span>
+                                                                        </a>
+                                                                    </td>
+                                                                    <td class="text-right">
+                                                                        <strong class="price">{{ format_price(_product.getPrice(), { currency: currency }) }} *</strong>
+                                                                    </td>
+                                                                </tr>
+                                                            {% endblock %}
+                                                        {% endfor %}
+                                                    </tbody>
+                                                    <tfoot>
+                                                        <tr>
+                                                            {% block modal_widget_minibasket_total %}
+                                                                <td><strong>{{ translate({ ident: "TOTAL" }) }}</strong></td>
+                                                                <td class="text-right">
+                                                                    <strong class="price">
+                                                                        {% if oxcmp_basket.isPriceViewModeNetto() %}
+                                                                            {{ format_price(oxcmp_basket.getNettoSum(), { currency: currency }) }}
+                                                                        {% else %}
+                                                                            {{ format_price(oxcmp_basket.getBruttoSum(), { currency: currency }) }} *
+                                                                        {% endif %}
+                                                                    </strong>
+                                                                </td>
+                                                            {% endblock %}
+                                                        </tr>
+                                                    </tfoot>
+                                                </table>
+                                            </div>
+                                            {% include "widget/minibasket/countdown.html.twig" %}
+                                        </div>
+                                    {% endhasrights %}
+                                {% endif %}
+                            </div>
+                            {% endblock %}
+                            {% block widget_minibasket_modal_footer %}
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">{{ translate({ ident: "DD_MINIBASKET_CONTINUE_SHOPPING" }) }}</button>
+                                <a href="{{ seo_url({ ident: oViewConf.getSelfLink()|cat("cl=basket") }) }}" class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="{{ translate({ ident: "DISPLAY_BASKET" }) }}">
+                                    <i class="fa fa-shopping-cart"></i>
+                                </a>
+                            </div>
+                            {% endblock %}
+                        </div>
+                    </div>
+                </div>
+                {{ script({ add: "$('#basketModal').modal('show');", dynamic: __oxid_include_dynamic }) }}
+            {% else %}
+                {% block dd_layout_page_header_icon_menu_minibasket_title %}
+                    <p class="title">
+                        <strong>{{ oxcmp_basket.getItemsCount() }} {{ translate({ ident: "ITEMS_IN_BASKET" }) }}</strong>
+                    </p>
+                {% endblock %}
+
+                <div id="{{ _prefix }}basketFlyout" class="basketFlyout{% if blScrollable %} scrollable{% endif %}">
+                    {% block dd_layout_page_header_icon_menu_minibasket_table %}
+                        <table class="table table-bordered table-striped">
+                            {% for _product in oxcmp_basket.getContents() %}
+                                {% block widget_minibasket_product %}
+                                    {% set minibasketItemTitle = _product.getTitle() %}
+                                    <tr>
+                                        <td class="picture text-center">
+                                            <span class="badge">{{ _product.getAmount() }}</span>
+                                            <a href="{{ _product.getLink() }}" title="{{ minibasketItemTitle|striptags }}">
+                                                <img src="{{ _product.getIconUrl() }}" alt="{{ minibasketItemTitle|striptags }}"/>
+                                            </a>
+                                        </td>
+                                        <td class="title">
+                                            <a href="{{ _product.getLink() }}" title="{{ minibasketItemTitle|striptags }}">{{ minibasketItemTitle|striptags }}</a>
+                                        </td>
+                                        <td class="price text-right">{{ format_price(_product.getPrice(), { currency: currency }) }}</td>
+                                    </tr>
+                                {% endblock %}
+                            {% endfor %}
+                            <tr>
+                                <td class="total_label" colspan="2">
+                                    <strong>{{ translate({ ident: "TOTAL" }) }}</strong>
+                                </td>
+                                <td class="total_price text-right">
+                                    <strong>
+                                        {% if oxcmp_basket.isPriceViewModeNetto() %}
+                                            {{ format_price(oxcmp_basket.getNettoSum(), { currency: currency }) }}
+                                        {% else %}
+                                            {{ format_price(oxcmp_basket.getBruttoSum(), { currency: currency }) }}
+                                        {% endif %}
+                                    </strong>
+                                </td>
+                            </tr>
+                        </table>
+                        <div class="clearfix">
+                            {% block widget_minibasket_total %}{% endblock %}
+                        </div>
+                    {% endblock %}
+                </div>
+
+                {% include "widget/minibasket/countdown.html.twig" %}
+
+                {% block dd_layout_page_header_icon_menu_minibasket_functions %}
+                    <p class="functions clear text-right">
+                        {% if oxcmp_user %}
+                            <a href="{{ seo_url({ ident: oViewConf.getSelfLink()|cat("cl=payment") }) }}" class="btn btn-primary">{{ translate({ ident: "CHECKOUT" }) }}</a>
+                        {% else %}
+                            <a href="{{ seo_url({ ident: oViewConf.getSelfLink()|cat("cl=user") }) }}" class="btn btn-primary">{{ translate({ ident: "CHECKOUT" }) }}</a>
+                        {% endif %}
+                        <a href="{{ seo_url({ ident: oViewConf.getSelfLink()|cat("cl=basket") }) }}" class="btn btn-default">{{ translate({ ident: "DISPLAY_BASKET" }) }}</a>
+                    </p>
+                {% endblock %}
+            {% endif %}
+        {% endhasrights %}
+    {% else %}
+        {% block dd_layout_page_header_icon_menu_minibasket_alert_empty %}
+            <div class="alert alert-info">{{ translate({ ident: "BASKET_EMPTY" }) }}</div>
+        {% endblock %}
+    {% endif %}
+{% endblock %}

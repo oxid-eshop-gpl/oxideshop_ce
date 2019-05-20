@@ -1,0 +1,8 @@
+<select name="{{ name }}"
+        {% if class %}class="{{ class }}"{% endif %}
+        {% if id %}id="{{ id }}"{% endif %}
+        {% if required %}required="required"{% endif %}>
+    <option value="" {% if empty(value) %}SELECTED{% endif %}>{{ translate({ ident: "DD_CONTACT_SELECT_SALUTATION" }) }}</option>
+    <option value="MRS" {% if value|lower  == "mrs" or value2|lower == "mrs" %}SELECTED{% endif %}>{{ translate({ ident: "MRS" }) }}</option>
+    <option value="MR"  {% if value|lower  == "mr"  or value2|lower == "mr" %}SELECTED{% endif %}>{{ translate({ ident: "MR" }) }}</option>
+</select>

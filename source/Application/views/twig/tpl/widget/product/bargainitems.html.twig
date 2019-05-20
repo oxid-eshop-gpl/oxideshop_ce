@@ -1,0 +1,104 @@
+{% set currency = oView.getActCurrency() %}
+<div class="bargainitems list-container">
+    <h2 class="page-header">
+        {{ translate({ ident: "WEEK_SPECIAL" }) }}
+
+        {% set rsslinks = oView.getRssLinks() %}
+        {% if rsslinks.bargainArticles %}
+            <small>
+                <a class="rss js-external" id="rssBargainProducts" href="{{ rsslinks.bargainArticles.link }}" title="{{ rsslinks.bargainArticles.title }}"><img src="{{ oViewConf.getImageUrl('rss.png') }}" alt="{{ rsslinks.bargainArticles.title }}"><span class="FXgradOrange corners glowShadow">{{ rsslinks.bargainArticles.title }}</span></a>
+            </small>
+        {% endif %}
+    </h2>
+
+    <div class="row">
+        {% set iBargainArticlesCount = oView.getBargainArticleList()|length %}
+        {% if iBargainArticlesCount > 4 %}
+            {% set iBargainArticlesCount = 4 %}
+        {% endif %}
+        {% set iColIdent = 12 / iBargainArticlesCount %}
+        {% for _product in oView.getBargainArticleList() %}
+            {% set sBargainArtTitle = _product.oxarticles__oxtitle.value ~ " " ~ _product.oxarticles__oxvarselect.value %}
+
+            {% set aVariantSelections = _product.getVariantSelections("null", "null", 1) %}
+            {% set blShowToBasket = true %} {# tobasket or more info ? #}
+            {% if blDisableToCart or _product.isNotBuyable() or (aVariantSelections and aVariantSelections.selections) or _product.hasMdVariants() or (oViewConf.showSelectListsInList() and _product.getSelections(1)) or _product.getVariants() %}
+                {% set blShowToBasket = false %}
+            {% endif %}
+
+            <form name="tobasket{{ testid }}" {% if blShowToBasket %}action="{{ oViewConf.getSelfActionLink() }}" method="post"{% else %}action="{{ _productLink }}" method="get"{% endif %}>
+                <div class="hidden">
+                    {{ oViewConf.getNavFormParams() }}
+                    {{ oViewConf.getHiddenSid()|raw() }}
+                    <input type="hidden" name="pgNr" value="{{ oView.getActPage() }}">
+                    {% if recommid %}
+                        <input type="hidden" name="recommid" value="{{ recommid }}">
+                    {% endif %}
+                    {% if blShowToBasket %}
+                        {% hasrights { "ident": "TOBASKET",} %}
+                            <input type="hidden" name="cl" value="{{ oViewConf.getActiveClassName() }}">
+                            <input type="hidden" name="fnc" value="tobasket">
+                            <input type="hidden" name="aid" value="{{ _product.oxarticles__oxid.value }}">
+                            <input type="hidden" name="anid" value="{{ _product.oxarticles__oxnid.value }}">
+                            <input type="hidden" name="am" value="1">
+                        {% endhasrights %}
+                    {% else %}
+                        <input type="hidden" name="cl" value="details">
+                        <input type="hidden" name="anid" value="{{ _product.oxarticles__oxnid.value }}">
+                    {% endif %}
+                </div>
+
+                <div class="col-xs-12 col-sm-6 col-md-{{ iColIdent }} productBox">
+                    <div class="picture text-center">
+                        <a href="{{ _product.getMainLink() }}" title="{{ sBargainArtTitle|striptags }}" class="img-thumbnail">
+                            <img src="{{ _product.getThumbnailUrl() }}" alt="{{ sBargainArtTitle|striptags }}" class="img-responsive">
+                        </a>
+                    </div>
+                    <div class="title">
+                        <a id="titleBargain_{{ loop.index }}" href="{{ _product.getMainLink() }}" title="{{ sBargainArtTitle|striptags }}">{{ sBargainArtTitle|striptags }}</a>
+                    </div>
+                    <div class="price text-center">
+                        {% block widget_product_bargainitem_price %}
+                            {% hasrights { "ident": "SHOWARTICLEPRICE",} %}
+                            {% set oUnitPrice = _product.getUnitPrice() %}
+                            {% set tprice = _product.getTPrice() %}
+                            {% set price = _product.getPrice() %}
+                            {% if tprice and tprice.getPrice() > price.getPrice() %}
+                                <span>{{ translate({ ident: "REDUCED_FROM" }) }} <del>{{ _product.getFTPrice() }} {{ currency.sign }}</del></span>
+                            {% endif %}
+                            {% if _product.getFPrice() %}
+                                {% set currency = oView.getActCurrency() %}
+                                <span class="lead{% if tprice and tprice.getPrice() > price.getPrice() %} text-danger{% endif %}">{{ _product.getFPrice() }} {{ currency.sign }}
+                                    {% if oView.isVatIncluded() %}
+                                        {% if not ( _product.hasMdVariants() or (oViewConf.showSelectListsInList() and _product.getSelections(1)) or _product.getVariants() ) %}*{% endif %}
+                                    {% endif %}
+                                </span>
+                            {% endif %}
+                            {% if oUnitPrice %}
+                                <span class="pricePerUnit">
+                                    {{ _product.oxarticles__oxunitquantity.value }} {{ _product.getUnitName() }} | {{ format_price(oUnitPrice, { currency: currency }) }}/{{ _product.getUnitName() }}
+                                </span>
+                            {% endif %}
+                            {% endhasrights %}
+                        {% endblock %}
+                    </div>
+                    <div class="actions text-center">
+                        {% block widget_product_bargainitem_tobasket %}
+                            <div class="btn-group">
+                                {% if not ( _product.hasMdVariants() or (oViewConf.showSelectListsInList() and _product.getSelections(1)) or _product.getVariants() ) %}
+                                    {% hasrights { "ident": "TOBASKET",} %}
+                                        <button type="submit" class="btn btn-default hasTooltip" data-placement="bottom" title="{{ translate({ ident: "TO_CART" }) }}">
+                                            <i class="fa fa-shopping-cart"></i>
+                                        </button>
+                                    {% endhasrights %}
+                                {% endif %}
+
+                                <a href="{{ _product.getMainLink() }}" class="btn btn-primary">{{ translate({ ident: "MORE_INFO" }) }}</a>
+                            </div>
+                        {% endblock %}
+                    </div>
+                </div>
+            </form>
+        {% endfor %}
+    </div>
+</div>

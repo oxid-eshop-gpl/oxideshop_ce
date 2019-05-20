@@ -1,0 +1,34 @@
+<div class="refineParams row clear{% if place == "bottom" %} bottomParams{% endif %}">
+    <div class="col-xs-12 pagination-options">
+        {% if locator %}
+            {% if place != "bottom" %}
+                <div class="pull-left">
+            {% endif %}
+                {% include "widget/locator/paging.html.twig" with {pages: locator, place: place} %}
+            {% if place != "bottom" %}
+                </div>
+            {% endif %}
+        {% endif %}
+
+        {% if listDisplayType or sort or itemsPerPage %}
+            <div class="pull-right options">
+                    {% if listDisplayType %}
+                        {% include "widget/locator/listdisplaytype.html.twig" %}
+                    {% endif %}
+
+                    {% if sort %}
+                        {% include "widget/locator/sort.html.twig" %}
+                    {% endif %}
+
+                    {% if itemsPerPage %}
+                        {% include "widget/locator/itemsperpage.html.twig" %}
+                    {% endif %}
+            </div>
+        {% endif %}
+        <div class="clearfix"></div>
+    </div>
+</div>
+
+{% if place != "bottom" %}
+    {% include "widget/locator/attributes.html.twig" %}
+{% endif %}

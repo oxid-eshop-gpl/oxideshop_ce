@@ -1,0 +1,116 @@
+{{ script({ include: "js/libs/jqBootstrapValidation.min.js", priority: 10, dynamic: __oxid_include_dynamic }) }}
+{{ script({ add: "$('input,select,textarea').not('[type=submit]').jqBootstrapValidation();", dynamic: __oxid_include_dynamic }) }}
+
+{% set editval = oView.getUserData() %}
+<form class="form-horizontal" action="{{ oViewConf.getSslSelfLink() }}" method="post" role="form" novalidate="novalidate">
+    <div class="hidden">
+        {{ oViewConf.getHiddenSid()|raw() }}
+        <input type="hidden" name="fnc" value="send"/>
+        <input type="hidden" name="cl" value="contact"/>
+    </div>
+
+    {% include "message/inputvalidation.html.twig" with {aErrors: aErrors.oxuser__oxfname} %}
+
+    {% block contact_form_fields %}
+    <div class="form-group">
+        <label class="{% if contactFormFields.salutation.isRequired %}req{% endif %} control-label col-lg-2">
+            {{ translate({ ident: "TITLE" }) }}
+        </label>
+        <div class="col-lg-10 controls">
+            {% include "form/fieldset/salutation.html.twig" with {name: "editval[oxuser__oxsal]", value: editval.oxuser__oxsal, class: "form-control selectpicker show-tick ", required: contactFormFields.salutation.isRequired} %}
+        </div>
+    </div>
+    <div class="form-group{% if aErrors.oxuser__oxfname %} oxInValid{% endif %}">
+        <label class="{% if contactFormFields.firstName.isRequired %}req{% endif %} control-label col-lg-2"
+               for="editval[oxuser__oxfname]">
+            {{ translate({ ident: "FIRST_NAME" }) }}
+        </label>
+        <div class="col-lg-10 controls">
+            <input type="text"
+                   name="editval[oxuser__oxfname]"
+                   id="editval[oxuser__oxfname]"
+                   size="70"
+                   maxlength="255"
+                   value="{{ editval.oxuser__oxfname }}"
+                   class="form-control"
+                   {% if contactFormFields.firstName.isRequired %}required="required"{% endif %} >
+        </div>
+    </div>
+    <div class="form-group{% if aErrors.oxuser__oxlname %} oxInValid{% endif %}">
+        <label class="{% if contactFormFields.lastName.isRequired %}req{% endif %} control-label col-lg-2"
+               for="editval[oxuser__oxlname]">
+            {{ translate({ ident: "LAST_NAME" }) }}
+        </label>
+        <div class="col-lg-10 controls">
+            <input type="text"
+                   name="editval[oxuser__oxlname]"
+                   id="editval[oxuser__oxlname]"
+                   size=70
+                   maxlength=255
+                   value="{{ editval.oxuser__oxlname }}"
+                   class="form-control"
+                   {% if contactFormFields.lastName.isRequired %}required="required"{% endif %}>
+        </div>
+    </div>
+    <div class="form-group{% if aErrors.oxuser__oxusername %} oxInValid{% endif %}">
+        <label class="{% if contactFormFields.email.isRequired %}req{% endif %} control-label col-lg-2"
+               for="contactEmail">
+            {{ translate({ ident: "EMAIL" }) }}
+        </label>
+        <div class="col-lg-10 controls">
+            <input id="contactEmail"
+                   type="email"
+                   name="editval[oxuser__oxusername]"
+                   size=70
+                   maxlength=255
+                   value="{{ editval.oxuser__oxusername }}"
+                   class="form-control"
+                   {% if contactFormFields.email.isRequired %}required="required"{% endif %}>
+        </div>
+    </div>
+    <div class="form-group{% if aErrors and not oView.getContactSubject() %} oxInValid{% endif %}">
+        <label class="{% if contactFormFields.subject.isRequired %}req{% endif %} control-label col-lg-2"
+               for="c_subject">
+            {{ translate({ ident: "SUBJECT" }) }}
+        </label>
+        <div class="col-lg-10 controls">
+            <input type="text"
+                   name="c_subject"
+                   id="c_subject"
+                   size="70"
+                   maxlength=80
+                   value="{{ oView.getContactSubject() }}"
+                   class="form-control"
+                   {% if contactFormFields.subject.isRequired %}required="required"{% endif %}>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="{% if contactFormFields.message.isRequired %}req{% endif %} control-label col-lg-2"
+               for="c_message">
+            {{ translate({ ident: "MESSAGE" }) }}
+        </label>
+        <div class="col-lg-10 controls">
+                <textarea rows="15"
+                          cols="70"
+                          name="c_message"
+                          id="c_message"
+                          class="form-control"
+                          {% if contactFormFields.message.isRequired %}required="required"{% endif %}
+                >{{ oView.getContactMessage() }}</textarea>
+        </div>
+    </div>
+    {% endblock %}
+
+    {% block captcha_form %}{% endblock %}
+
+    {% block contact_form_buttons %}
+    <div class="form-group">
+        <div class="col-lg-offset-2 col-lg-10">
+            <p class="alert alert-info">{{ translate({ ident: "COMPLETE_MARKED_FIELDS" }) }}</p>
+            <button class="btn btn-primary" type="submit">
+                <i class="fa fa-envelope"></i> {{ translate({ ident: "SEND" }) }}
+            </button>
+        </div>
+    </div>
+    {% endblock %}
+</form>

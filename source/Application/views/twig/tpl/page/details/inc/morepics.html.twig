@@ -1,0 +1,24 @@
+{% set oConfig = oViewConf.getConfig() %}
+
+{% if oView.morePics() %}
+    {% set iMorePics = oView.getIcons()|length %}
+    {% if iMorePics > 4 %}
+        {{ script({ include: "js/libs/jquery.flexslider.min.js", priority: 2, dynamic: __oxid_include_dynamic }) }}
+        {{ style({ include: "css/libs/jquery.flexslider.min.css" }) }}
+    {% endif %}
+
+    <div class="otherPictures{% if iMorePics > 4 %} flexslider{% endif %}" id="morePicsContainer">
+        <ul class="{% if iMorePics > 4 %}slides{% else %}list-inline{% endif %}">
+            {{ script({ add: "var aMorePic=new Array();", dynamic: __oxid_include_dynamic }) }}
+            {% for iPicNr, oArtIcon in oView.getIcons() %}
+                {% set sPictureName = oPictureProduct.getPictureFieldValue("oxpic", iPicNr) %}
+                {% set aPictureInfo = oConfig.getMasterPicturePath("product/" ~ iPicNr ~ "/" ~ sPictureName)|getimagesize %}
+                <li>
+                    <a id="morePics_{{ loop.index }}"{% if aPictureInfo %} data-width="{{ aPictureInfo.0 }}" data-height="{{ aPictureInfo.1 }}"{% endif %} data-zoom-url="{{ oPictureProduct.getMasterZoomPictureUrl(iPicNr) }}">
+                        <img src="{{ oPictureProduct.getIconUrl(iPicNr) }}" alt="morepic-{{ loop.index }}">
+                    </a>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+{% endif %}

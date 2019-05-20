@@ -1,0 +1,35 @@
+{% block widget_locator_sort %}
+    {% if oView.showSorting() %}
+        {% set _listType = oView.getListDisplayType() %}
+        {% set _additionalParams = oView.getAdditionalParams() %}
+        {% set _artPerPage = oViewConf.getArtPerPageCount() %}
+        {% set _sortColumnVarName = oView.getSortOrderByParameterName() %}
+        {% set _sortDirectionVarName = oView.getSortOrderParameterName() %}
+
+        <div class="btn-group">
+            <button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown">
+                <strong>{{ translate({ ident: "SORT_BY" }) }}:</strong>
+                {% if oView.getListOrderBy() %}
+                    {{ translate({ ident: oView.getListOrderBy()|upper }) }}
+                {% else %}
+                    {{ translate({ ident: "CHOOSE" }) }}
+                {% endif %}
+                <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu" role="menu">
+                {% for sColumnName in oView.getSortColumns() %}
+                    <li class="desc{% if oView.getListOrderDirection() == 'desc' and sColumnName == oView.getListOrderBy() %} active{% endif %}">
+                        <a href="{{ oView.getLink()|add_url_parameters("ldtype=$_listType&amp;_artperpage=$_artPerPage&amp;$_sortColumnVarName=$sColumnName&amp;$_sortDirectionVarName=desc&amp;pgNr=0&amp;$_additionalParams") }}" title="{{ translate({ ident: sColumnName|upper }) }} {{ translate({ ident: "DD_SORT_DESC" }) }}">
+                            <i class="fa fa-caret-down"></i> {{ translate({ ident: sColumnName|upper }) }}
+                        </a>
+                    </li>
+                    <li class="asc{% if oView.getListOrderDirection() == 'asc' and sColumnName == oView.getListOrderBy() %} active{% endif %}">
+                        <a href="{{ oView.getLink()|add_url_parameters("ldtype=$_listType&amp;_artperpage=$_artPerPage&amp;$_sortColumnVarName=$sColumnName&amp;$_sortDirectionVarName=asc&amp;pgNr=0&amp;$_additionalParams") }}" title="{{ translate({ ident: sColumnName|upper }) }} {{ translate({ ident: "DD_SORT_ASC" }) }}">
+                            <i class="fa fa-caret-up"></i> {{ translate({ ident: sColumnName|upper }) }}
+                        </a>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    {% endif %}
+{% endblock %}

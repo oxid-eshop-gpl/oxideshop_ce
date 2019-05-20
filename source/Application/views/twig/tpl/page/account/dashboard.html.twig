@@ -1,0 +1,154 @@
+{% set template_title = "MY_ACCOUNT"|translate %}
+{% capture append = "oxidBlock_content" %}
+    <div class="accountDashboardView">
+        <h1 id="accountMain" class="page-header">{{ translate({ ident: "MY_ACCOUNT" }) }}
+            "{{ oxcmp_user.oxuser__oxusername.value }}"</h1>
+
+        {% if oView.getAccountDeletionStatus() is same as(false) %}
+            {% set statusMessage = "DD_DELETE_MY_ACCOUNT_ERROR"|translate %}
+            {% include "message/error.html.twig" with {statusMessage: statusMessage} %}
+        {% endif %}
+
+        <div class="row">
+            <div class="col-xs-12 col-md-6">
+                {% block account_dashboard_col1 %}
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <a id="linkAccountPassword" href="{{ seo_url({ ident: oViewConf.getSslSelfLink()|cat("cl=account_password") }) }}">{{ translate({ ident: "CHANGE_PASSWORD" }) }}</a>
+                            <a href="{{ seo_url({ ident: oViewConf.getSslSelfLink()|cat("cl=account_password") }) }}" class="btn btn-default btn-xs pull-right">
+                                <i class="fa fa-arrow-right"></i>
+                            </a>
+                        </div>
+                        <div class="panel-body">{{ translate({ ident: "CHANGE_PASSWORD" }) }}</div>
+                    </div>
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <a id="linkAccountNewsletter" href="{{ seo_url({ ident: oViewConf.getSslSelfLink()|cat("cl=account_newsletter") }) }}">{{ translate({ ident: "NEWSLETTER_SETTINGS" }) }}</a>
+                            <a href="{{ seo_url({ ident: oViewConf.getSslSelfLink()|cat("cl=account_newsletter") }) }}" class="btn btn-default btn-xs pull-right">
+                                <i class="fa fa-arrow-right"></i>
+                            </a>
+                        </div>
+                        <div class="panel-body">{{ translate({ ident: "NEWSLETTER_SUBSCRIBE_CANCEL" }) }}</div>
+                    </div>
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <a id="linkAccountBillship" href="{{ seo_url({ ident: oViewConf.getSslSelfLink()|cat("cl=account_user") }) }}">{{ translate({ ident: "BILLING_SHIPPING_SETTINGS" }) }}</a>
+                            <a href="{{ seo_url({ ident: oViewConf.getSslSelfLink()|cat("cl=account_user") }) }}" class="btn btn-default btn-xs pull-right">
+                                <i class="fa fa-arrow-right"></i>
+                            </a>
+                        </div>
+                        <div class="panel-body">{{ translate({ ident: "UPDATE_YOUR_BILLING_SHIPPING_SETTINGS" }) }}</div>
+                    </div>
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <a id="linkAccountOrder" href="{{ seo_url({ ident: oViewConf.getSelfLink()|cat("cl=account_order") }) }}">{{ translate({ ident: "ORDER_HISTORY" }) }}</a>
+                            <a href="{{ seo_url({ ident: oViewConf.getSslSelfLink()|cat("cl=account_order") }) }}" class="btn btn-default btn-xs pull-right">
+                                <i class="fa fa-arrow-right"></i>
+                            </a>
+                        </div>
+                        <div class="panel-body">{{ translate({ ident: "ORDERS" }) }} {{ oView.getOrderCnt() }}</div>
+                    </div>
+                    {% if oView.isEnabledDownloadableFiles() %}
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <a id="linkAccountDownloads" href="{{ seo_url({ ident: oViewConf.getSelfLink()|cat("cl=account_downloads") }) }}">{{ translate({ ident: "MY_DOWNLOADS" }) }}</a>
+                                <a href="{{ seo_url({ ident: oViewConf.getSslSelfLink()|cat("cl=account_downloads") }) }}" class="btn btn-default btn-xs pull-right">
+                                    <i class="fa fa-arrow-right"></i>
+                                </a>
+                            </div>
+                            <div class="panel-body">{{ translate({ ident: "MY_DOWNLOADS_DESC" }) }}</div>
+                        </div>
+                    {% endif %}
+                {% endblock %}
+            </div>
+            <div class="col-xs-12 col-md-6">
+                {% block account_dashboard_col2 %}
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <a href="{{ seo_url({ ident: oViewConf.getSelfLink()|cat("cl=account_noticelist") }) }}">{{ translate({ ident: "MY_WISH_LIST" }) }}</a>
+                            <a href="{{ seo_url({ ident: oViewConf.getSslSelfLink()|cat("cl=account_noticelist") }) }}" class="btn btn-default btn-xs pull-right">
+                                <i class="fa fa-arrow-right"></i>
+                            </a>
+                        </div>
+                        <div class="panel-body">{{ translate({ ident: "PRODUCT" }) }} {% if oxcmp_user %}{{ oxcmp_user.getNoticeListArtCnt() }}{% else %}0{% endif %}</div>
+                    </div>
+                    {% if oViewConf.getShowWishlist() %}
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <a href="{{ seo_url({ ident: oViewConf.getSelfLink()|cat("cl=account_wishlist") }) }}">{{ translate({ ident: "MY_GIFT_REGISTRY" }) }}</a>
+                                <a href="{{ seo_url({ ident: oViewConf.getSslSelfLink()|cat("cl=account_wishlist") }) }}" class="btn btn-default btn-xs pull-right">
+                                    <i class="fa fa-arrow-right"></i>
+                                </a>
+                            </div>
+                            <div class="panel-body">{{ translate({ ident: "PRODUCT" }) }} {% if oxcmp_user %}{{ oxcmp_user.getWishListArtCnt() }}{% else %}0{% endif %}</div>
+                        </div>
+                    {% endif %}
+                    {% if oViewConf.getShowCompareList() %}
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <a href="{{ seo_url({ ident: oViewConf.getSelfLink()|cat("cl=compare") }) }}">{{ translate({ ident: "MY_PRODUCT_COMPARISON" }) }}</a>
+                                <a href="{{ seo_url({ ident: oViewConf.getSslSelfLink()|cat("cl=compare") }) }}" class="btn btn-default btn-xs pull-right">
+                                    <i class="fa fa-arrow-right"></i>
+                                </a>
+                            </div>
+                            <div class="panel-body">{{ translate({ ident: "PRODUCT" }) }} {% if oView.getCompareItemsCnt() %}{{ oView.getCompareItemsCnt() }}{% else %}0{% endif %}</div>
+                        </div>
+                    {% endif %}
+                    {% if oViewConf.getShowListmania() %}
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <a href="{{ seo_url({ ident: oViewConf.getSelfLink()|cat("cl=account_recommlist") }) }}">{{ translate({ ident: "MY_LISTMANIA" }) }}</a>
+                                <a href="{{ seo_url({ ident: oViewConf.getSslSelfLink()|cat("cl=account_recommlist") }) }}" class="btn btn-default btn-xs pull-right">
+                                    <i class="fa fa-arrow-right"></i>
+                                </a>
+                            </div>
+                            <div class="panel-body">{{ translate({ ident: "LISTS" }) }} {% if oxcmp_user.getRecommListsCount() %}{{ oxcmp_user.getRecommListsCount() }}{% else %}0{% endif %}</div>
+                        </div>
+                    {% endif %}
+                    {% if oView.isUserAllowedToManageOwnReviews() %}
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <a href="{{ seo_url({ ident: oViewConf.getSelfLink()|cat("cl=account_reviewlist") }) }}">{{ translate({ ident: "MY_REVIEWS" }) }}</a>
+                                <a href="{{ seo_url({ ident: oViewConf.getSslSelfLink()|cat("cl=account_reviewlist") }) }}" class="btn btn-default btn-xs pull-right">
+                                    <i class="fa fa-arrow-right"></i>
+                                </a>
+                            </div>
+                            <div class="panel-body">{{ translate({ ident: "MY_REVIEWS" }) }} {% if oView.getReviewAndRatingItemsCount() %}{{ oView.getReviewAndRatingItemsCount() }}{% else %}0{% endif %}</div>
+                        </div>
+                    {% endif %}
+                {% endblock %}
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        {% block account_dashboard_delete_my_account %}
+            <div class="col-xs-6">
+                {% if oView.isUserAllowedToDeleteOwnAccount() %}
+                <button
+                        class="btn btn-danger"
+                        data-toggle="modal"
+                        data-target="#delete_my_account_confirmation"
+                >
+                    <i class="fa fa-trash"></i>
+                    {{ translate({ ident: "DD_DELETE_MY_ACCOUNT" }) }}
+                </button>
+                {% include "page/account/delete_my_account_confirmation.html.twig" %}
+                {% endif %}
+            </div>
+        {% endblock %}
+        <div class="col-xs-6 text-right">
+            <a href="{{ oViewConf.getLogoutLink() }}" class="btn btn-warning" role="getLogoutLink">
+                <i class="fa fa-power-off"></i> {{ translate({ ident: "LOGOUT" }) }}
+            </a>
+        </div>
+        <p>&nbsp;</p>
+    </div>
+    {{ insert_tracker({title: template_title}) }}
+{% endcapture %}
+
+
+{% capture append = "oxidBlock_sidebar" %}
+    {% include "page/account/inc/account_menu.html.twig" %}
+{% endcapture %}
+{% include "layout/page.html.twig" with {sidebar: "Left"} %}

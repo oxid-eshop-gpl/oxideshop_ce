@@ -1,0 +1,6 @@
+<dl class="attributes dl-horizontal">
+    {% for oAttr in oView.getAttributes() %}
+        <dt id="attrTitle_{{ loop.index }}" class="hasTooltip" title="{{ oAttr.title }}" data-placement="right" >{{ oAttr.title }}</dt>
+        <dd id="attrValue_{{ loop.index }}">{{ oAttr.value }}</dd>
+    {% endfor %}
+</dl>

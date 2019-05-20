@@ -1,0 +1,97 @@
+{% capture append = "oxidBlock_content" %}
+    <h1 class="page-header">{{ translate({ ident: "CATEGORY_OVERVIEW" }) }}</h1>
+
+    {% set _navcategorytree = oView.getCategoryTree() %}
+    {% set _iCategoriesPerRow = 3 %}
+    {% set iSubCategoriesCount = 0 %}
+    {% if _navcategorytree|length %}
+        {{ script({ include: "js/widgets/oxequalizer.min.js", priority: 10, dynamic: __oxid_include_dynamic }) }}
+        {{ script({ add: "$(window).load(function(){ if( !isMobileDevice() ) { oxEqualizer.equalHeight( $( '.subcatList .row .panel' ) ); } });", dynamic: __oxid_include_dynamic }) }}
+        <div class="subcatList">
+            <div class="row">
+                {% for category in _navcategorytree %}
+                    {# TOP categories #}
+                    {% if category.getIsVisible() %}
+                        {# CMS top categories #}
+                        {% if category.getContentCats() %}
+                            {% for ocont in category.getContentCats() %}
+                                {% set iSubCategoriesCount = iSubCategoriesCount+1 %}
+                                <div class="box">
+                                    <h3>
+                                        <a id="moreSubCms_{{ loop.index }}" href="{{ ocont.getLink() }}">{{ ocont.oxcontents__oxtitle.value }}</a>
+                                    </h3>
+                                    <ul class="content"></ul>
+                                </div>
+                            {% endfor %}
+                        {% endif %}
+                        {% if iSubCategoriesCount % _iCategoriesPerRow == 0 %}
+                            </div><div class="row">
+                        {% endif %}
+                        {% set iSubCategoriesCount = iSubCategoriesCount+1 %}
+                        {% set iconUrl = category.getIconUrl() %}
+                        <div class="col-xs-12 col-sm-6 col-md-4">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h3 class="panel-title">
+                                        <a id="moreSubCat_{{ loop.index }}" href="{{ category.getLink() }}">
+                                            {{ category.oxcategories__oxtitle.value }}{% if oView.showCategoryArticlesCount() and (category.getNrOfArticles() > 0) %} ({{ category.getNrOfArticles() }}){% endif %}
+                                        </a>
+                                    </h3>
+                                </div>
+                                {# Top categories subcategories #}
+                                {% if category.getHasVisibleSubCats() %}
+                                    <div class="panel-body">
+                                        {% if iconUrl %}
+                                            <div class="text-center">
+                                                <a href="{{ category.getLink() }}">
+                                                    <img src="{{ category.getIconUrl() }}" alt="{{ category.oxcategories__oxtitle.value }}" class="img-thumbnail" height="100" width="168">
+                                                </a>
+                                            </div>
+                                        {% endif %}
+                                        <ul class="content">
+                                            {% for subcategory in category.getSubCats() %}
+                                                {% if subcategory.getIsVisible() %}
+                                                    {# CMS subcategories #}
+                                                    {% for ocont in subcategory.getContentCats() %}
+                                                        <li>
+                                                            <a href="{{ ocont.getLink() }}"><strong>{{ ocont.oxcontents__oxtitle.value }}</strong></a>
+                                                        </li>
+                                                    {% endfor %}
+                                                    <li>
+                                                        <a href="{{ subcategory.getLink() }}">
+                                                            <strong>{{ subcategory.oxcategories__oxtitle.value }}</strong>{% if oView.showCategoryArticlesCount() and (subcategory.getNrOfArticles() > 0) %} ({{ subcategory.getNrOfArticles() }}){% endif %}
+                                                        </a>
+                                                    </li>
+                                                {% endif %}
+                                            {% endfor %}
+                                        </ul>
+                                    </div>
+                                {% elseif iconUrl %}
+                                    <div class="panel-body catPicOnly">
+                                        <div class="subcatPic text-center">
+                                            {% if iconUrl %}
+                                                <a href="{{ category.getLink() }}">
+                                                    <img src="{{ category.getIconUrl() }}" alt="{{ category.oxcategories__oxtitle.value }}" class="img-thumbnail" height="100" width="168">
+                                                </a>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                {% else %}
+                                    <div class="content"></div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    {% endif %}
+                    {% if iSubCategoriesCount % _iCategoriesPerRow == 0 %}
+                        </div>
+                        <div class="row">
+                    {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+    {% endif %}
+    {{ insert_tracker() }}
+{% endcapture %}
+
+
+{% include "layout/page.html.twig" with {sidebar: "Left"} %}

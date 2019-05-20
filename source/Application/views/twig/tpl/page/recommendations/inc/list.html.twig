@@ -1,0 +1,44 @@
+{% set searchrecomm = oView.getRecommSearch() %}
+{% if oView.getRecommLists()|length > 0 %}
+    <ul class="list-unstyled" id="recommendationsLists">
+        {% for recommlist in oView.getRecommLists() %}
+            {% block redommendations_list_content %}
+                <li>
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            {% set editclass = oViewConf.getActiveClassName() %}
+                            {% if blEdit %}
+                                {% set editclass = "account_recommlist&amp;fnc=editList" %}
+                            {% endif %}
+                            <a href="{{ seo_url({ ident: oViewConf.getSelfLink()|cat("cl=" ~ editclass), params: "recommid=" ~ recommlist.oxrecommlists__oxid.value ~ "&amp;searchrecomm=" ~ searchrecomm }) }}" class="lead" title="{{ recommlist.oxrecommlists__oxtitle.value }}">{{ recommlist.oxrecommlists__oxtitle.value }}</a>
+                            <small class="text-muted">{{ translate({ ident: "LIST_BY" }) }} <strong>{{ recommlist.oxrecommlists__oxauthor.value }}</strong></small>
+
+                            {% if blEdit %}
+                                <form action="{{ oViewConf.getSelfActionLink() }}" method="post" class="form-inline pull-right">
+                                    <div class="hidden">
+                                        {{ oViewConf.getHiddenSid()|raw() }}
+                                        <input type="hidden" name="cl" value="account_recommlist">
+                                        <input type="hidden" name="fnc" value="editList">
+                                        <input type="hidden" name="recommid" value="{{ recommlist.getId() }}">
+                                    </div>
+                                    <button class="btn btn-warning btn-xs hasTooltip" type="submit" name="editList" title="{{ translate({ ident: "EDIT" }) }}">
+                                        <i class="fa fa-pencil"></i>
+                                    </button>
+                                    <button class="btn btn-danger btn-xs hasTooltip" type="submit" name="deleteList" value="1" title="{{ translate({ ident: "REMOVE" }) }}">
+                                        <i class="fa fa-times"></i>
+                                    </button>
+                                </form>
+                                <div class="clearfix"></div>
+                            {% endif %}
+
+                        </div>
+                        <div class="panel-body">{{ recommlist.oxrecommlists__oxdesc.value }}</div>
+                    </div>
+
+                </li>
+            {% endblock %}
+        {% endfor %}
+    </ul>
+{% else %}
+    <p class="alert alert-info">{{ translate({ ident: "NO_LISTMANIA_LIST_FOUND" }) }}</p>
+{% endif %}

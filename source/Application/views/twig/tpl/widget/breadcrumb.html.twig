@@ -1,0 +1,23 @@
+{% block dd_widget_breadcrumb %}
+    {% spaceless %}
+        <div class="row">
+            <div class="col-xs-12">
+                {% block dd_widget_breadcrumb_list_inner %}
+                    <ol id="breadcrumb" class="breadcrumb">
+                        {% block dd_widget_breadcrumb_list %}
+                            <li class="text-muted">{{ translate({ ident: "YOU_ARE_HERE" }) }}:</li>
+                            
+                            {% for sCrum in oView.getBreadCrumb() %}
+                                <li itemscope itemtype="http://data-vocabulary.org/Breadcrumb"{% if loop.last %} class="active"{% endif %}>
+                                    <a href="{% if sCrum.link %}{{ sCrum.link }}{% else %}#{% endif %}" title="{{ sCrum.title|escape('html') }}" itemprop="url">
+                                        <span itemprop="title">{{ sCrum.title }}</span>
+                                    </a>
+                                </li>
+                            {% endfor %}
+                        {% endblock %}
+                    </ol>
+                {% endblock %}
+            </div>
+        </div>
+    {% endspaceless %}
+{% endblock %}

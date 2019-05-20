@@ -1,0 +1,24 @@
+{% capture append = "oxidBlock_content" %}
+    {% set template_title = "LATEST_NEWS_AND_UPDATES_AT"|translate %}
+    <div>
+    {% set oNews = oView.getNews() %}
+    <h1 class="page-header">{{ translate({ ident: "LATEST_NEWS_AND_UPDATES_AT" }) }} {{ oxcmp_shop.oxshops__oxname.value }}</h1>
+    <div class="listRefine clear bottomRound">
+    </div>
+        {% for oNews in oNews %}
+            {% if not empty(oNews) and not empty(oNews.oxnews__oxshortdesc.value) %}
+                <div>
+                    <h3>
+                        <span>{{ oNews.oxnews__oxdate.value|date_format("%d.%m. % Y") }} - </span> {{ oNews.oxnews__oxshortdesc.value }}
+                    </h3>
+                    {{ oNews.getLongDesc()|raw }}
+                </div>
+            {% else %}
+
+            {% endif %}
+        {% endfor %}
+    </div>
+    {% include "widget/locator/listlocator.html.twig" with {locator: oView.getPageNavigation(), place: "bottom"} %}
+    {{ insert_tracker({title: template_title}) }}
+{% endcapture %}
+{% include "layout/page.html.twig" with {sidebar: "Left"} %}

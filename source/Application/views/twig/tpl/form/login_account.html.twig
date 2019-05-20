@@ -1,0 +1,83 @@
+{{ script({ include: "js/libs/jqBootstrapValidation.min.js", priority: 10, dynamic: __oxid_include_dynamic }) }}
+{{ script({ add: "$('input,select,textarea').not('[type=submit]').jqBootstrapValidation();", dynamic: __oxid_include_dynamic }) }}
+
+{% if oView.getAccountDeletionStatus() == true %}
+    {% set statusMessage = "DD_DELETE_MY_ACCOUNT_SUCCESS"|translate %}
+    {% include "message/success.html.twig" with {statusMessage: statusMessage} %}
+{% endif %}
+
+<div class="row">
+    <div class="col-xs-12 col-md-6 pull-right">
+        <div class="panel panel-default">
+            <div class="panel-heading">{{ translate({ ident: "DD_LOGIN_ACCOUNT_PANEL_LOGIN_TITLE" }) }}</div>
+            <div class="panel-body">
+                <form name="login" class="js-oxValidate form-horizontal" action="{{ oViewConf.getSslSelfLink() }}" method="post" novalidate="novalidate">
+                    <div class="hidden">
+                        {{ oViewConf.getHiddenSid()|raw() }}
+                        {{ oViewConf.getNavFormParams() }}
+                        <input type="hidden" name="fnc" value="login_noredirect">
+                        <input type="hidden" name="cl" value="{{ oViewConf.getActiveClassName() }}">
+                        <input type="hidden" name="tpl" value="{{ oViewConf.getActTplName() }}">
+                        <input type="hidden" name="oxloadid" value="{{ oViewConf.getActContentLoadId() }}">
+                        {% if oView.getArticleId() %}
+                            <input type="hidden" name="aid" value="{{ oView.getArticleId() }}">
+                        {% endif %}
+                        {% if oView.getProduct() %}
+                            {% set product = oView.getProduct() %}
+                            <input type="hidden" name="anid" value="{{ product.oxarticles__oxnid.value }}">
+                        {% endif %}
+                    </div>
+
+                    <p>{{ translate({ ident: "LOGIN_ALREADY_CUSTOMER" }) }}</p>
+
+                    <div class="form-group{% if aErrors %} oxInValid{% endif %}">
+                        <label class="req control-label col-lg-2">{{ translate({ ident: "EMAIL" }) }}</label>
+                        <div class="col-lg-10">
+                            <input id="loginUser" class="js-oxValidate js-oxValidate_notEmpty form-control" type="text" name="lgn_usr" role="loginUser" required="required">
+                            <div class="help-block"></div></div>
+                    </div>
+                    <div class="form-group{% if aErrors %} oxInValid{% endif %}">
+                        <label class="req control-label col-lg-2">{{ translate({ ident: "PASSWORD" }) }}</label>
+                        <div class="col-lg-10">
+                            <input id="loginPwd" class="js-oxValidate js-oxValidate_notEmpty  form-control" type="password" name="lgn_pwd" role="loginPwd" required="required">
+                            <div class="help-block"></div></div>
+                    </div>
+                    {% if oView.showRememberMe() %}
+                        <div class="form-group">
+                            <div class="col-lg-offset-2 col-lg-10">
+                                <div class="checkbox">
+                                    <label>
+                                        <input type="checkbox" class="checkbox" name="lgn_cook" value="1"> {{ translate({ ident: "KEEP_LOGGED_IN" }) }}
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    {% endif %}
+
+                    <div class="form-group">
+                        <div class="col-lg-offset-2 col-lg-10">
+                            <button id="loginButton" type="submit" class="btn btn-primary btn-block" role="loginButton">{{ translate({ ident: "LOGIN" }) }}</button>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-lg-offset-2 col-lg-10">
+                            <a id="forgotPasswordLink" href="{{ seo_url({ ident: oViewConf.getSelfLink()|cat("cl=forgotpwd") }) }}" class="textLink">{{ translate({ ident: "FORGOT_PASSWORD" }) }}</a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+    <div class="col-xs-12 col-md-6 pull-left">
+        <div class="panel panel-default">
+            <div class="panel-heading">{{ translate({ ident: "DD_LOGIN_ACCOUNT_PANEL_CREATE_TITLE" }) }}</div>
+            <div class="panel-body">
+                <p>{{ translate({ ident: "DD_LOGIN_ACCOUNT_PANEL_CREATE_BODY" }) }}</p>
+                <a id="openAccountLink" href="{{ seo_url({ ident: oViewConf.getSslSelfLink()|cat("cl=register") }) }}" class="btn btn-primary btn-block" role="button">{{ translate({ ident: "OPEN_ACCOUNT" }) }}</a><br />
+            </div>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+</div>

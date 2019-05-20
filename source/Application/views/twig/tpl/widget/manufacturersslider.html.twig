@@ -1,0 +1,25 @@
+{{ script({ include: "js/libs/jquery.flexslider.min.js", priority: 2, dynamic: __oxid_include_dynamic }) }}
+{{ style({ include: "css/libs/jquery.flexslider.min.css" }) }}
+
+<div class="row">
+    <div id="manufacturerSlider" class="boxwrapper">
+        <div class="page-header">
+            <h3>{{ translate({ ident: "OUR_BRANDS" }) }}</h3>
+            <span class="subhead">{{ translate({ ident: "MANUFACTURERSLIDER_SUBHEAD" }) }}</span>
+        </div>
+
+        <div class="flexslider">
+            <ul class="slides">
+                {% for oManufacturer in oView.getManufacturerForSlider() %}
+                    {% if oManufacturer.oxmanufacturers__oxicon.value %}
+                        <li>
+                            <a href="{{ oManufacturer.getLink() }}" title="{{ translate({ ident: "VIEW_ALL_PRODUCTS" }) }}">
+                                <img src="{{ oViewConf.getImageUrl('spinner.gif') }}" data-src="{{ oManufacturer.getIconUrl() }}" alt="{{ oManufacturer.oxmanufacturers__oxtitle.value }}">
+                            </a>
+                        </li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</div>

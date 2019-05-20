@@ -1,0 +1,23 @@
+{% capture append = "oxidBlock_content" %}
+    {% set template_title = "MESSAGE_WELCOME_REGISTERED_USER"|translate %}
+    <h1 id="openAccHeader" class="page-header">{{ translate({ ident: "MESSAGE_WELCOME_REGISTERED_USER" }) }}</h1>
+    <div class="box info">
+      {% if oView.getRegistrationStatus() == 1 %}
+        {{ translate({ ident: "MESSAGE_CONFIRMING_REGISTRATION" }) }}
+      {% elseif oView.getRegistrationStatus() == 2 %}
+        {{ translate({ ident: "MESSAGE_SENT_CONFIRMATION_EMAIL" }) }}
+      {% endif %}
+
+      {% if oView.getRegistrationError() == 4 %}
+        <div>
+          {{ translate({ ident: "MESSAGE_NOT_ABLE_TO_SEND_EMAIL" }) }}
+        </div>
+      {% endif %}
+    </div>
+    {{ insert_tracker({title: template_title}) }}
+{% endcapture %}
+{% if oView.isActive('PsLogin') %}
+    {% include "layout/popup.html.twig" %}
+{% else %}
+    {% include "layout/page.html.twig" with {sidebar: "Left"} %}
+{% endif %}

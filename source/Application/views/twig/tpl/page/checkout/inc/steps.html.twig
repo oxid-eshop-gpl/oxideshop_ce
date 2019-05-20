@@ -1,0 +1,79 @@
+{% block checkout_steps_main %}
+    <ol class="checkoutSteps">
+        {% if oxcmp_basket.getProductsCount() %}
+            {% set showStepLinks = true %}
+        {% endif %}
+
+        {% block checkout_steps_basket %}
+            <li class="step1{% if active == 1 %} active {% elseif active > 1 %} passed {% endif %}">
+                {% if showStepLinks %}<a href="{{ seo_url({ ident: oViewConf.getBasketLink() }) }}">{% endif %}
+                <div class="num">1</div>
+                <div class="text">
+                    {{ translate({ ident: "STEPS_BASKET" }) }}
+                </div>
+                {% if showStepLinks %}</a>{% endif %}
+            </li>
+        {% endblock %}
+
+        {% set showStepLinks = false %}
+        {% if not oView.isLowOrderPrice() and oxcmp_basket.getProductsCount() %}
+            {% set showStepLinks = true %}
+        {% endif %}
+
+        {% block checkout_steps_send %}
+            <li class="step2{% if active == 2 %} active {% elseif active > 2 %} passed {% endif %}">
+                {% if showStepLinks %}<a href="{{ seo_url({ ident: oViewConf.getOrderLink() }) }}">{% endif %}
+                <div class="num">2</div>
+                <div class="text">
+                    {{ translate({ ident: "STEPS_SEND" }) }}
+                </div>
+                {% if showStepLinks %}</a>{% endif %}
+            </li>
+        {% endblock %}
+
+        {% set showStepLinks = false %}
+        {% if active != 1 and oxcmp_user and not oView.isLowOrderPrice() and oxcmp_basket.getProductsCount() %}
+            {% set showStepLinks = true %}
+        {% endif %}
+
+        {% block checkout_steps_pay %}
+            <li class="step3{% if active == 3 %} active {% elseif active > 3 %} passed {% endif %}">
+                {% if showStepLinks %}<a {% if oViewConf.getActiveClassName() == "user" %}id="paymentStep"{% endif %} href="{{ seo_url({ ident: oViewConf.getPaymentLink() }) }}">{% endif %}
+                <div class="num">3</div>
+                <div class="text">
+                    {{ translate({ ident: "STEPS_PAY" }) }}
+                </div>
+                {% if showStepLinks %}</a>{% endif %}
+            </li>
+            {# {{ script({ add: "$('#paymentStep').click( function() { $('#userNextStepBottom').click();return false;});", dynamic: __oxid_include_dynamic }) }} #}
+        {% endblock %}
+
+        {% set showStepLinks = false %}
+        {% if active != 1 and oxcmp_user and oxcmp_basket.getProductsCount() and oView.getPaymentList() and not oView.isLowOrderPrice() %}
+            {% set showStepLinks = true %}
+        {% endif %}
+
+        {% block checkout_steps_order %}
+            <li class="step4{% if active == 4 %} active {% elseif active > 4 %} passed {% endif %}">
+                {% if showStepLinks %}<a {% if oViewConf.getActiveClassName() == "payment" %}id="orderStep"{% endif %} href="{% if oViewConf.getActiveClassName() == "payment" %}javascript:document.forms.order.submit();{% else %}{{ seo_url({ ident: oViewConf.getOrderConfirmLink() }) }}{% endif %}">{% endif %}
+                <div class="num">4</div>
+                <div class="text">
+                    {{ translate({ ident: "STEPS_ORDER" }) }}
+                </div>
+                {% if showStepLinks %}</a>{% endif %}
+            </li>
+            {# {{ script({ add: "$('#orderStep').click( function() { $('#paymentNextStepBottom').click();return false;});", dynamic: __oxid_include_dynamic }) }} #}
+        {% endblock %}
+
+        {% block checkout_steps_laststep %}
+            <li class="step5{% if active == 5 %} activeLast {% else %} defaultLast {% endif %} ">
+                <div class="num">5</div>
+                <div class="text">
+                    {{ translate({ ident: "READY" }) }}
+                </div>
+            </li>
+        {% endblock %}
+    </ol>
+    <div class="clearfix"></div>
+    <div class="spacer"></div>
+{% endblock %}

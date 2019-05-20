@@ -1,0 +1,16 @@
+{% set listType = oView.getListDisplayType() %}
+{% set _additionalParams = oView.getAdditionalParams() %}
+{% set _artPerPage = oViewConf.getArtPerPageCount() %}
+
+{% if oView.canSelectDisplayType() %}
+    <div class="btn-group hidden-xs">
+        <button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown">
+            <strong>{{ translate({ ident: "LIST_DISPLAY_TYPE" }) }}</strong> {{ translate({ ident: listType }) }} <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu" role="menu">
+            <li><a href="{{ oView.getLink()|add_url_parameters("ldtype=infogrid&amp;_artperpage=$_artPerPage&amp;pgNr=0&amp;$_additionalParams") }}" {% if listType == 'infogrid' %}class="selected" {% endif %}>{{ translate({ ident: "infogrid" }) }}</a></li>
+            <li><a href="{{ oView.getLink()|add_url_parameters("ldtype=grid&amp;_artperpage=$_artPerPage&amp;pgNr=0&amp;$_additionalParams") }}" {% if listType == 'grid' %}class="selected" {% endif %}>{{ translate({ ident: "grid" }) }}</a></li>
+            <li><a href="{{ oView.getLink()|add_url_parameters("ldtype=line&amp;_artperpage=$_artPerPage&amp;pgNr=0&amp;$_additionalParams") }}" {% if listType == 'line' %}class="selected" {% endif %}>{{ translate({ ident: "line" }) }}</a></li>
+        </ul>
+    </div>
+{% endif %}

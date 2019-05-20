@@ -1,0 +1,52 @@
+{% capture append = "oxidBlock_content" %}
+    {% set template_title = "MY_DOWNLOADS"|translate %}
+    <h1 class="page-header">{{ translate({ ident: "MY_DOWNLOADS" }) }}</h1>
+    {% if oView.getOrderFilesList()|length %}
+    <ol class="list-unstyled downloadList">
+        {% for oOrderArticle in oView.getOrderFilesList() %}
+            <li>
+                {% for oOrderFile in oOrderArticle.oxorderfiles %}
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <div class="row">
+                                <div class="col-xs-9">
+                                    <strong>{{ oOrderArticle.oxarticletitle }}</strong> &ndash; {{ translate({ ident: "ORDER_NUMBER" }) }}: {{ oOrderArticle.oxordernr }}, {{ oOrderArticle.oxorderdate|date_format("%d.%m. % Y") }}
+                                </div>
+                                <div class="col-xs-3">
+                                    {% if oOrderFile.isPaid() or not oOrderFile.oxorderfiles__oxpurchasedonly.value  %}
+                                        <a class="btn btn-success btn-xs pull-right" href="{{ seo_url({ ident: oViewConf.getSelfLink()|cat("cl=download"), params: "sorderfileid="|cat(oOrderFile.getId()) }) }}" title="{{ oOrderFile.oxorderfiles__oxfilename.value }} {{ translate({ ident: "DD_DOWNLOADS_DOWNLOAD_TOOLTIP" }) }}">
+                                            <i class="fa fa-download"></i> {{ translate({ ident: "DD_DOWNLOADS_DOWNLOAD_TOOLTIP" }) }}
+                                        </a>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel-body">
+                            {% if oOrderFile.isPaid() or not oOrderFile.oxorderfiles__oxpurchasedonly.value  %}
+                                {% if oOrderFile.isValid() %}
+                                    <strong>{{ translate({ ident: "DD_FILE_ATTRIBUTES_FILENAME" }) }}</strong> {{ oOrderFile.oxorderfiles__oxfilename.value }}<br>
+                                    {% include "page/account/inc/file_attributes.html.twig" %}
+                                {% else %}
+                                    {{ oOrderFile.oxorderfiles__oxfilename.value }}
+                                    {{ translate({ ident: "DOWNLOAD_LINK_EXPIRED_OR_MAX_COUNT_RECEIVED" }) }}
+                                {% endif %}
+                            {% else %}
+                                <span class="downloadableFile pending">{{ oOrderFile.oxorderfiles__oxfilename.value }}</span>
+                                <strong>{{ translate({ ident: "DOWNLOADS_PAYMENT_PENDING" }) }}</strong>
+                            {% endif %}
+                        </div>
+                    </div>
+                {% endfor %}
+            </li>
+        {% endfor %}
+    </ol>
+    {% else %}
+        <p class="alert alert-info">{{ translate({ ident: "DOWNLOADS_EMPTY" }) }}</p>
+    {% endif %}
+
+    {{ insert_tracker({title: template_title}) }}
+{% endcapture %}
+{% capture append = "oxidBlock_sidebar" %}
+    {% include "page/account/inc/account_menu.html.twig" with {active_link: "downloads"} %}
+{% endcapture %}
+{% include "layout/page.html.twig" with {sidebar: "Left"} %}

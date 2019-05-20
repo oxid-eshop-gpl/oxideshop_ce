@@ -1,0 +1,12 @@
+{% capture append = "oxidBlock_content" %}
+    <h1 id="addressSettingsHeader" class="page-header">{{ oView.getTitle() }}</h1>
+
+    {% block account_user_form %}
+        {% include "form/user.html.twig" %}
+    {% endblock %}
+    {{ insert_tracker({title: template_title}) }}
+{% endcapture %}
+{% capture append = "oxidBlock_sidebar" %}
+    {% include "page/account/inc/account_menu.html.twig" with {active_link: "billship"} %}
+{% endcapture %}
+{% include "layout/page.html.twig" with {sidebar: "Left"} %}

@@ -1,0 +1,22 @@
+{% if oxcmp_basket.getProductsCount() and _newitem %}
+    {% set blFullwidth = oViewConf.getViewThemeParam('blFullwidthLayout') %}
+
+    {% hasrights { "ident": "TOBASKET",} %}
+        {% if blFullwidth %}
+            <div class="container">
+        {% endif %}
+                <div class="alert alert-success" id="newItemMsg">
+                    {% block dd_widget_minibasket_new_item_msg %}
+                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                        <a href="{{ seo_url({ ident: oViewConf.getSelfLink()|cat("cl=basket") }) }}" class="btn btn-default btn-xs pull-right" style="margin-right:15px;">
+                            <i class="fa fa-shopping-cart"></i> {{ translate({ ident: "DISPLAY_BASKET" }) }}
+                        </a>
+
+                        {{ translate({ ident: "NEW_BASKET_ITEM_MSG" }) }}
+                    {% endblock %}
+                </div>
+        {% if blFullwidth %}
+            </div>
+        {% endif %}
+    {% endhasrights %}
+{% endif %}

@@ -1,0 +1,75 @@
+{% if not type %}
+    {% set type = "infogrid" %}
+{% endif %}
+
+{% if not iProductsPerLine %}
+    {% set iProductsPerLine = 4 %}
+{% endif %}
+
+{% if type == 'infogrid' %}
+    {% set iProductsPerLine = 2 %}
+{% elseif type == 'grid' %}
+    {% set iProductsPerLine = 4 %}
+{% elseif type == 'line' %}
+    {% set iProductsPerLine = 1 %}
+{% endif %}
+
+<div class="boxwrapper" id="boxwrapper_{{ listId }}">
+    {% if head %}
+        {% if header == "light" %}
+            <div class="page-header">
+                <span class="h3">{{ head }}</span>
+
+                {% if subhead %}
+                    <small class="subhead">{{ subhead }}</small>
+                {% endif %}
+            </div>
+        {% else %}
+            <div class="page-header">
+                <h2>
+                    {{ head }}
+                    {% if rsslink %}
+                        <a class="rss" id="{{ rssId }}" href="{{ rsslink.link }}" target="_blank">
+                            <i class="fa fa-rss"></i>
+                        </a>
+                    {% endif %}
+                </h2>
+
+                {% if subhead %}
+                    <small class="subhead">{{ subhead }}</small>
+                {% endif %}
+            </div>
+        {% endif %}
+    {% endif %}
+
+    {% if products and not empty(products) %}
+        {% set productsCount = products|length %}
+        {% set iColIdent = 12 / iProductsPerLine %}
+
+        <div class="list-container" id="{{ listId }}">
+            {% for _product in products %}
+                {% set defaultCounter = ( defaultCounter | default(0) ) + 1 %} {% set productlistCounter = defaultCounter %}
+                {% set testid = listId|cat("_")|cat(loop.index) %}
+
+                {% if productlistCounter == 1 %}
+                    <div class="row {{ type }}View newItems">
+                {% endif %}
+
+                <div class="productData col-xs-12{% if type != 'line' %} col-sm-6 col-md-{{ iColIdent }}{% endif %} productBox">
+                    {{ include_widget({ cl: "oxwArticleBox", _parent: oView.getClassName(), nocookie: 1, _navurlparams: oViewConf.getNavUrlParams(), iLinkType: _product.getLinkType(), _object: _product, anid: _product.getId(), sWidgetType: "product", sListType: "listitem_"~type, iIndex: testid, blDisableToCart: blDisableToCart, isVatIncluded: oView.isVatIncluded(), showMainLink: showMainLink, recommid: recommid, owishid: owishid, toBasketFunction: toBasketFunction, removeFunction: removeFunction, altproduct: altproduct, inlist: _product.isInList(), skipESIforUser: 1, testid: testid }) }}
+                </div>
+
+                {% if (productlistCounter % iProductsPerLine) is same as(0) or productsCount == productlistCounter %}
+                    </div>
+                {% endif %}
+
+                {% if (productlistCounter % iProductsPerLine) is same as(0) and productsCount > productlistCounter %}
+                    <div class="row {{ type }}View newItems">
+                {% endif %}
+            {% endfor %}
+
+            {# Counter resetten #}
+            {% set defaultCounter = ( defaultCounter | default(-1) ) + 1 %} {% set productlistCounter = defaultCounter %}
+        </div>
+    {% endif %}
+</div>

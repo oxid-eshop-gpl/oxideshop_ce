@@ -1,0 +1,297 @@
+<table id="basket_table" class="table table-bordered table-striped basketitems{% if oViewConf.getActiveClassName() == 'order' %} orderBasketItems{% endif %}">
+    <colgroup>
+        {% if editable %}<col class="editCol">{% endif %}
+        <col class="thumbCol">
+        {% if oView.isWrapping() %}<col class="wrappingCol">{% endif %}
+        <col class="coutCol">
+        <col class="priceCol">
+        <col class="vatCol">
+        <col class="totalCol">
+    </colgroup>
+    {# basket header #}
+    <thead>
+        <tr>
+            {% if editable %}<th></th>{% endif %}
+            <th>{{ translate({ ident: "PRODUCT" }) }}</th>
+            {% if oView.isWrapping() %}
+                <th>{{ translate({ ident: "WRAPPING" }) }}</th>
+            {% endif %}
+            <th>{{ translate({ ident: "QUANTITY" }) }}</th>
+            <th class="unitPrice">{{ translate({ ident: "UNIT_PRICE" }) }}</th>
+            <th class="vatPercent">{{ translate({ ident: "VAT" }) }}</th>
+            <th class="totalPrice">{{ translate({ ident: "TOTAL" }) }}</th>
+        </tr>
+    </thead>
+
+    {# basket items #}
+    <tbody>
+        {% set basketitemlist = oView.getBasketArticles() %}
+        {% for basketindex, basketitem in oxcmp_basket.getContents() %}
+            {% block checkout_basketcontents_basketitem %}
+                {% set basketproduct = basketitemlist[basketindex] %}
+                {% set oArticle = basketitem.getArticle() %}
+                {% set oAttributes = oArticle.getAttributesDisplayableInBasket() %}
+
+                <tr id="table_cartItem_{{ loop.index }}">
+
+                    {% block checkout_basketcontents_basketitem_removecheckbox %}
+                        {% if editable %}
+                            <td class="checkactive checkbox text-center" style="display:table-cell;margin:0;padding:0;vertical-align:middle;">
+                                <input type="checkbox" name="aproducts[{{ basketindex }}][remove]" value="1" style="margin:0;float:none;">
+                            </td>
+                        {% endif %}
+                    {% endblock %}
+
+                    {% block checkout_basketcontents_basketitem_titlenumber %}
+                        {# product title & number #}
+                        <td>
+                            {% block checkout_basketcontents_basketitem_image %}
+                                {# product image #}
+                                <div class="pull-left basketImage">
+                                    {% if editable %}<a href="{{ basketitem.getLink() }}">{% endif %}
+                                        <img src="{{ oViewConf.getImageUrl('spinner.gif') }}" data-src="{{ basketitem.getIconUrl() }}" alt="{{ basketitem.getTitle()|striptags }}">
+                                        {% if editable %}</a>{% endif %}
+                                </div>
+                            {% endblock %}
+                            <div class="basketItemDesc">
+                                {% block dd_checkout_inc_basketcontents_table_item_desc %}
+                                    {% block checkout_basketcontents_basketitem_title %}
+                                        {% if editable %}<a rel="nofllow" href="{{ basketitem.getLink() }}">{% endif %}
+                                        <b>{{ basketitem.getTitle() }}</b>
+                                        {% if editable %}</a>{% endif %}
+                                        {% if basketitem.isSkipDiscount() %} <sup><a href="#SkipDiscounts_link" >**</a></sup>{% endif %}
+                                    {% endblock %}
+                                    {% block checkout_basketcontents_basketitem_artnum %}
+                                        <div class="small">
+                                            {{ translate({ ident: "PRODUCT_NO" }) }} {{ basketproduct.oxarticles__oxartnum.value }}
+                                        </div>
+                                    {% endblock %}
+                                    {% block checkout_basketcontents_basketitem_attributes %}
+                                        <div class="small">
+                                            {% set sep = ", " %}
+                                            {% set result = "" %}
+                                            {% for oArtAttributes, oAttr in oAttributes.getArray() %}
+                                                {% set temp = oAttr.oxattribute__oxvalue.value %}
+                                                {% set result = result ~ temp ~ sep %}
+                                            {% endfor %}
+                                            {{ result|trim("sep") }}
+                                        </div>
+                                    {% endblock %}
+
+                                    {% block checkout_basketcontents_basketitem_selectlists %}
+                                        {% if not basketitem.isBundle() or not basketitem.isDiscountArticle() %}
+                                            {% set oSelections = basketproduct.getSelections("null", basketitem.getSelList()) %}
+                                            {% if oSelections %}
+                                                <div class="selectorsBox clear" id="cartItemSelections_{{ loop.index }}">
+                                                    {% for oList in oSelections %}
+                                                        {% if oViewConf.showSelectListsInList() %}
+                                                            {% include "widget/product/selectbox.html.twig" with {oSelectionList: oList, sFieldName: "aproducts[" ~ basketindex ~ "][sel]", iKey: loop.index0, blHideDefault: true, sSelType: "seldrop"} %}
+                                                        {% else %}
+                                                            {% set oActiveSelection = oList.getActiveSelection() %}
+                                                            {% if oActiveSelection %}
+                                                                <input type="hidden" name="aproducts[{{ basketindex }}][sel][{{ loop.index0 }}]" value="{{ oActiveSelection.getValue() }}">
+                                                                <div>{{ oList.getLabel() }}: {{ oActiveSelection.getName() }}</div>
+                                                            {% endif %}
+                                                        {% endif %}
+                                                    {% endfor %}
+                                                </div>
+                                            {% endif %}
+                                        {% endif %}
+                                    {% endblock %}
+
+                                    {% block checkout_basketcontents_basketitem_persparams %}
+                                        {% if not editable %}
+                                            <p class="persparamBox">
+                                                {% for sVar, aParam in basketitem.getPersParams() %}
+                                                    {% if not loop.first %}<br />{% endif %}
+                                                    <strong>
+                                                        {% if loop.first and loop.last %}
+                                                            {{ translate({ ident: "LABEL" }) }}
+                                                        {% else %}
+                                                            {{ sVar }} :
+                                                        {% endif %}
+                                                    </strong> {{ aParam }}
+                                                {% endfor %}
+                                            </p>
+                                        {% else %}
+                                            {% if basketproduct.oxarticles__oxisconfigurable.value %}
+                                                {% if basketitem.getPersParams() %}
+                                                    <br />
+                                                    {% for sVar, aParam in basketitem.getPersParams() %}
+                                                        <p>
+                                                            <label class="persParamLabel">
+                                                                {% if loop.first and loop.last %}
+                                                                    {{ translate({ ident: "LABEL" }) }}
+                                                                {% else %}
+                                                                    {{ sVar }}:
+                                                                {% endif %}
+                                                            </label>
+                                                            <input class="textbox persParam" type="text" name="aproducts[{{ basketindex }}][persparam][{{ sVar }}]" value="{{ aParam }}">
+                                                        </p>
+                                                    {% endfor %}
+                                                {% else %}
+                                                    <p>{{ translate({ ident: "LABEL" }) }} <input class="textbox persParam" type="text" name="aproducts[{{ basketindex }}][persparam][details]" value=""></p>
+                                                {% endif %}
+                                            {% endif %}
+                                        {% endif %}
+                                    {% endblock %}
+                                {% endblock %}
+                            </div>
+                        </td>
+                    {% endblock %}
+
+                    {% block checkout_basketcontents_basketitem_wrapping %}
+                        {# product wrapping #}
+                        {% if oView.isWrapping() %}
+                            <td align="center">
+                                {% if not basketitem.getWrappingId() %}
+                                    {% if editable %}
+                                        <a href="#" class="btn btn-default btn-xs" title="{{ translate({ ident: "ADD" }) }}" data-toggle="modal" data-target="#giftoptions">{{ translate({ ident: "ADD" }) }}</a>
+                                    {% else %}
+                                        {{ translate({ ident: "NONE" }) }}
+                                    {% endif %}
+                                {% else %}
+                                    {% set oWrap = basketitem.getWrapping() %}
+                                    {% if editable %}
+                                        <a class="btn btn-default btn-xs" href="#" title="{{ translate({ ident: "ADD" }) }}" data-toggle="modal" data-target="#giftoptions"><i class="fa fa-pencil"></i> {{ oWrap.oxwrapping__oxname.value }}</a>
+                                    {% else %}
+                                        {{ oWrap.oxwrapping__oxname.value }}
+                                    {% endif %}
+                                {% endif %}
+                            </td>
+                        {% endif %}
+                    {% endblock %}
+
+                    {% block checkout_basketcontents_basketitem_quantity %}
+                        {# product quantity manager #}
+                        <td class="quantity">
+                            {% if editable %}
+                                <input type="hidden" name="aproducts[{{ basketindex }}][aid]" value="{{ basketitem.getProductId() }}">
+                                <input type="hidden" name="aproducts[{{ basketindex }}][basketitemid]" value="{{ basketindex }}">
+                                <input type="hidden" name="aproducts[{{ basketindex }}][override]" value="1">
+                                {% if basketitem.isBundle() %}
+                                    <input type="hidden" name="aproducts[{{ basketindex }}][bundle]" value="1">
+                                {% endif %}
+
+                                {% if not basketitem.isBundle() or not basketitem.isDiscountArticle() %}
+                                    <p>
+                                        <input id="am_{{ loop.index }}" type="number" class="textbox" name="aproducts[{{ basketindex }}][am]" value="{{ basketitem.getAmount() }}" size="3" min="0"{% if oConfig.getConfigParam('blAllowUnevenAmounts') %} step="any"{% endif %}>
+                                    </p>
+                                {% endif %}
+                            {% else %}
+                                {{ basketitem.getAmount() }}
+                            {% endif %}
+                            {% if basketitem.getdBundledAmount() > 0 and (basketitem.isBundle() or basketitem.isDiscountArticle()) %}
+                                +{{ basketitem.getdBundledAmount() }}
+                            {% endif %}
+                        </td>
+                    {% endblock %}
+
+                    {% block checkout_basketcontents_basketitem_unitprice %}
+                        {# product price #}
+                        <td class="unitPrice">
+                            {% if basketitem.getUnitPrice() %}{{ format_price(basketitem.getUnitPrice(), { currency: currency }) }}{% endif %}
+                            {% if not basketitem.isBundle() %}
+                                {% set dRegUnitPrice = basketitem.getRegularUnitPrice() %}
+                                {% set dUnitPrice = basketitem.getUnitPrice() %}
+                                {% if dRegUnitPrice.getPrice() > dUnitPrice.getPrice() %}
+                                    <br><del class="text-danger">{{ format_price(basketitem.getRegularUnitPrice(), { currency: currency }) }}</del>
+                                {% endif %}
+                            {% endif %}
+                        </td>
+                    {% endblock %}
+
+                    {% block checkout_basketcontents_basketitem_vat %}
+                        {# product VAT percent #}
+                        <td class="vatPercent">
+                            {{ basketitem.getVatPercent() }}%
+                        </td>
+                    {% endblock %}
+
+                    {% block checkout_basketcontents_basketitem_totalprice %}
+                        {# product quantity * price #}
+                        <td class="totalPrice">
+                            {{ format_price(basketitem.getPrice(), { currency: currency }) }}
+                        </td>
+                    {% endblock %}
+                </tr>
+            {% endblock %}
+
+            {# packing unit #}
+
+            {% block checkout_basketcontents_itemerror %}
+                {% for key, oEr in Errors.basket %}
+                    {% if oEr.getErrorClassType() == 'oxOutOfStockException' %}
+                        {# display only the exceptions for the current article #}
+                        {% if basketindex == oEr.getValue('basketIndex') %}
+                            <tr class="basketError">
+                                {% if editable %}<td></td>{% endif %}
+                                <td colspan="5">
+                                    <span class="inlineError">{{ oEr.getOxMessage() }} <strong>{{ oEr.getValue('remainingAmount') }}</strong></span>
+                                </td>
+                                {% if oView.isWrapping() %}<td></td>{% endif %}
+                                <td></td>
+                            </tr>
+                        {% endif %}
+                    {% endif %}
+                    {% if oEr.getErrorClassType() == 'oxArticleInputException' %}
+                        {% if basketitem.getProductId() == oEr.getValue('productId') %}
+                            <tr class="basketError">
+                                {% if editable %}<td></td>{% endif %}
+                                <td colspan="5">
+                                    <span class="inlineError">{{ oEr.getOxMessage() }}</span>
+                                </td>
+                                {% if oView.isWrapping() %}<td></td>{% endif %}
+                                <td></td>
+                            </tr>
+                        {% endif %}
+                    {% endif %}
+                {% endfor %}
+            {% endblock %}
+            {# basket items end #}
+        {% endfor %}
+
+        {% block checkout_basketcontents_giftwrapping %}
+            {% if oViewConf.getShowGiftWrapping() %}
+                {% set oCard = oxcmp_basket.getCard() %}
+                {% if oCard %}
+                    <tr>
+                        {% if editable %}<td></td>{% endif %}
+                        <td id="orderCardTitle" colspan="3">{{ translate({ ident: "GREETING_CARD" }) }} "{{ oCard.oxwrapping__oxname.value }}"
+                            <br>
+                            <b>{{ translate({ ident: "YOUR_MESSAGE" }) }}</b>
+                            <br>
+                            <div id="orderCardText">{{ oxcmp_basket.getCardMessage()|nl2br }}</div>
+                        </td>
+                        <td id="orderCardPrice">{{ oCard.getFPrice() }}&nbsp;{{ currency.sign }}</td>
+                        <td>
+                            {% if oxcmp_basket.isProportionalCalculationOn() %}
+                                {{ translate({ ident: "PROPORTIONALLY_CALCULATED" }) }}
+                            {% else %}
+                                {% if oxcmp_basket.getGiftCardCostVat() %}{{ oxcmp_basket.getGiftCardCostVatPercent() }}%{% endif %}
+                            {% endif %}
+                        </td>
+                        <td id="orderCardTotalPrice" align="right">{{ oCard.getFPrice() }}&nbsp;{{ currency.sign }}</td>
+                    </tr>
+                {% endif %}
+            {% endif %}
+        {% endblock %}
+    </tbody>
+
+    {% block checkout_basketcontents_basketfunctions %}
+        {% if editable %}
+            <tfoot id="basketFn" class="basketFunctions">
+                <tr>
+                    <td class="text-center" style="display:table-cell;vertical-align:middle;">
+                        <input type="checkbox" name="checkAll" id="checkAll" title="{{ translate({ ident: "ALL" }) }}">
+                    </td>
+                    <td colspan="{% if oView.isWrapping() %}6{% else %}5{% endif %}">
+                        <button name="removeAllBtn" class="btn btn-sm" id="basketRemoveAll" type="button">{{ translate({ ident: "ALL" }) }}</button>
+                        <button name="removeBtn" class="btn btn-sm btn-danger" id="basketRemove" type="submit">{{ translate({ ident: "REMOVE" }) }}</button>
+                        <button name="updateBtn" class="btn btn-sm btn-warning" id="basketUpdate" type="submit">{{ translate({ ident: "UPDATE" }) }}</button>
+                    </td>
+                </tr>
+            </tfoot>
+        {% endif %}
+    {% endblock %}
+</table>

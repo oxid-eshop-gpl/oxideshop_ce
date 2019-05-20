@@ -1,0 +1,107 @@
+{% block user_checkout_registration %}
+    {{ script({ include: "js/libs/jqBootstrapValidation.min.js", priority: 10, dynamic: __oxid_include_dynamic }) }}
+
+    {% capture assign = "sValidationJS" %}
+        {% spaceless %}
+        $('input,select,textarea').not('[type=submit]').jqBootstrapValidation(
+            {
+                filter: function()
+                {
+                    if( $( '#shippingAddress' ).css( 'display' ) == 'block' )
+                    {
+                        return $(this).is(':visible, .selectpicker');
+                    }
+                    else
+                    {
+                        return $(this).is(':visible, #addressForm .selectpicker');
+                    }
+                }
+            }
+        );
+        {% endspaceless %}
+    {% endcapture %}
+
+    {{ script({ add: sValidationJS, dynamic: __oxid_include_dynamic }) }}
+
+    {% set aErrors = oView.getFieldValidationErrors() %}
+
+    <form class="form-horizontal js-oxValidate" action="{{ oViewConf.getSslSelfLink() }}" name="order" method="post" role="form" novalidate="novalidate">
+        {% block user_checkout_registration_form %}
+            <div class="hidden">
+                {{ oViewConf.getHiddenSid()|raw() }}
+                {{ oViewConf.getNavFormParams() }}
+                <input type="hidden" name="cl" value="user">
+                <input type="hidden" name="option" value="3">
+                {% if not oxcmp_user.oxuser__oxpassword.value %}
+                    <input type="hidden" name="fnc" value="createuser">
+                {% else %}
+                    <input type="hidden" name="fnc" value="changeuser">
+                    <input type="hidden" name="lgn_cook" value="0">
+                {% endif %}
+                <input type="hidden" id="reloadAddress" name="reloadaddress" value="">
+                <input type="hidden" name="blshowshipaddress" value="1">
+            </div>
+
+            {% block user_checkout_registration_next_step_top %}
+                <div class="well well-sm cart-buttons">
+                    <a href="{{ seo_url({ ident: oViewConf.getBasketLink() }) }}" class="btn btn-default prevStep submitButton largeButton" id="userBackStepTop">{{ translate({ ident: "PREVIOUS_STEP" }) }}</a>
+                    <div class="clearfix"></div>
+                </div>
+            {% endblock %}
+
+            <div class="checkoutCollumns clear">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">{{ translate({ ident: "ACCOUNT_INFORMATION" }) }}</h3>
+                    </div>
+                    <div class="panel-body">
+                        {% include "form/fieldset/user_account.html.twig" %}
+                    </div>
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">{{ translate({ ident: "BILLING_ADDRESS" }) }}</h3>
+                    </div>
+                    <div class="panel-body">
+                        {% include "form/fieldset/user_billing.html.twig" with {noFormSubmit: true, blSubscribeNews: false, blOrderRemark: true} %}
+                    </div>
+                </div>
+
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">{{ translate({ ident: "SHIPPING_ADDRESS" }) }}</h3>
+                    </div>
+                    <div class="panel-body">
+                        <div class="form-group">
+                            <div class="col-lg-9 col-lg-offset-3">
+                                <div class="checkbox">
+                                    <label>
+                                        <input type="checkbox" name="blshowshipaddress" id="showShipAddress" {% if not oView.showShipAddress() %}checked{% endif %} value="0"> {{ translate({ ident: "USE_BILLINGADDRESS_FOR_SHIPPINGADDRESS" }) }}
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="shippingAddress" {% if not oView.showShipAddress() %}style="display: none;"{% endif %}>
+                            {% include "form/fieldset/user_shipping.html.twig" with {noFormSubmit: true} %}
+                        </div>
+
+                        {% include "form/fieldset/order_remark.html.twig" with {blOrderRemark: true} %}
+
+                    </div>
+                </div>
+            </div>
+
+            {{ script({ add: "$('#showShipAddress').change( function() { $('#shippingAddress').toggle($(this).is(':not(:checked)'));});", dynamic: __oxid_include_dynamic }) }}
+
+            {% block user_checkout_registration_next_step_bottom %}
+                <div class="well well-sm cart-buttons">
+                    <a href="{{ seo_url({ ident: oViewConf.getBasketLink() }) }}" class="btn btn-default pull-left prevStep submitButton largeButton" id="userBackStepBottom">{{ translate({ ident: "PREVIOUS_STEP" }) }}</a>
+                    <button id="userNextStepBottom" class="btn btn-primary pull-right submitButton largeButton nextStep" name="userform" type="submit">{{ translate({ ident: "CONTINUE_TO_NEXT_STEP" }) }}</button>
+                    <div class="clearfix"></div>
+                </div>
+            {% endblock %}
+        {% endblock %}
+    </form>
+    {% include "form/fieldset/delete_shipping_address_modal.html.twig" %}
+{% endblock %}

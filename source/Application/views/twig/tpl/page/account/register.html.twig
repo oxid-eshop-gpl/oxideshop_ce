@@ -1,0 +1,23 @@
+{% capture append = "oxidBlock_pageBody" %}
+    {% if oView.isEnabledPrivateSales() %}
+        {{ include_widget({ cl: "oxwCookieNote", _parent: oView.getClassName(), nocookie: 1 }) }}
+    {% endif %}
+{% endcapture %}
+
+{% capture append = "oxidBlock_content" %}
+    {% set template_title = "OPEN_ACCOUNT"|translate %}
+    {% if oView.isActive('PsLogin') %}
+        {% include "message/errors.html.twig" %}
+    {% endif %}
+
+    <h1 id="openAccHeader" class="page-header">{{ translate({ ident: "OPEN_ACCOUNT" }) }}</h1>
+    {% include "form/register.html.twig" %}
+
+    {{ insert_tracker({title: template_title}) }}
+{% endcapture %}
+
+{% if oView.isActive('PsLogin') %}
+    {% include "layout/popup.html.twig" %}
+{% else %}
+    {% include "layout/page.html.twig" with {sidebar: "Right"} %}
+{% endif %}

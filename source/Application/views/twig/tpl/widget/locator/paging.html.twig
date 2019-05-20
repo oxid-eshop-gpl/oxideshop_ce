@@ -1,0 +1,47 @@
+{% block widget_locator_paging %}
+    {% if pages.changePage %}
+        <ol class="pagination pagination-sm{% if place == "bottom" %} lineBox{% endif %}" id="itemsPager{{ place }}">
+            <li class="prev{% if not pages.previousPage %} disabled{% endif %}">
+                {% if pages.previousPage %}
+                    <a href="{{ pages.previousPage }}">&larr; {{ translate({ ident: "PREVIOUS" }) }}</a>
+                {% else %}
+                    <span>&larr; {{ translate({ ident: "PREVIOUS" }) }}</span>
+                {% endif %}
+            </li>
+
+            {% set i = 1 %}
+            {% for iPage, page in pages.changePage %}
+                {% if iPage == i %}
+                    <li{% if iPage == pages.actPage %} class="active"{% endif %}>
+                        <a href="{{ page.url }}">{{ iPage }}</a>
+                    </li>
+                   {% set i = i+1 %}
+                {% elseif iPage > i %}
+                    <li class="disabled">
+                        <span>...</span>
+                    </li>
+                    <li{% if iPage == pages.actPage %} class="active"{% endif %}>
+                        <a href="{{ page.url }}">{{ iPage }}</a>
+                    </li>
+                    {% set i = iPage+1 %}
+                {% elseif iPage < i %}
+                    <li{% if iPage == pages.actPage %} class="active"{% endif %}>
+                        <a href="{{ page.url }}">{{ iPage }}</a>
+                    </li>
+                    <li class="disabled">
+                        <span>...</span>
+                    </li>
+                   {% set i = iPage+1 %}
+                {% endif %}
+            {% endfor %}
+
+            <li class="next{% if not pages.nextPage %} disabled{% endif %}">
+                {% if pages.nextPage %}
+                    <a href="{{ pages.nextPage }}">{{ translate({ ident: "NEXT" }) }} &rarr;</a>
+                {% else %}
+                    <span>{{ translate({ ident: "NEXT" }) }} &rarr;</span>
+                {% endif %}
+            </li>
+         </ol>
+    {% endif %}
+{% endblock %}

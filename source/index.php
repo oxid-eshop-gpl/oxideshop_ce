@@ -11,5 +11,19 @@ require_once dirname(__FILE__) . "/bootstrap.php";
  */
 redirectIfShopNotConfigured();
 
+//force twig theme
+//$themeName = 'flow';
+$themeName = 'twig';
+$shopId = 1;
+
+$currentShopId = \OxidEsales\Eshop\Core\Registry::getConfig()->getShopId();
+\OxidEsales\Eshop\Core\Registry::getConfig()->setShopId($shopId);
+
+$theme = oxNew( \OxidEsales\Eshop\Core\Theme::class);
+$theme->load($themeName);
+$theme->activate();
+
+\OxidEsales\Eshop\Core\Registry::getConfig()->setShopId($currentShopId);
+
 //Starts the shop
 OxidEsales\EshopCommunity\Core\Oxid::run();

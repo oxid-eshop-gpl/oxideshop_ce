@@ -1,0 +1,80 @@
+<div class="agb panel panel-default">
+    {% if not hideButtons %}
+
+        {% if not oView.isActive('PsLogin') %}
+            {% if oView.isConfirmAGBActive() %}
+                {% ifcontent ident "oxrighttocancellegend" set oContent %}
+                    <div class="panel-heading">
+                        <h3 class="panel-title">{{ oContent.oxcontents__oxtitle.value }}</strong></h3>
+                    </div>
+                {% endifcontent %}
+            {% else %}
+                {% ifcontent ident "oxrighttocancellegend2" set oContent %}
+                    <div class="panel-heading">
+                        <h3 class="panel-title">{{ oContent.oxcontents__oxtitle.value }}</strong></h3>
+                    </div>
+                {% endifcontent %}
+            {% endif %}
+        {% endif %}
+
+        <div class="panel-body">
+            {% if not oView.isActive('PsLogin') %}
+                {% if oView.isConfirmAGBActive() %}
+                    {% ifcontent ident "oxrighttocancellegend" set oContent %}
+                        <p class="agbConfirmation checkbox">
+                            <label>
+                                <input id="checkAgbTop" type="checkbox" name="ord_agb" value="1"> {{ oContent.oxcontents__oxcontent.value }}
+                            </label>
+                        </p>
+                    {% endifcontent %}
+                {% else %}
+                    {% ifcontent ident "oxrighttocancellegend2" set oContent %}
+                        <p class="agbConfirmation">
+                            {{ oContent.oxcontents__oxcontent.value }}
+                        </p>
+                    {% endifcontent %}
+                {% endif %}
+            {% endif %}
+
+            {% if oViewConf.isFunctionalityEnabled('blEnableIntangibleProdAgreement')  %}
+                {% set oExplanationMarks = oView.getBasketContentMarkGenerator() %}
+                {% if oxcmp_basket.hasArticlesWithDownloadableAgreement()  %}
+                    {% ifcontent ident "oxdownloadableproductsagreement" set oContent %}
+                        <p id="noteForDownloadableArticles" class="agbConfirmation checkbox">
+                            <label>
+                                <input id="oxdownloadableproductsagreement" type="checkbox" name="oxdownloadableproductsagreement" value="1">
+                                {{ oExplanationMarks.getMark('downloadable') }} {{ oContent.oxcontents__oxcontent.value }}
+                            </label>
+                        </p>
+                    {% endifcontent %}
+                {% endif %}
+                {% if oxcmp_basket.hasArticlesWithIntangibleAgreement()  %}
+                    {% ifcontent ident "oxserviceproductsagreement" set oContent %}
+                        <p id="noteForIntangibleArticles" class="agbConfirmation checkbox">
+                            <label>
+                                <input id="oxserviceproductsagreement" type="checkbox" name="oxserviceproductsagreement" value="1">
+                                {{ oExplanationMarks.getMark('intangible') }} {{ oContent.oxcontents__oxcontent.value }}
+                            </label>
+                        </p>
+                    {% endifcontent %}
+                {% endif %}
+            {% endif %}
+
+            {% if oViewConf.isFunctionalityEnabled("blShowTSInternationalFeesMessage") %}
+                {% ifcontent ident "oxtsinternationalfees" set oTSIFContent %}
+                    <hr/>{{ oTSIFContent.oxcontents__oxcontent.value }}
+                {% endifcontent %}
+            {% endif %}
+
+            {% if payment.oxpayments__oxid.value == "oxidcashondel" and oViewConf.isFunctionalityEnabled("blShowTSCODMessage") %}
+                {% ifcontent ident "oxtscodmessage" set oTSCODContent %}
+                    <hr/>{{ oTSCODContent.oxcontents__oxcontent.value }}
+                {% endifcontent %}
+            {% endif %}
+        </div>
+    {% endif %}
+</div>
+
+{{ script({ add: "$('#checkAgbTop').click(function(){ $('input[name=ord_agb]').val($(this).is(':checked') ? '1' : '0');});", dynamic: __oxid_include_dynamic }) }}
+{{ script({ add: "$('#oxdownloadableproductsagreement').click(function(){ $('input[name=oxdownloadableproductsagreement]').val($(this).is(':checked') ? '1' : '0');});", dynamic: __oxid_include_dynamic }) }}
+{{ script({ add: "$('#oxserviceproductsagreement').click(function(){ $('input[name=oxserviceproductsagreement]').val($(this).is(':checked') ? '1' : '0');});", dynamic: __oxid_include_dynamic }) }}

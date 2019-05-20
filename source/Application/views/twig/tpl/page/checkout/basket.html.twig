@@ -1,0 +1,115 @@
+{% set oConfig = oViewConf.getConfig() %}
+{% capture append = "oxidBlock_content" %}
+
+    {# ordering steps #}
+    {% include "page/checkout/inc/steps.html.twig" with {active: 1} %}
+
+    {% block checkout_basket_main %}
+        {% set currency = oView.getActCurrency() %}
+
+        {% if oView.isLowOrderPrice() %}
+            {% block checkout_basket_loworderprice_top %}
+                <div class="alert alert-info">{{ translate({ ident: "MIN_ORDER_PRICE" }) }} {{ oView.getMinOrderPrice() }} {{ currency.sign }}</div>
+                <div class="spacer"></div>
+            {% endblock %}
+        {% endif %}
+
+        {% if not oxcmp_basket.getProductsCount() %}
+            {% block checkout_basket_emptyshippingcart %}
+                <div class="spacer"></div>
+                <div class="alert alert-danger" id="empty-basket-warning">
+                    <a href="{{ oViewConf.getHomeLink() }}" title="{{ oxcmp_shop.oxshops__oxtitleprefix.value }}" class="btn btn-default"><i class="fa fa-caret-left"></i> {{ translate({ ident: "DD_BASKET_BACK_TO_SHOP" }) }}</a>
+                    {{ translate({ ident: "BASKET_EMPTY" }) }}
+                </div>
+            {% endblock %}
+        {% else %}
+            {% block checkout_basket_next_step_top %}
+                <div class="well well-sm cart-buttons">
+                    {% block checkout_basket_backtoshop_top %}
+                        {% if oView.showBackToShop() %}
+                            <form action="{{ oViewConf.getSslSelfLink() }}" method="post" class="pull-left">
+                                <div class="hidden">
+                                    {{ oViewConf.getHiddenSid()|raw() }}
+                                    <input type="hidden" name="cl" value="basket">
+                                    <input type="hidden" name="fnc" value="backtoshop">
+                                </div>
+                                <button type="submit" class="btn btn-default submitButton largeButton pull-left">
+                                    <i class="fa fa-caret-left"></i> {{ translate({ ident: "CONTINUE_SHOPPING" }) }}
+                                </button>
+                            </form>
+                        {% else %}
+                            <a href="{{ oViewConf.getHomeLink() }}" class="btn btn-default submitButton largeButton pull-left">
+                                <i class="fa fa-caret-left"></i> {{ translate({ ident: "CONTINUE_SHOPPING" }) }}
+                            </a>
+                        {% endif %}
+                    {% endblock %}
+
+                    {% if not oView.isLowOrderPrice() %}
+                        {% block basket_btn_next_top %}
+                            <form action="{{ oViewConf.getSslSelfLink() }}" method="post" class="pull-right">
+                                <div class="hidden">
+                                    {{ oViewConf.getHiddenSid()|raw() }}
+                                    <input type="hidden" name="cl" value="user">
+                                </div>
+                                <button type="submit" class="btn btn-primary submitButton largeButton nextStep pull-right">
+                                    {{ translate({ ident: "CONTINUE_TO_NEXT_STEP" }) }} <i class="fa fa-caret-right"></i>
+                                </button>
+                            </form>
+                        {% endblock %}
+                    {% endif %}
+                    <div class="clearfix"></div>
+                </div>
+            {% endblock %}
+
+            <div class="lineBox">
+                {% include "page/checkout/inc/basketcontents.html.twig" with {editable: true} %}
+            </div>
+
+            {% block checkout_basket_next_step_bottom %}
+                <div class="well well-sm cart-buttons">
+                    {% block checkout_basket_loworderprice_bottom %}{% endblock %}
+
+                    {% block checkout_basket_backtoshop_bottom %}
+                        {% if oView.showBackToShop() %}
+                            <form action="{{ oViewConf.getSslSelfLink() }}" method="post" class="pull-left">
+                                <div class="backtoshop">
+                                    {{ oViewConf.getHiddenSid()|raw() }}
+                                    <input type="hidden" name="cl" value="basket">
+                                    <input type="hidden" name="fnc" value="backtoshop">
+                                    <button type="submit" class="btn btn-default submitButton largeButton pull-left">
+                                        <i class="fa fa-caret-left"></i> {{ translate({ ident: "CONTINUE_SHOPPING" }) }}
+                                    </button>
+                                </div>
+                            </form>
+                        {% else %}
+                            <a href="{{ oViewConf.getHomeLink() }}" class="btn btn-default submitButton largeButton pull-left">
+                                <i class="fa fa-caret-left"></i> {{ translate({ ident: "CONTINUE_SHOPPING" }) }}
+                            </a>
+                        {% endif %}
+                    {% endblock %}
+
+                    {% if not oView.isLowOrderPrice() %}
+                        {% block basket_btn_next_bottom %}
+                            <form action="{{ oViewConf.getSslSelfLink() }}" method="post">
+                                <div class="hidden">
+                                    {{ oViewConf.getHiddenSid()|raw() }}
+                                    <input type="hidden" name="cl" value="user">
+                                </div>
+                                <button type="submit" class="btn btn-primary submitButton largeButton nextStep pull-right">
+                                    {{ translate({ ident: "CONTINUE_TO_NEXT_STEP" }) }} <i class="fa fa-caret-right"></i>
+                                </button>
+                            </form>
+                        {% endblock %}
+                    {% endif %}
+                    <div class="clearfix"></div>
+                </div>
+            {% endblock %}
+        {% endif %}
+        {% if oView.isWrapping() %}
+           {% include "page/checkout/inc/wrapping.html.twig" %}
+        {% endif %}
+    {% endblock %}
+    {{ insert_tracker({title: template_title}) }}
+{% endcapture %}
+
+{% include "layout/page.html.twig" %}

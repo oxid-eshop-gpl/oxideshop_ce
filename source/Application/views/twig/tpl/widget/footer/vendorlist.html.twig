@@ -1,0 +1,10 @@
+{% set vendors = oView.getVendorlist() %}
+{% if vendors.count() %}
+    {% block footer_vendors %}
+        <ul class="vendors list-unstyled">
+          {% for _vnd in vendors %}
+          <li><a href="{{ _vnd.getLink() }}" {% if _vnd.expanded %}class="exp"{% endif %}>{{ _vnd.oxvendor__oxtitle.value }}</a></li>
+          {% endfor %}
+        </ul>
+    {% endblock %}
+{% endif %}

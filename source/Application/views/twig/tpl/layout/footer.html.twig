@@ -1,0 +1,183 @@
+{% block footer_main %}
+    {% set blShowFullFooter = oView.showSearch() %}
+    {% set blFullwidth = oViewConf.getViewThemeParam('blFullwidthLayout') %}
+    {{ oView.setShowNewsletter(oViewConf.getViewThemeParam('blFooterShowNewsletterForm')) }}
+
+    {% if oxcmp_user %}
+        {% set force_sid = oView.getSidForWidget() %}
+    {% endif %}
+
+    <footer id="footer">
+        <div class="{% if blFullwidth %}container{% else %}container-fluid{% endif %}">
+            <div class="row">
+                <div class="col-xs-12 col-md-8">
+                    <div class="row">
+                        <div class="footer-left-part">
+                            {% block dd_footer_servicelist %}
+                                <section class="col-xs-12 {% if blShowFullFooter %}col-sm-3{% else %}col-sm-6{% endif %} footer-box footer-box-service">
+                                    <div class="h4 footer-box-title">{{ translate({ ident: "SERVICES" }) }}</div>
+                                    <div class="footer-box-content">
+                                        {% block dd_footer_servicelist_inner %}
+                                            {{ include_widget({ cl: "oxwServiceList", noscript: 1, nocookie: 1, force_sid: force_sid }) }}
+                                        {% endblock %}
+                                    </div>
+                                </section>
+                            {% endblock %}
+                            {% block dd_footer_information %}
+                                <section class="col-xs-12 {% if blShowFullFooter %}col-sm-3{% else %}col-sm-6{% endif %} footer-box footer-box-information">
+                                    <div class="h4 footer-box-title">{{ translate({ ident: "INFORMATION" }) }}</div>
+                                    <div class="footer-box-content">
+                                        {% block dd_footer_information_inner %}
+                                            {{ include_widget({ cl: "oxwInformation", noscript: 1, nocookie: 1, force_sid: force_sid }) }}
+                                        {% endblock %}
+                                    </div>
+                                </section>
+                            {% endblock %}
+                            {% if blShowFullFooter %}
+                                {% block dd_footer_manufacturerlist %}
+                                    <section class="col-xs-12 col-sm-3 footer-box footer-box-manufacturers">
+                                        <div class="h4 footer-box-title">{{ translate({ ident: "OUR_BRANDS" }) }}</div>
+                                        <div class="footer-box-content">
+                                            {% block dd_footer_manufacturerlist_inner %}
+                                                {{ include_widget({ cl: "oxwManufacturerList", _parent: oView.getClassName(), noscript: 1, nocookie: 1 }) }}
+                                            {% endblock %}
+                                        </div>
+                                    </section>
+                                {% endblock %}
+                                {% block dd_footer_categorytree %}
+                                    <section class="col-xs-12 col-sm-3 footer-box footer-box-categories">
+                                        <div class="h4 footer-box-title">{{ translate({ ident: "CATEGORIES" }) }}</div>
+                                        <div class="footer-box-content">
+                                            {% block dd_footer_categorytree_inner %}
+                                                {{ include_widget({ cl: "oxwCategoryTree", _parent: oView.getClassName(), sWidgetType: "footer", noscript: 1, nocookie: 1 }) }}
+                                            {% endblock %}
+                                        </div>
+                                    </section>
+                                {% endblock %}
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-12 col-md-4">
+                    <div class="row">
+                        <div class="footer-right-part">
+                            <div class="col-xs-6 col-xs-offset-3 col-sm-12 col-sm-offset-0">
+                                {% if oView.showNewsletter() %}
+                                    <section class="footer-box footer-box-newsletter">
+                                        <div class="h4 footer-box-title">{{ translate({ ident: "NEWSLETTER" }) }}</div>
+                                        <div class="footer-box-content">
+                                            {% block dd_footer_newsletter %}
+                                                <p class="small">{{ translate({ ident: "FOOTER_NEWSLETTER_INFO" }) }}</p>
+                                                {% include "widget/footer/newsletter.html.twig" %}
+                                            {% endblock %}
+                                        </div>
+                                    </section>
+                                {% endif %}
+
+                                {% block footer_social %}{% endblock %}
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="spacer"></div>
+
+            {# <<START>> Social Links #}
+            {% block dd_footer_social_links %}
+                {% if oViewConf.getViewThemeParam('sFacebookUrl') or oViewConf.getViewThemeParam('sGooglePlusUrl') or oViewConf.getViewThemeParam('sTwitterUrl') or oViewConf.getViewThemeParam('sYouTubeUrl') or oViewConf.getViewThemeParam('sBlogUrl') %}
+                    <div class="social-links">
+                        <div class="row">
+                            <section class="col-xs-12">
+                                <div class="text-center">
+                                    {% block dd_footer_social_links_inner %}
+                                        <ul class="list-inline">
+                                            {% block dd_footer_social_links_list %}
+                                                {% if oViewConf.getViewThemeParam('sFacebookUrl') %}
+                                                    <li>
+                                                        <a target="_blank" href="{{ oViewConf.getViewThemeParam('sFacebookUrl') }}">
+                                                            <i class="fa fa-facebook"></i> <span>Facebook</span>
+                                                        </a>
+                                                    </li>
+                                                {% endif %}
+                                                {% if oViewConf.getViewThemeParam('sGooglePlusUrl') %}
+                                                    <li>
+                                                        <a target="_blank" href="{{ oViewConf.getViewThemeParam('sGooglePlusUrl') }}">
+                                                            <i class="fa fa-google-plus-square"></i> <span>Google+</span>
+                                                        </a>
+                                                    </li>
+                                                {% endif %}
+                                                {% if oViewConf.getViewThemeParam('sTwitterUrl') %}
+                                                    <li>
+                                                        <a target="_blank" href="{{ oViewConf.getViewThemeParam('sTwitterUrl') }}">
+                                                            <i class="fa fa-twitter"></i> <span>Twitter</span>
+                                                        </a>
+                                                    </li>
+                                                {% endif %}
+                                                {% if oViewConf.getViewThemeParam('sYouTubeUrl') %}
+                                                    <li>
+                                                        <a target="_blank" href="{{ oViewConf.getViewThemeParam('sYouTubeUrl') }}">
+                                                            <i class="fa fa-youtube-square"></i> <span>YouTube</span>
+                                                        </a>
+                                                    </li>
+                                                {% endif %}
+                                                {% if oViewConf.getViewThemeParam('sBlogUrl') %}
+                                                    <li>
+                                                        <a target="_blank" href="{{ oViewConf.getViewThemeParam('sBlogUrl') }}">
+                                                            <i class="fa fa-wordpress"></i> <span>Blog</span>
+                                                        </a>
+                                                    </li>
+                                                {% endif %}
+                                            {% endblock %}
+                                        </ul>
+                                    {% endblock %}
+                                </div>
+                            </section>
+                        </div>
+                    </div>
+                {% endif %}
+            {% endblock %}
+            {# <<ENDE>> Social Links #}
+        </div>
+
+        {% if oView.isPriceCalculated() %}
+        {% block layout_page_vatinclude %}
+        {% block footer_deliveryinfo %}
+        {% ifcontent ident "oxdeliveryinfo" set oCont %}
+        <div id="incVatInfo">
+            {% if oView.isVatIncluded() %}
+            * <span class="deliveryInfo">{{ translate({ ident: "PLUS_SHIPPING" }) }}<a href="{{ oCont.getLink() }}">{{ translate({ ident: "PLUS_SHIPPING2" }) }}</a></span>
+            {% else %}
+            * <span class="deliveryInfo">{{ translate({ ident: "PLUS" }) }}<a href="{{ oCont.getLink() }}">{{ translate({ ident: "PLUS_SHIPPING2" }) }}</a></span>
+            {% endif %}
+        </div>
+        {% endifcontent %}
+        {% endblock %}
+        {% endblock %}
+        {% endif %}
+    </footer>
+
+    <div class="legal">
+        <div class="{% if blFullwidth %}container{% else %}container-fluid{% endif %}">
+            <div class="legal-box">
+                <div class="row">
+                    <section class="col-sm-12">
+                        {% block dd_footer_copyright %}
+                            {% ifcontent ident "oxstdfooter" set oCont %}
+                                {{ include(template_from_string(oCont.oxcontents__oxcontent.value)) }}
+                            {% endifcontent %}
+                        {% endblock %}
+                    </section>
+                </div>
+            </div>
+        </div>
+
+    </div>
+{% endblock %}
+
+{% if oView.isRootCatChanged() %}
+    <div id="scRootCatChanged" class="popupBox corners FXgradGreyLight glowShadow">
+        {% include "form/privatesales/basketexcl.html.twig" %}
+    </div>
+{% endif %}

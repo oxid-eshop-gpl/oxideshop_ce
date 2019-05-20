@@ -1,0 +1,82 @@
+{% block checkout_user_options %}
+    {{ script({ include: "js/widgets/oxequalizer.min.js", priority: 10, dynamic: __oxid_include_dynamic }) }}
+    {{ script({ add: "$(window).load(function(){ if( !isMobileDevice() ) { oxEqualizer.equalHeight( $( '.checkoutOptions .panel .panel-body' ) ); } });", dynamic: __oxid_include_dynamic }) }}
+
+    {% set sColClass = "col-lg-6" %}
+    {% if oView.getShowNoRegOption() %}
+        {% set sColClass = "col-lg-4" %}
+    {% endif %}
+
+    <div class="checkoutOptions">
+		<div class="row">
+			{% block checkout_options_noreg %}
+				{% if oView.getShowNoRegOption() %}
+					<div class="col-md-12 {{ sColClass }}">
+						<form action="{{ oViewConf.getSslSelfLink() }}" method="post">
+							<div class="hidden">
+								{{ oViewConf.getHiddenSid() }}
+								{{ oViewConf.getNavFormParams() }}
+								<input type="hidden" name="cl" value="user">
+								<input type="hidden" name="fnc" value="">
+								<input type="hidden" name="option" value="1">
+							</div>
+
+							<div class="panel panel-default" id="optionNoRegistration">
+								<div class="panel-heading">
+									<h3 class="panel-title">{{ translate({ ident: "PURCHASE_WITHOUT_REGISTRATION" }) }}</h3>
+								</div>
+								<div class="panel-body">
+									{% block checkout_options_noreg_text %}
+										<p>{{ translate({ ident: "DO_NOT_WANT_CREATE_ACCOUNT" }) }}</p>
+										{% if oView.isDownloadableProductWarning() %}
+											<p class="errorMsg">{{ translate({ ident: "MESSAGE_DOWNLOADABLE_PRODUCT" }) }}</p>
+										{% endif %}
+									{% endblock %}
+								</div>
+								<div class="panel-footer text-right">
+									<button class="btn btn-primary submitButton nextStep" type="submit">{{ translate({ ident: "NEXT" }) }} <i class="fa fa-caret-right"></i></button>
+								</div>
+							</div>
+						</form>
+					</div>
+				{% endif %}
+			{% endblock %}
+
+			{% block checkout_options_reg %}
+				<div class="col-md-12 {{ sColClass }}">
+					<form action="{{ oViewConf.getSslSelfLink() }}" method="post">
+						<div class="hidden">
+							{{ oViewConf.getHiddenSid() }}
+							{{ oViewConf.getNavFormParams() }}
+							<input type="hidden" name="cl" value="user">
+							<input type="hidden" name="fnc" value="">
+							<input type="hidden" name="option" value="3">
+						</div>
+
+						<div class="panel panel-default" id="optionRegistration">
+							<div class="panel-heading">
+								<h3 class="panel-title">{{ translate({ ident: "OPEN_ACCOUNT" }) }}</h3>
+							</div>
+							<div class="panel-body">
+								{% block checkout_options_reg_text %}
+									{% ifcontent ident "oxregistrationdescription" set oCont %}
+										{{ oCont.oxcontents__oxcontent.value|raw }}
+									{% endifcontent %}
+								{% endblock %}
+							</div>
+							<div class="panel-footer text-right">
+								<button class="btn btn-primary submitButton nextStep" type="submit">{{ translate({ ident: "NEXT" }) }} <i class="fa fa-caret-right"></i></button>
+							</div>
+						</div>
+					</form>
+				</div>
+			{% endblock %}
+
+			{% block checkout_options_login %}
+				<div class="col-md-12 {{ sColClass }}">
+					{% include "form/login.html.twig" %}
+				</div>
+			{% endblock %}
+		</div>
+    </div>
+{% endblock %}

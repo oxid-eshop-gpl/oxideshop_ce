@@ -1,0 +1,53 @@
+{% capture append = "oxidBlock_content" %}
+    {% set oConfig = oViewConf.getConfig() %}
+    {% set rsslinks = oView.getRssLinks() %}
+    {% set blFullwidth = oViewConf.getViewThemeParam('blFullwidthLayout') %}
+    {{ script({ include: "js/pages/start.min.js", dynamic: __oxid_include_dynamic }) }}
+
+    {% block start_welcome_text %}
+        {% ifcontent ident "oxstartwelcome" set oCont %}
+            <div class="welcome-teaser">{{ oCont.oxcontents__oxcontent.value }}</div>
+        {% endifcontent %}
+    {% endblock %}
+
+    {% set oTopArticles = oView.getTop5ArticleList() %}
+
+    {% block start_bargain_articles %}
+        {% set oBargainArticles = oView.getBargainArticleList() %}
+        {% if oBargainArticles and oBargainArticles.count() %}
+            {% include "widget/product/list.html.twig" with {type: oViewConf.getViewThemeParam('sStartPageListDisplayType'), head: "START_BARGAIN_HEADER"|translate, subhead: "START_BARGAIN_SUBHEADER"|translate, listId: "bargainItems", products: oBargainArticles, rsslink: rsslinks.bargainArticles, rssId: "rssBargainProducts", showMainLink: true, iProductsPerLine: 4} %}
+        {% endif %}
+    {% endblock %}
+
+    {% block start_manufacturer_slider %}
+        {% if oViewConf.getViewThemeParam('bl_showManufacturerSlider') %}
+            {% include "widget/manufacturersslider.html.twig" %}
+        {% endif %}
+    {% endblock %}
+
+    {% block start_newest_articles %}
+        {% set oNewestArticles = oView.getNewestArticles() %}
+        {% if oNewestArticles and oNewestArticles.count() %}
+            {% include "widget/product/list.html.twig" with {type: oViewConf.getViewThemeParam('sStartPageListDisplayType'), head: "START_NEWEST_HEADER"|translate, subhead: "START_NEWEST_SUBHEADER"|translate, listId: "newItems", products: oNewestArticles, rsslink: rsslinks.newestArticles, rssId: "rssNewestProducts", showMainLink: true, iProductsPerLine: 4} %}
+        {% endif %}
+    {% endblock %}
+
+    {% if oNewestArticles and oNewestArticles.count() and oTopArticles and oTopArticles.count() %}
+        <div class="row">
+            {% if blFullwidth %}
+                <div class="col-xs-12"><hr></div>
+            {% else %}
+                <hr>
+            {% endif %}
+        </div>
+    {% endif %}
+
+    {% block start_top_articles %}
+        {% if oTopArticles and oTopArticles.count() %}
+            {% include "widget/product/list.html.twig" with {type: "infogrid", head: "START_TOP_PRODUCTS_HEADER"|translate, subhead: "START_TOP_PRODUCTS_SUBHEADER"|translate(oTopArticles.count()), listId: "topBox", products: oTopArticles, rsslink: rsslinks.topArticles, rssId: "rssTopProducts", showMainLink: true, iProductsPerLine: 2} %}
+        {% endif %}
+    {% endblock %}
+
+    {{ insert_tracker() }}
+{% endcapture %}
+{% include "layout/page.html.twig" %}

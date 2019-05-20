@@ -1,0 +1,21 @@
+<div class="btn-group minibasket-menu">
+    <button type="button" class="btn dropdown-toggle" data-toggle="dropdown" data-href="{{ seo_url({ ident: oViewConf.getSelfLink()|cat("cl=basket") }) }}">
+        {% block dd_layout_page_header_icon_menu_minibasket_button %}
+            <i class="fa fa-shopping-cart fa-2x" aria-hidden="true"></i>
+            {% if oxcmp_basket.getItemsCount() > 0 %}{{  oxcmp_basket.getItemsCount()  }}{% endif %}
+        {% endblock %}
+    </button>
+    <ul class="dropdown-menu dropdown-menu-right pull-right" role="menu">
+        {% block dd_layout_page_header_icon_menu_minibasket_list %}
+            <li>
+                <div class="row">
+                    <div class="col-xs-12 pull-right">
+                        <div class="minibasket-menu-box">
+                            {% include_dynamic "widget/minibasket/minibasket.html.twig" %}
+                        </div>
+                    </div>
+                </div>
+            </li>
+        {% endblock %}
+    </ul>
+</div>

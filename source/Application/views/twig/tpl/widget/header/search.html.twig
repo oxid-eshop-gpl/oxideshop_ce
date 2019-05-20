@@ -1,0 +1,24 @@
+{% block widget_header_search_form %}
+    {% if oView.showSearch() %}
+        <form class="form search" role="form" action="{{ oViewConf.getSelfActionLink() }}" method="get" name="search">
+            {{ oViewConf.getHiddenSid()|raw() }}
+            <input type="hidden" name="cl" value="search">
+
+            {% block dd_widget_header_search_form_inner %}
+                <div class="input-group">
+                    {% block header_search_field %}
+                        <input class="form-control" type="text" id="searchParam" name="searchparam" value="{{ oView.getSearchParamForHtml() }}" placeholder="{{ translate({ ident: "SEARCH" }) }}">
+                    {% endblock %}
+
+                    {% block dd_header_search_button %}
+                        <span class="input-group-btn">
+                            <button type="submit" class="btn btn-primary" title="{{ translate({ ident: "SEARCH_SUBMIT" }) }}">
+                                <i class="fa fa-search"></i>
+                            </button>
+                        </span>
+                    {% endblock %}
+                </div>
+            {% endblock %}
+        </form>
+    {% endif %}
+{% endblock %}

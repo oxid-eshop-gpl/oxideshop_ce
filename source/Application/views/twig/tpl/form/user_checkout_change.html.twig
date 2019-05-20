@@ -1,0 +1,129 @@
+{{ script({ include: "js/libs/jqBootstrapValidation.min.js", priority: 10, dynamic: __oxid_include_dynamic }) }}
+
+{% capture assign = "sValidationJS" %}
+    {% spaceless %}
+    $('input,select,textarea').not('[type=submit]').jqBootstrapValidation(
+        {
+            filter: function()
+            {
+                if( $( '#shippingAddress' ).css( 'display' ) == 'block' )
+                {
+                    return $(this).is(':visible, .selectpicker');
+                }
+                else
+                {
+                    return $(this).is(':visible, #addressForm .selectpicker');
+                }
+            }
+        }
+    );
+    {% endspaceless %}
+{% endcapture %}
+
+{{ script({ add: sValidationJS, dynamic: __oxid_include_dynamic }) }}
+
+{% block user_checkout_change %}
+    <form class="form-horizontal" action="{{ oViewConf.getSslSelfLink() }}" name="order" method="post" novalidate="novalidate">
+        {% block user_checkout_change_form %}
+            {% set aErrors = oView.getFieldValidationErrors() %}
+            {{ oViewConf.getHiddenSid()|raw() }}
+            {{ oViewConf.getNavFormParams() }}
+            <input type="hidden" name="cl" value="user">
+            <input type="hidden" name="option" value="{{ oView.getLoginOption() }}">
+            <input type="hidden" name="fnc" value="changeuser">
+            <input type="hidden" name="lgn_cook" value="0">
+            <input type="hidden" name="blshowshipaddress" value="1">
+
+            {% block user_checkout_change_next_step_top %}
+                <div class="well well-sm cart-buttons">
+                    <a href="{{ seo_url({ ident: oViewConf.getBasketLink() }) }}" class="btn btn-default pull-left prevStep submitButton largeButton" id="userBackStepTop"><i class="fa fa-caret-left"></i> {{ translate({ ident: "PREVIOUS_STEP" }) }}</a>
+                    <button id="userNextStepTop" class="btn btn-primary pull-right submitButton largeButton nextStep" name="userform" type="submit">{{ translate({ ident: "CONTINUE_TO_NEXT_STEP" }) }} <i class="fa fa-caret-right"></i></button>
+                    <div class="clearfix"></div>
+                </div>
+            {% endblock %}
+
+            <div class="checkoutCollumns clear">
+                <div class="panel panel-default">
+                    {% block user_checkout_billing %}
+                        <div class="panel-heading">
+                            {% block user_checkout_billing_head %}
+                                <h3 class="panel-title">
+                                    {{ translate({ ident: "BILLING_ADDRESS" }) }}
+                                    <button id="userChangeAddress" class="btn btn-xs btn-warning pull-right submitButton largeButton" name="changeBillAddress" type="submit" title="{{ translate({ ident: "CHANGE" }) }}">
+                                        <i class="fa fa-pencil"></i>
+                                    </button>
+                                </h3>
+                                {{ script({ add: "$('#userChangeAddress').click( function() { $('#addressForm').show();$('#addressText').hide();$('#userChangeAddress').hide();return false;});", dynamic: __oxid_include_dynamic }) }}
+                            {% endblock %}
+                        </div>
+                    {% endblock %}
+                    <div class="panel-body">
+                        {% block user_checkout_billing_form %}
+                            <div {% if not aErrors|length  %}style="display: none;"{% endif %} id="addressForm">
+                                {% if not oxcmp_user.oxuser__oxpassword.value %}
+                                    {% include "form/fieldset/user_email.html.twig" %}
+                                {% endif %}
+                                {% include "form/fieldset/user_billing.html.twig" with {noFormSubmit: true, blSubscribeNews: true, blOrderRemark: true} %}
+                            </div>
+                        {% endblock %}
+                        {% block user_checkout_billing_feedback %}
+                            <div class="col-lg-9 col-lg-offset-3" id="addressText">
+                                {% include "widget/address/billing_address.html.twig" with {noFormSubmit: true, blSubscribeNews: true, blOrderRemark: true} %}
+                            </div>
+                        {% endblock %}
+                    </div>
+                </div>
+
+                <div class="panel panel-default">
+                    {% block user_checkout_shipping %}
+                        <div class="panel-heading">
+                            {% block user_checkout_shipping_head %}
+                                <h3 class="panel-title">
+                                    {{ translate({ ident: "SHIPPING_ADDRESS" }) }}
+                                    {% if oView.showShipAddress() and oxcmp_user.getSelectedAddress() %}
+                                        <button id="userChangeShippingAddress" class="btn btn-xs btn-warning pull-right submitButton largeButton" name="changeShippingAddress" type="submit" {% if not oView.showShipAddress() and oxcmp_user.getSelectedAddress() %} style="display: none;" {% endif %} title="{{ translate({ ident: "CHANGE" }) }}">
+                                            <i class="fa fa-pencil"></i>
+                                        </button>
+                                    {% endif %}
+                                </h3>
+                                {{ script({ add: "$('#userChangeShippingAddress').toggle($(this).is(':not(:checked)'));", dynamic: __oxid_include_dynamic }) }}
+                            {% endblock %}
+                        </div>
+                    {% endblock %}
+                    <div class="panel-body">
+                        {% block user_checkout_shipping_change %}
+                            <div class="form-group">
+                                <div class="col-lg-9 col-lg-offset-3">
+                                    <div class="checkbox">
+                                        <label for="showShipAddress">
+                                            <input type="checkbox" name="blshowshipaddress" id="showShipAddress" {% if not oView.showShipAddress() %}checked{% endif %} value="0"> {{ translate({ ident: "USE_BILLINGADDRESS_FOR_SHIPPINGADDRESS" }) }}
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            {{ script({ add: "$('#showShipAddress').change( function() { $('#shippingAddress').toggle($(this).is(':not(:checked)'));});", dynamic: __oxid_include_dynamic }) }}
+                        {% endblock %}
+                        {% block user_checkout_shipping_form %}
+                            <div id="shippingAddress" {% if not oView.showShipAddress() %}style="display: none;"{% endif %}>
+                                {% include "form/fieldset/user_shipping.html.twig" with {noFormSubmit: true, onChangeClass: 'user'} %}
+                            </div>
+                        {% endblock %}
+                        {% block user_checkout_shipping_feedback %}
+                            {% include "form/fieldset/order_newsletter.html.twig" with {blSubscribeNews: true} %}
+                            {% include "form/fieldset/order_remark.html.twig" with {blOrderRemark: true} %}
+                        {% endblock %}
+                    </div>
+                </div>
+            </div>
+
+            {% block user_checkout_change_next_step_bottom %}
+                <div class="well well-sm cart-buttons">
+                    <a href="{{ seo_url({ ident: oViewConf.getBasketLink() }) }}" class="btn btn-default pull-left prevStep submitButton largeButton" id="userBackStepBottom"><i class="fa fa-caret-left"></i> {{ translate({ ident: "PREVIOUS_STEP" }) }}</a>
+                    <button id="userNextStepBottom" class="btn btn-primary pull-right submitButton largeButton nextStep" name="userform" type="submit">{{ translate({ ident: "CONTINUE_TO_NEXT_STEP" }) }} <i class="fa fa-caret-right"></i></button>
+                    <div class="clearfix"></div>
+                </div>
+            {% endblock %}
+        {% endblock %}
+    </form>
+    {% include "form/fieldset/delete_shipping_address_modal.html.twig" %}
+{% endblock %}

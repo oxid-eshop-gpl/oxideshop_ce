@@ -1,0 +1,30 @@
+{% capture append = "oxidBlock_content" %}
+    {% set template_title = "LISTMANIA"|translate %}
+    {% set _actvrecommlist = oView.getActiveRecommList() %}
+
+    <h1 class="page-header">{{ translate({ ident: "LISTMANIA" }) }}</h1>
+
+    {% if oView.isSavedList() %}
+        {% set _statusMessage = "LISTMANIA_LIST_SAVED"|translate %}
+        {% include "message/success.html.twig" with {statusMessage: _statusMessage} %}
+    {% endif %}
+
+    {% block account_redommendationlist_content %}
+
+        {% include "form/recommendation_edit.html.twig" with {actvrecommlist: _actvrecommlist} %}
+
+        <hr>
+
+        {% if not oView.getActiveRecommList() %}
+            {% set blEdit = true %}
+            {% include "page/recommendations/inc/list.html.twig" %}
+        {% endif %}
+    {% endblock %}
+
+    {{ insert_tracker({title: template_title}) }}
+{% endcapture %}
+{% capture append = "oxidBlock_sidebar" %}
+    {% include "page/account/inc/account_menu.html.twig" with {active_link: "recommendationlist"} %}
+{% endcapture %}
+{% include "layout/page.html.twig" with {sidebar: "Left"} %}
+

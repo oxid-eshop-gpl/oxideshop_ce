@@ -1,0 +1,45 @@
+{% set oConfig = oViewConf.getConfig() %}
+{% set sAccountId = oViewConf.getViewThemeParam('sEcondaRecommendationsAID') %}
+{% set sClassName = oConfig.getRequestParameter('actcl') %}
+
+{% if sAccountId %}
+    {# Definieren, welches econda-Widget geladen werden soll #}
+    {% if sClassName == 'start' and oViewConf.getViewThemeParam('blEcondaRecommendationsStart') %}
+        {% set sListId = "recommendationsStart" %}
+        {% set sWidgetId = oViewConf.getViewThemeParam('sEcondaWidgetIdStart') %}
+    {% elseif sClassName == 'alist' and oViewConf.getViewThemeParam('blEcondaRecommendationsList') %}
+        {% set sListId = "recommendationsList" %}
+        {% set sWidgetId = oViewConf.getViewThemeParam('sEcondaWidgetIdList') %}
+    {% elseif sClassName == 'details' and oViewConf.getViewThemeParam('blEcondaRecommendationsDetails') %}
+        {% set sListId = "recommendationsDetails" %}
+        {% set sWidgetId = oViewConf.getViewThemeParam('sEcondaWidgetIdDetails') %}
+    {% elseif sClassName == 'basket' and oViewConf.getViewThemeParam('blEcondaRecommendationsBasket') %}
+        {% set sListId = "recommendationsBasket" %}
+        {% set sWidgetId = oViewConf.getViewThemeParam('sEcondaWidgetIdBasket') %}
+    {% endif %}
+
+    {% if sWidgetId %}
+        {# econda-Recommendations abholen #}
+        {% set sUrl = "http://widgets.crosssell.info/eps/crosssell/recommendations.do?aid=" ~ sAccountId ~ "&wid=" ~ sWidgetId ~ "&csize=20&start=0&type=cs&widgetdetails=true" %}
+        {% set oResponse = sUrl|file_get_contents|json_decode %}
+
+        {# Prüfen, ob Artikel-IDs zurückgekommen sind #}
+        {% if oResponse and count(oResponse.items) %}
+            [{*<pre>{{ oResponse|var_dump }}</pre>*}]
+
+            {# Array mit Artikeln aus Response bilden #}
+            {% for oItem in oResponse.items %}
+                {% capture append = "aArticles" %}{{ oItem.id }}{% endcapture %}
+            {% endfor %}
+
+            {# ToDo: Prüfen, ob Artikel anhand der OXID oder Artikelnummer geladen werden müssen. #}
+            {# @var oxArticleList $oArtList #}
+            {% set sArticles = "','"|implode(aArticles) %}
+            {% set sViewName = "oxarticles"|getViewName %}
+            {% set oArtList = "oxArticleList"|oxNew %}
+            {{ oArtList.selectString("SELECT * "FROM sViewName WHERE" "OXARTNUM" IN( "sArticles" ) "AND" "OXACTIVE" = 1") }}
+
+            {% include "widget/product/list.html.twig" with {listId: sListId, head: oResponse.widgetdetails.title, products: oArtList} %}
+        {% endif %}
+    {% endif %}
+{% endif %}

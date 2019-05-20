@@ -1,0 +1,101 @@
+{{ script({ include: "js/libs/jqBootstrapValidation.min.js", priority: 10, dynamic: __oxid_include_dynamic }) }}
+
+{% capture assign = "sValidationJS" %}
+    {% spaceless %}
+        $('input,select,textarea').not('[type=submit]').jqBootstrapValidation(
+            {
+                filter: function()
+                {
+                    if( $( '#shippingAddress' ).css( 'display' ) == 'block' )
+                    {
+                        return $(this).is(':visible, .selectpicker[required]');
+                    }
+                    else
+                    {
+                        return $(this).is(':visible, #addressForm .selectpicker[required]');
+                    }
+                }
+            }
+        );
+    {% endspaceless %}
+{% endcapture %}
+
+{{ script({ add: sValidationJS, dynamic: __oxid_include_dynamic }) }}
+{% block user %}
+    <form class="js-oxValidate form-horizontal" action="{{ oViewConf.getSelfActionLink() }}" name="order" method="post" novalidate="novalidate">
+        {% block user_form %}
+            {% set aErrors = oView.getFieldValidationErrors() %}
+            <div class="addressCollumns">
+                <div class="hidden">
+                    {{ oViewConf.getHiddenSid()|raw() }}
+                    {{ oViewConf.getNavFormParams() }}
+                    <input type="hidden" name="fnc" value="changeuser_testvalues">
+                    <input type="hidden" name="cl" value="account_user">
+                    <input type="hidden" name="CustomError" value='user'>
+                    <input type="hidden" name="blshowshipaddress" value="1">
+                </div>
+
+                {# Rechnungsadresse #}
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        {% block user_billing_address_head %}
+                            {{ translate({ ident: "BILLING_ADDRESS" }) }}
+                            <button id="userChangeAddress" class="btn btn-warning btn-xs hasTooltip pull-right" name="changeBillAddress" type="button" title="{{ translate({ ident: "CHANGE" }) }}">
+                                <i class="fa fa-pencil"></i>
+                            </button>
+                        {% endblock %}
+                    </div>
+                    <div class="panel-body">
+                        {% block user_billing_address %}
+                            {% block user_billing_address_text %}
+                                <div id="addressText">
+                                    {% include "widget/address/billing_address.html.twig" %}
+                                </div>
+                            {% endblock %}
+                            {% block user_billing_address_form %}
+                                <div style="display: none;" id="addressForm">
+                                    {% include "form/fieldset/user_email.html.twig" %}
+                                    {% include "form/fieldset/user_billing.html.twig" with {noFormSubmit: true} %}
+                                </div>
+                            {% endblock %}
+                        {% endblock %}
+                    </div>
+                </div>
+
+                {{ script({ add: "$('#userChangeAddress').click( function() { $('#addressForm, #addressText').toggle();return false;});", dynamic: __oxid_include_dynamic }) }}
+
+                {# Lieferadresse #}
+                {% block user_shipping_address %}
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            {% block user_shipping_address_head %}
+                                {{ translate({ ident: "SHIPPING_ADDRESSES" }) }}
+                            {% endblock %}
+                        </div>
+                        <div class="panel-body">
+                            <div class="checkbox">
+                                {% block user_shipping_address_choice %}
+                                    <label>
+                                        <input type="checkbox" name="blshowshipaddress" id="showShipAddress" {% if not oView.showShipAddress() %}checked{% endif %} value="0"> {{ translate({ ident: "USE_BILLINGADDRESS_FOR_SHIPPINGADDRESS" }) }}
+                                    </label>
+                                {% endblock %}
+                            </div>
+                            {% block user_shipping_address_form %}
+                                <div id="shippingAddress" {% if not oView.showShipAddress() %} style="display: none;" {% endif %}>
+                                    {% include "form/fieldset/user_shipping.html.twig" with {noFormSubmit: true} %}
+                                </div>
+                            {% endblock %}
+                        </div>
+                    </div>
+                    {{ script({ add: "$('#showShipAddress').change( function() { $('#shippingAddress').toggle($(this).is(':not(:checked)')); });", dynamic: __oxid_include_dynamic }) }}
+                {% endblock %}
+            </div>
+            <div class="form-group">
+                <div class="col-lg-12">
+                    <button id="accUserSaveTop" class="btn btn-primary" name="userform" type="submit">{{ translate({ ident: "SAVE" }) }}</button>
+                </div>
+            </div>
+        {% endblock %}
+    </form>
+    {% include "form/fieldset/delete_shipping_address_modal.html.twig" %}
+{% endblock %}

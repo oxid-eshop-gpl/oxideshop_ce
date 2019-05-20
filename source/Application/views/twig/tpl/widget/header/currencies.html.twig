@@ -1,0 +1,23 @@
+{% if oView.loadCurrency() %}
+    {% set currency = oView.getActCurrency() %}
+    <div class="btn-group currencies-menu">
+        <button type="button" class="btn dropdown-toggle" data-toggle="dropdown">
+            {% block dd_layout_page_header_icon_menu_currencies_button %}
+                {{ currency.name }} <i class="fa fa-angle-down"></i>
+            {% endblock %}
+        </button>
+        <ul class="dropdown-menu dropdown-menu-right" role="menu">
+            {% block dd_layout_page_header_icon_menu_currencies_list %}
+                {% for _cur in oxcmp_cur %}
+                    {% if _cur.selected %}
+                        {% set selectedCurrency = _cur.name %}
+                        {% capture name = "currencySelected" %}
+                            <a href="{{ _cur.link|add_url_parameters(oView.getDynUrlParams()) }}" title="{{ _cur.name }}"><span>{{ _cur.name }}</span></a>
+                        {% endcapture %}
+                    {% endif %}
+                    <li{% if _cur.selected %} class="active"{% endif %}><a href="{{ _cur.link|add_url_parameters(oView.getDynUrlParams()) }}" title="{{ _cur.name }}">{{ _cur.name }}</a></li>
+                {% endfor %}
+            {% endblock %}
+        </ul>
+    </div>
+{% endif %}
