@@ -21,8 +21,7 @@
         "symfony/config": "~2.8|~3.0",
         "symfony/templating": "^4.1",
         "twig/twig": "^2.5",
-        "symfony/expression-language": "^4.1",
-        "oxid-esales/twig-theme": "dev-OXDEV-1433-mighrate-flow-theme-to-twig"
+        "symfony/expression-language": "^4.1"
     },
     "require-dev": {
         "oxid-esales/flow-theme": "^v3.0.2",
@@ -84,12 +83,6 @@
                 "shop_tests_path": "SHOP_TESTS_PATH",
                 "partial_module_paths": "PARTIAL_MODULE_PATHS"
             }
-        }
-    },
-    "repositories": {
-        "oxid-esales/twig-theme": {
-            "type": "vcs",
-            "url": "https://github.com/OXID-eSales/twig-theme"
         }
     }
 }
