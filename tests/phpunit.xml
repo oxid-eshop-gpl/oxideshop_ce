@@ -42,7 +42,38 @@
                 <file>../source/Setup/De/lang.php</file>
                 <file>../source/Setup/En/lang.php</file>
                 <file>../source/Application/Controller/Admin/ShopCountries.php</file>
+                <file>../source/tests/Integration/Encoding/UtfTest.php</file>
+                <file>../source/tests/Integration/Core/Module/ModuleSmartyPluginDirectoriesTest.php</file>
+                <file>../source/tests/Acceptance/FrontendTestCase.php</file>
+
+                <directory suffix=".php">../source/tests/Acceptance/Admin</directory>
+                <directory suffix=".php">../source/tests/Acceptance/Frontend</directory>
+                <directory suffix=".php">../source/tests/Acceptance/International</directory>
+                <directory suffix=".php">../source/tests/Acceptance/Javascript</directory>
+                <directory suffix=".php">../source/tests/</directory>
+
+                <file>../source/tests/Acceptance/AdminTestCase.php</file>
+                <file>../source/tests/Acceptance/FrontendTestCase.php</file>
+                <file>../source/tests/Unit/Core/EmailAzureTplTest.php</file>
+                <file>../source/tests/Unit/Core/EmailTest.php</file>
+                <file>../source/tests/Unit/Core/EmailUtf8Test.php</file>
+                <file>../source/tests/Unit/Core/UtilsTest.php</file>
+                <file>../source/tests/Unit/Core/UtilsViewTest.php</file>
+                <file>../source/tests/Unit/Application/Controller/ContentTest.php</file>
+                <file>../source/tests/Unit/Application/Controller/ShopControlTest.php</file>
+                <file>../source/tests/Unit/Application/Model/ActionsTest.php</file>
+                <file>../source/tests/Unit/Application/Model/CategoryTest.php</file>
+                <file>../source/tests/Unit/Application/Model/NewsTest.php</file>
+                <file>../source/tests/Unit/Application/Model/NewsletterTest.php</file>
+                <file>../source/tests/Unit/Application/Component/Widget/CategoryTreeTest.php</file>
             </exclude>
         </whitelist>
     </filter>
+
+
+
+
+
+
+
 </phpunit>
