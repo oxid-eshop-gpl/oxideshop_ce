@@ -234,52 +234,37 @@ class ViewConfigTest extends \OxidTestCase
 
     public function testGetLogoutLink()
     {
-        $oCfg = $this->getMock(\OxidEsales\Eshop\Core\Config::class, array('getShopHomeURL', 'isSsl'));
-        $oCfg->expects($this->once())
-            ->method('getShopHomeURL')
-            ->will($this->returnValue('shopHomeUrl/'));
-        $oCfg->expects($this->once())
-            ->method('isSsl')
-            ->will($this->returnValue(false));
+        $config = $this->getMockBuilder(Config::class)->setMethods(['getShopHomeURL', 'isSsl'])->getMock();
+        $config->expects($this->once())->method('getShopHomeURL')->willReturn('shopHomeUrl/');
+        $config->expects($this->once())->method('isSsl')->willReturn(false);
 
-        $oVC = $this->getMock(
-            'oxviewconfig'
-            , array('getConfig', 'getTopActionClassName', 'getActCatId', 'getActTplName', 'getActContentLoadId'
-                    , 'getActArticleId', 'getActSearchParam', 'getActSearchTag', 'getActListType', 'getActRecommendationId', 'getSessionChallengeToken')
-        );
+        $viewConfig = $this->getMockBuilder(ViewConfig::class)
+            ->setMethods([
+                'getConfig',
+                'getTopActionClassName',
+                'getActCatId',
+                'getActTplName',
+                'getActContentLoadId',
+                'getActArticleId',
+                'getActSearchParam',
+                'getActSearchTag',
+                'getActListType',
+                'getActRecommendationId',
+                'getSessionChallengeToken',
+            ])->getMock();
 
-        $oVC->expects($this->any())
-            ->method('getConfig')
-            ->will($this->returnValue($oCfg));
-        $oVC->expects($this->once())
-            ->method('getTopActionClassName')
-            ->will($this->returnValue('actionclass'));
-        $oVC->expects($this->once())
-            ->method('getActCatId')
-            ->will($this->returnValue('catid'));
-        $oVC->expects($this->once())
-            ->method('getActTplName')
-            ->will($this->returnValue('tpl'));
-        $oVC->expects($this->once())
-            ->method('getActContentLoadId')
-            ->will($this->returnValue('oxloadid'));
-        $oVC->expects($this->once())
-            ->method('getActArticleId')
-            ->will($this->returnValue('anid'));
-        $oVC->expects($this->once())
-            ->method('getActSearchParam')
-            ->will($this->returnValue('searchparam'));
-        $oVC->expects($this->once())
-            ->method('getActRecommendationId')
-            ->will($this->returnValue('testrecomm'));
-        $oVC->expects($this->once())
-            ->method('getActListType')
-            ->will($this->returnValue('listtype'));
-        $oVC->expects($this->once())
-            ->method('getSessionChallengeToken')
-            ->will($this->returnValue('csrftoken'));
+        $viewConfig->expects($this->any())->method('getConfig')->willReturn($config);
+        $viewConfig->expects($this->once())->method('getTopActionClassName')->willReturn('actionclass');
+        $viewConfig->expects($this->once())->method('getActCatId')->willReturn('catid');
+        $viewConfig->expects($this->once())->method('getActTplName')->willReturn('tpl');
+        $viewConfig->expects($this->once())->method('getActContentLoadId')->willReturn('oxloadid');
+        $viewConfig->expects($this->once())->method('getActArticleId')->willReturn('anid');
+        $viewConfig->expects($this->once())->method('getActSearchParam')->willReturn('searchparam');
+        $viewConfig->expects($this->once())->method('getActRecommendationId')->willReturn('testrecomm');
+        $viewConfig->expects($this->once())->method('getActListType')->willReturn('listtype');
+        $viewConfig->expects($this->once())->method('getSessionChallengeToken')->willReturn('csrftoken');
 
-        $this->assertEquals('shopHomeUrl/cl=actionclass&amp;cnid=catid&amp;anid=anid&amp;searchparam=searchparam&amp;recommid=testrecomm&amp;listtype=listtype&amp;fnc=logout&amp;tpl=tpl&amp;oxloadid=oxloadid&amp;redirect=1&amp;stoken=csrftoken', $oVC->getLogoutLink());
+        $this->assertEquals('shopHomeUrl/cl=actionclass&amp;cnid=catid&amp;anid=anid&amp;searchparam=searchparam&amp;recommid=testrecomm&amp;listtype=listtype&amp;fnc=logout&amp;tpl=tpl&amp;oxloadid=oxloadid&amp;redirect=1&amp;stoken=csrftoken', $viewConfig->getLogoutLink());
     }
 
     /**
@@ -289,52 +274,37 @@ class ViewConfigTest extends \OxidTestCase
      */
     public function testGetLogoutLinkSsl()
     {
-        $oCfg = $this->getMock(\OxidEsales\Eshop\Core\Config::class, array('getShopSecureHomeUrl', 'isSsl'));
-        $oCfg->expects($this->once())
-            ->method('getShopSecureHomeUrl')
-            ->will($this->returnValue('sslShopHomeUrl/'));
-        $oCfg->expects($this->once())
-            ->method('isSsl')
-            ->will($this->returnValue(true));
+        $config = $this->getMockBuilder(Config::class)->setMethods(['getShopSecureHomeUrl', 'isSsl'])->getMock();
+        $config->expects($this->once())->method('getShopSecureHomeUrl')->willReturn('sslShopHomeUrl/');
+        $config->expects($this->once())->method('isSsl')->willReturn(true);
 
-        $oVC = $this->getMock(
-            'oxviewconfig'
-            , array('getConfig', 'getTopActionClassName', 'getActCatId', 'getActTplName', 'getActContentLoadId'
-                    , 'getActArticleId', 'getActSearchParam', 'getActSearchTag', 'getActListType', 'getActRecommendationId', 'getSessionChallengeToken')
-        );
+        $viewConfig = $this->getMockBuilder(ViewConfig::class)
+            ->setMethods([
+                'getConfig',
+                'getTopActionClassName',
+                'getActCatId',
+                'getActTplName',
+                'getActContentLoadId',
+                'getActArticleId',
+                'getActSearchParam',
+                'getActSearchTag',
+                'getActListType',
+                'getActRecommendationId',
+                'getSessionChallengeToken',
+            ])->getMock();
 
-        $oVC->expects($this->any())
-            ->method('getConfig')
-            ->will($this->returnValue($oCfg));
-        $oVC->expects($this->once())
-            ->method('getTopActionClassName')
-            ->will($this->returnValue('actionclass'));
-        $oVC->expects($this->once())
-            ->method('getActCatId')
-            ->will($this->returnValue('catid'));
-        $oVC->expects($this->once())
-            ->method('getActTplName')
-            ->will($this->returnValue('tpl'));
-        $oVC->expects($this->once())
-            ->method('getActContentLoadId')
-            ->will($this->returnValue('oxloadid'));
-        $oVC->expects($this->once())
-            ->method('getActArticleId')
-            ->will($this->returnValue('anid'));
-        $oVC->expects($this->once())
-            ->method('getActSearchParam')
-            ->will($this->returnValue('searchparam'));
-        $oVC->expects($this->once())
-            ->method('getActRecommendationId')
-            ->will($this->returnValue('testrecomm'));
-        $oVC->expects($this->once())
-            ->method('getActListType')
-            ->will($this->returnValue('listtype'));
-        $oVC->expects($this->once())
-            ->method('getSessionChallengeToken')
-            ->will($this->returnValue('csrftoken'));
+        $viewConfig->expects($this->any())->method('getConfig')->willReturn($config);
+        $viewConfig->expects($this->once())->method('getTopActionClassName')->willReturn('actionclass');
+        $viewConfig->expects($this->once())->method('getActCatId')->willReturn('catid');
+        $viewConfig->expects($this->once())->method('getActTplName')->willReturn('tpl');
+        $viewConfig->expects($this->once())->method('getActContentLoadId')->willReturn('oxloadid');
+        $viewConfig->expects($this->once())->method('getActArticleId')->willReturn('anid');
+        $viewConfig->expects($this->once())->method('getActSearchParam')->willReturn('searchparam');
+        $viewConfig->expects($this->once())->method('getActRecommendationId')->willReturn('testrecomm');
+        $viewConfig->expects($this->once())->method('getActListType')->willReturn('listtype');
+        $viewConfig->expects($this->once())->method('getSessionChallengeToken')->willReturn('csrftoken');
 
-        $this->assertEquals('sslShopHomeUrl/cl=actionclass&amp;cnid=catid&amp;anid=anid&amp;searchparam=searchparam&amp;recommid=testrecomm&amp;listtype=listtype&amp;fnc=logout&amp;tpl=tpl&amp;oxloadid=oxloadid&amp;redirect=1&amp;stoken=csrftoken', $oVC->getLogoutLink());
+        $this->assertEquals('sslShopHomeUrl/cl=actionclass&amp;cnid=catid&amp;anid=anid&amp;searchparam=searchparam&amp;recommid=testrecomm&amp;listtype=listtype&amp;fnc=logout&amp;tpl=tpl&amp;oxloadid=oxloadid&amp;redirect=1&amp;stoken=csrftoken', $viewConfig->getLogoutLink());
     }
 
     /**
