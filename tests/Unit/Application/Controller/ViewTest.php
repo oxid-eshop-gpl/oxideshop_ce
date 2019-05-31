@@ -5,6 +5,7 @@
  */
 namespace OxidEsales\EshopCommunity\Tests\Unit\Application\Controller;
 
+use OxidEsales\Eshop\Core\Controller\BaseController;
 use OxidEsales\Eshop\Core\Registry;
 use OxidEsales\Eshop\Core\Session;
 use OxidEsales\Eshop\Core\ShopVersion;
@@ -293,8 +294,8 @@ class ViewTest extends \OxidTestCase
      */
     public function testExecuteFunction()
     {
-        $session = $this->getMock(Session::class, ['checkSessionChallenge']);
-        $session->method('checkSessionChallenge')->will($this->returnValue(true));
+        $session = $this->getMockBuilder(Session::class)->setMethods(['checkSessionChallenge'])->getMock();
+        $session->method('checkSessionChallenge')->willReturn(true);
         Registry::set(Session::class, $session);
 
         $oView = $this->getMock(\OxidEsales\EshopCommunity\Tests\Unit\Application\Controller\modOxView::class, array('xxx', '_executeNewAction'));
@@ -305,8 +306,8 @@ class ViewTest extends \OxidTestCase
 
     public function testExecuteFunctionExecutesComponentFunction()
     {
-        $session = $this->getMock(Session::class, array('checkSessionChallenge'));
-        $session->method('checkSessionChallenge')->will($this->returnValue(true));
+        $session = $this->getMockBuilder(Session::class)->setMethods(['checkSessionChallenge'])->getMock();
+        $session->method('checkSessionChallenge')->willReturn(true);
         Registry::set(Session::class, $session);
 
         $oCmp = $this->getMock(\OxidEsales\Eshop\Application\Component\CategoriesComponent::class, array('xxx'));
@@ -316,8 +317,8 @@ class ViewTest extends \OxidTestCase
 
     public function testExecuteFunctionThrowsExeption()
     {
-        $session = $this->getMock(Session::class, array('checkSessionChallenge'));
-        $session->method('checkSessionChallenge')->will($this->returnValue(true));
+        $session = $this->getMockBuilder(Session::class)->setMethods(['checkSessionChallenge'])->getMock();
+        $session->method('checkSessionChallenge')->willReturn(true);
         Registry::set(Session::class, $session);
 
         $oView = $this->getMock(\OxidEsales\EshopCommunity\Tests\Unit\Application\Controller\modOxView::class, array('xxx'));
@@ -337,8 +338,8 @@ class ViewTest extends \OxidTestCase
 
     public function testExecuteFunctionExecutesOnlyOnce()
     {
-        $session = $this->getMock(Session::class, array('checkSessionChallenge'));
-        $session->method('checkSessionChallenge')->will($this->returnValue(true));
+        $session = $this->getMockBuilder(Session::class)->setMethods(['checkSessionChallenge'])->getMock();
+        $session->method('checkSessionChallenge')->willReturn(true);
         Registry::set(Session::class, $session);
 
         $oCmp = $this->getMock(\OxidEsales\Eshop\Application\Component\CategoriesComponent::class, array('xxx'));
@@ -742,8 +743,8 @@ class ViewTest extends \OxidTestCase
     {
         $toBeExecuted = 'viewtestmodulecontroller?fnc=doSomethingElse&someParameter=1';
 
-        $session = $this->getMock(Session::class, array('checkSessionChallenge'));
-        $session->method('checkSessionChallenge')->will($this->returnValue(true));
+        $session = $this->getMockBuilder(Session::class)->setMethods(['checkSessionChallenge'])->getMock();
+        $session->method('checkSessionChallenge')->willReturn(true);
         Registry::set(Session::class, $session);
 
         $view = $this->getMock(\OxidEsales\EshopCommunity\Tests\Unit\Application\Controller\modOxView::class, array('doSomething'));
@@ -792,5 +793,23 @@ class ViewTest extends \OxidTestCase
         $shopIdCalculator->expects($this->any())->method('getShopId')->will($this->returnValue($this->getShopId()));
 
         return oxNew(\OxidEsales\Eshop\Core\Module\ModuleVariablesLocator::class, $cache, $shopIdCalculator);
+    }
+
+    /**
+     * @expectedException \OxidEsales\Eshop\Core\Exception\CSRFTokenException
+     * @expectedExceptionMessage EXCEPTION_NON_MATCHING_CSRF_TOKEN
+     * @expectedExceptionCode 400
+     */
+    public function testExecuteFunctionThrowsCSRFException(): void
+    {
+        $session = $this->getMockBuilder(Session::class)->setMethods(['getId', 'isActualSidInCookie', 'checkSessionChallenge'])->getMock();
+        $session->expects($this->once())->method('getId')->willReturn('some-session-id');
+        $session->expects($this->once())->method('isActualSidInCookie')->willReturn(true);
+        $session->expects($this->once())->method('checkSessionChallenge')->willReturn(false);
+        Registry::set(Session::class, $session);
+
+        $view = $this->getMockBuilder(BaseController::class)->setMethods(['nonExistingMethod'])->getMock();
+        $view->expects($this->never())->method('nonExistingMethod');
+        $view->executeFunction('nonExistingMethod');
     }
 }

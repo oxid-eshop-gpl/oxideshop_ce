@@ -2613,6 +2613,12 @@ return [
         'isInterface'      => false,
         'isDeprecated'     => false
     ],
+    'OxidEsales\Eshop\Core\Exception\CSRFTokenException'                         => [
+        'editionClassName' => \OxidEsales\EshopCommunity\Core\Exception\CSRFTokenException::class,
+        'isAbstract'       => false,
+        'isInterface'      => false,
+        'isDeprecated'     => false
+    ],
     'OxidEsales\Eshop\Core\Exception\DatabaseConnectionException'                => [
         'editionClassName' => \OxidEsales\EshopCommunity\Core\Exception\DatabaseConnectionException::class,
         'isAbstract'       => false,

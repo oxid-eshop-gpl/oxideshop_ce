@@ -6,10 +6,12 @@
 namespace OxidEsales\EshopCommunity\Core;
 
 use OxidEsales\Eshop\Application\Controller\FrontendController;
+use OxidEsales\Eshop\Core\Exception\CSRFTokenException;
 use OxidEsales\Eshop\Core\Exception\DatabaseConnectionException;
 use OxidEsales\Eshop\Core\Exception\RoutingException;
 use OxidEsales\Eshop\Core\Exception\StandardException;
 use OxidEsales\Eshop\Core\Cache\DynamicContent\ContentCache;
+use OxidEsales\Eshop\Core\Registry;
 use oxOutput;
 use oxSystemComponentException;
 use PHPMailer\PHPMailer\PHPMailer;
@@ -143,6 +145,8 @@ class ShopControl extends \OxidEsales\Eshop\Core\Base
             $this->_handleCookieException($exception);
         } catch (\OxidEsales\Eshop\Core\Exception\DatabaseException $exception) {
             $this->handleDatabaseException($exception);
+        } catch (CSRFTokenException $exception) {
+            $this->handleCSRFTokenException($exception);
         } catch (\OxidEsales\Eshop\Core\Exception\StandardException $exception) {
             $this->_handleBaseException($exception);
         }
@@ -735,10 +739,11 @@ class ShopControl extends \OxidEsales\Eshop\Core\Base
         $exception->debugOut();
 
         if ($this->_isDebugMode()) {
-            \OxidEsales\Eshop\Core\Registry::getUtilsView()->addErrorToDisplay($exception);
+            $_POST['stoken'] = Registry::getSession()->getSessionChallengeToken();
+            Registry::getUtilsView()->addErrorToDisplay($exception);
             $this->_process('exceptionError', 'displayExceptionError');
         } else {
-            \OxidEsales\Eshop\Core\Registry::getUtils()->redirect($this->getConfig()->getShopHomeUrl() . 'cl=start', true, 302);
+            Registry::getUtils()->redirect($this->getConfig()->getShopHomeUrl() . 'cl=start', true, 302);
         }
     }
 
@@ -805,6 +810,18 @@ class ShopControl extends \OxidEsales\Eshop\Core\Base
     }
 
     /**
+     * Handles CSRF token inconsistency.
+     *
+     * @param CSRFTokenException $exception
+     */
+    protected function handleCSRFTokenException(CSRFTokenException $exception): void
+    {
+        $this->logException($exception);
+        Registry::getUtilsView()->addErrorToDisplay($exception);
+        Registry::getUtils()->redirect(Registry::getConfig()->getShopHomeUrl() . 'cl=start', true, 302);
+    }
+
+    /**
      * Handling other not caught exceptions.
      *
      * @param \OxidEsales\Eshop\Core\Exception\StandardException $exception
@@ -814,7 +831,8 @@ class ShopControl extends \OxidEsales\Eshop\Core\Base
         $this->logException($exception);
 
         if ($this->_isDebugMode()) {
-            \OxidEsales\Eshop\Core\Registry::getUtilsView()->addErrorToDisplay($exception);
+            $_POST['stoken'] = Registry::getSession()->getSessionChallengeToken();
+            Registry::getUtilsView()->addErrorToDisplay($exception);
             $this->_process('exceptionError', 'displayExceptionError');
         }
     }

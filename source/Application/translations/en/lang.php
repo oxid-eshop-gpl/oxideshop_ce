@@ -182,6 +182,7 @@ $aLang = [
 'ERROR_MESSAGE_INCORRECT_DATE'                                => 'Incorrect date',
 'EXCEPTION_NOT_VALID_CURL_CONSTANT'                           => 'Not valid cURL constant name: %s',
 'EXCEPTION_CURL_ERROR'                                        => 'cURL error: %s',
+'EXCEPTION_NON_MATCHING_CSRF_TOKEN'                           => 'CSRF token does not match!',
 'EXPIRES_IN'                                                  => 'Expires in',
 'FAX'                                                         => 'Telefax',
 'FIRST_LAST_NAME'                                             => 'First/last Name',

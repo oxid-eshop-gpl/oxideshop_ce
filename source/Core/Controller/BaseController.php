@@ -6,6 +6,7 @@
 
 namespace OxidEsales\EshopCommunity\Core\Controller;
 
+use OxidEsales\Eshop\Core\Exception\CSRFTokenException;
 use OxidEsales\Eshop\Core\Registry;
 use OxidEsales\EshopCommunity\Core\ShopVersion;
 use OxidEsales\EshopCommunity\Internal\ShopEvents\AfterRequestProcessedEvent;
@@ -525,24 +526,16 @@ class BaseController extends \OxidEsales\Eshop\Core\Base
      * @param string $sFunction name of function to execute
      *
      * @throws \OxidEsales\Eshop\Core\Exception\SystemComponentException system component exception
-     *
-     * @return bool|null
      */
     public function executeFunction($sFunction)
     {
-        // Check whether the csrf token matches
-        $session = Registry::getSession();
-        if (null !== $sFunction &&
-            $session->getId() &&
-            $session->isActualSidInCookie() &&
-            false === $session->checkSessionChallenge()
-        ) {
-            return false;
-        }
-
         // execute
         if ($sFunction && !self::$_blExecuted) {
             if (method_exists($this, $sFunction)) {
+                if ($this->checkCSRFToken()) {
+                    throw oxNew(CSRFTokenException::class, 'EXCEPTION_NON_MATCHING_CSRF_TOKEN', 400);
+                }
+
                 $sNewAction = $this->$sFunction();
                 self::$_blExecuted = true;
                 $this->dispatchEvent(new AfterRequestProcessedEvent);
@@ -561,6 +554,15 @@ class BaseController extends \OxidEsales\Eshop\Core\Base
                 }
             }
         }
+    }
+
+    /**
+     * @return bool
+     */
+    protected function checkCSRFToken(): bool
+    {
+        $session = Registry::getSession();
+        return $session->getId() && $session->isActualSidInCookie() && !$session->checkSessionChallenge();
     }
 
     /**
