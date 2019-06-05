@@ -756,6 +756,9 @@ class MyAccountFrontendTest extends FrontendTestCase
      */
     public function testFrontendMyAccountCompare()
     {
+        // See https://github.com/OXID-eSales/oxideshop_ce/blob/b-6.x-add-codeception-tests/tests/Codeception/acceptance/ProductCompareCest.php#L65
+        $this->markTestSkipped('CSRF token is missing from left to right comparison links in azure theme. This test will be replaced with codeception test.');
+
         $this->openArticle( 1000, true );
         $this->click("productLinks");
         $this->waitForItemAppear("addToCompare");
@@ -832,6 +835,8 @@ class MyAccountFrontendTest extends FrontendTestCase
      */
     public function testListmaniaCreating()
     {
+        $this->markTestSkipped('CSRF token is missing from recommendations list. This test will be replaced with codeception test.');
+
         //deleting existing recommlists for better possibility to test creating of new recomlist
         $aRecommListParams = array("OXTITLE" => 'Kite-Equipment');
         $this->callShopSC("oxRecommList", "delete", "e7a0b1906e0d94e05693f06b0b6fcc32", $aRecommListParams);
