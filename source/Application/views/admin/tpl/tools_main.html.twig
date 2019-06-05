@@ -45,7 +45,7 @@
             </tr>
             <tr>
                 <td class="edittext">
-                    {{ translate({ ident: "TOOLS_MAIN_SQLDUMB" }) }} ({{ translate({ ident: "GENERAL_MAX_FILE_UPLOAD" }) }} {{ sMaxFormattedFileSize }})&nbsp;&nbsp;&nbsp;
+                    {{ translate({ ident: "TOOLS_MAIN_SQLDUMB" })|raw }} ({{ translate({ ident: "GENERAL_MAX_FILE_UPLOAD" })|raw }} {{ sMaxFormattedFileSize }})&nbsp;&nbsp;&nbsp;
                 </td>
                 <td class="edittext"><br>
                     <input type="file" style="width: 370" class="edittext" name="myfile[SQL1@usqlfile]" {{ readonly }}>

@@ -86,7 +86,7 @@
         <tr>
             <td class="edittext" height="40">{{ translate({ ident: "GENIMPORT_FIELDSENCLOSEDBY" }) }}:</td>
             <td class="edittext">
-            <input type="input" class="edittext" style="width: 20px;" maxlength="1" name="sGiCsvFieldEncloser" value="{{ sGiCsvFieldEncloser }}" {{ readonly }}>
+            <input type="input" class="edittext" style="width: 20px;" maxlength="1" name="sGiCsvFieldEncloser" value="{{ sGiCsvFieldEncloser|raw }}" {{ readonly }}>
             </td>
         </tr>
         <tr>

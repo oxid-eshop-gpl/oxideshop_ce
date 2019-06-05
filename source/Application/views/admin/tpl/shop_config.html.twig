@@ -1111,7 +1111,7 @@ function editThis(sID)
 
             <dl>
                 <dt>
-                    <input type=text class="txt" name=confstrs[sGiCsvFieldEncloser] value="{{ confstrs.sGiCsvFieldEncloser }}" {{ readonly }}>
+                    <input type=text class="txt" name=confstrs[sGiCsvFieldEncloser] value="{{ confstrs.sGiCsvFieldEncloser|raw }}" {{ readonly }}>
                 </dt>
                 <dd>
                     {{ translate({ ident: "SHOP_CONFIG_CSVFIELDENCLOSER" }) }}
@@ -1166,7 +1166,7 @@ function editThis(sID)
 
             <dl>
                 <dt>
-                    <input type="text" class="txt" name="confstrs[sParcelService]" style="width: 300px;" value="{{ confstrs.sParcelService }}" {{ readonly }}>
+                    <input type="text" class="txt" name="confstrs[sParcelService]" style="width: 300px;" value="{{ confstrs.sParcelService|raw }}" {{ readonly }}>
                     {% include "inputhelp.html.twig" with {'sHelpId': help_id("HELP_SHOP_CONFIG_PARCELSERVICE"), 'sHelpText': help_text("HELP_SHOP_CONFIG_PARCELSERVICE")} %}
                 </dt>
                 <dd>

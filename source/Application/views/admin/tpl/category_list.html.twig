@@ -53,7 +53,7 @@
 
                                 <select name="where[oxcategories][oxparentid]" class="editinput" onChange="Javascript:document.search.submit();">
                                     {% for pcat in cattree.__get('aList') %}
-                                        <option value="{{ pcat.oxcategories__oxid.value }}" {% if pcat.selected %}SELECTED{% endif %}>{{ pcat.oxcategories__oxtitle.getRawValue() }}</option>
+                                        <option value="{{ pcat.oxcategories__oxid.value }}" {% if pcat.selected %}SELECTED{% endif %}>{{ pcat.oxcategories__oxtitle.getRawValue()|raw }}</option>
                                     {% endfor %}
                                 </select>
 

@@ -101,7 +101,7 @@ function editThis(sID)
                   </tr>
                  {% endif %}
 
-                  {% for picRow in 1..$iPicCount+1 %}
+                  {% for picRow in 1..iPicCount+1 %}
                   {% set iIndex = smarty.section.picRow.index %}
 
                   <tr>
@@ -109,7 +109,7 @@ function editThis(sID)
                         #{{ iIndex }}
                     </td>
                     <td class="text">
-                        {% set sPicFile = edit.getPictureFieldValue("oxpic", %}
+                        {% set sPicFile = edit.getPictureFieldValue("oxpic", iIndex) %}
                         {% set blPicUplodaded = true %}
 
                         {% if sPicFile == "nopic.jpg" or sPicFile == "" %}

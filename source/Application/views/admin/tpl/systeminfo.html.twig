@@ -42,7 +42,7 @@
 {% for name, value in aSystemInfo %}
 <tr>
     <td class="e">{{ name }}</td>
-    <td class="v">{{ value }}</td>
+    <td class="v">{{ value|raw }}</td>
 </tr>
 {% endfor %}
 </table>

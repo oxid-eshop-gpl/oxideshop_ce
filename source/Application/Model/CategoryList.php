@@ -8,6 +8,7 @@ namespace OxidEsales\EshopCommunity\Application\Model;
 
 use oxDb;
 use Exception;
+use OxidEsales\EshopCommunity\Core\Field;
 
 /**
  * Category list manager.
@@ -530,7 +531,7 @@ class CategoryList extends \OxidEsales\Eshop\Core\Model\ListModel
     protected function _addDepthInfo($aTree, $oCat, $sDepth = "")
     {
         $sDepth .= "-";
-        $oCat->oxcategories__oxtitle->setValue($sDepth . ' ' . $oCat->oxcategories__oxtitle->value);
+        $oCat->oxcategories__oxtitle->setValue($sDepth . ' ' . $oCat->oxcategories__oxtitle->value, Field::T_RAW);
         $aTree[$oCat->getId()] = $oCat;
         $aSubCats = $oCat->getSubCats();
         if (count($aSubCats) > 0) {
