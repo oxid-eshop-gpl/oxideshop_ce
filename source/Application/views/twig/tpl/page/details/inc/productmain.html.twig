@@ -21,7 +21,7 @@
 
     <form class="js-oxWidgetReload" action="{{ oView.getWidgetLink() }}" method="get">
         {{ oViewConf.getHiddenSid()|raw() }}
-        {{ oViewConf.getNavFormParams() }}
+        {{ oViewConf.getNavFormParams()|raw() }}
         <input type="hidden" name="cl" value="{{ oView.getClassName() }}">
         <input type="hidden" name="oxwparent" value="{{ oViewConf.getTopActiveClassName() }}">
         <input type="hidden" name="listtype" value="{{ oView.getListType() }}">
@@ -36,10 +36,10 @@
 {% endif %}
 
 {% hasrights { "ident": "TOBASKET",} %}
-    <form class="js-oxProductForm" action="{{ oViewConf.getSelfActionLink() }}" method="post">
+    <form class="js-oxProductForm" action="{{ oViewConf.getSelfActionLink()|raw() }}" method="post">
         <div class="hidden">
             {{ oViewConf.getHiddenSid()|raw() }}
-            {{ oViewConf.getNavFormParams() }}
+            {{ oViewConf.getNavFormParams()|raw() }}
             <input type="hidden" name="cl" value="{{ oViewConf.getTopActiveClassName() }}">
             <input type="hidden" name="aid" value="{{ oDetailsProduct.oxarticles__oxid.value }}">
             <input type="hidden" name="anid" value="{{ oDetailsProduct.oxarticles__oxnid.value }}">

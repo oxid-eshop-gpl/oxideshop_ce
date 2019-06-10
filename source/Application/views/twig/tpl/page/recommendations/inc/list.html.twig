@@ -14,7 +14,7 @@
                             <small class="text-muted">{{ translate({ ident: "LIST_BY" }) }} <strong>{{ recommlist.oxrecommlists__oxauthor.value }}</strong></small>
 
                             {% if blEdit %}
-                                <form action="{{ oViewConf.getSelfActionLink() }}" method="post" class="form-inline pull-right">
+                                <form action="{{ oViewConf.getSelfActionLink()|raw() }}" method="post" class="form-inline pull-right">
                                     <div class="hidden">
                                         {{ oViewConf.getHiddenSid()|raw() }}
                                         <input type="hidden" name="cl" value="account_recommlist">

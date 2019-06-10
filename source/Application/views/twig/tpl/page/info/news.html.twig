@@ -9,7 +9,7 @@
             {% if not empty(oNews) and not empty(oNews.oxnews__oxshortdesc.value) %}
                 <div>
                     <h3>
-                        <span>{{ oNews.oxnews__oxdate.value|date_format("%d.%m. % Y") }} - </span> {{ oNews.oxnews__oxshortdesc.value }}
+                        <span>{{ oNews.oxnews__oxdate.value|date_format("%d.%m.%Y") }} - </span> {{ oNews.oxnews__oxshortdesc.value }}
                     </h3>
                     {{ oNews.getLongDesc()|raw }}
                 </div>

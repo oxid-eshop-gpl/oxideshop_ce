@@ -11,10 +11,10 @@
         <div class="panel panel-default">
             <div class="panel-heading">{{ translate({ ident: "DD_LOGIN_ACCOUNT_PANEL_LOGIN_TITLE" }) }}</div>
             <div class="panel-body">
-                <form name="login" class="js-oxValidate form-horizontal" action="{{ oViewConf.getSslSelfLink() }}" method="post" novalidate="novalidate">
+                <form name="login" class="js-oxValidate form-horizontal" action="{{ oViewConf.getSslSelfLink()|raw() }}" method="post" novalidate="novalidate">
                     <div class="hidden">
                         {{ oViewConf.getHiddenSid()|raw() }}
-                        {{ oViewConf.getNavFormParams() }}
+                        {{ oViewConf.getNavFormParams()|raw() }}
                         <input type="hidden" name="fnc" value="login_noredirect">
                         <input type="hidden" name="cl" value="{{ oViewConf.getActiveClassName() }}">
                         <input type="hidden" name="tpl" value="{{ oViewConf.getActTplName() }}">
@@ -75,7 +75,7 @@
             <div class="panel-heading">{{ translate({ ident: "DD_LOGIN_ACCOUNT_PANEL_CREATE_TITLE" }) }}</div>
             <div class="panel-body">
                 <p>{{ translate({ ident: "DD_LOGIN_ACCOUNT_PANEL_CREATE_BODY" }) }}</p>
-                <a id="openAccountLink" href="{{ seo_url({ ident: oViewConf.getSslSelfLink()|cat("cl=register") }) }}" class="btn btn-primary btn-block" role="button">{{ translate({ ident: "OPEN_ACCOUNT" }) }}</a><br />
+                <a id="openAccountLink" href="{{ seo_url({ ident: oViewConf.getSslSelfLink()|raw()|cat("cl=register") }) }}" class="btn btn-primary btn-block" role="button">{{ translate({ ident: "OPEN_ACCOUNT" }) }}</a><br />
             </div>
         </div>
         <div class="clearfix"></div>

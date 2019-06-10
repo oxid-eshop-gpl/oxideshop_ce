@@ -6,7 +6,7 @@
             {% endfor %}
         {% endif %}
         {% set editval = oView.getEnteredData() %}
-        <form action="{{ oViewConf.getSelfActionLink() }}" method="post" class="form-horizontal">
+        <form action="{{ oViewConf.getSelfActionLink()|raw() }}" method="post" class="form-horizontal">
             <div class="hidden">
                 {{ oViewConf.getHiddenSid()|raw() }}
                 <input type="hidden" name="fnc" value="sendwishlist">

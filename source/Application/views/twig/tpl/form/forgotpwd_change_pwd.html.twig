@@ -1,11 +1,11 @@
 {{ script({ include: "js/libs/jqBootstrapValidation.min.js", priority: 10, dynamic: __oxid_include_dynamic }) }}
 {{ script({ add: "$('input,select,textarea').not('[type=submit]').jqBootstrapValidation();", dynamic: __oxid_include_dynamic }) }}
 
-<form class="form-horizontal" action="{{ oViewConf.getSelfActionLink() }}" name="forgotpwd" method="post" role="form"  novalidate="novalidate">
+<form class="form-horizontal" action="{{ oViewConf.getSelfActionLink()|raw() }}" name="forgotpwd" method="post" role="form"  novalidate="novalidate">
     {% set aErrors = oView.getFieldValidationErrors() %}
     <div class="hidden">
         {{ oViewConf.getHiddenSid()|raw() }}
-        {{ oViewConf.getNavFormParams() }}
+        {{ oViewConf.getNavFormParams()|raw() }}
         <input type="hidden" name="fnc" value="updatePassword">
         <input type="hidden" name="uid" value="{{ oView.getUpdateId() }}">
         <input type="hidden" name="cl" value="forgotpwd">

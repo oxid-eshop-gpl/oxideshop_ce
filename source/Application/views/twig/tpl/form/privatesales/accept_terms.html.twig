@@ -1,9 +1,9 @@
 <div class="well">
-    <form name="login" class="js-oxValidate" action="{{ oViewConf.getSslSelfLink() }}" method="post" id="private-sales-login">
+    <form name="login" class="js-oxValidate" action="{{ oViewConf.getSslSelfLink()|raw() }}" method="post" id="private-sales-login">
 
         <div>
             {{ oViewConf.getHiddenSid()|raw() }}
-            {{ oViewConf.getNavFormParams() }}
+            {{ oViewConf.getNavFormParams()|raw() }}
             <input type="hidden" name="fnc" value="login_noredirect">
             <input type="hidden" name="cl" value="{{ oViewConf.getActiveClassName() }}">
             <input type="hidden" name="tpl" value="{{ oViewConf.getActTplName() }}">
@@ -21,7 +21,7 @@
         <div class="checkbox">
             <label>
                 <input type="checkbox" name="ord_agb" value="1" class="agb-check"> {% ifcontent ident "oxrighttocancellegend" set oContent %}
-                {{ oContent.oxcontents__oxcontent.value }}
+                {{ oContent.oxcontents__oxcontent.value|raw() }}
                 {% endifcontent %}
             </label>
         </div>

@@ -6,7 +6,7 @@
     {% endfor %}
 {% endcapture %}
 {% if not oxcmp_user.oxuser__oxpassword.value %}
-    <form class="form" id="login" name="login" action="{{ oViewConf.getSslSelfLink() }}" method="post">
+    <form class="form" id="login" name="login" action="{{ oViewConf.getSslSelfLink()|raw() }}" method="post">
         <div id="loginBox" class="loginBox" {% if bIsError %}style="display: block;"{% endif %}>
             {{ oViewConf.getHiddenSid()|raw() }}
             {{ oViewConf.getNavFormParams()|raw() }}
@@ -31,7 +31,7 @@
                 <div class="input-group">
                     <input id="loginPasword" type="password" name="lgn_pwd" class="form-control" value="" placeholder="{{ translate({ ident: "PASSWORD" }) }}">
                     <span class="input-group-btn">
-                        <a class="forgotPasswordOpener btn btn-default" href="{{ seo_url({ ident: oViewConf.getSslSelfLink()|cat("cl=forgotpwd") }) }}" title="{{ translate({ ident: "FORGOT_PASSWORD" }) }}">?</a>
+                        <a class="forgotPasswordOpener btn btn-default" href="{{ seo_url({ ident: oViewConf.getSslSelfLink()|raw()|cat("cl=forgotpwd") }) }}" title="{{ translate({ ident: "FORGOT_PASSWORD" }) }}">?</a>
                     </span>
                 </div>
             </div>
@@ -47,7 +47,7 @@
             <button type="submit" class="btn btn-primary">{{ translate({ ident: "LOGIN" }) }}</button>
 
             {% if not oxcmp_user %}
-                <a class="btn" id="registerLink" role="button" href="{{ seo_url({ ident: oViewConf.getSslSelfLink()|cat("cl=register") }) }}" title="{{ translate({ ident: "REGISTER" }) }}">{{ translate({ ident: "REGISTER" }) }}</a>
+                <a class="btn" id="registerLink" role="button" href="{{ seo_url({ ident: oViewConf.getSslSelfLink()|raw()|cat("cl=register") }) }}" title="{{ translate({ ident: "REGISTER" }) }}">{{ translate({ ident: "REGISTER" }) }}</a>
             {% endif %}
 
             {% block thirdparty_login %}{% endblock %}

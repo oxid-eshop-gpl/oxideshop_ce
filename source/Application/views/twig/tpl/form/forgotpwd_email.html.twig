@@ -6,10 +6,10 @@
     {{ translate({ ident: "HERE_YOU_SET_UP_NEW_PASSWORD" }) }}
 </p>
 
-<form class="form-horizontal" action="{{ oViewConf.getSelfActionLink() }}" name="forgotpwd" method="post" novalidate="novalidate">
+<form class="form-horizontal" action="{{ oViewConf.getSelfActionLink()|raw() }}" name="forgotpwd" method="post" novalidate="novalidate">
     <div class="hidden">
         {{ oViewConf.getHiddenSid()|raw() }}
-        {{ oViewConf.getNavFormParams() }}
+        {{ oViewConf.getNavFormParams()|raw() }}
         <input type="hidden" name="fnc" value="forgotpassword">
         <input type="hidden" name="cl" value="forgotpwd">
         <input type="hidden" name="actcontrol" value="forgotpwd">

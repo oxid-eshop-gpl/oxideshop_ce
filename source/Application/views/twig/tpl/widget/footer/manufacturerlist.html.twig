@@ -1,19 +1,21 @@
 {% set iManufacturerLimit = "20" %}
 {% set manufacturers = oView.getManufacturerlist() %}
 {% if manufacturers %}
-{% if manufacturers|length %}
-    {% block footer_manufacturers %}
-        <ul class="manufacturers list-unstyled">
-            {% set rootManufacturer = oView.getRootManufacturer() %}
-            <li><a href="{{ rootManufacturer.getLink() }}">{{ translate({ ident: "ALL_BRANDS" }) }}</a></li>
-            {% for _mnf in manufacturers %}
-                {% if loop.index0 < iManufacturerLimit %}
-                    <li><a href="{{ _mnf.getLink() }}" {% if _mnf.expanded %}class="exp"{% endif %}>{{ _mnf.oxmanufacturers__oxtitle.value }}</a></li>
-                {% elseif loop.index0 == iManufacturerLimit %}
-                    <li><a href="{{ rootManufacturer.getLink() }}">{{ translate({ ident: "MORE" }) }}</a></li>
-                {% endif %}
-            {% endfor %}
-        </ul>
-    {% endblock %}
-{% endif %}
+    {% if manufacturers|length %}
+        {% block footer_manufacturers %}
+            <ul class="manufacturers list-unstyled">
+                {% set rootManufacturer = oView.getRootManufacturer() %}
+                <li><a href="{{ rootManufacturer.getLink() }}">{{ translate({ ident: "ALL_BRANDS" }) }}</a></li>
+                {% for _mnf in manufacturers %}
+                    {% if loop.index0 < iManufacturerLimit %}
+                        <li><a href="{{ _mnf.getLink() }}"
+                               {% if _mnf.expanded %}class="exp"{% endif %}>{{ _mnf.oxmanufacturers__oxtitle.value|raw }}</a>
+                        </li>
+                    {% elseif loop.index0 == iManufacturerLimit %}
+                        <li><a href="{{ rootManufacturer.getLink() }}">{{ translate({ ident: "MORE" }) }}</a></li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
+        {% endblock %}
+    {% endif %}
 {% endif %}

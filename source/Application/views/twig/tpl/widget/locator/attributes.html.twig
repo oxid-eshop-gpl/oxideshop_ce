@@ -3,7 +3,7 @@
         <div class="row">
             <div class="col-xs-12">
                 <div class="list-filter clearfix">
-                    <form method="get" action="{{ oViewConf.getSelfActionLink() }}" name="_filterlist" id="filterList"
+                    <form method="get" action="{{ oViewConf.getSelfActionLink()|raw() }}" name="_filterlist" id="filterList"
                           class="pull-left">
                         <div class="hidden">
                             {{ oViewConf.getHiddenSid()|raw() }}
@@ -50,7 +50,7 @@
                     </form>
 
                     {% if hasActiveValue %}
-                        <form method="get" action="{{ oViewConf.getSelfActionLink() }}" name="_resetFilter"
+                        <form method="get" action="{{ oViewConf.getSelfActionLink()|raw() }}" name="_resetFilter"
                               id="resetFilter" class="pull-left">
                             {{ oViewConf.getHiddenSid()|raw() }}
                             {{ oViewConf.getNavFormParams()|raw() }}

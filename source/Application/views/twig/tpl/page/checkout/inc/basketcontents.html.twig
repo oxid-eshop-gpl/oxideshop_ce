@@ -5,7 +5,7 @@
 {{ script({ add: "$('input,select,textarea').not('[type=submit]').jqBootstrapValidation();", dynamic: __oxid_include_dynamic }) }}
 {% set currency = oView.getActCurrency() %}
 
-<form name="basket{{ basketindex }}" id="basket_form" action="{{ oViewConf.getSelfActionLink() }}" method="post">
+<form name="basket{{ basketindex }}" id="basket_form" action="{{ oViewConf.getSelfActionLink()|raw() }}" method="post">
     {{ oViewConf.getHiddenSid()|raw() }}
     <input type="hidden" name="cl" value="basket">
     <input type="hidden" name="fnc" value="changebasket">
@@ -24,7 +24,7 @@
 {% if oViewConf.getShowVouchers() and oViewConf.getActiveClassName() == 'basket' %}
     {% block checkout_basket_vouchers %}
         <div id="basketVoucher" class="pull-left">
-            <form name="voucher" action="{{ oViewConf.getSelfActionLink() }}" method="post" class="js-oxValidate form-inline" role="form" novalidate="novalidate">
+            <form name="voucher" action="{{ oViewConf.getSelfActionLink()|raw() }}" method="post" class="js-oxValidate form-inline" role="form" novalidate="novalidate">
                 <div class="couponBox" id="coupon">
                     <div class="hidden">
                         {{ oViewConf.getHiddenSid()|raw() }}

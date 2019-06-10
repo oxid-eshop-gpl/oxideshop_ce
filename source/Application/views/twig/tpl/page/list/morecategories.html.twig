@@ -34,7 +34,7 @@
                                 <div class="panel-heading">
                                     <h3 class="panel-title">
                                         <a id="moreSubCat_{{ loop.index }}" href="{{ category.getLink() }}">
-                                            {{ category.oxcategories__oxtitle.value }}{% if oView.showCategoryArticlesCount() and (category.getNrOfArticles() > 0) %} ({{ category.getNrOfArticles() }}){% endif %}
+                                            {{ category.oxcategories__oxtitle.value|raw() }}{% if oView.showCategoryArticlesCount() and (category.getNrOfArticles() > 0) %} ({{ category.getNrOfArticles() }}){% endif %}
                                         </a>
                                     </h3>
                                 </div>
@@ -44,7 +44,7 @@
                                         {% if iconUrl %}
                                             <div class="text-center">
                                                 <a href="{{ category.getLink() }}">
-                                                    <img src="{{ category.getIconUrl() }}" alt="{{ category.oxcategories__oxtitle.value }}" class="img-thumbnail" height="100" width="168">
+                                                    <img src="{{ category.getIconUrl() }}" alt="{{ category.oxcategories__oxtitle.value|raw() }}" class="img-thumbnail" height="100" width="168">
                                                 </a>
                                             </div>
                                         {% endif %}
@@ -71,7 +71,7 @@
                                         <div class="subcatPic text-center">
                                             {% if iconUrl %}
                                                 <a href="{{ category.getLink() }}">
-                                                    <img src="{{ category.getIconUrl() }}" alt="{{ category.oxcategories__oxtitle.value }}" class="img-thumbnail" height="100" width="168">
+                                                    <img src="{{ category.getIconUrl() }}" alt="{{ category.oxcategories__oxtitle.value|raw() }}" class="img-thumbnail" height="100" width="168">
                                                 </a>
                                             {% endif %}
                                         </div>

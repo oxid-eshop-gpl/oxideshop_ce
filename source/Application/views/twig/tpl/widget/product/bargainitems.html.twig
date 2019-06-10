@@ -26,9 +26,9 @@
                 {% set blShowToBasket = false %}
             {% endif %}
 
-            <form name="tobasket{{ testid }}" {% if blShowToBasket %}action="{{ oViewConf.getSelfActionLink() }}" method="post"{% else %}action="{{ _productLink }}" method="get"{% endif %}>
+            <form name="tobasket{{ testid }}" {% if blShowToBasket %}action="{{ oViewConf.getSelfActionLink()|raw() }}" method="post"{% else %}action="{{ _productLink|raw() }}" method="get"{% endif %}>
                 <div class="hidden">
-                    {{ oViewConf.getNavFormParams() }}
+                    {{ oViewConf.getNavFormParams()|raw() }}
                     {{ oViewConf.getHiddenSid()|raw() }}
                     <input type="hidden" name="pgNr" value="{{ oView.getActPage() }}">
                     {% if recommid %}

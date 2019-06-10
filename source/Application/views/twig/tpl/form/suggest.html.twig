@@ -3,10 +3,10 @@
 {{ script({ include: "js/libs/jqBootstrapValidation.min.js", priority: 10, dynamic: __oxid_include_dynamic }) }}
 {{ script({ add: "$('input,select,textarea').not('[type=submit]').jqBootstrapValidation();", dynamic: __oxid_include_dynamic }) }}
 
-<form class="form-horizontal" action="{{ oViewConf.getSslSelfLink() }}" method="post" novalidate="novalidate">
+<form class="form-horizontal" action="{{ oViewConf.getSslSelfLink()|raw() }}" method="post" novalidate="novalidate">
     <div class="hidden">
         {{ oViewConf.getHiddenSid()|raw() }}
-        {{ oViewConf.getNavFormParams() }}
+        {{ oViewConf.getNavFormParams()|raw() }}
         <input type="hidden" name="fnc" value="send">
         <input type="hidden" name="cl" value="suggest">
         <input type="hidden" name="anid" value="{{ _oProduct.oxarticles__oxnid.value }}">

@@ -12,10 +12,10 @@
 			{% block checkout_options_noreg %}
 				{% if oView.getShowNoRegOption() %}
 					<div class="col-md-12 {{ sColClass }}">
-						<form action="{{ oViewConf.getSslSelfLink() }}" method="post">
+						<form action="{{ oViewConf.getSslSelfLink()|raw() }}" method="post">
 							<div class="hidden">
 								{{ oViewConf.getHiddenSid() }}
-								{{ oViewConf.getNavFormParams() }}
+								{{ oViewConf.getNavFormParams()|raw() }}
 								<input type="hidden" name="cl" value="user">
 								<input type="hidden" name="fnc" value="">
 								<input type="hidden" name="option" value="1">
@@ -44,10 +44,10 @@
 
 			{% block checkout_options_reg %}
 				<div class="col-md-12 {{ sColClass }}">
-					<form action="{{ oViewConf.getSslSelfLink() }}" method="post">
+					<form action="{{ oViewConf.getSslSelfLink()|raw() }}" method="post">
 						<div class="hidden">
 							{{ oViewConf.getHiddenSid() }}
-							{{ oViewConf.getNavFormParams() }}
+							{{ oViewConf.getNavFormParams()|raw() }}
 							<input type="hidden" name="cl" value="user">
 							<input type="hidden" name="fnc" value="">
 							<input type="hidden" name="option" value="3">

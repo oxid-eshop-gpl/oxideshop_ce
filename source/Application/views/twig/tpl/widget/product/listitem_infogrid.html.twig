@@ -16,9 +16,9 @@
         {% set blShowToBasket = false %}
     {% endif %}
 
-    <form name="tobasket{{ testid }}" {% if blShowToBasket %}action="{{ oViewConf.getSelfActionLink() }}" method="post"{% else %}action="{{ _productLink }}" method="get"{% endif %}>
+    <form name="tobasket{{ testid }}" {% if blShowToBasket %}action="{{ oViewConf.getSelfActionLink()|raw() }}" method="post"{% else %}action="{{ _productLink|raw() }}" method="get"{% endif %}>
         <div class="hidden">
-            {{ oViewConf.getNavFormParams() }}
+            {{ oViewConf.getNavFormParams()|raw() }}
             {{ oViewConf.getHiddenSid()|raw() }}
             <input type="hidden" name="pgNr" value="{{ oView.getActPage() }}">
             {% if recommid %}
@@ -53,7 +53,7 @@
             <div class="col-xs-12 col-md-5">
                 {% block widget_product_listitem_infogrid_gridpicture %}
                     <div class="picture text-center">
-                        <a href="{{ _productLink }}" title="{{ product.oxarticles__oxtitle.value }} {{ product.oxarticles__oxvarselect.value }}">
+                        <a href="{{ _productLink|raw() }}" title="{{ product.oxarticles__oxtitle.value }} {{ product.oxarticles__oxvarselect.value }}">
                             <img src="{{ oViewConf.getImageUrl('spinner.gif') }}" data-src="{{ product.getThumbnailUrl() }}" alt="{{ product.oxarticles__oxtitle.value }} {{ product.oxarticles__oxvarselect.value }}" class="img-responsive">
                         </a>
                     </div>
@@ -63,7 +63,7 @@
                 <div class="listDetails">
                     {% block widget_product_listitem_infogrid_titlebox %}
                         <div class="title">
-                            <a id="{{ testid }}" href="{{ _productLink }}" class="title" title="{{ product.oxarticles__oxtitle.value }} {{ product.oxarticles__oxvarselect.value }}">
+                            <a id="{{ testid }}" href="{{ _productLink|raw() }}" class="title" title="{{ product.oxarticles__oxtitle.value }} {{ product.oxarticles__oxvarselect.value }}">
                                 <span>{{ product.oxarticles__oxtitle.value }} {{ product.oxarticles__oxvarselect.value }}</span>
                             </a>
                         </div>
@@ -155,9 +155,9 @@
                                             <i class="fa fa-shopping-cart"></i>
                                         </button>
                                     {% endhasrights %}
-                                    <a class="btn btn-primary" href="{{ _productLink }}" >{{ translate({ ident: "MORE_INFO" }) }}</a>
+                                    <a class="btn btn-primary" href="{{ _productLink|raw() }}" >{{ translate({ ident: "MORE_INFO" }) }}</a>
                                 {% else %}
-                                    <a class="btn btn-primary" href="{{ _productLink }}" >{{ translate({ ident: "MORE_INFO" }) }}</a>
+                                    <a class="btn btn-primary" href="{{ _productLink|raw() }}" >{{ translate({ ident: "MORE_INFO" }) }}</a>
                                 {% endif %}
                             </div>
                         </div>

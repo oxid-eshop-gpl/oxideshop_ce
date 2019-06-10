@@ -3,10 +3,10 @@
 
 {% set currency = oView.getActCurrency() %}
 <p class="alert alert-info">{{ translate({ ident: "MESSAGE_PRICE_ALARM_PRICE_CHANGE" }) }}</p>
-<form class="js-oxValidate form-horizontal" name="pricealarm" action="{{ oViewConf.getSelfActionLink() }}" method="post" novalidate="novalidate">
+<form class="js-oxValidate form-horizontal" name="pricealarm" action="{{ oViewConf.getSelfActionLink()|raw() }}" method="post" novalidate="novalidate">
     <div>
         {{ oViewConf.getHiddenSid()|raw() }}
-        {{ oViewConf.getNavFormParams() }}
+        {{ oViewConf.getNavFormParams()|raw() }}
         <input type="hidden" name="cl" value="{{ oViewConf.getTopActiveClassName() }}">
         {% if oDetailsProduct %}
             <input type="hidden" name="anid" value="{{ oDetailsProduct.oxarticles__oxid.value }}">

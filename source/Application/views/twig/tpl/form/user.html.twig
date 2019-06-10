@@ -22,13 +22,13 @@
 
 {{ script({ add: sValidationJS, dynamic: __oxid_include_dynamic }) }}
 {% block user %}
-    <form class="js-oxValidate form-horizontal" action="{{ oViewConf.getSelfActionLink() }}" name="order" method="post" novalidate="novalidate">
+    <form class="js-oxValidate form-horizontal" action="{{ oViewConf.getSelfActionLink()|raw() }}" name="order" method="post" novalidate="novalidate">
         {% block user_form %}
             {% set aErrors = oView.getFieldValidationErrors() %}
             <div class="addressCollumns">
                 <div class="hidden">
                     {{ oViewConf.getHiddenSid()|raw() }}
-                    {{ oViewConf.getNavFormParams() }}
+                    {{ oViewConf.getNavFormParams()|raw() }}
                     <input type="hidden" name="fnc" value="changeuser_testvalues">
                     <input type="hidden" name="cl" value="account_user">
                     <input type="hidden" name="CustomError" value='user'>

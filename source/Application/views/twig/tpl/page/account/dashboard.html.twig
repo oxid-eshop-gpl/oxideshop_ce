@@ -14,8 +14,8 @@
                 {% block account_dashboard_col1 %}
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            <a id="linkAccountPassword" href="{{ seo_url({ ident: oViewConf.getSslSelfLink()|cat("cl=account_password") }) }}">{{ translate({ ident: "CHANGE_PASSWORD" }) }}</a>
-                            <a href="{{ seo_url({ ident: oViewConf.getSslSelfLink()|cat("cl=account_password") }) }}" class="btn btn-default btn-xs pull-right">
+                            <a id="linkAccountPassword" href="{{ seo_url({ ident: oViewConf.getSslSelfLink()|raw()|cat("cl=account_password") }) }}">{{ translate({ ident: "CHANGE_PASSWORD" }) }}</a>
+                            <a href="{{ seo_url({ ident: oViewConf.getSslSelfLink()|raw()|cat("cl=account_password") }) }}" class="btn btn-default btn-xs pull-right">
                                 <i class="fa fa-arrow-right"></i>
                             </a>
                         </div>
@@ -23,8 +23,8 @@
                     </div>
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            <a id="linkAccountNewsletter" href="{{ seo_url({ ident: oViewConf.getSslSelfLink()|cat("cl=account_newsletter") }) }}">{{ translate({ ident: "NEWSLETTER_SETTINGS" }) }}</a>
-                            <a href="{{ seo_url({ ident: oViewConf.getSslSelfLink()|cat("cl=account_newsletter") }) }}" class="btn btn-default btn-xs pull-right">
+                            <a id="linkAccountNewsletter" href="{{ seo_url({ ident: oViewConf.getSslSelfLink()|raw()|cat("cl=account_newsletter") }) }}">{{ translate({ ident: "NEWSLETTER_SETTINGS" }) }}</a>
+                            <a href="{{ seo_url({ ident: oViewConf.getSslSelfLink()|raw()|cat("cl=account_newsletter") }) }}" class="btn btn-default btn-xs pull-right">
                                 <i class="fa fa-arrow-right"></i>
                             </a>
                         </div>
@@ -32,8 +32,8 @@
                     </div>
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            <a id="linkAccountBillship" href="{{ seo_url({ ident: oViewConf.getSslSelfLink()|cat("cl=account_user") }) }}">{{ translate({ ident: "BILLING_SHIPPING_SETTINGS" }) }}</a>
-                            <a href="{{ seo_url({ ident: oViewConf.getSslSelfLink()|cat("cl=account_user") }) }}" class="btn btn-default btn-xs pull-right">
+                            <a id="linkAccountBillship" href="{{ seo_url({ ident: oViewConf.getSslSelfLink()|raw()|cat("cl=account_user") }) }}">{{ translate({ ident: "BILLING_SHIPPING_SETTINGS" }) }}</a>
+                            <a href="{{ seo_url({ ident: oViewConf.getSslSelfLink()|raw()|cat("cl=account_user") }) }}" class="btn btn-default btn-xs pull-right">
                                 <i class="fa fa-arrow-right"></i>
                             </a>
                         </div>
@@ -42,7 +42,7 @@
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             <a id="linkAccountOrder" href="{{ seo_url({ ident: oViewConf.getSelfLink()|cat("cl=account_order") }) }}">{{ translate({ ident: "ORDER_HISTORY" }) }}</a>
-                            <a href="{{ seo_url({ ident: oViewConf.getSslSelfLink()|cat("cl=account_order") }) }}" class="btn btn-default btn-xs pull-right">
+                            <a href="{{ seo_url({ ident: oViewConf.getSslSelfLink()|raw()|cat("cl=account_order") }) }}" class="btn btn-default btn-xs pull-right">
                                 <i class="fa fa-arrow-right"></i>
                             </a>
                         </div>
@@ -52,7 +52,7 @@
                         <div class="panel panel-default">
                             <div class="panel-heading">
                                 <a id="linkAccountDownloads" href="{{ seo_url({ ident: oViewConf.getSelfLink()|cat("cl=account_downloads") }) }}">{{ translate({ ident: "MY_DOWNLOADS" }) }}</a>
-                                <a href="{{ seo_url({ ident: oViewConf.getSslSelfLink()|cat("cl=account_downloads") }) }}" class="btn btn-default btn-xs pull-right">
+                                <a href="{{ seo_url({ ident: oViewConf.getSslSelfLink()|raw()|cat("cl=account_downloads") }) }}" class="btn btn-default btn-xs pull-right">
                                     <i class="fa fa-arrow-right"></i>
                                 </a>
                             </div>
@@ -66,7 +66,7 @@
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             <a href="{{ seo_url({ ident: oViewConf.getSelfLink()|cat("cl=account_noticelist") }) }}">{{ translate({ ident: "MY_WISH_LIST" }) }}</a>
-                            <a href="{{ seo_url({ ident: oViewConf.getSslSelfLink()|cat("cl=account_noticelist") }) }}" class="btn btn-default btn-xs pull-right">
+                            <a href="{{ seo_url({ ident: oViewConf.getSslSelfLink()|raw()|cat("cl=account_noticelist") }) }}" class="btn btn-default btn-xs pull-right">
                                 <i class="fa fa-arrow-right"></i>
                             </a>
                         </div>
@@ -76,7 +76,7 @@
                         <div class="panel panel-default">
                             <div class="panel-heading">
                                 <a href="{{ seo_url({ ident: oViewConf.getSelfLink()|cat("cl=account_wishlist") }) }}">{{ translate({ ident: "MY_GIFT_REGISTRY" }) }}</a>
-                                <a href="{{ seo_url({ ident: oViewConf.getSslSelfLink()|cat("cl=account_wishlist") }) }}" class="btn btn-default btn-xs pull-right">
+                                <a href="{{ seo_url({ ident: oViewConf.getSslSelfLink()|raw()|cat("cl=account_wishlist") }) }}" class="btn btn-default btn-xs pull-right">
                                     <i class="fa fa-arrow-right"></i>
                                 </a>
                             </div>
@@ -87,7 +87,7 @@
                         <div class="panel panel-default">
                             <div class="panel-heading">
                                 <a href="{{ seo_url({ ident: oViewConf.getSelfLink()|cat("cl=compare") }) }}">{{ translate({ ident: "MY_PRODUCT_COMPARISON" }) }}</a>
-                                <a href="{{ seo_url({ ident: oViewConf.getSslSelfLink()|cat("cl=compare") }) }}" class="btn btn-default btn-xs pull-right">
+                                <a href="{{ seo_url({ ident: oViewConf.getSslSelfLink()|raw()|cat("cl=compare") }) }}" class="btn btn-default btn-xs pull-right">
                                     <i class="fa fa-arrow-right"></i>
                                 </a>
                             </div>
@@ -98,7 +98,7 @@
                         <div class="panel panel-default">
                             <div class="panel-heading">
                                 <a href="{{ seo_url({ ident: oViewConf.getSelfLink()|cat("cl=account_recommlist") }) }}">{{ translate({ ident: "MY_LISTMANIA" }) }}</a>
-                                <a href="{{ seo_url({ ident: oViewConf.getSslSelfLink()|cat("cl=account_recommlist") }) }}" class="btn btn-default btn-xs pull-right">
+                                <a href="{{ seo_url({ ident: oViewConf.getSslSelfLink()|raw()|cat("cl=account_recommlist") }) }}" class="btn btn-default btn-xs pull-right">
                                     <i class="fa fa-arrow-right"></i>
                                 </a>
                             </div>
@@ -109,7 +109,7 @@
                         <div class="panel panel-default">
                             <div class="panel-heading">
                                 <a href="{{ seo_url({ ident: oViewConf.getSelfLink()|cat("cl=account_reviewlist") }) }}">{{ translate({ ident: "MY_REVIEWS" }) }}</a>
-                                <a href="{{ seo_url({ ident: oViewConf.getSslSelfLink()|cat("cl=account_reviewlist") }) }}" class="btn btn-default btn-xs pull-right">
+                                <a href="{{ seo_url({ ident: oViewConf.getSslSelfLink()|raw()|cat("cl=account_reviewlist") }) }}" class="btn btn-default btn-xs pull-right">
                                     <i class="fa fa-arrow-right"></i>
                                 </a>
                             </div>
@@ -138,7 +138,7 @@
             </div>
         {% endblock %}
         <div class="col-xs-6 text-right">
-            <a href="{{ oViewConf.getLogoutLink() }}" class="btn btn-warning" role="getLogoutLink">
+            <a href="{{ oViewConf.getLogoutLink()|raw() }}" class="btn btn-warning" role="getLogoutLink">
                 <i class="fa fa-power-off"></i> {{ translate({ ident: "LOGOUT" }) }}
             </a>
         </div>

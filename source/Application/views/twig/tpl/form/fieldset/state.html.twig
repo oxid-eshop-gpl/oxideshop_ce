@@ -13,7 +13,7 @@
 
 {{ script({ include: "js/widgets/oxcountrystateselect.min.js", priority: 10, dynamic: __oxid_include_dynamic }) }}
 {{ script({ add: "$( '#" ~ countrySelectId ~ "' ).oxCountryStateSelect({selectedStateId:'" ~ selectedStateId ~ "', listItem: '.form-group', span: 'div'});", dynamic: __oxid_include_dynamic }) }}
-{{ script({ add: "$('#" ~ countrySelectId ~ "').change(function() { $( 'select[name=\"" ~ stateSelectName ~ "\"]', ).selectpicker('refresh');: ).selectpicker('refresh');, );: );", dynamic: __oxid_include_dynamic }) }}
+{{ script({ add: "$('#" ~ countrySelectId ~ "').change(function() { $( 'select[name=\"" ~ stateSelectName ~ "\"]', ).selectpicker('refresh'); } );", dynamic: __oxid_include_dynamic }) }}
 
 <script type="text/javascript"><!--
     var allStates = new Array();

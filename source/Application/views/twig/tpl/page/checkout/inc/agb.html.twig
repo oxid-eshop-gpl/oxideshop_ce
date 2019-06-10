@@ -23,14 +23,14 @@
                     {% ifcontent ident "oxrighttocancellegend" set oContent %}
                         <p class="agbConfirmation checkbox">
                             <label>
-                                <input id="checkAgbTop" type="checkbox" name="ord_agb" value="1"> {{ oContent.oxcontents__oxcontent.value }}
+                                <input id="checkAgbTop" type="checkbox" name="ord_agb" value="1"> {{ oContent.oxcontents__oxcontent.value|raw() }}
                             </label>
                         </p>
                     {% endifcontent %}
                 {% else %}
                     {% ifcontent ident "oxrighttocancellegend2" set oContent %}
                         <p class="agbConfirmation">
-                            {{ oContent.oxcontents__oxcontent.value }}
+                            {{ oContent.oxcontents__oxcontent.value|raw() }}
                         </p>
                     {% endifcontent %}
                 {% endif %}
@@ -43,7 +43,7 @@
                         <p id="noteForDownloadableArticles" class="agbConfirmation checkbox">
                             <label>
                                 <input id="oxdownloadableproductsagreement" type="checkbox" name="oxdownloadableproductsagreement" value="1">
-                                {{ oExplanationMarks.getMark('downloadable') }} {{ oContent.oxcontents__oxcontent.value }}
+                                {{ oExplanationMarks.getMark('downloadable') }} {{ oContent.oxcontents__oxcontent.value|raw() }}
                             </label>
                         </p>
                     {% endifcontent %}
@@ -53,7 +53,7 @@
                         <p id="noteForIntangibleArticles" class="agbConfirmation checkbox">
                             <label>
                                 <input id="oxserviceproductsagreement" type="checkbox" name="oxserviceproductsagreement" value="1">
-                                {{ oExplanationMarks.getMark('intangible') }} {{ oContent.oxcontents__oxcontent.value }}
+                                {{ oExplanationMarks.getMark('intangible') }} {{ oContent.oxcontents__oxcontent.value|raw() }}
                             </label>
                         </p>
                     {% endifcontent %}

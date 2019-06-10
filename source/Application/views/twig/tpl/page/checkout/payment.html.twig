@@ -7,10 +7,10 @@
         {% block change_shipping %}
             {% if oView.getAllSets() %}
                 {% set aErrors = oView.getFieldValidationErrors() %}
-                <form action="{{ oViewConf.getSslSelfLink() }}" name="shipping" id="shipping" method="post">
+                <form action="{{ oViewConf.getSslSelfLink()|raw() }}" name="shipping" id="shipping" method="post">
                     <div class="hidden">
                         {{ oViewConf.getHiddenSid()|raw() }}
-                        {{ oViewConf.getNavFormParams() }}
+                        {{ oViewConf.getNavFormParams()|raw() }}
                         <input type="hidden" name="cl" value="{{ oViewConf.getActiveClassName() }}">
                         <input type="hidden" name="fnc" value="changeshipping">
                     </div>
@@ -87,10 +87,10 @@
             {{ script({ include: "js/libs/jqBootstrapValidation.min.js", priority: 10, dynamic: __oxid_include_dynamic }) }}
             {{ script({ add: "$( '#payment' ).oxPayment();", dynamic: __oxid_include_dynamic }) }}
             {{ script({ add: "$('input,select,textarea').not('[type=submit]').jqBootstrapValidation();", dynamic: __oxid_include_dynamic }) }}
-            <form action="{{ oViewConf.getSslSelfLink() }}" class="form-horizontal js-oxValidate payment" id="payment" name="order" method="post" novalidate="novalidate">
+            <form action="{{ oViewConf.getSslSelfLink()|raw() }}" class="form-horizontal js-oxValidate payment" id="payment" name="order" method="post" novalidate="novalidate">
                 <div class="hidden">
                     {{ oViewConf.getHiddenSid()|raw() }}
-                    {{ oViewConf.getNavFormParams() }}
+                    {{ oViewConf.getNavFormParams()|raw() }}
                     <input type="hidden" name="cl" value="{{ oViewConf.getActiveClassName() }}">
                     <input type="hidden" name="fnc" value="validatepayment">
                 </div>

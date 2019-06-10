@@ -5,7 +5,7 @@
             <ul id="services" class="list-unstyled">
                 {% block widget_header_servicebox_items %}
                     <li>
-                        <a href="{{ seo_url({ ident: oViewConf.getSslSelfLink()|cat("cl=account") }) }}">{{ translate({ ident: "MY_ACCOUNT" }) }}</a>
+                        <a href="{{ seo_url({ ident: oViewConf.getSslSelfLink()|raw()|cat("cl=account") }) }}">{{ translate({ ident: "MY_ACCOUNT" }) }}</a>
                     </li>
                     {% if oViewConf.getShowCompareList() %}
                         <li>

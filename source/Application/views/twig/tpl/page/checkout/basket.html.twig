@@ -27,7 +27,7 @@
                 <div class="well well-sm cart-buttons">
                     {% block checkout_basket_backtoshop_top %}
                         {% if oView.showBackToShop() %}
-                            <form action="{{ oViewConf.getSslSelfLink() }}" method="post" class="pull-left">
+                            <form action="{{ oViewConf.getSslSelfLink()|raw() }}" method="post" class="pull-left">
                                 <div class="hidden">
                                     {{ oViewConf.getHiddenSid()|raw() }}
                                     <input type="hidden" name="cl" value="basket">
@@ -46,7 +46,7 @@
 
                     {% if not oView.isLowOrderPrice() %}
                         {% block basket_btn_next_top %}
-                            <form action="{{ oViewConf.getSslSelfLink() }}" method="post" class="pull-right">
+                            <form action="{{ oViewConf.getSslSelfLink()|raw() }}" method="post" class="pull-right">
                                 <div class="hidden">
                                     {{ oViewConf.getHiddenSid()|raw() }}
                                     <input type="hidden" name="cl" value="user">
@@ -71,7 +71,7 @@
 
                     {% block checkout_basket_backtoshop_bottom %}
                         {% if oView.showBackToShop() %}
-                            <form action="{{ oViewConf.getSslSelfLink() }}" method="post" class="pull-left">
+                            <form action="{{ oViewConf.getSslSelfLink()|raw() }}" method="post" class="pull-left">
                                 <div class="backtoshop">
                                     {{ oViewConf.getHiddenSid()|raw() }}
                                     <input type="hidden" name="cl" value="basket">
@@ -90,7 +90,7 @@
 
                     {% if not oView.isLowOrderPrice() %}
                         {% block basket_btn_next_bottom %}
-                            <form action="{{ oViewConf.getSslSelfLink() }}" method="post">
+                            <form action="{{ oViewConf.getSslSelfLink()|raw() }}" method="post">
                                 <div class="hidden">
                                     {{ oViewConf.getHiddenSid()|raw() }}
                                     <input type="hidden" name="cl" value="user">

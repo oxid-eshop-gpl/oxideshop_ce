@@ -1,4 +1,4 @@
-<form name="wishlist_searchbox" action="{{ oViewConf.getSelfActionLink() }}" method="post" class="form-horizontal">
+<form name="wishlist_searchbox" action="{{ oViewConf.getSelfActionLink()|raw() }}" method="post" class="form-horizontal">
     <div class="hidden">
         {{ oViewConf.getHiddenSid()|raw() }}
         <input type="hidden" name="cl" value="{{ searchClass }}">

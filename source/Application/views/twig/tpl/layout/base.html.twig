@@ -113,22 +113,22 @@
             {% set sFavicon128File = oViewConf.getViewThemeParam('sFavicon128File') %}
 
             {% if sFaviconFile %}
-                <link rel="shortcut icon" href="{{ oViewConf.getImageUrl("favicons / " ~ sFaviconFile) }} ~ ?rand=1" type="image/x-icon" />
+                <link rel="shortcut icon" href="{{ oViewConf.getImageUrl("favicons/" ~ sFaviconFile) }}?rand=1" type="image/x-icon" />
             {% endif %}
             {% if sFavicon16File %}
-                <link rel="icon" href="{{ oViewConf.getImageUrl("favicons / " ~ sFavicon16File) }}" sizes="16x16" />
+                <link rel="icon" href="{{ oViewConf.getImageUrl("favicons/" ~ sFavicon16File) }}" sizes="16x16" />
             {% endif %}
             {% if sFavicon32File %}
-                <link rel="icon" href="{{ oViewConf.getImageUrl("favicons / " ~ sFavicon32File) }}" sizes="32x32" />
+                <link rel="icon" href="{{ oViewConf.getImageUrl("favicons/" ~ sFavicon32File) }}" sizes="32x32" />
             {% endif %}
             {% if sFavicon48File %}
-                <link rel="icon" href="{{ oViewConf.getImageUrl("favicons / " ~ sFavicon48File) }}" sizes="48x48" />
+                <link rel="icon" href="{{ oViewConf.getImageUrl("favicons/" ~ sFavicon48File) }}" sizes="48x48" />
             {% endif %}
             {% if sFavicon64File %}
-                <link rel="icon" href="{{ oViewConf.getImageUrl("favicons / " ~ sFavicon64File) }}" sizes="64x64" />
+                <link rel="icon" href="{{ oViewConf.getImageUrl("favicons/" ~ sFavicon64File) }}" sizes="64x64" />
             {% endif %}
             {% if sFavicon128File %}
-                <link rel="icon" href="{{ oViewConf.getImageUrl("favicons / " ~ sFavicon128File) }}" sizes="128x128" />
+                <link rel="icon" href="{{ oViewConf.getImageUrl("favicons/" ~ sFavicon128File) }}" sizes="128x128" />
             {% endif %}
         {% endblock %}
 

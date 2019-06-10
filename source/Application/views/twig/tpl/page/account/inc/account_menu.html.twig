@@ -2,13 +2,13 @@
     <ul class="list-group">
         {% block account_menu %}
             <li class="list-group-item{% if active_link == "password" %} active{% endif %}">
-                <a href="{{ seo_url({ ident: oViewConf.getSslSelfLink()|cat("cl=account_password") }) }}" title="{{ translate({ ident: "CHANGE_PASSWORD" }) }}">{{ translate({ ident: "CHANGE_PASSWORD" }) }}</a>
+                <a href="{{ seo_url({ ident: oViewConf.getSslSelfLink()|raw()|cat("cl=account_password") }) }}" title="{{ translate({ ident: "CHANGE_PASSWORD" }) }}">{{ translate({ ident: "CHANGE_PASSWORD" }) }}</a>
             </li>
             <li class="list-group-item{% if active_link == "newsletter" %} active{% endif %}">
-                <a href="{{ seo_url({ ident: oViewConf.getSslSelfLink()|cat("cl=account_newsletter") }) }}" title="{{ translate({ ident: "NEWSLETTER_SETTINGS" }) }}">{{ translate({ ident: "NEWSLETTER_SETTINGS" }) }}</a>
+                <a href="{{ seo_url({ ident: oViewConf.getSslSelfLink()|raw()|cat("cl=account_newsletter") }) }}" title="{{ translate({ ident: "NEWSLETTER_SETTINGS" }) }}">{{ translate({ ident: "NEWSLETTER_SETTINGS" }) }}</a>
             </li>
             <li class="list-group-item{% if active_link == "billship" %} active{% endif %}">
-                <a href="{{ seo_url({ ident: oViewConf.getSslSelfLink()|cat("cl=account_user") }) }}" title="{{ translate({ ident: "BILLING_SHIPPING_SETTINGS" }) }}">{{ translate({ ident: "BILLING_SHIPPING_SETTINGS" }) }}</a>
+                <a href="{{ seo_url({ ident: oViewConf.getSslSelfLink()|raw()|cat("cl=account_user") }) }}" title="{{ translate({ ident: "BILLING_SHIPPING_SETTINGS" }) }}">{{ translate({ ident: "BILLING_SHIPPING_SETTINGS" }) }}</a>
             </li>
             <li class="list-group-item{% if active_link == "orderhistory" %} active{% endif %}">
                 <a href="{{ seo_url({ ident: oViewConf.getSelfLink()|cat("cl=account_order") }) }}" title="{{ translate({ ident: "ORDER_HISTORY" }) }}">{{ translate({ ident: "ORDER_HISTORY" }) }}</a>

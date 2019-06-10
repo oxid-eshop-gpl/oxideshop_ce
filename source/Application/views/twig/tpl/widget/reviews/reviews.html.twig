@@ -17,7 +17,7 @@
                 <div id="review_form" class="panel-collapse collapse">
                     <div class="panel-body">
                         {% block widget_reviews_form %}
-                            <form action="{{ oViewConf.getSelfActionLink() }}" method="post" id="rating" class="form-horizontal" novalidate="novalidate">
+                            <form action="{{ oViewConf.getSelfActionLink()|raw() }}" method="post" id="rating" class="form-horizontal" novalidate="novalidate">
                                 <div id="writeReview">
                                     <div class="hidden">
                                         {% if oView.canRate() %}
@@ -25,7 +25,7 @@
                                             <input id="recommListRating" type="hidden" name="recommlistrating" value="0">
                                         {% endif %}
                                         {{ oViewConf.getHiddenSid()|raw() }}
-                                        {{ oViewConf.getNavFormParams() }}
+                                        {{ oViewConf.getNavFormParams()|raw() }}
                                         {% include_dynamic "form/formparams.html.twig" %}
                                         <input type="hidden" name="fnc" value="savereview">
                                         <input type="hidden" name="cl" value="{{ oViewConf.getTopActiveClassName() }}">

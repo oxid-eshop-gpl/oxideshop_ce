@@ -8,14 +8,14 @@
 
     <div class="row picture">
         <div class="col-xs-12">
-            <a href="{{ _productLink }}" {% if oView.noIndex() %}rel="nofollow"{% endif %}>
+            <a href="{{ _productLink|raw() }}" {% if oView.noIndex() %}rel="nofollow"{% endif %}>
                 <img src="{% if size=='big' %}{{ product.getPictureUrl(1) }}{% elseif size=='thinest' %}{{ product.getIconUrl() }}{% else %}{{ product.getThumbnailUrl() }}{% endif %}" alt="{{ product.oxarticles__oxtitle.value|striptags }} {{ product.oxarticles__oxvarselect.value|default('') }}" class="img-responsive">
             </a>
         </div>
     </div>
 
     <strong class="title">
-        <a class="fn" href="{{ _productLink }}" {% if oView.noIndex() %}rel="nofollow"{% endif %}>{{ product.oxarticles__oxtitle.value }} {{ product.oxarticles__oxvarselect.value }}</a>
+        <a class="fn" href="{{ _productLink|raw() }}" {% if oView.noIndex() %}rel="nofollow"{% endif %}>{{ product.oxarticles__oxtitle.value }} {{ product.oxarticles__oxvarselect.value }}</a>
     </strong><br/>
     <span class="identifier">
         {% if product.oxarticles__oxweight.value %}
@@ -38,12 +38,12 @@
         {% set blShowToBasket = false %}
     {% endif %}
 
-    <form name="tobasket.{{ testid }}" {% if blShowToBasket %}action="{{ oViewConf.getSelfActionLink() }}" method="post"{% else %}action="{{ _productLink }}" method="get"{% endif %}>
+    <form name="tobasket.{{ testid }}" {% if blShowToBasket %}action="{{ oViewConf.getSelfActionLink()|raw() }}" method="post"{% else %}action="{{ _productLink|raw() }}" method="get"{% endif %}>
         <div class="variants">
             {% hasrights { "ident": "TOBASKET",} %}
                 {% if blShowToBasket %}
                     {{ oViewConf.getHiddenSid()|raw() }}
-                    {{ oViewConf.getNavFormParams() }}
+                    {{ oViewConf.getNavFormParams()|raw() }}
                     <input type="hidden" name="cl" value="{{ oViewConf.getActiveClassName() }}">
                     {% if owishid %}
                         <input type="hidden" name="owishid" value="{{ owishid }}">
@@ -100,7 +100,7 @@
                     {% endhasrights %}
                 {% else %}
                     <span >
-                        <a id="variantMoreInfo_{{ testid }}" class="btn btn-primary btn-block" href="{{ _productLink }}" onclick="oxid.mdVariants.getMdVariantUrl('mdVariant_{{ testid }}'); return false;">{{ translate({ ident: "MORE_INFO" }) }}</a>
+                        <a id="variantMoreInfo_{{ testid }}" class="btn btn-primary btn-block" href="{{ _productLink|raw() }}" onclick="oxid.mdVariants.getMdVariantUrl('mdVariant_{{ testid }}'); return false;">{{ translate({ ident: "MORE_INFO" }) }}</a>
                     </span>
                 {% endif %}
             </div>
@@ -142,10 +142,10 @@
 
     </form>
 
-    <form action="{{ oViewConf.getSelfActionLink() }}" method="post">
+    <form action="{{ oViewConf.getSelfActionLink()|raw() }}" method="post">
         <div class="hidden">
             {{ oViewConf.getHiddenSid()|raw() }}
-            {{ oViewConf.getNavFormParams() }}
+            {{ oViewConf.getNavFormParams()|raw() }}
             <input type="hidden" name="cl" value="{{ oViewConf.getActiveClassName() }}">
             <input type="hidden" name="fnc" value="tocomparelist">
             <input type="hidden" name="aid" value="{{ product.oxarticles__oxid.value }}">

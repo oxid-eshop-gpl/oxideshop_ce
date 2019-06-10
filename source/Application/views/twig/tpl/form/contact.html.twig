@@ -2,7 +2,7 @@
 {{ script({ add: "$('input,select,textarea').not('[type=submit]').jqBootstrapValidation();", dynamic: __oxid_include_dynamic }) }}
 
 {% set editval = oView.getUserData() %}
-<form class="form-horizontal" action="{{ oViewConf.getSslSelfLink() }}" method="post" role="form" novalidate="novalidate">
+<form class="form-horizontal" action="{{ oViewConf.getSslSelfLink()|raw() }}" method="post" role="form" novalidate="novalidate">
     <div class="hidden">
         {{ oViewConf.getHiddenSid()|raw() }}
         <input type="hidden" name="fnc" value="send"/>
