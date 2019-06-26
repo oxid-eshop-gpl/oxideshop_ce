@@ -3,7 +3,9 @@
 {% if oSelections %}
     <div class="selectbox dropDown">
         {% if not blHideLabel %}
-            <p class="variant-label"><strong>{{ oSelectionList.getLabel() }}{{ translate({ ident: "COLON" }) }}</strong></p>
+            <p class="variant-label">
+                <strong>{{ oSelectionList.getLabel() }}{{ translate({ ident: "COLON" }) }}</strong>
+            </p>
         {% endif %}
         <div class="dropdown-wrapper">
             <button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown">
@@ -22,8 +24,10 @@
 
                 <i class="fa fa-angle-down pull-right"></i>
             </button>
-            {% if editable != false %}
-                <input type="hidden" name="{{ sFieldName|default("varselid") }}[{{ iKey }}]" value="{% if oActiveSelection %}{{ oActiveSelection.getValue() }}{% endif %}">
+            {% if editable is not same as(false) %}
+                <input type="hidden" name="{{ sFieldName|default("varselid") }}[{{ iKey }}]"
+                       value="{% if oActiveSelection %}{{ oActiveSelection.getValue() }}{% endif %}">
+
                 <ul class="dropdown-menu {{ sJsAction }}{% if sFieldName != "sel" %} vardrop{% endif %}" role="menu">
                     {% if oActiveSelection and not blHideDefault %}
                         <li>
@@ -38,7 +42,8 @@
                     {% endif %}
                     {% for oSelection in oSelections %}
                         <li class="{% if oSelection.isDisabled() %}disabled js-disabled{% endif %}">
-                            <a href="{{ oSelection.getLink() }}" data-selection-id="{{ oSelection.getValue() }}" class="{% if oSelection.isActive() %}active{% endif %}">{{ oSelection.getName() }}</a>
+                            <a href="{{ oSelection.getLink() }}" data-selection-id="{{ oSelection.getValue() }}"
+                               class="{% if oSelection.isActive() %}active{% endif %}">{{ oSelection.getName() }}</a>
                         </li>
                     {% endfor %}
                 </ul>

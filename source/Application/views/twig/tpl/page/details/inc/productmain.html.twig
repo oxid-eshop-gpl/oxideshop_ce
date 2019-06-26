@@ -10,11 +10,13 @@
     {% for iKey, oSelectionList in aVariantSelections.rawselections %}
         {% set _sSelectionHash = "" %}
         {% for iPos, oListItem in oSelectionList %}
-            {% set _sSelectionHash = _sSelectionHash|cat(iPos)|cat(", ")|cat(oListItem.hash)|cat(")|") %}
+            {% set _sSelectionHash = _sSelectionHash ~ iPos ~ ":" ~ oListItem.hash ~ "|" %}
         {% endfor %}
         {% if _sSelectionHash %}
-            {% if _sSelectionHashCollection %}{% set _sSelectionHashCollection = _sSelectionHashCollection|cat(",") %}{% endif %}
-            {% set _sSelectionHashCollection = _sSelectionHashCollection|cat(_sSelectionHash) %}
+            {% if _sSelectionHashCollection is not same as("") %}
+                {% set _sSelectionHashCollection = _sSelectionHashCollection|cat(",") %}
+            {% endif %}
+            {% set _sSelectionHashCollection = _sSelectionHashCollection ~ "'" ~ _sSelectionHash ~ "'" %}
         {% endif %}
     {% endfor %}
     {{ script({ add: "oxVariantSelections  = [" ~ _sSelectionHashCollection ~ "];", dynamic: __oxid_include_dynamic }) }}

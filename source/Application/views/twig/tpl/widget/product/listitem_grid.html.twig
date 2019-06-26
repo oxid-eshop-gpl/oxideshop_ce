@@ -60,8 +60,8 @@
         <div class="listDetails text-center">
             {% block widget_product_listitem_infogrid_titlebox %}
                 <div class="title">
-                    <a id="{{ testid }}" href="{{ _productLink|raw() }}" class="title" title="{{ product.oxarticles__oxtitle.value }} {{ product.oxarticles__oxvarselect.value }}">
-                        <span>{{ product.oxarticles__oxtitle.value }} {{ product.oxarticles__oxvarselect.value }}</span>
+                    <a id="{{ testid }}" href="{{ _productLink|raw() }}" class="title" title="{{ product.oxarticles__oxtitle.value|raw }} {{ product.oxarticles__oxvarselect.value|raw }}">
+                        <span>{{ product.oxarticles__oxtitle.value|raw }} {{ product.oxarticles__oxvarselect.value|raw }}</span>
                     </a>
                 </div>
             {% endblock %}
