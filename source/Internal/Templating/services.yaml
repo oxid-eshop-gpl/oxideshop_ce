@@ -1,4 +1,7 @@
 services:
+  _defaults:
+    public: true
+    autowire: true
   OxidEsales\Eshop\Core\Config:
     class: OxidEsales\Eshop\Core\Config
     factory: ['OxidEsales\Eshop\Core\Registry', getConfig]
@@ -6,7 +9,6 @@ services:
     class: OxidEsales\EshopCommunity\Internal\Templating\TemplateRenderer
     arguments:
       - '@OxidEsales\EshopCommunity\Internal\Templating\TemplateEngineInterface'
-    public: true
     tags: ['templating']
   OxidEsales\EshopCommunity\Internal\Templating\TemplateNameResolverInterface:
     class: OxidEsales\EshopCommunity\Internal\Templating\LegacyTemplateNameResolver

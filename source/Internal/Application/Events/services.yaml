@@ -10,3 +10,4 @@ services:
   OxidEsales\EshopCommunity\Internal\Application\Events\ConfigurationChangedEventSubscriber:
     class: OxidEsales\EshopCommunity\Internal\Application\Events\ConfigurationChangedEventSubscriber
     tags: ['kernel.event_subscriber']
+    public: true

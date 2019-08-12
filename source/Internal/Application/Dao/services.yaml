@@ -6,3 +6,4 @@ services:
     class: OxidEsales\EshopCommunity\Internal\Application\Dao\ContainerAwareProjectYamlDao
     arguments:
       Symfony\Component\Filesystem\Filesystem: '@oxid_esales.symfony.file_system'
+    public: true

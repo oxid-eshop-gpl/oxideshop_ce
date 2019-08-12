@@ -1,15 +1,13 @@
 services:
   _defaults:
     autowire: true
-    public: false
+    public: true
 
   OxidEsales\EshopCommunity\Internal\Module\Setup\Bridge\ModuleActivationBridgeInterface:
     class: OxidEsales\EshopCommunity\Internal\Module\Setup\Bridge\ModuleActivationBridge
-    public: true
 
   OxidEsales\EshopCommunity\Internal\Module\Setup\Bridge\ClassExtensionChainBridgeInterface:
     class: OxidEsales\EshopCommunity\Internal\Module\Setup\Bridge\ClassExtensionChainBridge
-    public: true
     arguments:
       $classExtensionChainService: '@oxid_esales.module.setup.class_extension_chain_service'
 

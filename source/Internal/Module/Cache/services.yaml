@@ -2,8 +2,10 @@ services:
   OxidEsales\EshopCommunity\Internal\Module\Cache\ModuleCacheServiceInterface:
     class: OxidEsales\EshopCommunity\Internal\Module\Cache\ShopModuleCacheService
     autowire: true
+    public: true
   oxid_esales.module.cache.invalidate_module_cache_event_subscriber:
     class: OxidEsales\EshopCommunity\Internal\Module\Cache\InvalidateModuleCacheEventSubscriber
     autowire: true
+    public: true
     tags:
       - { name: kernel.event_subscriber }
