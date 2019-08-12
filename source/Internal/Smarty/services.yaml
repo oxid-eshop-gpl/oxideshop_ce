@@ -49,7 +49,7 @@ services:
   OxidEsales\EshopCommunity\Internal\Templating\TemplateEngineInterface:
     class: OxidEsales\EshopCommunity\Internal\Smarty\Legacy\LegacySmartyEngine
     factory: 'smarty.smarty_engine_factory:getTemplateEngine'
-    public: false
+    public: true
   OxidEsales\EshopCommunity\Internal\Templating\TemplateRendererBridgeInterface:
     class: OxidEsales\EshopCommunity\Internal\Smarty\Bridge\SmartyTemplateRendererBridge
     autowire: true
