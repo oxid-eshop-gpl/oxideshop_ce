@@ -207,7 +207,6 @@ class DatabaseProvider
     protected function onPostConnect()
     {
         // @todo Set database logging from iDebug
-        // @todo Set user auditing from blLogChangesInAdmin
     }
 
     /**

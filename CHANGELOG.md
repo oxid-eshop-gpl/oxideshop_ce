@@ -21,6 +21,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Fixed
 - Metadata 1.2 support
+- Fix admin query logging [#0006999](https://bugs.oxid-esales.com/view.php?id=6999). Information will be written to 
+  to `source/log/oxadmin.log`.
+
  
 ## [6.4.0] - 2019-08-02
 

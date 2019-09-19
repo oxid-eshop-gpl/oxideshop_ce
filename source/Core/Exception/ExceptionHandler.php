@@ -125,7 +125,7 @@ class ExceptionHandler
              * Logger is broken because of exception.
              * Try again to log original exception in order to show the root cause of a problem.
              */
-            $loggerServiceFactory = new LoggerServiceFactory(new Context(Registry::getConfig()));
+            $loggerServiceFactory = new LoggerServiceFactory(new Context());
             $logger = $loggerServiceFactory->getLogger();
             $logger->error($this->getFormattedException($exception));
         }
