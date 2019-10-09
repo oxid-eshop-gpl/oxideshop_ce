@@ -1778,4 +1778,58 @@ EOT;
         $this->openListItem("test sub 03");
         $this->assertSame("03", $this->getValue("editval[oxcategories__oxparentid]"));
     }
+
+    public function testParentProductMainFormWithConfigChangeWillToggleWarningAndPriceFieldsVisibility()
+    {
+        $parentProductId = 3571;
+        /** Force translator into Admin mode */
+        $tr = self::getTranslator();
+        $initMode = $tr->getAdmin();
+        $tr->setAdmin(true);
+
+        $this->loginAdmin('Master Settings', 'Core Settings');
+        /** Set config */
+        $this->openTab('System');
+        $this->click("link=Variants");
+        $this->check("//input[@name='confbools[blVariantParentBuyable]' and @value='true']");
+        $this->click('save');
+        /** Open product form */
+        $this->selectMenu('Administer Products', 'Products');
+        $this->type('where[oxarticles][oxartnum]', $parentProductId);
+        $this->clickAndWait('submitit');
+        $this->clickAndWaitFrame("link=$parentProductId", "edit");
+        $this->openTab("Main");
+        /** Check price fields */
+        $this->assertElementPresent('//input[@name="editval[oxarticles__oxprice]"]');
+        $this->assertElementPresent('//input[@name="editval[oxarticles__oxpricea]"]');
+        $this->assertElementPresent('//input[@name="editval[oxarticles__oxpriceb]"]');
+        $this->assertElementPresent('//input[@name="editval[oxarticles__oxpricec]"]');
+        $this->assertElementPresent('//input[@name="editval[oxarticles__oxvat]"]');
+        /** Check warning msg */
+        $this->assertTextNotPresent('%ARTICLE_MAIN_PARENTNOTBUYABLE%');
+
+        /** Set config */
+        $this->selectMenu('Master Settings', 'Core Settings');
+        $this->openTab('System');
+        $this->click("link=Variants");
+        $this->uncheck("//input[@name='confbools[blVariantParentBuyable]' and @value='true']");
+        $this->click('save');
+        /** Open product form */
+        $this->selectMenu('Administer Products', 'Products');
+        $this->type('where[oxarticles][oxartnum]', $parentProductId);
+        $this->clickAndWait('submitit');
+        $this->clickAndWaitFrame("link=$parentProductId", "edit");
+        $this->openTab("Main");
+        /** Check price fields */
+        $this->assertElementNotPresent('//input[@name="editval[oxarticles__oxprice]"]');
+        $this->assertElementNotPresent('//input[@name="editval[oxarticles__oxpricea]"]');
+        $this->assertElementNotPresent('//input[@name="editval[oxarticles__oxpriceb]"]');
+        $this->assertElementNotPresent('//input[@name="editval[oxarticles__oxpricec]"]');
+        $this->assertElementNotPresent('//input[@name="editval[oxarticles__oxvat]"]');
+        /** Check warning msg */
+        $this->assertTextPresent('%ARTICLE_MAIN_PARENTNOTBUYABLE%');
+
+        /** Restore initial translator's mode */
+        $tr->setAdmin($initMode);
+    }
 }

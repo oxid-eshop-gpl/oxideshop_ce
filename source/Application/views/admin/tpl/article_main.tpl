@@ -211,7 +211,7 @@ window.onload = function ()
                       <div class="errorbox">[{oxmultilang ident="ARTICLE_MAIN_PARENTNOTBUYABLE"}]</div>
                     </td>
                   </tr>
-                  [{/if}]
+                  [{else}]
                     <tr>
                       <td class="edittext">
                         [{oxmultilang ident="ARTICLE_MAIN_PRICE"}] ([{$oActCur->sign}])
@@ -244,7 +244,7 @@ window.onload = function ()
                         [{oxinputhelp ident="HELP_ARTICLE_MAIN_VAT"}]
                     </td>
                   </tr>
-
+                [{/if}]
               [{/block}]
 
               <tr>
