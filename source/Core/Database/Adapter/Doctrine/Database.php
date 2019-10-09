@@ -1380,9 +1380,9 @@ class Database implements DatabaseInterface
         $connectionParameters = $this->getConnectionParameters();
 
         $container = ContainerFactory::getInstance()->getContainer();
-        $configuration->setSQLLogger(
-            $container->get(DatabaseLoggerFactoryInterface::class)->getDatabaseLogger()
-        );
+        #$configuration->setSQLLogger(
+        #    $container->get(DatabaseLoggerFactoryInterface::class)->getDatabaseLogger()
+        #);
 
         return DriverManager::getConnection($connectionParameters, $configuration);
     }
