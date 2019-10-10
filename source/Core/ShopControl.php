@@ -578,7 +578,7 @@ class ShopControl extends \OxidEsales\Eshop\Core\Base
         //session is started, a possible SeoUrl is decoded, globals and environment variables are set.
         $config->init();
 
-        error_reporting($this->_getErrorReportingLevel());
+//        error_reporting($this->_getErrorReportingLevel());
 
         $runOnceExecuted = \OxidEsales\Eshop\Core\Registry::getSession()->getVariable('blRunOnceExecuted');
         if (!$runOnceExecuted && !$this->isAdmin() && $config->isProductiveMode()) {
