@@ -18,6 +18,7 @@ use OxidEsales\Eshop\Core\Database\Adapter\DatabaseInterface;
 use OxidEsales\Eshop\Core\Exception\DatabaseConnectionException;
 use OxidEsales\Eshop\Core\Exception\DatabaseErrorException;
 use OxidEsales\Eshop\Core\Exception\StandardException;
+use OxidEsales\EshopCommunity\Internal\Container\ContainerFactory;
 use PDO;
 
 /**
@@ -1384,6 +1385,8 @@ class Database implements DatabaseInterface
     {
         $configuration = new Configuration();
         $connectionParameters = $this->getConnectionParameters();
+
+        $container = ContainerFactory::getInstance()->getContainer();
 
         return DriverManager::getConnection($connectionParameters, $configuration);
     }
