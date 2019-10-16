@@ -1991,6 +1991,8 @@ $aLang = [
     'TITLE'                          => 'Anrede',
     'SUBJECT'                        => 'Betreff',
     'MESSAGE'                        => 'Nachricht',
+    'ADMIN_PRODUCT_MAIN_SAVE_ERROR' => 'Fehler beim Speichern eines Artikels',
+    'ADMIN_MULTI_SHOP_MISCONFIGURATION_EXCEPTION' => 'Ein konfiguriertes Feld existiert nicht in der Datenbank',
 ];
 
 /*

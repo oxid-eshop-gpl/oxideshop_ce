@@ -1995,7 +1995,8 @@ $aLang = [
     'TITLE'                          => 'Salutation',
     'SUBJECT'                        => 'Subject',
     'MESSAGE'                        => 'Message',
-
+    'ADMIN_PRODUCT_MAIN_SAVE_ERROR' => 'Error when saving product',
+    'ADMIN_MULTI_SHOP_MISCONFIGURATION_EXCEPTION' => 'A configured field is missing in the database',
 ];
 
 /*
