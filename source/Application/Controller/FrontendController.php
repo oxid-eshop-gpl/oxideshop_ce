@@ -1562,6 +1562,7 @@ class FrontendController extends \OxidEsales\Eshop\Core\Controller\BaseControlle
 
         $config = $this->getConfig();
 
+        $url = null;
         if (Registry::getUtils()->seoIsActive()) {
             if ($displayObj = $this->_getSubject($languageId)) {
                 $url = $displayObj->getLink($languageId);

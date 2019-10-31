@@ -423,7 +423,7 @@ class BasketComponent extends \OxidEsales\Eshop\Core\Controller\BaseController
 
             if (!$basketItem) {
                 $info = $basket->getBasketSummary();
-                $productAmount = $info->aArticles[$data['id']];
+                $productAmount = $info->aArticles[$data['id']] ?? null;
                 $products[$addProductId]['am'] = isset($productAmount) ? $productAmount : 0;
             }
         }
@@ -548,7 +548,7 @@ class BasketComponent extends \OxidEsales\Eshop\Core\Controller\BaseController
         $return['amount'] = isset($productInfo['am']) ? $productInfo['am'] : 0;
         $return['selectList'] = isset($productInfo['sel']) ? $productInfo['sel'] : null;
 
-        $return['persistentParameters'] = $this->getPersistedParameters($productInfo['persparam']);
+        $return['persistentParameters'] = $this->getPersistedParameters($productInfo['persparam'] ?? null);
         $return['override'] = isset($productInfo['override']) ? $productInfo['override'] : null;
         $return['bundle'] = isset($productInfo['bundle']) ? true : false;
         $return['oldBasketItemId'] = isset($productInfo['basketitemid']) ? $productInfo['basketitemid'] : null;

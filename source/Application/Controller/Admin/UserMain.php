@@ -130,7 +130,7 @@ class UserMain extends \OxidEsales\Eshop\Application\Controller\Admin\AdminDetai
             }
 
             //FS#2167 V checks for already used email
-            if ($oUser->checkIfEmailExists($aParams['oxuser__oxusername'])) {
+            if ($oUser->checkIfEmailExists($aParams['oxuser__oxusername'] ?? null)) {
                 $this->_sSaveError = 'EXCEPTION_USER_USEREXISTS';
 
                 return;

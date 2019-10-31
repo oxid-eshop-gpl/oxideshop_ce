@@ -498,7 +498,7 @@ class AdminListController extends \OxidEsales\Eshop\Application\Controller\Admin
 
                             // #M1260: if field is date
                             if ($localDateFormat && $localDateFormat != 'ISO' && isset($listItem->$field)) {
-                                $fieldType = $listItem->{$field}->fldtype;
+                                $fieldType = $listItem->{$field}->fldtype ?? null;
                                 if ("datetime" == $fieldType || "date" == $fieldType) {
                                     $value = $this->_convertToDBDate($value, $fieldType);
                                 }
@@ -639,7 +639,9 @@ class AdminListController extends \OxidEsales\Eshop\Application\Controller\Admin
             // yes, we need to build the navigation object
             $pageNavigation = new stdClass();
             $pageNavigation->pages = round((($this->_iListSize - 1) / $adminListSize) + 0.5, 0);
-            $pageNavigation->actpage = ($pageNavigation->actpage > $pageNavigation->pages) ? $pageNavigation->pages : round(
+            $activePage = $pageNavigation->actpage ?? null;
+            $pages = $pageNavigation->pages ?? null;
+            $pageNavigation->actpage = ($activePage > $pages) ? $pages : round(
                 ($this->_iCurrListPos / $adminListSize) + 0.5,
                 0
             );

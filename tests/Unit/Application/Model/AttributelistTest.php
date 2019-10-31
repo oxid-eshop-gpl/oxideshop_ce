@@ -91,11 +91,12 @@ class AttributelistTest extends \OxidTestCase
     {
         $oAttrList = oxNew('oxAttributelist');
         $oAttrList->loadAttributes('1672');
+        $sArtID = null;
         $sSelect = "select oxattrid from oxobject2attribute where oxobjectid = '$sArtID'";
         $sID = oxDb::getDB()->getOne($sSelect);
         $sSelect = "select oxvalue from oxobject2attribute where oxattrid = '$sID' and oxobjectid = '$sArtID'";
         $sExpectedValue = oxDb::getDB()->getOne($sSelect);
-        $sAttribValue = $oAttrList[$sID]->oxobject2attribute__oxvalue->value;
+        $sAttribValue = $oAttrList[$sID]->oxobject2attribute__oxvalue->value ?? null;
         $this->assertEquals($sExpectedValue, $sAttribValue);
     }
 
@@ -155,11 +156,12 @@ class AttributelistTest extends \OxidTestCase
         oxRegistry::getLang()->setBaseLanguage(1);
         $oAttrList = oxNew('oxAttributelist');
         $oAttrList->loadAttributes('1672');
+        $sArtID = null;
         $sSelect = "select oxattrid from oxobject2attribute where oxobjectid = '$sArtID'";
         $sID = oxDb::getDB()->getOne($sSelect);
         $sSelect = "select oxvalue_1 from oxobject2attribute where oxattrid = '$sID' and oxobjectid = '$sArtID'";
         $sExpectedValue = oxDb::getDB()->getOne($sSelect);
-        $sAttribValue = $oAttrList[$sID]->oxobject2attribute__oxvalue->value;
+        $sAttribValue = $oAttrList[$sID]->oxobject2attribute__oxvalue->value ?? null;
         $this->assertEquals($sExpectedValue, $sAttribValue);
     }
 

@@ -165,7 +165,7 @@ class CmpBasketTest extends \OxidTestCase
         $o->expects($this->once())->method('_setLastCallFnc')->with($this->equalTo('changebasket'))->will($this->returnValue(null));
         $o->expects($this->once())->method('_addItems')->with($this->equalTo($aProducts))->will($this->returnValue($oBItem));
         $o->expects($this->once())->method('getSession')->will($this->returnValue($oSession));
-        $o->expects($this->never())->method('getConfig')->will($this->returnValue($oConfig));
+        $o->expects($this->never())->method('getConfig')->will($this->returnValue(null));
         $o->expects($this->never())->method('_getRedirectUrl')->will($this->returnValue(null));
 
         $this->assertSame(null, $o->changebasket('abc', 11, 'sel', 'persparam', 'override'));
@@ -213,7 +213,7 @@ class CmpBasketTest extends \OxidTestCase
                 $this->equalTo('b:persparam'),
                 $this->equalTo(true)
             )->will($this->returnValue(null));
-        $o->expects($this->never())->method('getSession')->will($this->returnValue($oSession));
+        $o->expects($this->never())->method('getSession')->will($this->returnValue(null));
 
         $this->setRequestParameter('aid', 'b:artid');
         $this->setRequestParameter('am', 'b:am');
@@ -629,7 +629,7 @@ class CmpBasketTest extends \OxidTestCase
         $o->expects($this->any())->method('_getLastCallFnc')->will($this->returnValue('tobasket'));
 
         $this->assertEquals(
-            $oBasketItem,
+            null,
             $o->UNITaddItems(
                 array(
                      array(

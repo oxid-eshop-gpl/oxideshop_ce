@@ -194,8 +194,8 @@ class File extends \OxidEsales\Eshop\Core\Model\BaseModel
     protected function _getFileLocation()
     {
         $this->_sRelativeFilePath = '';
-        $sFileHash = $this->oxfiles__oxstorehash->value;
-        $sFileName = $this->oxfiles__oxfilename->value;
+        $sFileHash = $this->oxfiles__oxstorehash->value ?? null;
+        $sFileName = $this->oxfiles__oxfilename->value ?? null;
 
         //security check for demo shops
         if ($this->getConfig()->isDemoShop()) {
@@ -277,7 +277,7 @@ class File extends \OxidEsales\Eshop\Core\Model\BaseModel
     public function isUploaded()
     {
         $blHashed = false;
-        if ($this->oxfiles__oxstorehash->value) {
+        if (isset($this->oxfiles__oxstorehash->value) && $this->oxfiles__oxstorehash->value) {
             $blHashed = true;
         }
 
@@ -336,7 +336,7 @@ class File extends \OxidEsales\Eshop\Core\Model\BaseModel
      */
     protected function _getFilenameForUrl()
     {
-        return rawurlencode($this->oxfiles__oxfilename->value);
+        return rawurlencode($this->oxfiles__oxfilename->value ?? null);
     }
 
     /**

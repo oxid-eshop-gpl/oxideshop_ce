@@ -84,13 +84,14 @@ class ArticleExtendAjax extends \OxidEsales\Eshop\Application\Controller\Admin\L
             reset($dataFields);
             foreach ($dataFields as $position => $fields) {
                 // already set ?
-                if ($fields['_3'] == '0') {
+                $field = $fields['_3'] ?? null;
+                if ($field == '0') {
                     $minimalPosition = null;
                     break;
                 }
 
                 if (!$minimalValue) {
-                    $minimalValue = $fields['_3'];
+                    $minimalValue = $fields['_3'] ?? null;
                     $minimalPosition = $position;
                 } elseif ($minimalValue > $fields['_3']) {
                     $minimalPosition = $position;

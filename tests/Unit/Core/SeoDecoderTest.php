@@ -277,7 +277,7 @@ class SeoDecoderTest extends \OxidTestCase
         }
         oxTestModules::cleanUp();
         $oDb->Execute("delete from oxseo where oxstdurl='std'");
-        if ($e) {
+        if (isset($e)) {
             throw $e;
         }
     }
@@ -342,7 +342,7 @@ class SeoDecoderTest extends \OxidTestCase
         }
         $_GET = $aG;
         $_SERVER = $aS;
-        if ($e) {
+        if (isset($e)) {
             throw $e;
         }
     }

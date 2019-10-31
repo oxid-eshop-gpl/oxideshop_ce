@@ -41,7 +41,7 @@ class ListUser extends \OxidEsales\Eshop\Application\Controller\Admin\UserList
     public function render()
     {
         parent::render();
-        $this->_aViewData["menustructure"] = $this->getNavigation()->getDomXml()->documentElement->childNodes;
+        $this->_aViewData["menustructure"] = $this->getNavigation()->getDomXml()->documentElement->childNodes ?? null;
 
         return "list_user.tpl";
     }

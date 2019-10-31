@@ -62,7 +62,7 @@ class SeoEncoderManufacturer extends \OxidEsales\Eshop\Core\SeoEncoder
                 $sSeoUrl .= $this->_aRootManufacturerUri[$iLang];
             }
 
-            $sSeoUrl .= $this->_prepareTitle($oManufacturer->oxmanufacturers__oxtitle->value, false, $oManufacturer->getLanguage()) . '/';
+            $sSeoUrl .= $this->_prepareTitle($oManufacturer->oxmanufacturers__oxtitle->value ?? null, false, $oManufacturer->getLanguage()) . '/';
             $sSeoUrl = $this->_processSeoUrl($sSeoUrl, $oManufacturer->getId(), $iLang);
 
             // save to db

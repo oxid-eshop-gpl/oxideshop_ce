@@ -204,9 +204,9 @@ class ContentTest extends \OxidTestCase
             $o->oxcontents__oxtitle = new oxField('aaFaa');
 
             $this->assertEquals("seolinkaaFaa", $o->getLink());
-        } catch (Ecxeption $e) {
+        } catch (\Exception $e) {
         }
-        if ($e) {
+        if (isset($e)) {
             throw $e;
         }
     }
@@ -265,9 +265,9 @@ class ContentTest extends \OxidTestCase
             $o->oxcontents__oxtitle = new oxField('aaFaa');
 
             $this->assertEquals("seolinkaaFaa1", $o->getLink(1));
-        } catch (Ecxeption $e) {
+        } catch (\Exception $e) {
         }
-        if ($e) {
+        if (isset($e)) {
             throw $e;
         }
     }

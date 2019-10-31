@@ -235,7 +235,8 @@ class ListComponentAjax extends \OxidEsales\Eshop\Core\Base
         if (!count($aVisibleCols)) {
             foreach ($aColNames as $sName => $aCol) {
                 // visible ?
-                if ($aCol[1] && !$aColNames[$sName][4]) {
+                $value = $aColNames[$sName][4] ?? null;
+                if ($aCol[1] && !$value) {
                     $aVisibleCols[$sName] = $aCol;
                 }
             }

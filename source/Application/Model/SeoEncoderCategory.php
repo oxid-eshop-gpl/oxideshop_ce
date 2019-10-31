@@ -80,7 +80,7 @@ class SeoEncoderCategory extends \OxidEsales\Eshop\Core\SeoEncoder
         $sCatId = $oCat->getId();
 
         // skipping external category URLs
-        if ($oCat->oxcategories__oxextlink->value) {
+        if (isset($oCat->oxcategories__oxextlink->value) && $oCat->oxcategories__oxextlink->value) {
             $sSeoUrl = null;
         } else {
             // not found in cache, process it from the top
@@ -99,7 +99,8 @@ class SeoEncoderCategory extends \OxidEsales\Eshop\Core\SeoEncoder
                 }
 
                 // prepare oCat title part
-                $sTitle = $this->_prepareTitle($oCat->oxcategories__oxtitle->value, false, $oCat->getLanguage());
+                $categoryTitle = $oCat->oxcategories__oxtitle->value ?? null;
+                $sTitle = $this->_prepareTitle($categoryTitle, false, $oCat->getLanguage());
 
                 foreach (array_keys($aCacheMap) as $id) {
                     $aCacheMap[$id] = $sTitle . '/' . $aCacheMap[$id];

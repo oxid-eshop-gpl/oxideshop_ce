@@ -395,7 +395,8 @@ class BasketItem extends \OxidEsales\Eshop\Core\Base
         }
 
         // calculating general weight
-        $this->_dWeight = $oArticle->oxarticles__oxweight->value * $this->_dAmount;
+        $weight = $oArticle->oxarticles__oxweight->value ?? null;
+        $this->_dWeight = $weight * $this->_dAmount;
 
         if ($iOnStock !== true) {
             /** @var \OxidEsales\Eshop\Core\Exception\OutOfStockException $oEx */
@@ -728,7 +729,7 @@ class BasketItem extends \OxidEsales\Eshop\Core\Base
         $this->getTitle();
 
         // icon and details URL's
-        $this->_sIcon = $oArticle->oxarticles__oxicon->value;
+        $this->_sIcon = $oArticle->oxarticles__oxicon->value ?? null;
         $this->_sIconUrl = $oArticle->getIconUrl();
         $this->_blSsl = $oConfig->isSsl();
 
@@ -737,11 +738,11 @@ class BasketItem extends \OxidEsales\Eshop\Core\Base
 
         // shop Ids
         $this->_sShopId = $oConfig->getShopId();
-        $this->_sNativeShopId = $oArticle->oxarticles__oxshopid->value;
+        $this->_sNativeShopId = $oArticle->oxarticles__oxshopid->value ?? null;
 
         // SSL/NON SSL image paths
-        $this->_sDimageDirNoSsl = $oArticle->nossl_dimagedir;
-        $this->_sDimageDirSsl = $oArticle->ssl_dimagedir;
+        $this->_sDimageDirNoSsl = $oArticle->nossl_dimagedir ?? null;
+        $this->_sDimageDirSsl = $oArticle->ssl_dimagedir ?? null;
     }
 
     /**
@@ -762,11 +763,11 @@ class BasketItem extends \OxidEsales\Eshop\Core\Base
         $this->_sProductId = $oOrderArticle->getProductId();
 
         // products title
-        $this->_sTitle = $oOrderArticle->oxarticles__oxtitle->value;
+        $this->_sTitle = $oOrderArticle->oxarticles__oxtitle->value ?? null;
 
         // shop Ids
         $this->_sShopId = $this->getConfig()->getShopId();
-        $this->_sNativeShopId = $oOrderArticle->oxarticles__oxshopid->value;
+        $this->_sNativeShopId = $oOrderArticle->oxarticles__oxshopid->value ?? null;
     }
 
     /**
@@ -791,7 +792,7 @@ class BasketItem extends \OxidEsales\Eshop\Core\Base
             foreach ($this->_aSelList as $conkey => $iSel) {
                 $this->_aChosenSelectlist[$conkey] = new stdClass();
                 $this->_aChosenSelectlist[$conkey]->name = $aSelectLists[$conkey]['name'];
-                $this->_aChosenSelectlist[$conkey]->value = $aSelectLists[$conkey][$iSel]->name;
+                $this->_aChosenSelectlist[$conkey]->value = $aSelectLists[$conkey][$iSel]->name ?? null;
             }
         }
     }

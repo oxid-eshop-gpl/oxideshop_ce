@@ -98,7 +98,7 @@ class UserTest_oxUtilsServerHelper2 extends oxUtilsServer
             return $this->_aCookieVars;
         }
 
-        if ($this->_aCookieVars[$sVar]) {
+        if (isset($this->_aCookieVars[$sVar]) && $this->_aCookieVars[$sVar]) {
             return $this->_aCookieVars[$sVar];
         }
 
@@ -880,7 +880,7 @@ class UserTest extends \OxidTestCase
     public function testGetNewsSubscriptionNoUserEmptySubscription()
     {
         $oUser = oxNew('oxUser');
-        $this->assertNull($oUser->getNewsSubscription()->oxnewssubscribed__oxid->value);
+        $this->assertNull($oUser->getNewsSubscription()->oxnewssubscribed__oxid->value ?? null);
     }
 
     // 2. loading subscription by user id
@@ -1375,7 +1375,7 @@ class UserTest extends \OxidTestCase
         $oUser = $this->createUser();
 
         $oConfig = $this->getConfig();
-        $blMall = $oConfig->blMallUsers;
+        $blMall = $oConfig->blMallUsers ?? null;
         $oConfig->blMallUsers = true;
 
         $this->assertEquals(true, $oUser->exists($oUser->getId()));
@@ -1584,7 +1584,8 @@ class UserTest extends \OxidTestCase
         $oUser->createUser();
 
         // checking
-        $sQ = 'select count(*) from oxuser where oxusername = "' . $oUser->oxuser__oxusername->value . '" ';
+        $userName = $oUser->oxuser__oxusername->value ?? null;
+        $sQ = 'select count(*) from oxuser where oxusername = "' . $userName . '" ';
         $this->assertEquals(1, $oDb->getOne($sQ));
     }
 
@@ -2079,7 +2080,7 @@ class UserTest extends \OxidTestCase
         $oActiveUser = oxNew('oxUser');
         $oActiveUser->loadAdminUser();
 
-        $this->assertNull($oActiveUser->oxuser__oxusername->value);
+        $this->assertNull($oActiveUser->oxuser__oxusername->value ?? null);
 
         $oAdminUser = $this->getMock(\OxidEsales\Eshop\Application\Model\User::class, array('isAdmin'));
         $oAdminUser->expects($this->any())->method('isAdmin')->will($this->returnValue(true));

@@ -81,7 +81,8 @@ class UserBasketItem extends \OxidEsales\Eshop\Core\Model\BaseModel
      */
     public function getArticle($sItemKey)
     {
-        if (!$this->oxuserbasketitems__oxartid->value) {
+        $basketItemsProductId = $this->oxuserbasketitems__oxartid->value ?? null;
+        if (!$basketItemsProductId) {
             //this exception may not be caught, anyhow this is a critical exception
             $oEx = oxNew(\OxidEsales\Eshop\Core\Exception\ArticleException::class);
             $oEx->setMessage('EXCEPTION_ARTICLE_NOPRODUCTID');
@@ -145,7 +146,10 @@ class UserBasketItem extends \OxidEsales\Eshop\Core\Model\BaseModel
      */
     public function getSelList()
     {
-        if ($this->_aSelList == null && $this->oxuserbasketitems__oxsellist->value) {
+        if ($this->_aSelList == null
+            && isset($this->oxuserbasketitems__oxsellist->value)
+            && $this->oxuserbasketitems__oxsellist->value
+        ) {
             $this->_aSelList = unserialize($this->oxuserbasketitems__oxsellist->value);
         }
 
@@ -169,7 +173,10 @@ class UserBasketItem extends \OxidEsales\Eshop\Core\Model\BaseModel
      */
     public function getPersParams()
     {
-        if ($this->_aPersParam == null && $this->oxuserbasketitems__oxpersparam->value) {
+        if ($this->_aPersParam == null
+            && isset($this->oxuserbasketitems__oxpersparam->value)
+            && $this->oxuserbasketitems__oxpersparam->value
+        ) {
             $this->_aPersParam = unserialize($this->oxuserbasketitems__oxpersparam->value);
         }
 

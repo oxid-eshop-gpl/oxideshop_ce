@@ -385,7 +385,7 @@ class NewsletterTest extends \OxidTestCase
         $oTestNews = new modOxNewsLetter();
         $oTestNews->UNITsetUser('123');
         $oUser = $oTestNews->getUser();
-        $this->assertEquals($oUser->oxuser__oxid->value, null);
+        $this->assertEquals($oUser->oxuser__oxid->value ?? null, null);
     }
 
     /**

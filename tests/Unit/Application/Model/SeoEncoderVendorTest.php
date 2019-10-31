@@ -55,7 +55,7 @@ class SeoEncoderVendorTest extends \OxidTestCase
 
     public function testGetVendorUrlExistingVendor()
     {
-        oxTestModules::addFunction("oxUtilsServer", "getServerVar", "{ \$aArgs = func_get_args(); if ( \$aArgs[0] === 'HTTP_HOST' ) { return '" . $this->getConfig()->getShopUrl() . "'; } elseif ( \$aArgs[0] === 'SCRIPT_NAME' ) { return ''; } else { return \$_SERVER[\$aArgs[0]]; } }");
+        oxTestModules::addFunction("oxUtilsServer", "getServerVar", "{ \$aArgs = func_get_args(); if ( isset(\$aArgs[0]) && \$aArgs[0] === 'HTTP_HOST' ) { return '" . $this->getConfig()->getShopUrl() . "'; } elseif ( isset(\$aArgs[0]) && \$aArgs[0] === 'SCRIPT_NAME' ) { return ''; } else { return \$_SERVER[\$aArgs[0] ?? null] ?? null; } }");
 
         $sVndId = $this->getTestConfig()->getShopEdition() == 'EE' ? 'd2e44d9b32fd2c224.65443178' : '77442e37fdf34ccd3.94620745';
         $sUrl = $this->getTestConfig()->getShopEdition() == 'EE' ? 'Nach-Lieferant/Hersteller-2/' : 'Nach-Lieferant/Bush/';
@@ -69,7 +69,7 @@ class SeoEncoderVendorTest extends \OxidTestCase
 
     public function testGetVendorUrlExistingVendorEng()
     {
-        oxTestModules::addFunction("oxUtilsServer", "getServerVar", "{ \$aArgs = func_get_args(); if ( \$aArgs[0] === 'HTTP_HOST' ) { return '" . $this->getConfig()->getShopUrl() . "'; } elseif ( \$aArgs[0] === 'SCRIPT_NAME' ) { return ''; } else { return \$_SERVER[\$aArgs[0]]; } }");
+        oxTestModules::addFunction("oxUtilsServer", "getServerVar", "{ \$aArgs = func_get_args(); if ( isset(\$aArgs[0]) && \$aArgs[0] === 'HTTP_HOST' ) { return '" . $this->getConfig()->getShopUrl() . "'; } elseif ( isset(\$aArgs[0]) && \$aArgs[0] === 'SCRIPT_NAME' ) { return ''; } else { return \$_SERVER[\$aArgs[0] ?? null] ?? null; } }");
         oxTestModules::addFunction('oxVendor', 'resetRootVendor', '{ self::$_aRootVendor = array() ; }');
         $oVendor = oxNew('oxVendor');
         $oVendor->resetRootVendor();
@@ -86,7 +86,7 @@ class SeoEncoderVendorTest extends \OxidTestCase
 
     public function testGetVendorUrlExistingVendorWithLangParam()
     {
-        oxTestModules::addFunction("oxUtilsServer", "getServerVar", "{ \$aArgs = func_get_args(); if ( \$aArgs[0] === 'HTTP_HOST' ) { return '" . $this->getConfig()->getShopUrl() . "'; } elseif ( \$aArgs[0] === 'SCRIPT_NAME' ) { return ''; } else { return \$_SERVER[\$aArgs[0]]; } }");
+        oxTestModules::addFunction("oxUtilsServer", "getServerVar", "{ \$aArgs = func_get_args(); if ( isset(\$aArgs[0]) && \$aArgs[0] === 'HTTP_HOST' ) { return '" . $this->getConfig()->getShopUrl() . "'; } elseif ( isset(\$aArgs[0]) && \$aArgs[0] === 'SCRIPT_NAME' ) { return ''; } else { return \$_SERVER[\$aArgs[0] ?? null] ?? null; } }");
 
         $sVndId = $this->getTestConfig()->getShopEdition() == 'EE' ? 'd2e44d9b32fd2c224.65443178' : '77442e37fdf34ccd3.94620745';
         $sUrl = $this->getTestConfig()->getShopEdition() == 'EE' ? 'Nach-Lieferant/Hersteller-2/' : 'Nach-Lieferant/Bush/';
@@ -100,7 +100,7 @@ class SeoEncoderVendorTest extends \OxidTestCase
 
     public function testGetVendorUrlExistingVendorEngWithLangParam()
     {
-        oxTestModules::addFunction("oxUtilsServer", "getServerVar", "{ \$aArgs = func_get_args(); if ( \$aArgs[0] === 'HTTP_HOST' ) { return '" . $this->getConfig()->getShopUrl() . "'; } elseif ( \$aArgs[0] === 'SCRIPT_NAME' ) { return ''; } else { return \$_SERVER[\$aArgs[0]]; } }");
+        oxTestModules::addFunction("oxUtilsServer", "getServerVar", "{ \$aArgs = func_get_args(); if ( isset(\$aArgs[0]) && \$aArgs[0] === 'HTTP_HOST' ) { return '" . $this->getConfig()->getShopUrl() . "'; } elseif ( isset(\$aArgs[0]) && \$aArgs[0] === 'SCRIPT_NAME' ) { return ''; } else { return \$_SERVER[\$aArgs[0] ?? null] ?? null; } }");
         oxTestModules::addFunction('oxVendor', 'resetRootVendor', '{ self::$_aRootVendor = array() ; }');
         $oVendor = oxNew('oxVendor');
         $oVendor->resetRootVendor();
@@ -184,7 +184,7 @@ class SeoEncoderVendorTest extends \OxidTestCase
      */
     public function testGetVendorPageUrl()
     {
-        oxTestModules::addFunction("oxUtilsServer", "getServerVar", "{ \$aArgs = func_get_args(); if ( \$aArgs[0] === 'HTTP_HOST' ) { return '" . $this->getConfig()->getShopUrl() . "'; } elseif ( \$aArgs[0] === 'SCRIPT_NAME' ) { return ''; } else { return \$_SERVER[\$aArgs[0]]; } }");
+        oxTestModules::addFunction("oxUtilsServer", "getServerVar", "{ \$aArgs = func_get_args(); if ( isset(\$aArgs[0]) && \$aArgs[0] === 'HTTP_HOST' ) { return '" . $this->getConfig()->getShopUrl() . "'; } elseif ( isset(\$aArgs[0]) && \$aArgs[0] === 'SCRIPT_NAME' ) { return ''; } else { return \$_SERVER[\$aArgs[0] ?? null] ?? null; } }");
 
         $sVndId = $this->getTestConfig()->getShopEdition() == 'EE' ? 'd2e44d9b32fd2c224.65443178' : '77442e37fdf34ccd3.94620745';
         $sUrl = $this->getTestConfig()->getShopEdition() == 'EE' ? 'en/By-distributor/Manufacturer-2/?pgNr=100' : 'en/By-distributor/Bush/?pgNr=100';
@@ -198,7 +198,7 @@ class SeoEncoderVendorTest extends \OxidTestCase
 
     public function testGetVendorPageUrlWithLangParam()
     {
-        oxTestModules::addFunction("oxUtilsServer", "getServerVar", "{ \$aArgs = func_get_args(); if ( \$aArgs[0] === 'HTTP_HOST' ) { return '" . $this->getConfig()->getShopUrl() . "'; } elseif ( \$aArgs[0] === 'SCRIPT_NAME' ) { return ''; } else { return \$_SERVER[\$aArgs[0]]; } }");
+        oxTestModules::addFunction("oxUtilsServer", "getServerVar", "{ \$aArgs = func_get_args(); if ( isset(\$aArgs[0]) && \$aArgs[0] === 'HTTP_HOST' ) { return '" . $this->getConfig()->getShopUrl() . "'; } elseif ( isset(\$aArgs[0]) && \$aArgs[0] === 'SCRIPT_NAME' ) { return ''; } else { return \$_SERVER[\$aArgs[0] ?? null] ?? null; } }");
 
         $sVndId = $this->getTestConfig()->getShopEdition() == 'EE' ? 'd2e44d9b32fd2c224.65443178' : '77442e37fdf34ccd3.94620745';
         $sUrl = $this->getTestConfig()->getShopEdition() == 'EE' ? 'en/By-distributor/Manufacturer-2/?pgNr=100' : 'en/By-distributor/Bush/?pgNr=100';

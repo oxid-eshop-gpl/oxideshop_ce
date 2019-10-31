@@ -187,7 +187,7 @@ class VendorTest extends \OxidTestCase
 
     public function testGetLinkSeoDe()
     {
-        oxTestModules::addFunction("oxutilsserver", "getServerVar", "{ \$aArgs = func_get_args(); if ( \$aArgs[0] === 'HTTP_HOST' ) { return '" . $this->getConfig()->getShopUrl() . "'; } elseif ( \$aArgs[0] === 'SCRIPT_NAME' ) { return ''; } else { return \$_SERVER[\$aArgs[0]]; } }");
+        oxTestModules::addFunction("oxutilsserver", "getServerVar", "{ \$aArgs = func_get_args(); if ( isset(\$aArgs[0]) && \$aArgs[0] === 'HTTP_HOST' ) { return '" . $this->getConfig()->getShopUrl() . "'; } elseif ( isset(\$aArgs[0]) && \$aArgs[0] === 'SCRIPT_NAME' ) { return ''; } else { return \$_SERVER[\$aArgs[0] ?? null] ?? null; } }");
         oxTestModules::addFunction("oxutils", "seoIsActive", "{return true;}");
 
         /** @var Vendor $vendor */
@@ -205,7 +205,7 @@ class VendorTest extends \OxidTestCase
 
     public function testGetLinkSeoEng()
     {
-        oxTestModules::addFunction("oxutilsserver", "getServerVar", "{ \$aArgs = func_get_args(); if ( \$aArgs[0] === 'HTTP_HOST' ) { return '" . $this->getConfig()->getShopUrl() . "'; } elseif ( \$aArgs[0] === 'SCRIPT_NAME' ) { return ''; } else { return \$_SERVER[\$aArgs[0]]; } }");
+        oxTestModules::addFunction("oxutilsserver", "getServerVar", "{ \$aArgs = func_get_args(); if ( isset(\$aArgs[0]) && \$aArgs[0] === 'HTTP_HOST' ) { return '" . $this->getConfig()->getShopUrl() . "'; } elseif ( isset(\$aArgs[0]) && \$aArgs[0] === 'SCRIPT_NAME' ) { return ''; } else { return \$_SERVER[\$aArgs[0] ?? null] ?? null; } }");
         oxTestModules::addFunction("oxutils", "seoIsActive", "{return true;}");
 
         /** @var Vendor $vendor */
@@ -242,7 +242,7 @@ class VendorTest extends \OxidTestCase
 
     public function testGetLinkSeoDeWithLangParam()
     {
-        oxTestModules::addFunction("oxutilsserver", "getServerVar", "{ \$aArgs = func_get_args(); if ( \$aArgs[0] === 'HTTP_HOST' ) { return '" . $this->getConfig()->getShopUrl() . "'; } elseif ( \$aArgs[0] === 'SCRIPT_NAME' ) { return ''; } else { return \$_SERVER[\$aArgs[0]]; } }");
+        oxTestModules::addFunction("oxutilsserver", "getServerVar", "{ \$aArgs = func_get_args(); if ( isset(\$aArgs[0]) && \$aArgs[0] === 'HTTP_HOST' ) { return '" . $this->getConfig()->getShopUrl() . "'; } elseif ( isset(\$aArgs[0]) && \$aArgs[0] === 'SCRIPT_NAME' ) { return ''; } else { return \$_SERVER[\$aArgs[0] ?? null] ?? null; } }");
 
         /** @var Vendor $vendor */
         $vendor = oxNew('oxvendor');
@@ -259,7 +259,7 @@ class VendorTest extends \OxidTestCase
 
     public function testGetLinkSeoEngWithLangParam()
     {
-        oxTestModules::addFunction("oxutilsserver", "getServerVar", "{ \$aArgs = func_get_args(); if ( \$aArgs[0] === 'HTTP_HOST' ) { return '" . $this->getConfig()->getShopUrl() . "'; } elseif ( \$aArgs[0] === 'SCRIPT_NAME' ) { return ''; } else { return \$_SERVER[\$aArgs[0]]; } }");
+        oxTestModules::addFunction("oxutilsserver", "getServerVar", "{ \$aArgs = func_get_args(); if ( isset(\$aArgs[0]) && \$aArgs[0] === 'HTTP_HOST' ) { return '" . $this->getConfig()->getShopUrl() . "'; } elseif ( isset(\$aArgs[0]) && \$aArgs[0] === 'SCRIPT_NAME' ) { return ''; } else { return \$_SERVER[\$aArgs[0] ?? null] ?? null; } }");
         oxTestModules::addFunction("oxutils", "seoIsActive", "{return true;}");
 
         /** @var Vendor $vendor */

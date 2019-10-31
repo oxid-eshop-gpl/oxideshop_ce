@@ -238,7 +238,7 @@ class AdminViewTest extends \OxidTestCase
         $oAdminView = oxNew('oxAdminView');
         $oAdminView->resetContentCache();
 
-        $this->assertEquals(null, $_GET["testReset"]);
+        $this->assertEquals(null, $_GET["testReset"] ?? null);
     }
 
     /**
@@ -304,10 +304,10 @@ class AdminViewTest extends \OxidTestCase
         $oAdminView->resetCounter('vendorArticle', 'testValue');
         $oAdminView->resetCounter('manufacturerArticle', 'testValue');
 
-        $this->assertEquals(null, $_GET["testReset"]["priceCatCount"]);
-        $this->assertEquals(null, $_GET["testReset"]["catCount"]);
-        $this->assertEquals(null, $_GET["testReset"]["vendorCount"]);
-        $this->assertEquals(null, $_GET["testReset"]["manufacturerCount"]);
+        $this->assertEquals(null, $_GET["testReset"]["priceCatCount"] ?? null);
+        $this->assertEquals(null, $_GET["testReset"]["catCount"] ?? null);
+        $this->assertEquals(null, $_GET["testReset"]["vendorCount"] ?? null);
+        $this->assertEquals(null, $_GET["testReset"]["manufacturerCount"] ?? null);
     }
 
     public function testAddGlobalParamsAddsSid()

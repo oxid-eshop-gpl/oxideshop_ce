@@ -380,6 +380,7 @@ class AdminController extends \OxidEsales\Eshop\Core\Controller\BaseController
         // processing config
         $iMaxFileSize = trim($iMaxFileSize);
         $sParam = strtolower($iMaxFileSize{strlen($iMaxFileSize) - 1});
+        $iMaxFileSize = preg_replace('/[^0-9]/', '', $iMaxFileSize);
         switch ($sParam) {
             case 'g':
                 $iMaxFileSize *= 1024;

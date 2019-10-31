@@ -36,6 +36,7 @@ class DownloadController extends \OxidEsales\Eshop\Application\Controller\Fronte
     {
         $sFileOrderId = Registry::getConfig()->getRequestParameter('sorderfileid');
 
+        $sError = null;
         if ($sFileOrderId) {
             $oArticleFile = oxNew(\OxidEsales\Eshop\Application\Model\File::class);
             try {

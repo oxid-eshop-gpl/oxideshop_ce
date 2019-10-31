@@ -142,7 +142,8 @@ class SelectList extends \OxidEsales\Eshop\Core\Model\MultiLanguageModel impleme
      */
     public function getSelections()
     {
-        if ($this->_aList === null && $this->oxselectlist__oxvaldesc->value) {
+        $description = $this->oxselectlist__oxvaldesc->value ?? null;
+        if ($this->_aList === null && $description) {
             $this->_aList = false;
             $aList = \OxidEsales\Eshop\Core\Registry::getUtils()->assignValuesFromText($this->oxselectlist__oxvaldesc->getRawValue(), $this->getVat());
             foreach ($aList as $sKey => $oField) {

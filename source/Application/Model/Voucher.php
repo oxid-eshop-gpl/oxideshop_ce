@@ -103,7 +103,7 @@ class Voucher extends \OxidEsales\Eshop\Core\Model\BaseModel
     public function markAsUsed($sOrderId, $sUserId, $dDiscount)
     {
         //saving oxreserved field
-        if ($this->oxvouchers__oxid->value) {
+        if (isset($this->oxvouchers__oxid->value) && $this->oxvouchers__oxid->value) {
             $this->oxvouchers__oxorderid->setValue($sOrderId);
             $this->oxvouchers__oxuserid->setValue($sUserId);
             $this->oxvouchers__oxdiscount->setValue($dDiscount);
@@ -136,7 +136,7 @@ class Voucher extends \OxidEsales\Eshop\Core\Model\BaseModel
     public function unMarkAsReserved()
     {
         //saving oxreserved field
-        $sVoucherID = $this->oxvouchers__oxid->value;
+        $sVoucherID = $this->oxvouchers__oxid->value ?? null;
 
         if ($sVoucherID) {
             $oDb = \OxidEsales\Eshop\Core\DatabaseProvider::getDb();
@@ -226,7 +226,7 @@ class Voucher extends \OxidEsales\Eshop\Core\Model\BaseModel
         if ($oSeries->oxvoucherseries__oxminimumvalue->value && $dPrice < ($oSeries->oxvoucherseries__oxminimumvalue->value * $oCur->rate)) {
             $oEx = oxNew(\OxidEsales\Eshop\Core\Exception\VoucherException::class);
             $oEx->setMessage('ERROR_MESSAGE_VOUCHER_INCORRECTPRICE');
-            $oEx->setVoucherNr($this->oxvouchers__oxvouchernr->value);
+            $oEx->setVoucherNr($this->oxvouchers__oxvouchernr->value ?? null);
             throw $oEx;
         }
 
@@ -408,8 +408,8 @@ class Voucher extends \OxidEsales\Eshop\Core\Model\BaseModel
             $sSelect .= '((oxorderid is not NULL and oxorderid != "") or (oxdateused is not NULL and oxdateused != 0)) ';
 
             $params = [
-                ':oxuserid' => $oUser->oxuser__oxid->value,
-                ':oxvoucherserieid' => $this->oxvouchers__oxvoucherserieid->value
+                ':oxuserid' => $oUser->oxuser__oxid->value ?? null,
+                ':oxvoucherserieid' => $this->oxvouchers__oxvoucherserieid->value ?? null
             ];
 
             if ($oDb->getOne($sSelect, $params)) {

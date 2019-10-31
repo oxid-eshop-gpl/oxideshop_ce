@@ -100,7 +100,7 @@ class PriceAlarmMain extends \OxidEsales\Eshop\Application\Controller\Admin\Admi
                 $sMailBody = \OxidEsales\Eshop\Core\Registry::getUtilsView()->parseThroughSmarty($sMailBody, $oPricealarm->getId());
             }
 
-            $sRecipient = $oPricealarm->oxpricealarm__oxemail->value;
+            $sRecipient = $oPricealarm->oxpricealarm__oxemail->value ?? null;
 
             $oEmail = oxNew(\OxidEsales\Eshop\Core\Email::class);
             $blSuccess = (int) $oEmail->sendPricealarmToCustomer($sRecipient, $oPricealarm, $sMailBody);

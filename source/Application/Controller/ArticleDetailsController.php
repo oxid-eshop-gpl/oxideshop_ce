@@ -840,7 +840,7 @@ class ArticleDetailsController extends \OxidEsales\Eshop\Application\Controller\
     public function getCanonicalUrl()
     {
         if (($article = $this->getProduct())) {
-            if ($article->oxarticles__oxparentid->value) {
+            if (isset($article->oxarticles__oxparentid->value) && $article->oxarticles__oxparentid->value) {
                 $article = $this->_getParentProduct($article->oxarticles__oxparentid->value);
             }
 
@@ -900,7 +900,7 @@ class ArticleDetailsController extends \OxidEsales\Eshop\Application\Controller\
         $parameters['aid'] = $this->getProduct()->getId();
         $activeCurrency = $config->getActShopCurrencyObject();
         // convert currency to default
-        $price = $utils->currency2Float($parameters['price']);
+        $price = $utils->currency2Float($parameters['price'] ?? null);
 
         $priceAlarm = oxNew(\OxidEsales\Eshop\Application\Model\PriceAlarm::class);
         $priceAlarm->oxpricealarm__oxuserid = new Field(Registry::getSession()->getVariable('usr'));
@@ -957,7 +957,7 @@ class ArticleDetailsController extends \OxidEsales\Eshop\Application\Controller\
     {
         $article = $this->getProduct();
         $variantSelectionListId = $this->getConfig()->getRequestParameter("varselid");
-        if (($articleParent = $this->_getParentProduct($article->oxarticles__oxparentid->value))) {
+        if (($articleParent = $this->_getParentProduct($article->oxarticles__oxparentid->value ?? null))) {
             return $articleParent->getVariantSelections($variantSelectionListId, $article->getId());
         }
 

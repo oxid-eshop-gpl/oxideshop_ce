@@ -1298,9 +1298,9 @@ class VoucherTest extends \OxidTestCase
         $oVoucher = oxNew('oxvoucher');
         $oVoucher->markAsUsed('xxx', 'yyy', '');
 
-        $this->assertNull($oVoucher->oxvouchers__oxorderid->value);
-        $this->assertNull($oVoucher->oxvouchers__oxuserid->value);
-        $this->assertNull($oVoucher->oxvouchers__oxdateused->value);
+        $this->assertNull($oVoucher->oxvouchers__oxorderid->value ?? null);
+        $this->assertNull($oVoucher->oxvouchers__oxuserid->value ?? null);
+        $this->assertNull($oVoucher->oxvouchers__oxdateused->value ?? null);
     }
 
     // barking existing voucher

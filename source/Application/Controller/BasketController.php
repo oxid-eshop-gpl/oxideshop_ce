@@ -288,7 +288,8 @@ class BasketController extends \OxidEsales\Eshop\Application\Controller\Frontend
             return false;
         }
 
-        if ($this->_iWrapCnt === null) {
+        $wrapCount = $this->_iWrapCnt ?? null;
+        if ($wrapCount === null) {
             $this->_iWrapCnt = 0;
 
             $oWrap = oxNew(Wrapping::class);

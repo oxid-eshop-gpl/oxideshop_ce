@@ -55,7 +55,7 @@ class BasketContentMarkGenerator
             $this->_aMarks = $aMarks;
         }
 
-        return $this->_aMarks[$sMarkIdentification];
+        return $this->_aMarks[$sMarkIdentification] ?? null;
     }
 
     /**

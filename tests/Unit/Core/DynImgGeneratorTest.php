@@ -336,7 +336,7 @@ class DynImgGeneratorTest extends \OxidTestCase
 
     public function testGenerateImageGdVersionValidation()
     {
-        $oGen = $this->getMock(DynamicImageGenerator::class, ['validateGdVersion']);
+        $oGen = $this->getMock(DynamicImageGenerator::class, ['validateGdVersion', '_getImageInfo']);
         $oGen->expects($this->any())->method('validateGdVersion')->will($this->returnValue(false));
 
         $this->assertFalse($oGen->UNITgenerateImage('source.jpg', 'target.jpg'));
@@ -344,7 +344,13 @@ class DynImgGeneratorTest extends \OxidTestCase
 
     public function testGenerateImageSourceFileExistValidation()
     {
-        $oGen = $this->getMock(DynamicImageGenerator::class, ['validateGdVersion', 'validateFileExist']);
+        $oGen = $this->getMock(DynamicImageGenerator::class,
+            [
+                'validateGdVersion',
+                'validateFileExist',
+                '_getImageInfo'
+            ]
+        );
         $oGen->expects($this->any())->method('validateGdVersion')->will($this->returnValue(true));
         $oGen->expects($this->any())->method('validateFileExist')->will($this->returnValue(false));
 
@@ -353,7 +359,9 @@ class DynImgGeneratorTest extends \OxidTestCase
 
     public function testGenerateImageTargetPathValidation()
     {
-        $oGen = $this->getMock(DynamicImageGenerator::class, ['validateGdVersion', 'validateFileExist', '_isTargetPathValid']);
+        $oGen = $this->getMock(DynamicImageGenerator::class,
+            ['validateGdVersion', 'validateFileExist', '_isTargetPathValid','_getImageInfo']
+        );
         $oGen->expects($this->any())->method('validateGdVersion')->will($this->returnValue(true));
         $oGen->expects($this->any())->method('validateFileExist')->will($this->returnValue(true));
         $oGen->expects($this->any())->method('_isTargetPathValid')->will($this->returnValue(false));
@@ -363,7 +371,15 @@ class DynImgGeneratorTest extends \OxidTestCase
 
     public function testGenerateImageFileExtensionValidationSource()
     {
-        $oGen = $this->getMock(DynamicImageGenerator::class, ['validateGdVersion', 'validateFileExist', '_isTargetPathValid', 'validateImageFileExtension']);
+        $oGen = $this->getMock(
+            DynamicImageGenerator::class,
+            ['validateGdVersion',
+                'validateFileExist',
+                '_isTargetPathValid',
+                'validateImageFileExtension',
+                '_getImageInfo'
+            ]
+        );
         $oGen->expects($this->any())->method('validateGdVersion')->will($this->returnValue(true));
         $oGen->expects($this->any())->method('validateFileExist')->will($this->returnValue(true));
         $oGen->expects($this->any())->method('_isTargetPathValid')->will($this->returnValue(true));
@@ -374,7 +390,16 @@ class DynImgGeneratorTest extends \OxidTestCase
 
     public function testGenerateImageFileExtensionValidationTarget()
     {
-        $oGen = $this->getMock(DynamicImageGenerator::class, ['validateGdVersion', 'validateFileExist', '_isTargetPathValid', 'validateImageFileExtension']);
+        $oGen = $this->getMock(
+            DynamicImageGenerator::class,
+            [
+                'validateGdVersion',
+                'validateFileExist',
+                '_isTargetPathValid',
+                'validateImageFileExtension',
+                '_getImageInfo'
+            ]
+        );
         $oGen->expects($this->any())->method('validateGdVersion')->will($this->returnValue(true));
         $oGen->expects($this->any())->method('validateFileExist')->will($this->returnValue(true));
         $oGen->expects($this->any())->method('_isTargetPathValid')->will($this->returnValue(true));
@@ -388,7 +413,16 @@ class DynImgGeneratorTest extends \OxidTestCase
 
     public function testGenerateImageFileSourceAndTargetExtensionEqualityValidation()
     {
-        $oGen = $this->getMock(DynamicImageGenerator::class, ['validateGdVersion', 'validateFileExist', '_isTargetPathValid', 'validateImageFileExtension']);
+        $oGen = $this->getMock(
+            DynamicImageGenerator::class,
+            [
+                'validateGdVersion',
+                'validateFileExist',
+                '_isTargetPathValid',
+                'validateImageFileExtension',
+                '_getImageInfo'
+            ]
+        );
         $oGen->expects($this->any())->method('validateGdVersion')->will($this->returnValue(true));
         $oGen->expects($this->any())->method('validateFileExist')->will($this->returnValue(true));
         $oGen->expects($this->any())->method('_isTargetPathValid')->will($this->returnValue(true));

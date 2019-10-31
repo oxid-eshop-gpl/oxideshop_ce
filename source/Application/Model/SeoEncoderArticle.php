@@ -334,9 +334,11 @@ class SeoEncoderArticle extends \OxidEsales\Eshop\Core\SeoEncoder
     protected function _prepareArticleTitle($oArticle)
     {
         // create title part for uri
-        if (!($sTitle = $oArticle->oxarticles__oxtitle->value)) {
+        $sTitle = $oArticle->oxarticles__oxtitle->value ?? null;
+        if (!$sTitle) {
             // taking parent article title
-            if (($sParentId = $oArticle->oxarticles__oxparentid->value)) {
+            $sParentId = $oArticle->oxarticles__oxparentid->value ?? null;
+            if ($sParentId) {
                 // looking in cache ..
                 if (!isset(self::$_aTitleCache[$sParentId])) {
                     $oDb = \OxidEsales\Eshop\Core\DatabaseProvider::getDb();
@@ -350,11 +352,13 @@ class SeoEncoderArticle extends \OxidEsales\Eshop\Core\SeoEncoder
         }
 
         // variant has varselect value
-        if ($oArticle->oxarticles__oxvarselect->value) {
+        $productParentId = $oArticle->oxarticles__oxparentid->value ?? null;
+        if (isset($oArticle->oxarticles__oxvarselect->value) && $oArticle->oxarticles__oxvarselect->value) {
             $sTitle .= ($sTitle ? ' ' : '') . $oArticle->oxarticles__oxvarselect->value . ' ';
-        } elseif (!$sTitle || ($oArticle->oxarticles__oxparentid->value)) {
+        } elseif (!$sTitle || ($productParentId)) {
             // in case nothing was found - looking for number
-            $sTitle .= ($sTitle ? ' ' : '') . $oArticle->oxarticles__oxartnum->value;
+            $productNumber = $oArticle->oxarticles__oxartnum->value ?? null;
+            $sTitle .= ($sTitle ? ' ' : '') . $productNumber;
         }
 
         return $this->_prepareTitle($sTitle, false, $oArticle->getLanguage()) . $this->_getUrlExtension();
@@ -421,7 +425,8 @@ class SeoEncoderArticle extends \OxidEsales\Eshop\Core\SeoEncoder
         $oView = $this->getConfig()->getActiveView();
 
         $oVendor = null;
-        if ($sActVendorId = $oArticle->oxarticles__oxvendorid->value) {
+        $sActVendorId = $oArticle->oxarticles__oxvendorid->value ?? null;
+        if ($sActVendorId) {
             if ($oView instanceof \OxidEsales\Eshop\Application\Controller\FrontendController && ($oActVendor = $oView->getActVendor())) {
                 $oVendor = $oActVendor;
             } else {
@@ -496,7 +501,8 @@ class SeoEncoderArticle extends \OxidEsales\Eshop\Core\SeoEncoder
     protected function _getManufacturer($oArticle, $iLang)
     {
         $oManufacturer = null;
-        if ($sActManufacturerId = $oArticle->oxarticles__oxmanufacturerid->value) {
+        $sActManufacturerId = $oArticle->oxarticles__oxmanufacturerid->value ?? null;
+        if ($sActManufacturerId) {
             $oView = $this->getConfig()->getActiveView();
 
             if ($oView instanceof \OxidEsales\Eshop\Application\Controller\FrontendController && ($oActManufacturer = $oView->getActManufacturer())) {

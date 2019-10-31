@@ -529,7 +529,7 @@ class RecommendationList extends \OxidEsales\Eshop\Core\Model\BaseModel implemen
      */
     public function save()
     {
-        if (!$this->oxrecommlists__oxtitle->value) {
+        if (isset($this->oxrecommlists__oxtitle->value) && !$this->oxrecommlists__oxtitle->value) {
             throw oxNew(\OxidEsales\Eshop\Core\Exception\ObjectException::class, 'EXCEPTION_RECOMMLIST_NOTITLE');
         }
         $this->onSave();

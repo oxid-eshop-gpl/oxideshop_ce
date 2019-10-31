@@ -673,7 +673,10 @@ class ArticleListController extends \OxidEsales\Eshop\Application\Controller\Fro
         // assign template name
         if (($templateName = basename(Registry::getConfig()->getRequestParameter('tpl')))) {
             $this->_sThisTemplate = 'custom/' . $templateName;
-        } elseif (($category = $this->getActiveCategory()) && $category->oxcategories__oxtemplate->value) {
+        } elseif (($category = $this->getActiveCategory())
+            && isset($category->oxcategories__oxtemplate->value)
+            && $category->oxcategories__oxtemplate->value
+        ) {
             $this->_sThisTemplate = $category->oxcategories__oxtemplate->value;
         }
 

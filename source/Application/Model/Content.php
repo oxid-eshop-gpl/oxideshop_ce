@@ -212,7 +212,7 @@ class Content extends \OxidEsales\Eshop\Core\Model\MultiLanguageModel implements
      */
     public function getLoadId()
     {
-        return $this->oxcontents__oxloadid->value;
+        return $this->oxcontents__oxloadid->value ?? null;
     }
 
     /**
@@ -222,7 +222,7 @@ class Content extends \OxidEsales\Eshop\Core\Model\MultiLanguageModel implements
      */
     public function isActive()
     {
-        return $this->oxcontents__oxactive->value;
+        return $this->oxcontents__oxactive->value ?? null;
     }
 
     /**
@@ -293,7 +293,7 @@ class Content extends \OxidEsales\Eshop\Core\Model\MultiLanguageModel implements
             $sUrl = $this->getConfig()->getShopUrl($iLang, false);
         }
 
-        if ($this->oxcontents__oxloadid->value === 'oxcredits') {
+        if (isset($this->oxcontents__oxloadid->value) && $this->oxcontents__oxloadid->value === 'oxcredits') {
             $sUrl .= "index.php?cl=credits";
         } else {
             $sUrl .= "index.php?cl=content";
@@ -303,12 +303,14 @@ class Content extends \OxidEsales\Eshop\Core\Model\MultiLanguageModel implements
         if ($blAddId) {
             $sUrl .= "&amp;oxcid=" . $this->getId();
             // adding parent category if if available
-            if ($this->_sParentCatId !== false && $this->oxcontents__oxcatid->value && $this->oxcontents__oxcatid->value != 'oxrootid') {
+            $parentCategoryId = $this->_sParentCatId ?? null;
+            $categoryId = $this->oxcontents__oxcatid->value ?? null;
+            if ($parentCategoryId !== false && $categoryId && $categoryId != 'oxrootid') {
                 if ($this->_sParentCatId === null) {
                     $this->_sParentCatId = false;
                     $oDb = \OxidEsales\Eshop\Core\DatabaseProvider::getDb();
                     $sParentId = $oDb->getOne("select oxparentid from oxcategories where oxid = :oxid", [
-                        ':oxid' => $this->oxcontents__oxcatid->value
+                        ':oxid' => $categoryId
                     ]);
                     if ($sParentId && 'oxrootid' != $sParentId) {
                         $this->_sParentCatId = $sParentId;
@@ -370,7 +372,7 @@ class Content extends \OxidEsales\Eshop\Core\Model\MultiLanguageModel implements
      */
     protected function _getFieldData($sFieldName)
     {
-        return $this->{$sFieldName}->value;
+        return $this->{$sFieldName}->value ?? null;
     }
 
     /**
@@ -403,7 +405,8 @@ class Content extends \OxidEsales\Eshop\Core\Model\MultiLanguageModel implements
     public function save()
     {
         $blSaved = parent::save();
-        if ($blSaved && $this->oxcontents__oxloadid->value === 'oxagb') {
+        $loadId = $this->oxcontents__oxloadid->value ?? null;
+        if ($blSaved && $loadId === 'oxagb') {
             $sShopId = $this->getConfig()->getShopId();
             $sVersion = $this->oxcontents__oxtermversion->value;
 

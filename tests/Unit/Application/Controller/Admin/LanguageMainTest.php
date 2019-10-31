@@ -30,10 +30,10 @@ class LanguageMainTest extends \OxidTestCase
 
         // testing view data
         $aViewData = $oView->getViewData();
-        $this->assertNull($aViewData["allowSharedEdit"]);
-        $this->assertNull($aViewData["malladmin"]);
+        $this->assertNull($aViewData["allowSharedEdit"] ?? null);
+        $this->assertNull($aViewData["malladmin"] ?? null);
 
-        $this->assertNull($aViewData["updatelist"]);
+        $this->assertNull($aViewData["updatelist"] ?? null);
 
         $this->assertEquals('language_main.tpl', $sTplName);
     }

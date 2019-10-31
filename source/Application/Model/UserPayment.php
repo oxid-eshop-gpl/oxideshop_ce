@@ -133,13 +133,16 @@ class UserPayment extends \OxidEsales\Eshop\Core\Model\BaseModel
     {
         // we do not store credit card information
         // check and in case skip it
-        if (!$this->getStoreCreditCardInfo() && $this->oxuserpayments__oxpaymentsid->value == 'oxidcreditcard') {
+        if (!$this->getStoreCreditCardInfo()
+            && isset($this->oxuserpayments__oxpaymentsid->value)
+            && $this->oxuserpayments__oxpaymentsid->value == 'oxidcreditcard') {
             return true;
         }
 
         //encode sensitive data
         $sEncodedValue = '';
-        if ($sValue = $this->oxuserpayments__oxvalue->value) {
+        $sValue = $this->oxuserpayments__oxvalue->value ?? null;
+        if ($sValue) {
             // Function is called from inside a transaction in Category::save (see ESDEV-3804 and ESDEV-3822).
             // No need to explicitly force master here.
             $database = \OxidEsales\Eshop\Core\DatabaseProvider::getDb();
@@ -240,7 +243,10 @@ class UserPayment extends \OxidEsales\Eshop\Core\Model\BaseModel
      */
     public function getDynValues()
     {
-        if (!$this->getStoreCreditCardInfo() && $this->oxuserpayments__oxpaymentsid->value == 'oxidcreditcard') {
+        if (!$this->getStoreCreditCardInfo()
+            && isset($this->oxuserpayments__oxpaymentsid->value)
+            && $this->oxuserpayments__oxpaymentsid->value == 'oxidcreditcard'
+        ) {
             return null;
         }
 

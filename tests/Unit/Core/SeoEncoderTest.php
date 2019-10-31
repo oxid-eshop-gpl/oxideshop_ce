@@ -381,7 +381,7 @@ class SeoEncoderTest extends \OxidTestCase
 
     public function testLanguagePrefixForSeoUrlForDe()
     {
-        oxTestModules::addFunction("oxutilsserver", "getServerVar", "{ \$aArgs = func_get_args(); if ( \$aArgs[0] === 'HTTP_HOST' ) { return '" . $this->getConfig()->getShopUrl() . "'; } elseif ( \$aArgs[0] === 'SCRIPT_NAME' ) { return ''; } else { return \$_SERVER[\$aArgs[0]]; } }");
+        oxTestModules::addFunction("oxutilsserver", "getServerVar", "{ \$aArgs = func_get_args(); if ( isset(\$aArgs[0]) && \$aArgs[0] === 'HTTP_HOST' ) { return '" . $this->getConfig()->getShopUrl() . "'; } elseif ( isset(\$aArgs[0]) && \$aArgs[0] === 'SCRIPT_NAME' ) { return ''; } else { return \$_SERVER[\$aArgs[0] ?? null] ?? null; } }");
         $oConfig = $this->getConfig();
 
         // inserting price category for test
@@ -471,7 +471,7 @@ class SeoEncoderTest extends \OxidTestCase
 
     public function testLanguagePrefixForSeoUrlForEn()
     {
-        oxTestModules::addFunction("oxutilsserver", "getServerVar", "{ \$aArgs = func_get_args(); if ( \$aArgs[0] === 'HTTP_HOST' ) { return '" . $this->getConfig()->getShopUrl() . "'; } elseif ( \$aArgs[0] === 'SCRIPT_NAME' ) { return ''; } else { return \$_SERVER[\$aArgs[0]]; } }");
+        oxTestModules::addFunction("oxutilsserver", "getServerVar", "{ \$aArgs = func_get_args(); if ( isset(\$aArgs[0]) && \$aArgs[0] === 'HTTP_HOST' ) { return '" . $this->getConfig()->getShopUrl() . "'; } elseif ( isset(\$aArgs[0]) && \$aArgs[0] === 'SCRIPT_NAME' ) { return ''; } else { return \$_SERVER[\$aArgs[0] ?? null] ?? null; } }");
         $oConfig = $this->getConfig();
 
         // inserting price category for test
@@ -717,7 +717,7 @@ class SeoEncoderTest extends \OxidTestCase
      */
     public function testGetDynamicUrlWhenLoadedExisting()
     {
-        oxTestModules::addFunction("oxutilsserver", "getServerVar", "{ \$aArgs = func_get_args(); if ( \$aArgs[0] === 'HTTP_HOST' ) { return '" . $this->getConfig()->getShopUrl() . "'; } elseif ( \$aArgs[0] === 'SCRIPT_NAME' ) { return ''; } else { return \$_SERVER[\$aArgs[0]]; } }");
+        oxTestModules::addFunction("oxutilsserver", "getServerVar", "{ \$aArgs = func_get_args(); if ( isset(\$aArgs[0]) && \$aArgs[0] === 'HTTP_HOST' ) { return '" . $this->getConfig()->getShopUrl() . "'; } elseif ( isset(\$aArgs[0]) && \$aArgs[0] === 'SCRIPT_NAME' ) { return ''; } else { return \$_SERVER[\$aArgs[0] ?? null] ?? null; } }");
 
         $sStdUrl = 'cl=stdcl';
         $sSeoUrl = 'en/dynseourl/';
@@ -742,7 +742,7 @@ class SeoEncoderTest extends \OxidTestCase
 
     public function testGetDynamicUrlWhenLoadedExistingButDiffersFromGiven()
     {
-        oxTestModules::addFunction("oxutilsserver", "getServerVar", "{ \$aArgs = func_get_args(); if ( \$aArgs[0] === 'HTTP_HOST' ) { return '" . $this->getConfig()->getShopUrl() . "'; } elseif ( \$aArgs[0] === 'SCRIPT_NAME' ) { return ''; } else { return \$_SERVER[\$aArgs[0]]; } }");
+        oxTestModules::addFunction("oxutilsserver", "getServerVar", "{ \$aArgs = func_get_args(); if ( isset(\$aArgs[0]) && \$aArgs[0] === 'HTTP_HOST' ) { return '" . $this->getConfig()->getShopUrl() . "'; } elseif ( isset(\$aArgs[0]) && \$aArgs[0] === 'SCRIPT_NAME' ) { return ''; } else { return \$_SERVER[\$aArgs[0] ?? null] ?? null; } }");
 
         $sStdUrl = 'cl=stdcl';
         $sSeoUrl = 'dynseourl/';
@@ -770,7 +770,7 @@ class SeoEncoderTest extends \OxidTestCase
 
     public function testGetDynamicUriExistingButDoesNotMatchPassed()
     {
-        oxTestModules::addFunction("oxutilsserver", "getServerVar", "{ \$aArgs = func_get_args(); if ( \$aArgs[0] === 'HTTP_HOST' ) { return '" . $this->getConfig()->getShopUrl() . "'; } elseif ( \$aArgs[0] === 'SCRIPT_NAME' ) { return ''; } else { return \$_SERVER[\$aArgs[0]]; } }");
+        oxTestModules::addFunction("oxutilsserver", "getServerVar", "{ \$aArgs = func_get_args(); if ( isset(\$aArgs[0]) && \$aArgs[0] === 'HTTP_HOST' ) { return '" . $this->getConfig()->getShopUrl() . "'; } elseif ( isset(\$aArgs[0]) && \$aArgs[0] === 'SCRIPT_NAME' ) { return ''; } else { return \$_SERVER[\$aArgs[0] ?? null] ?? null; } }");
 
         $iLang = 1;
         $sStdUrl = 'cl=stdcl';

@@ -47,10 +47,10 @@ class VoucherSerieListTest extends \OxidTestCase
 
         // testing view data
         $aViewData = $oView->getViewData();
-        $this->assertNull($aViewData["allowSharedEdit"]);
-        $this->assertNull($aViewData["malladmin"]);
-        $this->assertNull($aViewData["updatelist"]);
-        $this->assertNull($aViewData["sort"]);
+        $this->assertNull($aViewData["allowSharedEdit"] ?? null);
+        $this->assertNull($aViewData["malladmin"] ?? null);
+        $this->assertNull($aViewData["updatelist"] ?? null);
+        $this->assertNull($aViewData["sort"] ?? null);
 
         $this->assertEquals('voucherserie_list.tpl', $sTplName);
     }

@@ -1592,7 +1592,6 @@ class ArticleTest extends \OxidTestCase
         $dbRecord['oxarticles__oxtitle'] = 'test2';
         $oArticle->assign($dbRecord);
         $this->assertEquals('LongDesc', $oArticle->oxarticles__oxlongdesc->value);
-        $this->assertEquals($oArticle->oxarticles__oxid->value, $oArticle->oxarticles__oxnid->value);
         $this->assertEquals('test2', $oArticle->oxarticles__oxtitle->value);
     }
 
@@ -4376,7 +4375,7 @@ class ArticleTest extends \OxidTestCase
         $oVariant->setId('_testVar2');
         $oVariant->oxarticles__oxprice = new oxField(12.2, oxField::T_RAW);
         $oVariant->oxarticles__oxshopid = new oxField($this->getConfig()->getBaseShopId(), oxField::T_RAW);
-        $oVariant->oxarticles__oxparentid = new oxField($this->oArticle->oxarticles__oxid->value, oxField::T_RAW);
+        $oVariant->oxarticles__oxparentid = new oxField($this->oArticle->oxarticles__oxid->value ?? null, oxField::T_RAW);
         $oVariant->oxarticles__oxtitle = new oxField("test", oxField::T_RAW);
 
         $oVariant->save();
@@ -4410,12 +4409,13 @@ class ArticleTest extends \OxidTestCase
     {
         $oArticle = oxNew('oxArticle');
         $oArticle->load('1672');
+        $sArtID = null;
         $sSelect = "select oxattrid from oxobject2attribute where oxobjectid = '$sArtID'";
         $sID = oxDb::getDB()->getOne($sSelect);
         $sSelect = "select oxvalue from oxobject2attribute where oxattrid = '$sID' and oxobjectid = '$sArtID'";
         $sExpectedValue = oxDb::getDB()->getOne($sSelect);
         $aAttrList = $oArticle->getAttributes();
-        $sAttribValue = $aAttrList[$sID]->oxobject2attribute__oxvalue->value;
+        $sAttribValue = $aAttrList[$sID]->oxobject2attribute__oxvalue->value ?? null;
         $this->assertEquals($sExpectedValue, $sAttribValue);
     }
 
@@ -4438,7 +4438,7 @@ class ArticleTest extends \OxidTestCase
         $expectedValue = oxDb::getDB()->getOne("SELECT oxvalue_1 FROM oxobject2attribute WHERE oxattrid = '?' AND oxobjectid = '$articleId'", array($attributeId, $articleId));
 
         $attributeList = $article->getAttributes();
-        $attributeValue = $attributeList[$attributeId]->oxattribute__oxvalue->value;
+        $attributeValue = $attributeList[$attributeId]->oxattribute__oxvalue->value ?? null;
 
         $this->setLanguage($oldLanguage);
 
@@ -4621,7 +4621,7 @@ class ArticleTest extends \OxidTestCase
         $oArticle->oxarticles__oxstockflag = new oxField(4, oxField::T_RAW);
         $oArticle->UNITassignStock();
         $this->assertEquals(0, $oArticle->getStockStatus());
-        $this->assertNull($this->_blNotBuyable);
+        $this->assertNull($this->_blNotBuyable ?? null);
     }
 
     /**
@@ -4748,8 +4748,8 @@ class ArticleTest extends \OxidTestCase
         $this->assertFalse($oArticle->isPropertyLoaded('oxarticles__oxzoom1'));
 
         //first time access
-        $picture    = $oArticle->oxarticles__oxpic1->value;
-        $zoom       = $oArticle->oxarticles__oxzoom1->value;
+        $picture    = $oArticle->oxarticles__oxpic1->value ?? null;
+        $zoom       = $oArticle->oxarticles__oxzoom1->value ?? null;
 
         $this->assertTrue($oArticle->isPropertyLoaded('oxarticles__oxpic1'));
         $this->assertEquals("front_z1.jpg", $oArticle->oxarticles__oxpic1->value);
@@ -4881,7 +4881,7 @@ class ArticleTest extends \OxidTestCase
         $sUrl = $this->getConfig()->getShopHomeURL() . 'cl=details&amp;anid=xxx&amp;cnid=yyy&amp;pgNr=10&amp;mnid=mmm&amp;listtype=search';
 
         $oArticle = $this->getMock(\OxidEsales\Eshop\Application\Model\Article::class, array('getSession'));
-        $oArticle->expects($this->any())->method('getSession')->will($this->returnValue($oSession));
+        $oArticle->expects($this->any())->method('getSession')->will($this->returnValue(null));
         $oArticle->setId('xxx');
 
         $this->assertEquals($sUrl, $oArticle->getStdLink(0, array('cnid' => 'yyy', 'pgNr' => 10, 'mnid' => 'mmm', 'listtype' => 'search')));
@@ -4912,7 +4912,7 @@ class ArticleTest extends \OxidTestCase
      */
     public function testGetLinkSeoDe()
     {
-        oxTestModules::addFunction("oxutilsserver", "getServerVar", "{ \$aArgs = func_get_args(); if ( \$aArgs[0] === 'HTTP_HOST' ) { return '" . $this->getConfig()->getShopUrl() . "'; } elseif ( \$aArgs[0] === 'SCRIPT_NAME' ) { return ''; } else { return \$_SERVER[\$aArgs[0]]; } }");
+        oxTestModules::addFunction("oxutilsserver", "getServerVar", "{ \$aArgs = func_get_args(); if ( isset(\$aArgs[0]) && \$aArgs[0] === 'HTTP_HOST' ) { return '" . $this->getConfig()->getShopUrl() . "'; } elseif ( isset(\$aArgs[0]) && \$aArgs[0] === 'SCRIPT_NAME' ) { return ''; } else { return \$_SERVER[\$aArgs[0] ?? null] ?? null; } }");
         oxTestModules::addFunction("oxutils", "seoIsActive", "{return true;}");
 
         $oArticle = oxNew('oxArticle');
@@ -4935,7 +4935,7 @@ class ArticleTest extends \OxidTestCase
      */
     public function testGetLinkSeoEng()
     {
-        oxTestModules::addFunction("oxutilsserver", "getServerVar", "{ \$aArgs = func_get_args(); if ( \$aArgs[0] === 'HTTP_HOST' ) { return '" . $this->getConfig()->getShopUrl() . "'; } elseif ( \$aArgs[0] === 'SCRIPT_NAME' ) { return ''; } else { return \$_SERVER[\$aArgs[0]]; } }");
+        oxTestModules::addFunction("oxutilsserver", "getServerVar", "{ \$aArgs = func_get_args(); if ( isset(\$aArgs[0]) && \$aArgs[0] === 'HTTP_HOST' ) { return '" . $this->getConfig()->getShopUrl() . "'; } elseif ( isset(\$aArgs[0]) && \$aArgs[0] === 'SCRIPT_NAME' ) { return ''; } else { return \$_SERVER[\$aArgs[0] ?? null] ?? null; } }");
         oxTestModules::addFunction("oxutils", "seoIsActive", "{return true;}");
 
         $oArticle = oxNew('oxArticle');
@@ -5276,8 +5276,8 @@ class ArticleTest extends \OxidTestCase
         $this->assertEquals("variant_pic1.jpg", $oVarArticle->oxarticles__oxpic1->value);
 
         //parent values are not loaded
-        $this->assertEquals("", $oVarArticle->oxarticles__oxthumb->value);
-        $this->assertEquals("", $oVarArticle->oxarticles__oxpic2->value);
+        $this->assertEquals("", $oVarArticle->oxarticles__oxthumb->value ?? null);
+        $this->assertEquals("", $oVarArticle->oxarticles__oxpic2->value ?? null);
     }
 
     /**
@@ -5356,7 +5356,7 @@ class ArticleTest extends \OxidTestCase
         $this->assertEquals($this->getConfig()->getShopHomeURL() . 'cl=details&amp;anid=xxx&amp;lang=2', $oArticle->getLink(2));
 
         // next
-        oxTestModules::addFunction("oxutilsserver", "getServerVar", "{ \$aArgs = func_get_args(); if ( \$aArgs[0] === 'HTTP_HOST' ) { return '" . $this->getConfig()->getShopUrl() . "'; } elseif ( \$aArgs[0] === 'SCRIPT_NAME' ) { return ''; } else { return \$_SERVER[\$aArgs[0]]; } }");
+        oxTestModules::addFunction("oxutilsserver", "getServerVar", "{ \$aArgs = func_get_args(); if ( isset(\$aArgs[0]) && \$aArgs[0] === 'HTTP_HOST' ) { return '" . $this->getConfig()->getShopUrl() . "'; } elseif ( isset(\$aArgs[0]) && \$aArgs[0] === 'SCRIPT_NAME' ) { return ''; } else { return \$_SERVER[\$aArgs[0] ?? null] ?? null; } }");
         oxTestModules::addFunction("oxutils", "seoIsActive", "{return true;}");
 
         $oArticle = oxNew('oxArticle');
@@ -5405,7 +5405,7 @@ class ArticleTest extends \OxidTestCase
         $sUrl2 = $this->getConfig()->getShopHomeURL() . 'cl=details&amp;anid=xxx&amp;cnid=yyy&amp;pgNr=10&amp;mnid=mmm&amp;listtype=search';
 
         $oArticle = $this->getMock(\OxidEsales\Eshop\Application\Model\Article::class, array('getSession'));
-        $oArticle->expects($this->any())->method('getSession')->will($this->returnValue($oSession));
+        $oArticle->expects($this->any())->method('getSession')->will($this->returnValue(null));
         $oArticle->setId('xxx');
 
         $this->assertEquals($sUrl1, $oArticle->getStdLink(1, array("cnid" => "yyy", "pgNr" => 10, "mnid" => "mmm", "listtype" => "search")));
@@ -5517,7 +5517,7 @@ class ArticleTest extends \OxidTestCase
      */
     public function testGetToBasketLinkIsSearchEngine()
     {
-        oxTestModules::addFunction("oxutilsserver", "getServerVar", "{ \$aArgs = func_get_args(); if ( \$aArgs[0] === 'HTTP_HOST' ) { return 'seolink'; } elseif ( \$aArgs[0] === 'SCRIPT_NAME' ) { return ''; } else { return \$_SERVER[\$aArgs[0]]; } }");
+        oxTestModules::addFunction("oxutilsserver", "getServerVar", "{ \$aArgs = func_get_args(); if ( isset(\$aArgs[0]) && \$aArgs[0] === 'HTTP_HOST' ) { return 'seolink'; } elseif ( isset(\$aArgs[0]) && \$aArgs[0] === 'SCRIPT_NAME' ) { return ''; } else { return \$_SERVER[\$aArgs[0] ?? null] ?? null; } }");
         oxTestModules::addFunction("oxutils", "isSearchEngine", "{return true;}");
 
         $oArticle = $this->getMock(\OxidEsales\Eshop\Application\Model\Article::class, array('getLink'));
@@ -6348,7 +6348,7 @@ class ArticleTest extends \OxidTestCase
         oxTestModules::addFunction("oxutils", "seoIsActive", "{return false;}");
 
         $oArticle = $this->getMock(\OxidEsales\Eshop\Application\Model\Article::class, array('getSession'));
-        $oArticle->expects($this->any())->method('getSession')->will($this->returnValue($oSession));
+        $oArticle->expects($this->any())->method('getSession')->will($this->returnValue(null));
         $oArticle->setId('xxx');
 
         $sUrl = $this->getConfig()->getShopHomeURL() . 'cl=details&amp;anid=xxx&amp;cnid=cid&amp;lala=lili&amp;pgNr=10&amp;mnid=mmm&amp;listtype=search&amp;lang=1';

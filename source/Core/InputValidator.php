@@ -135,7 +135,9 @@ class InputValidator extends \OxidEsales\Eshop\Core\Base
 
         // check only for users with password during registration
         // if user wants to change user name - we must check if passwords are ok before changing
-        if ($user->oxuser__oxpassword->value && $login != $user->oxuser__oxusername->value) {
+        $password = $user->oxuser__oxpassword->value ?? null;
+        $userName = $user->oxuser__oxusername->value ?? null;
+        if ($password && $login != $userName) {
             // on this case password must be taken directly from request
             $newPassword = (isset($invAddress['oxuser__oxpassword']) && $invAddress['oxuser__oxpassword']) ? $invAddress['oxuser__oxpassword'] : \OxidEsales\Eshop\Core\Registry::getConfig()->getRequestParameter('user_password');
             if (!$newPassword) {
@@ -348,6 +350,8 @@ class InputValidator extends \OxidEsales\Eshop\Core\Base
      */
     public function checkVatId($user, $invAddress)
     {
+        $ustId = $invAddress['oxuser__oxustid'] ?? null;
+        $company = $invAddress['oxuser__oxcompany'] ?? null;
         if ($this->_hasRequiredParametersForVatInCheck($invAddress)) {
             $country = $this->_getCountry($invAddress['oxuser__oxcountryid']);
 
@@ -365,7 +369,7 @@ class InputValidator extends \OxidEsales\Eshop\Core\Base
                     return $this->_addValidationError("oxuser__oxustid", $exception);
                 }
             }
-        } elseif ($invAddress['oxuser__oxustid'] && !$invAddress['oxuser__oxcompany']) {
+        } elseif ($ustId && !$company) {
             /** @var \OxidEsales\Eshop\Core\Exception\InputException $exception */
             $exception = oxNew(\OxidEsales\Eshop\Core\Exception\InputException::class);
             $exception->setMessage(\OxidEsales\Eshop\Core\Registry::getLang()->translateString('VAT_MESSAGE_COMPANY_MISSING'));
@@ -609,7 +613,10 @@ class InputValidator extends \OxidEsales\Eshop\Core\Base
      */
     protected function _hasRequiredParametersForVatInCheck($invAddress)
     {
-        return $invAddress['oxuser__oxustid'] && $invAddress['oxuser__oxcountryid'] && $invAddress['oxuser__oxcompany'];
+        $ustId = $invAddress['oxuser__oxustid'] ?? null;
+        $countryId = $invAddress['oxuser__oxcountryid'] ?? null;
+        $company = $invAddress['oxuser__oxcompany'] ?? null;
+        return $ustId && $countryId && $company;
     }
 
     /**

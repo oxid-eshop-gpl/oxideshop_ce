@@ -87,7 +87,8 @@ class AdminlinksMain extends \OxidEsales\Eshop\Application\Controller\Admin\Admi
             $aParams['oxlinks__oxurldesc'] .= " ";
         }
 
-        if (!$aParams['oxlinks__oxinsert']) {
+        $insert = $aParams['oxlinks__oxinsert'] ?? null;
+        if (!$insert) {
             // sets default (?) date format to output
             // else if possible - changes date format to system compatible
             $sDate = date(\OxidEsales\Eshop\Core\Registry::getLang()->translateString("simpleDateFormat"));

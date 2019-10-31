@@ -596,7 +596,7 @@ class ContentTest extends \OxidTestCase
     {
         $oDelivery = oxNew('oxDelivery');
         $oDelivery->setId('_testDeliveryId');
-        $oDelivery->oxdelivery__oxtitle = new oxField('_testDelivertTitle' . $i, oxField::T_RAW);
+        $oDelivery->oxdelivery__oxtitle = new oxField('_testDelivertTitle', oxField::T_RAW);
         $oDelivery->oxdelivery__oxactive = new oxField(1, oxField::T_RAW);
         $oDelivery->oxdelivery__oxdeltype = new oxField('p', oxField::T_RAW);
         $oDelivery->oxdelivery__oxparam = new oxField(0, oxField::T_RAW);

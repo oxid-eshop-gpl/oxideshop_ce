@@ -56,7 +56,7 @@ class SeoEncoderManufacturerTest extends \OxidTestCase
 
     public function testGetManufacturerUrlExistingManufacturer()
     {
-        oxTestModules::addFunction("oxutilsserver", "getServerVar", "{ \$aArgs = func_get_args(); if ( \$aArgs[0] === 'HTTP_HOST' ) { return '" . $this->getConfig()->getShopUrl() . "'; } elseif ( \$aArgs[0] === 'SCRIPT_NAME' ) { return ''; } else { return \$_SERVER[\$aArgs[0]]; } }");
+        oxTestModules::addFunction("oxutilsserver", "getServerVar", "{ \$aArgs = func_get_args(); if ( isset(\$aArgs[0]) && \$aArgs[0] === 'HTTP_HOST' ) { return '" . $this->getConfig()->getShopUrl() . "'; } elseif ( isset(\$aArgs[0]) && \$aArgs[0] === 'SCRIPT_NAME' ) { return ''; } else { return \$_SERVER[\$aArgs[0] ?? null] ?? null; } }");
 
         $vendorId = $this->getTestConfig()->getShopEdition() == 'EE' ? '2536d76675ebe5cb777411914a2fc8fb' : 'ee4948794e28d488cf1c8101e716a3f4';
         $link = $this->getTestConfig()->getShopEdition() == 'EE' ? 'Nach-Hersteller/Hersteller-2/' : 'Nach-Hersteller/Bush/';
@@ -70,7 +70,7 @@ class SeoEncoderManufacturerTest extends \OxidTestCase
 
     public function testGetManufacturerUrlExistingManufacturerEng()
     {
-        oxTestModules::addFunction("oxutilsserver", "getServerVar", "{ \$aArgs = func_get_args(); if ( \$aArgs[0] === 'HTTP_HOST' ) { return '" . $this->getConfig()->getShopUrl() . "'; } elseif ( \$aArgs[0] === 'SCRIPT_NAME' ) { return ''; } else { return \$_SERVER[\$aArgs[0]]; } }");
+        oxTestModules::addFunction("oxutilsserver", "getServerVar", "{ \$aArgs = func_get_args(); if ( isset(\$aArgs[0]) && \$aArgs[0] === 'HTTP_HOST' ) { return '" . $this->getConfig()->getShopUrl() . "'; } elseif ( isset(\$aArgs[0]) && \$aArgs[0] === 'SCRIPT_NAME' ) { return ''; } else { return \$_SERVER[\$aArgs[0] ?? null] ?? null; } }");
         oxTestModules::addFunction('oxManufacturer', 'resetRootManufacturer', '{ self::$_aRootManufacturer = array() ; }');
 
         $vendorId = $this->getTestConfig()->getShopEdition() == 'EE' ? '2536d76675ebe5cb777411914a2fc8fb' : 'ee4948794e28d488cf1c8101e716a3f4';
@@ -88,7 +88,7 @@ class SeoEncoderManufacturerTest extends \OxidTestCase
 
     public function testGetManufacturerUrlExistingManufacturerWithLangParam()
     {
-        oxTestModules::addFunction("oxutilsserver", "getServerVar", "{ \$aArgs = func_get_args(); if ( \$aArgs[0] === 'HTTP_HOST' ) { return '" . $this->getConfig()->getShopUrl() . "'; } elseif ( \$aArgs[0] === 'SCRIPT_NAME' ) { return ''; } else { return \$_SERVER[\$aArgs[0]]; } }");
+        oxTestModules::addFunction("oxutilsserver", "getServerVar", "{ \$aArgs = func_get_args(); if ( isset(\$aArgs[0]) && \$aArgs[0] === 'HTTP_HOST' ) { return '" . $this->getConfig()->getShopUrl() . "'; } elseif ( isset(\$aArgs[0]) && \$aArgs[0] === 'SCRIPT_NAME' ) { return ''; } else { return \$_SERVER[\$aArgs[0] ?? null] ?? null; } }");
 
         $vendorId = $this->getTestConfig()->getShopEdition() == 'EE' ? '2536d76675ebe5cb777411914a2fc8fb' : 'ee4948794e28d488cf1c8101e716a3f4';
         $link = $this->getTestConfig()->getShopEdition() == 'EE' ? 'Nach-Hersteller/Hersteller-2/' : 'Nach-Hersteller/Bush/';
@@ -102,7 +102,7 @@ class SeoEncoderManufacturerTest extends \OxidTestCase
 
     public function testGetManufacturerUrlExistingManufacturerEngWithLangParam()
     {
-        oxTestModules::addFunction("oxutilsserver", "getServerVar", "{ \$aArgs = func_get_args(); if ( \$aArgs[0] === 'HTTP_HOST' ) { return '" . $this->getConfig()->getShopUrl() . "'; } elseif ( \$aArgs[0] === 'SCRIPT_NAME' ) { return ''; } else { return \$_SERVER[\$aArgs[0]]; } }");
+        oxTestModules::addFunction("oxutilsserver", "getServerVar", "{ \$aArgs = func_get_args(); if ( isset(\$aArgs[0]) && \$aArgs[0] === 'HTTP_HOST' ) { return '" . $this->getConfig()->getShopUrl() . "'; } elseif ( isset(\$aArgs[0]) && \$aArgs[0] === 'SCRIPT_NAME' ) { return ''; } else { return \$_SERVER[\$aArgs[0] ?? null] ?? null; } }");
         oxTestModules::addFunction('oxManufacturer', 'resetRootManufacturer', '{ self::$_aRootManufacturer = array() ; }');
 
         $vendorId = $this->getTestConfig()->getShopEdition() == 'EE' ? '2536d76675ebe5cb777411914a2fc8fb' : 'ee4948794e28d488cf1c8101e716a3f4';
@@ -195,7 +195,7 @@ class SeoEncoderManufacturerTest extends \OxidTestCase
      */
     public function testGetManufacturerPageUrl()
     {
-        oxTestModules::addFunction("oxutilsserver", "getServerVar", "{ \$aArgs = func_get_args(); if ( \$aArgs[0] === 'HTTP_HOST' ) { return '" . $this->getConfig()->getShopUrl() . "'; } elseif ( \$aArgs[0] === 'SCRIPT_NAME' ) { return ''; } else { return \$_SERVER[\$aArgs[0]]; } }");
+        oxTestModules::addFunction("oxutilsserver", "getServerVar", "{ \$aArgs = func_get_args(); if ( isset(\$aArgs[0]) && \$aArgs[0] === 'HTTP_HOST' ) { return '" . $this->getConfig()->getShopUrl() . "'; } elseif ( isset(\$aArgs[0]) && \$aArgs[0] === 'SCRIPT_NAME' ) { return ''; } else { return \$_SERVER[\$aArgs[0] ?? null] ?? null; } }");
 
         $vendorId = $this->getTestConfig()->getShopEdition() == 'EE' ? '2536d76675ebe5cb777411914a2fc8fb' : 'ee4948794e28d488cf1c8101e716a3f4';
         $link = $this->getTestConfig()->getShopEdition() == 'EE' ? 'en/By-manufacturer/Manufacturer-2/?pgNr=100' : 'en/By-manufacturer/Bush/?pgNr=100';
@@ -209,7 +209,7 @@ class SeoEncoderManufacturerTest extends \OxidTestCase
 
     public function testGetManufacturerPageUrlWithLangParam()
     {
-        oxTestModules::addFunction("oxutilsserver", "getServerVar", "{ \$aArgs = func_get_args(); if ( \$aArgs[0] === 'HTTP_HOST' ) { return '" . $this->getConfig()->getShopUrl() . "'; } elseif ( \$aArgs[0] === 'SCRIPT_NAME' ) { return ''; } else { return \$_SERVER[\$aArgs[0]]; } }");
+        oxTestModules::addFunction("oxutilsserver", "getServerVar", "{ \$aArgs = func_get_args(); if ( isset(\$aArgs[0]) && \$aArgs[0] === 'HTTP_HOST' ) { return '" . $this->getConfig()->getShopUrl() . "'; } elseif ( isset(\$aArgs[0]) && \$aArgs[0] === 'SCRIPT_NAME' ) { return ''; } else { return \$_SERVER[\$aArgs[0] ?? null] ?? null; } }");
 
         $vendorId = $this->getTestConfig()->getShopEdition() == 'EE' ? '2536d76675ebe5cb777411914a2fc8fb' : 'ee4948794e28d488cf1c8101e716a3f4';
         $link = $this->getTestConfig()->getShopEdition() == 'EE' ? 'en/By-manufacturer/Manufacturer-2/?pgNr=100' : 'en/By-manufacturer/Bush/?pgNr=100';

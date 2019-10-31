@@ -508,7 +508,7 @@ class Email extends PHPMailer
         $myConfig = $this->getConfig();
         $shop = ($shop) ? $shop : $this->_getShop();
 
-        $smtpUrl = $this->_setSmtpProtocol($shop->oxshops__oxsmtp->value);
+        $smtpUrl = $this->_setSmtpProtocol($shop->oxshops__oxsmtp->value ?? null);
 
         if (!$this->_isValidSmtpHost($smtpUrl)) {
             $this->setMailer("mail");
@@ -664,7 +664,8 @@ class Email extends PHPMailer
             if ($renderer->exists($this->_sOrderOwnerSubjectTemplate)) {
                 $subject = $renderer->renderTemplate($this->_sOrderOwnerSubjectTemplate, $this->getViewData());
             } else {
-                $subject = $shop->oxshops__oxordersubject->getRawValue() . " (#" . $order->oxorder__oxordernr->value . ")";
+                $orderNr = $order->oxorder__oxordernr->value ?? null;
+                $subject = $shop->oxshops__oxordersubject->getRawValue() . " (#" . $orderNr . ")";
             }
         }
 
@@ -858,7 +859,9 @@ class Email extends PHPMailer
 
         // create messages
         $renderer = $this->getRenderer();
-        $confirmCode = md5($user->oxuser__oxusername->value . $user->oxuser__oxpasssalt->value);
+        $userName = $user->oxuser__oxusername->value ?? null;
+        $salt = $user->oxuser__oxpasssalt->value ?? null;
+        $confirmCode = md5($userName . $salt);
         $this->setViewData("subscribeLink", $this->_getNewsSubsLink($user->oxuser__oxid->value, $confirmCode));
         $this->setUser($user);
 
@@ -985,10 +988,10 @@ class Email extends PHPMailer
 
         $this->setBody($renderer->renderTemplate($this->_sSuggestTemplate, $this->getViewData()));
         $this->setAltBody($renderer->renderTemplate($this->_sSuggestTemplatePlain, $this->getViewData()));
-        $this->setSubject($user->send_subject);
+        $this->setSubject($user->send_subject ?? null);
 
-        $this->setRecipient($user->rec_email, $user->rec_name);
-        $this->setReplyTo($user->send_email, $user->send_name);
+        $this->setRecipient($user->rec_email ?? null, $user->rec_name ?? null);
+        $this->setReplyTo($user->send_email ?? null, $user->send_name ?? null);
 
         return $this->send();
     }
@@ -1087,7 +1090,7 @@ class Email extends PHPMailer
         if ($myConfig->getConfigParam('bl_perfLoadReviews', false)) {
             $this->setViewData("blShowReviewLink", true);
             $user = oxNew(\OxidEsales\Eshop\Application\Model\User::class);
-            $this->setViewData("reviewuserhash", $user->getReviewUserHash($order->oxorder__oxuserid->value));
+            $this->setViewData("reviewuserhash", $user->getReviewUserHash($order->oxorder__oxuserid->value ?? null));
         } else {
             $this->setViewData("blShowReviewLink", false);
         }
@@ -1114,8 +1117,8 @@ class Email extends PHPMailer
 
         $fullName = $order->oxorder__oxbillfname->getRawValue() . " " . $order->oxorder__oxbilllname->getRawValue();
 
-        $this->setRecipient($order->oxorder__oxbillemail->value, $fullName);
-        $this->setReplyTo($shop->oxshops__oxorderemail->value, $shop->oxshops__oxname->getRawValue());
+        $this->setRecipient($order->oxorder__oxbillemail->value ?? null, $fullName);
+        $this->setReplyTo($shop->oxshops__oxorderemail->value ?? null, $shop->oxshops__oxname->getRawValue());
 
         return $this->send();
     }
@@ -1362,7 +1365,7 @@ class Email extends PHPMailer
         //set mail params (from, fromName, smtp)
         $this->_setMailParams($shop);
 
-        $alarmLang = $alarm->oxpricealarm__oxlang->value;
+        $alarmLang = $alarm->oxpricealarm__oxlang->value ?? null;
 
         $article = oxNew(\OxidEsales\Eshop\Application\Model\Article::class);
         //$article->setSkipAbPrice( true );

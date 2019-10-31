@@ -54,8 +54,14 @@ class VendorlistTest extends \OxidTestCase
 
         if ($rs != false && $rs->count() > 0) {
             while (!$rs->EOF) {
-                $this->assertEquals($rs->fields[1], $oVendorlist[$rs->fields[0]]->oxvendor__oxtitle->value);
-                $this->assertEquals($rs->fields[2], $oVendorlist[$rs->fields[0]]->oxvendor__oxshortdesc->value);
+                $this->assertEquals(
+                    $rs->fields[1] ?? null,
+                    $oVendorlist[$rs->fields[0] ?? null]->oxvendor__oxtitle->value ?? null
+                );
+                $this->assertEquals(
+                    $rs->fields[2] ?? null,
+                    $oVendorlist[$rs->fields[0] ?? null]->oxvendor__oxshortdesc->value ?? null
+                );
                 $rs->fetchRow();
             }
         } else {

@@ -701,10 +701,13 @@ class ArticleList extends \OxidEsales\Eshop\Core\Model\ListModel
         // not active or not available products must not have button "tobasket"
         $sNow = date('Y-m-d H:i:s');
         foreach ($this as $oArticle) {
-            if (!$oArticle->oxarticles__oxactive->value &&
+            $isActive = $oArticle->oxarticles__oxactive->value ?? null;
+            $activeFrom = $oArticle->oxarticles__oxactivefrom->value ?? null;
+            $activeTo = $oArticle->oxarticles__oxactiveto->value ?? null;
+            if (!$isActive &&
                 (
-                    $oArticle->oxarticles__oxactivefrom->value > $sNow ||
-                 $oArticle->oxarticles__oxactiveto->value < $sNow
+                    $activeFrom > $sNow ||
+                    $activeTo < $sNow
                 )
             ) {
                 $oArticle->setBuyableState(false);

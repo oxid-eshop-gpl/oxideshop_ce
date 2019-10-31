@@ -257,7 +257,10 @@ class Actions extends \OxidEsales\Eshop\Core\Model\MultiLanguageModel
      */
     public function getBannerPictureUrl()
     {
-        if (isset($this->oxactions__oxpic) && $this->oxactions__oxpic->value) {
+        if (isset($this->oxactions__oxpic)
+            && isset($this->oxactions__oxpic->value)
+            && $this->oxactions__oxpic->value
+        ) {
             $sPromoDir = \OxidEsales\Eshop\Core\Registry::getUtilsFile()->normalizeDir(\OxidEsales\Eshop\Core\UtilsFile::PROMO_PICTURE_DIR);
 
             return $this->getConfig()->getPictureUrl($sPromoDir . $this->oxactions__oxpic->value, false);

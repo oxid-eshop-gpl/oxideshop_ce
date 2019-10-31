@@ -74,8 +74,9 @@ class AttributeTest extends \OxidTestCase
     {
         $this->_oAttr->delete();
 
-        $sCheckOxid1 = oxDb::getDb()->GetOne("select oxid from oxobject2attribute where oxattrid = '{$this->sOxid}'");
-        $sCheckOxid2 = oxDb::getDb()->GetOne("select oxid from oxcategory2attribute where oxattrid = '{$this->sOxid}'");
+        $id = $this->sOxid ?? null;
+        $sCheckOxid1 = oxDb::getDb()->GetOne("select oxid from oxobject2attribute where oxattrid = '{$id}'");
+        $sCheckOxid2 = oxDb::getDb()->GetOne("select oxid from oxcategory2attribute where oxattrid = '{$id}'");
         $oAttr = oxNew('oxAttribute');
         if ($sCheckOxid1 || $sCheckOxid2 || $oAttr->Load($this->_oAttr->getId())) {
             $this->fail("fail deleting");

@@ -403,7 +403,7 @@ class SystemRequirements
     {
         // got here from setup dir
         $sScript = $_SERVER['SCRIPT_NAME'];
-        $iPort = (int) $_SERVER['SERVER_PORT'];
+        $iPort = (int) ($_SERVER['SERVER_PORT'] ?? null);
         $blSsl = (isset($_SERVER['HTTPS']) && ($_SERVER['HTTPS'] == 'on'));
         if (!$iPort) {
             $iPort = $blSsl ? 443 : 80;

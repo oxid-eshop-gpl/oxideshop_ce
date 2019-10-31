@@ -431,7 +431,7 @@ class BaseModel extends \OxidEsales\Eshop\Core\Base
                 ':oxid' => $this->getId()
             ]);
             $fieldValue = "{$tableName}__{$fieldName}";
-            $currentTime = $this->$fieldValue->value;
+            $currentTime = $this->$fieldValue->value ?? null;
 
             if ($title == $currentTime) {
                 $this->setUpdateSeo(false);
@@ -1585,7 +1585,7 @@ class BaseModel extends \OxidEsales\Eshop\Core\Base
      */
     public function isPropertyLoaded($name)
     {
-        return property_exists($this, $name) && $this->$name !== null;
+        return property_exists($this, $name) && isset($this->$name) && $this->$name !== null;
     }
 
     /**
@@ -1630,6 +1630,7 @@ class BaseModel extends \OxidEsales\Eshop\Core\Base
      */
     private function isPropertyField($name)
     {
-        return $this->$name instanceof Field;
+        $field = $this->$name ?? null;
+        return $field instanceof Field;
     }
 }

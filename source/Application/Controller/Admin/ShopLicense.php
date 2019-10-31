@@ -105,7 +105,7 @@ class ShopLicense extends \OxidEsales\Eshop\Application\Controller\Admin\ShopCon
 
         $sOutput = strip_tags($sOutput, "<br>, <b>");
         $aResult = explode("<br>", $sOutput);
-        if (strstr($aResult[5], "update")) {
+        if (isset($aResult[5]) && strstr($aResult[5], "update")) {
             $sUpdateLink = \OxidEsales\Eshop\Core\Registry::getLang()->translateString("VERSION_UPDATE_LINK");
             $aResult[5] = "<a id='linkToUpdate' href='$sUpdateLink' target='_blank'>" . $aResult[5] . "</a>";
         }

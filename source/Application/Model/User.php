@@ -269,13 +269,13 @@ class User extends \OxidEsales\Eshop\Core\Model\BaseModel
 
         // if subscription object is not set yet - we should create one
         if (!$this->_oNewsSubscription->loadFromUserId($this->getId())) {
-            if (!$this->_oNewsSubscription->loadFromEmail($this->oxuser__oxusername->value)) {
+            if (!$this->_oNewsSubscription->loadFromEmail($this->oxuser__oxusername->value ?? null)) {
                 // no subscription defined yet - creating one
                 $this->_oNewsSubscription->oxnewssubscribed__oxuserid = new \OxidEsales\Eshop\Core\Field($this->getId(), \OxidEsales\Eshop\Core\Field::T_RAW);
-                $this->_oNewsSubscription->oxnewssubscribed__oxemail = new \OxidEsales\Eshop\Core\Field($this->oxuser__oxusername->value, \OxidEsales\Eshop\Core\Field::T_RAW);
-                $this->_oNewsSubscription->oxnewssubscribed__oxsal = new \OxidEsales\Eshop\Core\Field($this->oxuser__oxsal->value, \OxidEsales\Eshop\Core\Field::T_RAW);
-                $this->_oNewsSubscription->oxnewssubscribed__oxfname = new \OxidEsales\Eshop\Core\Field($this->oxuser__oxfname->value, \OxidEsales\Eshop\Core\Field::T_RAW);
-                $this->_oNewsSubscription->oxnewssubscribed__oxlname = new \OxidEsales\Eshop\Core\Field($this->oxuser__oxlname->value, \OxidEsales\Eshop\Core\Field::T_RAW);
+                $this->_oNewsSubscription->oxnewssubscribed__oxemail = new \OxidEsales\Eshop\Core\Field($this->oxuser__oxusername->value ?? null, \OxidEsales\Eshop\Core\Field::T_RAW);
+                $this->_oNewsSubscription->oxnewssubscribed__oxsal = new \OxidEsales\Eshop\Core\Field($this->oxuser__oxsal->value ?? null, \OxidEsales\Eshop\Core\Field::T_RAW);
+                $this->_oNewsSubscription->oxnewssubscribed__oxfname = new \OxidEsales\Eshop\Core\Field($this->oxuser__oxfname->value ?? null, \OxidEsales\Eshop\Core\Field::T_RAW);
+                $this->_oNewsSubscription->oxnewssubscribed__oxlname = new \OxidEsales\Eshop\Core\Field($this->oxuser__oxlname->value ?? null, \OxidEsales\Eshop\Core\Field::T_RAW);
             }
         }
 
@@ -518,7 +518,8 @@ class User extends \OxidEsales\Eshop\Core\Model\BaseModel
     public function save()
     {
         $blAddRemark = false;
-        if ($this->oxuser__oxpassword->value
+        if (isset($this->oxuser__oxpassword->value)
+            && $this->oxuser__oxpassword->value
             && (!$this->oxuser__oxregister instanceof \OxidEsales\Eshop\Core\Field || $this->oxuser__oxregister->value < 1)
         ) {
             $blAddRemark = true;
@@ -685,7 +686,8 @@ class User extends \OxidEsales\Eshop\Core\Model\BaseModel
         $params = [];
 
         $sShopSelect = '';
-        if (!$this->_blMallUsers && $this->oxuser__oxrights->value != 'malladmin') {
+        $userRights = $this->oxuser__oxrights->value ?? null;
+        if (!$this->_blMallUsers && $userRights != 'malladmin') {
             $sShopSelect = ' AND oxshopid = :oxshopid ';
             $params[':oxshopid'] = $this->getConfig()->getShopId();
         }
@@ -695,7 +697,7 @@ class User extends \OxidEsales\Eshop\Core\Model\BaseModel
         $sSelect = 'SELECT oxid FROM ' . $this->getViewName() . '
                     WHERE oxusername = :oxusername ';
         $sSelect .= $sShopSelect;
-        $params[':oxusername'] = (string) $this->oxuser__oxusername->value;
+        $params[':oxusername'] = (string) ($this->oxuser__oxusername->value ?? null);
 
         if (($sOxid = $masterDb->getOne($sSelect, $params))) {
             // update - set oxid
@@ -828,9 +830,9 @@ class User extends \OxidEsales\Eshop\Core\Model\BaseModel
         if ($soxAddressId) {
             $oDelAddress = oxNew(\OxidEsales\Eshop\Application\Model\Address::class);
             $oDelAddress->load($soxAddressId);
-            $sDeliveryCountry = $oDelAddress->oxaddress__oxcountryid->value;
+            $sDeliveryCountry = $oDelAddress->oxaddress__oxcountryid->value ?? null;
         } elseif ($this->getId()) {
-            $sDeliveryCountry = $this->oxuser__oxcountryid->value;
+            $sDeliveryCountry = $this->oxuser__oxcountryid->value ?? null;
         } else {
             $oUser = oxNew(\OxidEsales\Eshop\Application\Model\User::class);
             if ($oUser->loadActiveUser()) {
@@ -858,7 +860,7 @@ class User extends \OxidEsales\Eshop\Core\Model\BaseModel
             where oxusername = :oxusername 
             and oxpassword = :oxpassword ";
         $params = [
-            ':oxusername' => (string) $this->oxuser__oxusername->value,
+            ':oxusername' => (string) ($this->oxuser__oxusername->value ?? null),
             ':oxpassword' => ''
         ];
         if (!$this->_blMallUsers) {
@@ -877,7 +879,7 @@ class User extends \OxidEsales\Eshop\Core\Model\BaseModel
                 where oxusername = :oxusername
                 and oxusername != '' ";
             $params = [
-                ':oxusername' => (string) $this->oxuser__oxusername->value
+                ':oxusername' => (string) ($this->oxuser__oxusername->value ?? null)
             ];
 
             // We force reading from master to prevent issues with slow replications or open transactions (see ESDEV-3804).
@@ -906,7 +908,7 @@ class User extends \OxidEsales\Eshop\Core\Model\BaseModel
                       set oxuserpayments.oxuserid = :newUserId
                       where oxuserpayments.oxuserid = :oldUserId";
             $oDb->execute($query, [
-                ':newUserId' => $this->oxuser__oxusername->value,
+                ':newUserId' => $this->oxuser__oxusername->value ?? null,
                 ':oldUserId' => $this->oxuser__oxid->value,
             ]);
         }
@@ -1271,7 +1273,7 @@ class User extends \OxidEsales\Eshop\Core\Model\BaseModel
             $oAddress->load($sAddressId);
             $oAddress->assign($aDelAddress);
             $oAddress->oxaddress__oxuserid = new \OxidEsales\Eshop\Core\Field($this->getId(), \OxidEsales\Eshop\Core\Field::T_RAW);
-            $oAddress->oxaddress__oxcountry = $this->getUserCountry($oAddress->oxaddress__oxcountryid->value);
+            $oAddress->oxaddress__oxcountry = $this->getUserCountry($oAddress->oxaddress__oxcountryid->value ?? null);
             $oAddress->save();
 
             // resetting addresses
@@ -1783,7 +1785,9 @@ class User extends \OxidEsales\Eshop\Core\Model\BaseModel
     protected function _update()
     {
         //V #M418: for not registered users, don't change boni during update
-        if (!$this->oxuser__oxpassword->value && $this->oxuser__oxregister->value < 1) {
+        $password = $this->oxuser__oxpassword->value ?? null;
+        $register = $this->oxuser__oxregister->value ?? null;
+        if (!$password && $register < 1) {
             $this->_aSkipSaveFields[] = 'oxboni';
         }
 
@@ -2280,7 +2284,7 @@ class User extends \OxidEsales\Eshop\Core\Model\BaseModel
         $blSet = false;
         $iPoints = $this->getConfig()->getConfigParam('dPointsForInvitation');
         if ($iPoints) {
-            $iNewPoints = $this->oxuser__oxpoints->value + $iPoints;
+            $iNewPoints = $this->oxuser__oxpoints->value ?? null + $iPoints;
             $this->oxuser__oxpoints = new Field($iNewPoints, Field::T_RAW);
             $blSet = $this->save();
         }
@@ -2360,7 +2364,7 @@ class User extends \OxidEsales\Eshop\Core\Model\BaseModel
      */
     public function isMallAdmin()
     {
-        return 'malladmin' === $this->oxuser__oxrights->value;
+        return isset($this->oxuser__oxrights->value) && $this->oxuser__oxrights->value === 'malladmin';
     }
 
     /**

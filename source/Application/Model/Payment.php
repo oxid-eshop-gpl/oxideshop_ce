@@ -194,11 +194,12 @@ class Payment extends \OxidEsales\Eshop\Core\Model\MultiLanguageModel
      */
     public function getPaymentValue($dBasePrice)
     {
-        if ($this->oxpayments__oxaddsumtype->value == "%") {
+        if (isset($this->oxpayments__oxaddsumtype->value) && $this->oxpayments__oxaddsumtype->value == "%") {
             $dRet = $dBasePrice * $this->oxpayments__oxaddsum->value / 100;
         } else {
             $oCur = $this->getConfig()->getActShopCurrencyObject();
-            $dRet = $this->oxpayments__oxaddsum->value * $oCur->rate;
+            $sum = $this->oxpayments__oxaddsum->value ?? null;
+            $dRet = $sum * $oCur->rate;
         }
 
         if (($dRet * -1) > $dBasePrice) {
@@ -219,7 +220,7 @@ class Payment extends \OxidEsales\Eshop\Core\Model\MultiLanguageModel
     public function getBaseBasketPriceForPaymentCostCalc($oBasket)
     {
         $dBasketPrice = 0;
-        $iRules = $this->oxpayments__oxaddsumrules->value;
+        $iRules = $this->oxpayments__oxaddsumrules->value ?? null;
 
         // products brutto price
         if (!$iRules || ($iRules & self::PAYMENT_ADDSUMRULE_ALLGOODS)) {
@@ -391,7 +392,7 @@ class Payment extends \OxidEsales\Eshop\Core\Model\MultiLanguageModel
                 ':oxpaymentid' => $sOxId
             ]);
 
-            return $rs->EOF;
+            return $rs->EOF ?? null;
         }
 
         return false;
@@ -411,7 +412,7 @@ class Payment extends \OxidEsales\Eshop\Core\Model\MultiLanguageModel
     public function isValidPayment($aDynValue, $sShopId, $oUser, $dBasketPrice, $sShipSetId)
     {
         $myConfig = $this->getConfig();
-        if ($this->oxpayments__oxid->value == 'oxempty') {
+        if (isset($this->oxpayments__oxid->value) && $this->oxpayments__oxid->value == 'oxempty') {
             // inactive or blOtherCountryOrder is off
             if (!$this->oxpayments__oxactive->value || !$myConfig->getConfigParam("blOtherCountryOrder")) {
                 $this->_iPaymentError = -2;
@@ -434,7 +435,8 @@ class Payment extends \OxidEsales\Eshop\Core\Model\MultiLanguageModel
             return true;
         }
 
-        $mxValidationResult = \OxidEsales\Eshop\Core\Registry::getInputValidator()->validatePaymentInputData($this->oxpayments__oxid->value, $aDynValue);
+        $mxValidationResult = \OxidEsales\Eshop\Core\Registry::getInputValidator()
+            ->validatePaymentInputData($this->oxpayments__oxid->value ?? null, $aDynValue);
 
         if (is_integer($mxValidationResult)) {
             $this->_iPaymentError = $mxValidationResult;

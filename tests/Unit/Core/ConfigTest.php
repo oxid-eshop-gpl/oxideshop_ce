@@ -117,7 +117,7 @@ class ConfigTest extends \OxidTestCase
      */
     public function testIsSsl_specialHandling()
     {
-        oxTestModules::addFunction("oxUtilsServer", "getServerVar", '{ if ( $aA[0] == "HTTPS" ) { return null; } else { return array( "HTTP_X_FORWARDED_SERVER" => "sslsites.de" ); } }');
+        oxTestModules::addFunction("oxUtilsServer", "getServerVar", '{ if ( isset($aA[0]) && $aA[0] == "HTTPS" ) { return null; } else { return array( "HTTP_X_FORWARDED_SERVER" => "sslsites.de" ); } }');
 
         $oConfig = $this->getMock(\OxidEsales\Eshop\Core\Config::class, array('getConfigParam'), array(), '', false);
         $oConfig->expects($this->never())->method('getConfigParam');
@@ -129,7 +129,7 @@ class ConfigTest extends \OxidTestCase
      */
     public function testIsSsl_notSslMode()
     {
-        oxTestModules::addFunction("oxUtilsServer", "getServerVar", '{ if ( $aA[0] == "HTTPS" ) { return null; } else { return array(); } }');
+        oxTestModules::addFunction("oxUtilsServer", "getServerVar", '{ if (  isset($aA[0]) && $aA[0] == "HTTPS" ) { return null; } else { return array(); } }');
 
         $oConfig = $this->getMock(\OxidEsales\Eshop\Core\Config::class, array('getConfigParam'));
         $oConfig->expects($this->never())->method('getConfigParam');
@@ -142,7 +142,7 @@ class ConfigTest extends \OxidTestCase
      */
     public function testIsSsl_SslMode_NoSslShopUrl()
     {
-        oxTestModules::addFunction("oxUtilsServer", "getServerVar", '{ if ( $aA[0] == "HTTPS" ) { return 1; } else { return array(); } }');
+        oxTestModules::addFunction("oxUtilsServer", "getServerVar", '{ if ( isset($aA[0]) && $aA[0] == "HTTPS" ) { return 1; } else { return array(); } }');
 
         $oConfig = $this->getMock(\OxidEsales\Eshop\Core\Config::class, array('getConfigParam'));
         $oConfig->expects($this->at(0))->method('getConfigParam')->with($this->equalTo('sSSLShopURL'))->will($this->returnValue(''));
@@ -156,7 +156,7 @@ class ConfigTest extends \OxidTestCase
      */
     public function testIsSsl_SslMode_WithSslShopUrl()
     {
-        oxTestModules::addFunction("oxUtilsServer", "getServerVar", '{ if ( $aA[0] == "HTTPS" ) { return 1; } else { return array(); } }');
+        oxTestModules::addFunction("oxUtilsServer", "getServerVar", '{ if ( isset($aA[0]) && $aA[0] == "HTTPS" ) { return 1; } else { return array(); } }');
 
         $oConfig = $this->getMock(\OxidEsales\Eshop\Core\Config::class, array('getConfigParam'));
         $oConfig->expects($this->once())->method('getConfigParam')->with($this->equalTo('sSSLShopURL'))->will($this->returnValue('https://eshop/'));
@@ -170,7 +170,7 @@ class ConfigTest extends \OxidTestCase
      */
     public function testIsSsl_SslMode_WithSslShopUrl_forSubshop()
     {
-        oxTestModules::addFunction("oxUtilsServer", "getServerVar", '{ if ( $aA[0] == "HTTPS" ) { return 1; } else { return array(); } }');
+        oxTestModules::addFunction("oxUtilsServer", "getServerVar", '{ if ( isset($aA[0]) && $aA[0] == "HTTPS" ) { return 1; } else { return array(); } }');
 
         $oConfig = $this->getMock(\OxidEsales\Eshop\Core\Config::class, array('getConfigParam'));
         $oConfig->expects($this->at(0))->method('getConfigParam')->with($this->equalTo('sSSLShopURL'))->will($this->returnValue(''));
@@ -186,14 +186,14 @@ class ConfigTest extends \OxidTestCase
      */
     public function testIsSsl_SslMode_WithDifferentParams()
     {
-        oxTestModules::addFunction("oxUtilsServer", "getServerVar", '{ if ( $aA[0] == "HTTPS" ) { return 1; } else { return array(); } }');
+        oxTestModules::addFunction("oxUtilsServer", "getServerVar", '{ if ( isset($aA[0]) && $aA[0] == "HTTPS" ) { return 1; } else { return array(); } }');
 
         $oConfig = $this->getMock(\OxidEsales\Eshop\Core\Config::class, array('getConfigParam'));
         $oConfig->expects($this->at(0))->method('getConfigParam')->with($this->equalTo('sSSLShopURL'))->will($this->returnValue('https://eshop'));
         $this->assertTrue($oConfig->isSsl());
 
         oxTestModules::cleanUp();
-        oxTestModules::addFunction("oxUtilsServer", "getServerVar", '{ if ( $aA[0] == "HTTPS" ) { return "on"; } else { return array(); } }');
+        oxTestModules::addFunction("oxUtilsServer", "getServerVar", '{ if ( isset($aA[0]) && $aA[0] == "HTTPS" ) { return "on"; } else { return array(); } }');
         $this->assertTrue($oConfig->isSsl());
     }
 
@@ -1346,7 +1346,7 @@ class ConfigTest extends \OxidTestCase
             rmdir($sD);
         }
 
-        if ($e) {
+        if (isset($e)) {
             throw $e;
         }
     }

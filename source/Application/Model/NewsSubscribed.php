@@ -59,10 +59,12 @@ class NewsSubscribed extends \OxidEsales\Eshop\Core\Model\BaseModel
     {
         $blRet = parent::load($oxId);
 
-        if ($this->oxnewssubscribed__oxdboptin->value == 1) {
-            $this->_blWasSubscribed = true;
-        } elseif ($this->oxnewssubscribed__oxdboptin->value == 2) {
-            $this->_blWasPreSubscribed = true;
+        if (isset($this->oxnewssubscribed__oxdboptin->value)) {
+            if ($this->oxnewssubscribed__oxdboptin->value == 1) {
+                $this->_blWasSubscribed = true;
+            } elseif ($this->oxnewssubscribed__oxdboptin->value == 2) {
+                $this->_blWasPreSubscribed = true;
+            }
         }
 
         return $blRet;
@@ -167,7 +169,7 @@ class NewsSubscribed extends \OxidEsales\Eshop\Core\Model\BaseModel
      */
     public function getOptInStatus()
     {
-        return $this->oxnewssubscribed__oxdboptin->value;
+        return $this->oxnewssubscribed__oxdboptin->value ?? null;
     }
 
     /**
@@ -188,7 +190,7 @@ class NewsSubscribed extends \OxidEsales\Eshop\Core\Model\BaseModel
      */
     public function getOptInEmailStatus()
     {
-        return $this->oxnewssubscribed__oxemailfailed->value;
+        return $this->oxnewssubscribed__oxemailfailed->value ?? null;
     }
 
     /**
@@ -227,14 +229,16 @@ class NewsSubscribed extends \OxidEsales\Eshop\Core\Model\BaseModel
     public function updateSubscription($oUser)
     {
         // user email changed ?
-        if ($oUser->oxuser__oxusername->value && $this->oxnewssubscribed__oxemail->value != $oUser->oxuser__oxusername->value) {
-            $this->oxnewssubscribed__oxemail = new \OxidEsales\Eshop\Core\Field($oUser->oxuser__oxusername->value, \OxidEsales\Eshop\Core\Field::T_RAW);
+        $userName = $oUser->oxuser__oxusername->value ?? null;
+        $email = $this->oxnewssubscribed__oxemail->value ?? null;
+        if ($userName && $email != $userName) {
+            $this->oxnewssubscribed__oxemail = new \OxidEsales\Eshop\Core\Field($userName, \OxidEsales\Eshop\Core\Field::T_RAW);
         }
 
         // updating some other fields
-        $this->oxnewssubscribed__oxsal = new \OxidEsales\Eshop\Core\Field($oUser->oxuser__oxsal->value, \OxidEsales\Eshop\Core\Field::T_RAW);
-        $this->oxnewssubscribed__oxfname = new \OxidEsales\Eshop\Core\Field($oUser->oxuser__oxfname->value, \OxidEsales\Eshop\Core\Field::T_RAW);
-        $this->oxnewssubscribed__oxlname = new \OxidEsales\Eshop\Core\Field($oUser->oxuser__oxlname->value, \OxidEsales\Eshop\Core\Field::T_RAW);
+        $this->oxnewssubscribed__oxsal = new \OxidEsales\Eshop\Core\Field($oUser->oxuser__oxsal->value ?? null, \OxidEsales\Eshop\Core\Field::T_RAW);
+        $this->oxnewssubscribed__oxfname = new \OxidEsales\Eshop\Core\Field($oUser->oxuser__oxfname->value ?? null, \OxidEsales\Eshop\Core\Field::T_RAW);
+        $this->oxnewssubscribed__oxlname = new \OxidEsales\Eshop\Core\Field($oUser->oxuser__oxlname->value ?? null, \OxidEsales\Eshop\Core\Field::T_RAW);
 
         return (bool) $this->save();
     }

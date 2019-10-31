@@ -308,7 +308,7 @@ class Locator extends \OxidEsales\Eshop\Core\Base
             $iPage = $this->_findActPageNumber($oLocatorTarget->getActPage(), $oIdList, $oCurrArticle);
 
             $sSearchRecomm = Registry::getConfig()->getRequestParameter('searchrecomm', true);
-
+            $sAddSearch = null;
             if ($sSearchRecomm !== null) {
                 $sSearchFormRecomm = Registry::getConfig()->getRequestParameter('searchrecomm');
                 $sSearchLinkRecomm = rawurlencode($sSearchRecomm);
@@ -453,9 +453,8 @@ class Locator extends \OxidEsales\Eshop\Core\Base
     protected function _getProductPos($oArticle, $oIdList, $oLocatorTarget)
     {
         // variant handling
-        $sOxid = $oArticle->oxarticles__oxparentid->value
-            ? $oArticle->oxarticles__oxparentid->value
-            : $oArticle->getId();
+        $articleParentId = $oArticle->oxarticles__oxparentid->value ?? null;
+        $sOxid = $articleParentId ?: $oArticle->getId();
         if ($oIdList->count() && isset($oIdList[$sOxid])) {
             $aIds = $oIdList->arrayKeys();
             $iPos = Registry::getUtils()->arrayStringSearch($sOxid, $aIds);

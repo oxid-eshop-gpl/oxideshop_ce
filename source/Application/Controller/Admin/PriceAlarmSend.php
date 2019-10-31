@@ -151,7 +151,7 @@ class PriceAlarmSend extends \OxidEsales\Eshop\Application\Controller\Admin\Admi
         $alarm->load($priceAlarmId);
 
         $language = \OxidEsales\Eshop\Core\Registry::getLang();
-        $languageId = (int) $alarm->oxpricealarm__oxlang->value;
+        $languageId = (int) ($alarm->oxpricealarm__oxlang->value ?? null);
 
         $oldLanguageId = $language->getTplLanguage();
         $language->setTplLanguage($languageId);

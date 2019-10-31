@@ -82,7 +82,7 @@ class ShopConfiguration extends \OxidEsales\Eshop\Application\Controller\Admin\A
         $this->_aViewData["var_constraints"] = $dbVariables['constraints'];
         $this->_aViewData["var_grouping"] = $dbVariables['grouping'];
         foreach ($this->_aConfParams as $type => $param) {
-            $this->_aViewData[$param] = $confVars[$type];
+            $this->_aViewData[$param] = $confVars[$type] ?? null;
         }
 
         // #251A passing country list
@@ -432,7 +432,7 @@ class ShopConfiguration extends \OxidEsales\Eshop\Application\Controller\Admin\A
                 if ($multiline) {
                     $multiline .= "\n";
                 }
-                $multiline .= $key . " => " . $value;
+                $multiline .= @($key . " => " .  $value);
             }
 
             return $multiline;

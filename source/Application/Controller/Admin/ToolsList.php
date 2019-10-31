@@ -60,7 +60,7 @@ class ToolsList extends \OxidEsales\Eshop\Application\Controller\Admin\AdminList
             $oStr = getStr();
             $iLen = $oStr->strlen($sUpdateSQL);
             if ($this->_prepareSQL($sUpdateSQL, $iLen)) {
-                $aQueries = $this->aSQLs;
+                $aQueries = $this->aSQLs ?? null;
                 $this->_aViewData["aQueries"] = [];
                 $aPassedQueries = [];
                 $aQAffectedRows = [];
@@ -137,7 +137,8 @@ class ToolsList extends \OxidEsales\Eshop\Application\Controller\Admin\AdminList
 
                 $aBadFiles = ["php", 'php4', 'php5', "jsp", "cgi", "cmf", "exe"];
 
-                if (in_array($aFilename[1], $aBadFiles)) {
+                $fileName = $aFilename[1] ?? null;
+                if (in_array($fileName, $aBadFiles)) {
                     \OxidEsales\Eshop\Core\Registry::getUtils()->showMessageAndExit("File didn't pass our allowed files filter.");
                 }
 

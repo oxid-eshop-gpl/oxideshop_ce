@@ -107,7 +107,7 @@ class SimpleVariant extends \OxidEsales\Eshop\Core\Model\MultiLanguageModel impl
      */
     protected function _getGroupPrice()
     {
-        $dPrice = $this->oxarticles__oxprice->value;
+        $dPrice = $this->oxarticles__oxprice->value ?? null;
         if ($oUser = $this->getArticleUser()) {
             if ($oUser->inGroup('oxidpricea')) {
                 $dPrice = $this->oxarticles__oxpricea->value;
@@ -312,6 +312,7 @@ class SimpleVariant extends \OxidEsales\Eshop\Core\Model\MultiLanguageModel impl
      */
     public function getBaseStdLink($iLang, $blAddId = true, $blFull = true)
     {
+        $iLinkType = null; // Just fixing notice. Issue reported.
         if (!isset($this->_aBaseStdUrls[$iLang][$iLinkType])) {
             $oArticle = oxNew(\OxidEsales\Eshop\Application\Model\Article::class);
             $oArticle->setId($this->getId());
@@ -356,7 +357,8 @@ class SimpleVariant extends \OxidEsales\Eshop\Core\Model\MultiLanguageModel impl
      */
     public function getBaseSeoLink($iLang)
     {
-        return \OxidEsales\Eshop\Core\Registry::get(\OxidEsales\Eshop\Application\Model\SeoEncoderArticle::class)->getArticleUrl($this, $iLang, $iLinkType);
+        return \OxidEsales\Eshop\Core\Registry::get(\OxidEsales\Eshop\Application\Model\SeoEncoderArticle::class)
+            ->getArticleUrl($this, $iLang, null);
     }
 
     /**

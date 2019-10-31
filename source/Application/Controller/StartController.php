@@ -148,7 +148,8 @@ class StartController extends \OxidEsales\Eshop\Application\Controller\FrontendC
             $oArt = $this->getFirstArticle()
         ) {
             $oDescField = $oArt->getLongDescription();
-            $sMeta = $oArt->oxarticles__oxtitle->value . ' - ' . $oDescField->value;
+            $title = $oArt->oxarticles__oxtitle->value ?? null;
+            $sMeta = $title . ' - ' . $oDescField->value;
         }
 
         return parent::_prepareMetaDescription($sMeta, $iLength, $blDescTag);

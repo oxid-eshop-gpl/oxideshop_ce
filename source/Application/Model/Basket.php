@@ -517,10 +517,11 @@ class Basket extends \OxidEsales\Eshop\Core\Base
         }
 
         // returning basket item object
-        if ($this->_aBasketContents[$sItemId] instanceof \OxidEsales\Eshop\Application\Model\BasketItem) {
-            $this->_aBasketContents[$sItemId]->setBasketItemKey($sItemId);
+        $basketItem = $this->_aBasketContents[$sItemId] ?? null;
+        if ($basketItem instanceof \OxidEsales\Eshop\Application\Model\BasketItem) {
+            $basketItem->setBasketItemKey($sItemId);
         }
-        return $this->_aBasketContents[$sItemId];
+        return $basketItem;
     }
 
     /**
@@ -540,7 +541,7 @@ class Basket extends \OxidEsales\Eshop\Core\Base
             //inserting new
             $this->_aBasketContents[$sItemId] = oxNew(\OxidEsales\Eshop\Application\Model\BasketItem::class);
             $this->_aBasketContents[$sItemId]->initFromOrderArticle($oOrderArticle);
-            $this->_aBasketContents[$sItemId]->setWrapping($oOrderArticle->oxorderarticles__oxwrapid->value);
+            $this->_aBasketContents[$sItemId]->setWrapping($oOrderArticle->oxorderarticles__oxwrapid->value ?? null);
             $this->_aBasketContents[$sItemId]->setBundle($oOrderArticle->isBundle());
 
             //calling update method
@@ -649,7 +650,7 @@ class Basket extends \OxidEsales\Eshop\Core\Base
         }
 
         $oArticle = $oBasketItem->getArticle(true);
-        if ($oArticle && $oArticle->oxarticles__oxbundleid->value) {
+        if (isset($oArticle->oxarticles__oxbundleid->value) && $oArticle && $oArticle->oxarticles__oxbundleid->value) {
             $aBundles[$oArticle->oxarticles__oxbundleid->value] = 1;
         }
 
@@ -1269,7 +1270,8 @@ class Basket extends \OxidEsales\Eshop\Core\Base
             if (is_array($this->_aDiscounts)) {
                 foreach ($this->_aDiscounts as $oDiscount) {
                     // skipping bundle discounts
-                    if ($oDiscount->sType == 'itm') {
+                    $type = $oDiscount->sType ?? null;
+                    if ($type == 'itm') {
                         continue;
                     }
 
@@ -1597,7 +1599,8 @@ class Basket extends \OxidEsales\Eshop\Core\Base
             }
 
             // saving voucher info
-            $this->_aVouchers[$oVoucher->oxvouchers__oxid->value] = $oVoucher->getSimpleVoucher();
+            $voucherId = $oVoucher->oxvouchers__oxid->value ?? null;
+            $this->_aVouchers[$voucherId] = $oVoucher->getSimpleVoucher();
         } catch (\OxidEsales\Eshop\Core\Exception\VoucherException $oEx) {
             // problems adding voucher
             \OxidEsales\Eshop\Core\Registry::getUtilsView()->addErrorToDisplay($oEx, false, true);
@@ -1683,7 +1686,13 @@ class Basket extends \OxidEsales\Eshop\Core\Base
             try {
                 $oSelList = $oItem->getSelList();
 
-                $this->addToBasket($oItem->oxuserbasketitems__oxartid->value, $oItem->oxuserbasketitems__oxamount->value, $oSelList, $oItem->getPersParams(), true);
+                $this->addToBasket(
+                    $oItem->oxuserbasketitems__oxartid->value ?? null,
+                    $oItem->oxuserbasketitems__oxamount->value ?? null,
+                    $oSelList,
+                    $oItem->getPersParams(),
+                    true
+                );
             } catch (\OxidEsales\Eshop\Core\Exception\ArticleException $oEx) {
                 // caught and ignored
             }
@@ -1763,7 +1772,7 @@ class Basket extends \OxidEsales\Eshop\Core\Base
 
             // still not found ?
             if (!$sDeliveryCountry) {
-                $sDeliveryCountry = $oUser->oxuser__oxcountryid->value;
+                $sDeliveryCountry = $oUser->oxuser__oxcountryid->value ?? null;
             }
         }
 
@@ -2687,7 +2696,8 @@ class Basket extends \OxidEsales\Eshop\Core\Base
         }
 
         // adding delivery price to final price
-        if ($oDeliveryPrice = $this->_aCosts['oxdelivery']) {
+        $oDeliveryPrice = $this->_aCosts['oxdelivery'] ?? null;
+        if ($oDeliveryPrice) {
             $dPrice += $oDeliveryPrice->getBruttoPrice();
         }
 
@@ -2758,7 +2768,7 @@ class Basket extends \OxidEsales\Eshop\Core\Base
             $dPrice -= $oVoucherPrice->getBruttoPrice();
         }
 
-        return $dPrice;
+        return $dPrice ?? null;
     }
 
     /**

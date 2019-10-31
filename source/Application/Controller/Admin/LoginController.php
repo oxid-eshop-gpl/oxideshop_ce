@@ -63,7 +63,7 @@ class LoginController extends \OxidEsales\Eshop\Application\Controller\Admin\Adm
 
         // setting templates language to selected language id
         foreach ($aLanguages as $iKey => $oLang) {
-            if ($aLanguages[$iKey]->selected) {
+            if (isset($aLanguages[$iKey]->selected) && $aLanguages[$iKey]->selected) {
                 \OxidEsales\Eshop\Core\Registry::getLang()->setTplLanguage($iKey);
                 break;
             }

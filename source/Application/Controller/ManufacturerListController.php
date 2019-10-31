@@ -415,7 +415,7 @@ class ManufacturerListController extends \OxidEsales\Eshop\Application\Controlle
             foreach ($oCatTree->getPath() as $oCat) {
                 $aCatPath = [];
                 $aCatPath['link'] = $oCat->getLink();
-                $aCatPath['title'] = $oCat->oxmanufacturers__oxtitle->value;
+                $aCatPath['title'] = $oCat->oxmanufacturers__oxtitle->value ?? null;
 
                 $aPaths[] = $aCatPath;
             }

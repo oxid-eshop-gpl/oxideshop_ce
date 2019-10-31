@@ -748,8 +748,6 @@ class DetailsTest extends \OxidTestCase
      */
     public function testGetTitle()
     {
-        $this->_oProduct->oxarticles__oxtitle->value . ($this->_oProduct->oxarticles__oxvarselect->value ? ' ' . $this->_oProduct->oxarticles__oxvarselect->value : '');
-
         $oProduct = oxNew('oxArticle');
         $oProduct->oxarticles__oxtitle = new oxField('product title');
         $oProduct->oxarticles__oxvarselect = new oxField('and varselect');

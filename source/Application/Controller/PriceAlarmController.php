@@ -73,12 +73,12 @@ class PriceAlarmController extends \OxidEsales\Eshop\Application\Controller\Fron
 
         $oCur = $myConfig->getActShopCurrencyObject();
         // convert currency to default
-        $dPrice = $myUtils->currency2Float($aParams['price']);
+        $dPrice = $myUtils->currency2Float($aParams['price'] ?? null);
 
         $oAlarm = oxNew(\OxidEsales\Eshop\Application\Model\PriceAlarm::class);
         $oAlarm->oxpricealarm__oxuserid = new Field(Registry::getSession()->getVariable('usr'));
         $oAlarm->oxpricealarm__oxemail = new Field($aParams['email']);
-        $oAlarm->oxpricealarm__oxartid = new Field($aParams['aid']);
+        $oAlarm->oxpricealarm__oxartid = new Field($aParams['aid'] ?? null);
         $oAlarm->oxpricealarm__oxprice = new Field($myUtils->fRound($dPrice, $oCur));
         $oAlarm->oxpricealarm__oxshopid = new Field($myConfig->getShopId());
         $oAlarm->oxpricealarm__oxcurrency = new Field($oCur->name);

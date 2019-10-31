@@ -86,7 +86,7 @@ class ShopRdfa extends \OxidEsales\Eshop\Application\Controller\Admin\ShopConfig
         $aParams = \OxidEsales\Eshop\Core\Registry::getConfig()->getRequestParameter("aSubmitUrl");
         if ($aParams['url']) {
             $sNotificationUrl = "http://gr-notify.appspot.com/submit?uri=" . urlencode($aParams['url']) . "&agent=oxid";
-            if ($aParams['email']) {
+            if (isset($aParams['email']) && $aParams['email']) {
                 $sNotificationUrl .= "&contact=" . urlencode($aParams['email']);
             }
             $aHeaders = $this->getHttpResponseCode($sNotificationUrl);

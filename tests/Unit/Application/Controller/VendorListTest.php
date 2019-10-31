@@ -182,7 +182,7 @@ class VendorListTest extends \OxidTestCase
 
     public function testGetArticleListAndCount()
     {
-        oxTestModules::addFunction('oxUtilsServer', 'getServerVar', '{ if ( $aA[0] == "HTTP_HOST") { return "shop.com/"; } else { return "test.php";} }');
+        oxTestModules::addFunction('oxUtilsServer', 'getServerVar', '{ if ( isset($aArgs[0]) && $aA[0] == "HTTP_HOST") { return "shop.com/"; } else { return "test.php";} }');
 
         $sVendorId = $this->getTestConfig()->getShopEdition() == 'EE'? 'd2e44d9b31fcce448.08890330' : '68342e2955d7401e6.18967838';
 
@@ -260,7 +260,7 @@ class VendorListTest extends \OxidTestCase
 
     public function testGetCatTreePath()
     {
-        oxTestModules::addFunction('oxUtilsServer', 'getServerVar', '{ if ( $aA[0] == "HTTP_HOST") { return "shop.com/"; } else { return "test.php";} }');
+        oxTestModules::addFunction('oxUtilsServer', 'getServerVar', '{ if ( isset($aArgs[0]) && $aA[0] == "HTTP_HOST") { return "shop.com/"; } else { return "test.php";} }');
         $this->setRequestParameter('cnid', 'v_root');
         $oVendorTree = oxNew('oxVendorList');
         $oVendorTree->buildVendorTree('vendorlist', 'v_root', $this->getConfig()->getShopHomeURL());
@@ -294,7 +294,7 @@ class VendorListTest extends \OxidTestCase
 
     public function testAddPageNrParamIfSeo()
     {
-        oxTestModules::addFunction("oxutilsserver", "getServerVar", "{ \$aArgs = func_get_args(); if ( \$aArgs[0] === 'HTTP_HOST' ) { return '" . $this->getConfig()->getShopUrl() . "'; } elseif ( \$aArgs[0] === 'SCRIPT_NAME' ) { return ''; } else { return \$_SERVER[\$aArgs[0]]; } }");
+        oxTestModules::addFunction("oxutilsserver", "getServerVar", "{ \$aArgs = func_get_args(); if ( isset(\$aArgs[0]) && \$aArgs[0] === 'HTTP_HOST' ) { return '" . $this->getConfig()->getShopUrl() . "'; } elseif ( isset(\$aArgs[0]) && \$aArgs[0] === 'SCRIPT_NAME' ) { return ''; } else { return \$_SERVER[\$aArgs[0] ?? null] ?? null; } }");
 
         if ($this->getTestConfig()->getShopEdition() == 'EE') {
             $sVendorId = 'd2e44d9b31fcce448.08890330';

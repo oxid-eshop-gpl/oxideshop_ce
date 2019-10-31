@@ -84,7 +84,7 @@ class NewsMain extends \OxidEsales\Eshop\Application\Controller\Admin\AdminDetai
             $aParams['oxnews__oxactive'] = 0;
         }
         // creating fake object to save correct time value
-        if (!$aParams['oxnews__oxdate']) {
+        if (!isset($aParams['oxnews__oxdate']) || !$aParams['oxnews__oxdate']) {
             $aParams['oxnews__oxdate'] = "";
         }
 
@@ -135,7 +135,7 @@ class NewsMain extends \OxidEsales\Eshop\Application\Controller\Admin\AdminDetai
         parent::save();
 
         // creating fake object to save correct time value
-        if (!$aParams['oxnews__oxdate']) {
+        if (!isset($aParams['oxnews__oxdate']) || !$aParams['oxnews__oxdate']) {
             $aParams['oxnews__oxdate'] = "";
         }
 

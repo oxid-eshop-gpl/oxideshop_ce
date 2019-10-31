@@ -96,7 +96,8 @@ class Wrapping extends \OxidEsales\Eshop\Core\Model\MultiLanguageModel
             }
 
             $oCur = $this->getConfig()->getActShopCurrencyObject();
-            $this->_oPrice->setPrice($this->oxwrapping__oxprice->value * $oCur->rate, $this->_dVat);
+            $wrappingPrice = $this->oxwrapping__oxprice->value ?? null;
+            $this->_oPrice->setPrice($wrappingPrice * $oCur->rate, $this->_dVat);
             $this->_oPrice->multiply($dAmount);
         }
 
@@ -211,7 +212,7 @@ class Wrapping extends \OxidEsales\Eshop\Core\Model\MultiLanguageModel
      */
     public function getPictureUrl()
     {
-        if ($this->oxwrapping__oxpic->value) {
+        if (isset($this->oxwrapping__oxpic->value) && $this->oxwrapping__oxpic->value) {
             return $this->getConfig()->getPictureUrl("master/wrapping/" . $this->oxwrapping__oxpic->value, false, $this->getConfig()->isSsl(), null, $this->oxwrapping__oxshopid->value);
         }
     }

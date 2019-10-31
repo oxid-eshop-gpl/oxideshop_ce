@@ -505,7 +505,7 @@ class BaseTest extends \OxidTestCase
         $oBase->setClassVar("_blUseLazyLoading", true);
         $oBase->init("oxarticles");
         $oBase->setId("test");
-        $this->assertNull($oBase->oxarticles__oxtitle->value);
+        $this->assertNull($oBase->oxarticles__oxtitle->value ?? null);
     }
 
     /**
@@ -1185,7 +1185,7 @@ class BaseTest extends \OxidTestCase
         $oBase->load("2000");
 
         $this->assertEquals("2000", $oBase->getId());
-        $sFakeValue = $oBase->oxarticles__oxnonexistingfield->value;
+        $sFakeValue = $oBase->oxarticles__oxnonexistingfield->value ?? null;
         $aFieldList = $oBase->getClassVar("_aFieldNames");
         $this->assertFalse(isset($aFieldList["oxnonexistingfield"]));
     }

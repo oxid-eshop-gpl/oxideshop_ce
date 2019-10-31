@@ -54,6 +54,6 @@ class ListObject
     public function getId()
     {
         $sFieldName = strtolower($this->_sTableName . '__oxid');
-        return $this->$sFieldName->value;
+        return $this->$sFieldName->value ?? null;
     }
 }

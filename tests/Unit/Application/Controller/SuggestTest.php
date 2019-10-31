@@ -101,7 +101,7 @@ class SuggestTest extends \OxidTestCase
 
     public function testGetLink()
     {
-        oxTestModules::addFunction("oxutilsserver", "getServerVar", "{ \$aArgs = func_get_args(); if ( \$aArgs[0] === 'HTTP_HOST' ) { return '" . $this->getConfig()->getShopUrl() . "'; } elseif ( \$aArgs[0] === 'SCRIPT_NAME' ) { return ''; } else { return \$_SERVER[\$aArgs[0]]; } }");
+        oxTestModules::addFunction("oxutilsserver", "getServerVar", "{ \$aArgs = func_get_args(); if ( isset(\$aArgs[0]) && \$aArgs[0] === 'HTTP_HOST' ) { return '" . $this->getConfig()->getShopUrl() . "'; } elseif ( isset(\$aArgs[0]) && \$aArgs[0] === 'SCRIPT_NAME' ) { return ''; } else { return \$_SERVER[\$aArgs[0] ?? null] ?? null; } }");
         $oCfg = $this->getConfig();
         $oV = $this->getMock(\OxidEsales\Eshop\Application\Controller\SuggestController::class, array('_getRequestParams', '_getSeoRequestParams'));
         $oV->expects($this->any())->method('_getRequestParams')->will($this->returnValue('cl=suggest'));

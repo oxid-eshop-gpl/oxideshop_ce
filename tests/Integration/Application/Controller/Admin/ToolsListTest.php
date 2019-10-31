@@ -7,6 +7,7 @@
 namespace OxidEsales\EshopCommunity\Tests\Integration\Application\Controller\Admin;
 
 use OxidEsales\Eshop\Application\Controller\Admin\ToolsList;
+use OxidEsales\Eshop\Core\Registry;
 
 /**
  * Tests for Tools_List class
@@ -54,7 +55,7 @@ class ToolsListTest extends \OxidEsales\TestingLibrary\UnitTestCase
     public function testDoNotProcessEmptySqlFile()
     {
         $this->getSession()->setVariable('auth', 'oxdefaultadmin');
-        $tempFile = tempnam(sys_get_temp_dir() . '/test_temp_sql_file', 'test_');
+        $tempFile = tempnam(Registry::getConfig()->getConfigParam('sCompileDir'), 'test_');
         $this->tempFile = $tempFile;
         $_FILES['myfile']['name'] = [basename($tempFile)];
         $_FILES['myfile']['tmp_name'] = [$tempFile];

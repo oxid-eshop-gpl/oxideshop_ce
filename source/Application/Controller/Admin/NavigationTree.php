@@ -345,7 +345,8 @@ class NavigationTree extends \OxidEsales\Eshop\Core\Base
     protected function _mergeNodes($domElemTo, $domElemFrom, $xPathTo, $domDocTo, $queryStart)
     {
         foreach ($domElemFrom->childNodes as $fromNode) {
-            if ($fromNode->nodeType === XML_ELEMENT_NODE) {
+            $nodeType = $fromNode->nodeType ?? null;
+            if ($nodeType === XML_ELEMENT_NODE) {
                 $fromAttrName = $fromNode->getAttribute('id');
                 $fromNodeName = $fromNode->tagName;
 
@@ -743,7 +744,8 @@ class NavigationTree extends \OxidEsales\Eshop\Core\Base
      */
     protected function _hasRights($rights)
     {
-        return $this->getUser()->oxuser__oxrights->value == $rights;
+        $userRights = $this->getUser()->oxuser__oxrights->value ?? null;
+        return $userRights == $rights;
     }
 
     /**

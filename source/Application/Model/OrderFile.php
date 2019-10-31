@@ -158,7 +158,9 @@ class OrderFile extends \OxidEsales\Eshop\Core\Model\BaseModel
     public function isValid()
     {
         if (!$this->oxorderfiles__oxmaxdownloadcount->value || ($this->oxorderfiles__oxdownloadcount->value < $this->oxorderfiles__oxmaxdownloadcount->value)) {
-            if (!$this->oxorderfiles__oxlinkexpirationtime->value && !$this->oxorderfiles__oxdownloadxpirationtime->value) {
+            $expirationTime = $this->oxorderfiles__oxlinkexpirationtime->value ?? null;
+            $downloadTime = $this->oxorderfiles__oxdownloadxpirationtime->value ?? null;
+            if (!$expirationTime && !$downloadTime) {
                 return true;
             } else {
                 $sNow = \OxidEsales\Eshop\Core\Registry::getUtilsDate()->getTime();
@@ -246,6 +248,6 @@ class OrderFile extends \OxidEsales\Eshop\Core\Model\BaseModel
      */
     public function getFileId()
     {
-        return $this->oxorderfiles__oxfileid->value;
+        return $this->oxorderfiles__oxfileid->value ?? null;
     }
 }

@@ -1017,7 +1017,7 @@ class NavigationTreeTest extends \OxidTestCase
 
         $oTree = $this->getMock(\OxidEsales\Eshop\Application\Controller\Admin\NavigationTree::class, array("_copyAttributes"));
         $oTree->expects($this->once())->method('_copyAttributes');
-        $oTree->UNITmergeNodes($oDomElemTo, $oDomElemFrom, $oXPathTo, $oDomDocTo, $sQueryStart);
+        $oTree->UNITmergeNodes($oDomElemTo, $oDomElemFrom, $oXPathTo, $oDomDocTo, null);
     }
 
     /**

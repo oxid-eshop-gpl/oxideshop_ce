@@ -149,10 +149,15 @@ class VariantHandler extends \OxidEsales\Eshop\Core\Base
                         $oVariant->oxarticles__oxprice->setValue($oVariant->oxarticles__oxprice->value + $dPriceMod);
                         //assign for all languages
                         foreach ($aConfLanguages as $sKey => $sLang) {
-                            $oValue = $aValues[$i][$sKey];
+                            $oValue = $aValues[$i][$sKey] ?? null;
                             $sPrefix = $myLang->getLanguageTag($sKey);
                             $aVarselect[$oSimpleVariant->oxarticles__oxid->value][$sKey] = $oVariant->{"oxarticles__oxvarselect" . $sPrefix}->value;
-                            $oVariant->{'oxarticles__oxvarselect' . $sPrefix}->setValue($oVariant->{"oxarticles__oxvarselect" . $sPrefix}->value . $this->_sMdSeparator . $oValue->name);
+                            $prefixedVarSelection = $oVariant->{"oxarticles__oxvarselect" . $sPrefix}->value ?? null;
+                            $separator = $this->_sMdSeparator ?? null;
+                            $name = $oValue->name ?? null;
+                            $oVariant->{'oxarticles__oxvarselect' . $sPrefix}->setValue(
+                                $prefixedVarSelection . $separator . $name
+                            );
                         }
                         $oVariant->oxarticles__oxsort->setValue($oVariant->oxarticles__oxsort->value * 10);
                         $oVariant->save();
@@ -160,9 +165,10 @@ class VariantHandler extends \OxidEsales\Eshop\Core\Base
                     } else {
                         //we create new variants
                         foreach ($aVarselect[$oSimpleVariant->oxarticles__oxid->value] as $sKey => $sVarselect) {
-                            $oValue = $aValues[$i][$sKey];
+                            $oValue = $aValues[$i][$sKey] ?? null;
+                            $name = $oValue->name ?? null;
                             $sPrefix = $myLang->getLanguageTag($sKey);
-                            $aParams['oxarticles__oxvarselect' . $sPrefix] = $sVarselect . $this->_sMdSeparator . $oValue->name;
+                            $aParams['oxarticles__oxvarselect' . $sPrefix] = $sVarselect . $this->_sMdSeparator . $name;
                         }
                         $aParams['oxarticles__oxartnum'] = $oSimpleVariant->oxarticles__oxartnum->value . "-" . $iCounter;
                         $aParams['oxarticles__oxprice'] = $oSimpleVariant->oxarticles__oxprice->value + $dPriceMod;
@@ -186,9 +192,9 @@ class VariantHandler extends \OxidEsales\Eshop\Core\Base
                 //in case we don't have any variants then we just create variant(s) with $oValue->name
                 $iCounter++;
                 foreach ($aConfLanguages as $sKey => $sLang) {
-                    $oValue = $aValues[$i][$sKey];
+                    $oValue = $aValues[$i][$sKey] ?? null;
                     $sPrefix = $myLang->getLanguageTag($sKey);
-                    $aParams['oxarticles__oxvarselect' . $sPrefix] = $oValue->name;
+                    $aParams['oxarticles__oxvarselect' . $sPrefix] = $oValue->name ?? null;
                 }
                 $aParams['oxarticles__oxartnum'] = $oArticle->oxarticles__oxartnum->value . "-" . $iCounter;
                 $aParams['oxarticles__oxprice'] = $oArticle->oxarticles__oxprice->value + $dPriceMod;
@@ -285,7 +291,8 @@ class VariantHandler extends \OxidEsales\Eshop\Core\Base
     public function isMdVariant($oArticle)
     {
         if ($this->getConfig()->getConfigParam('blUseMultidimensionVariants')) {
-            if (strpos($oArticle->oxarticles__oxvarselect->value, trim($this->_sMdSeparator)) !== false) {
+            $variant = $oArticle->oxarticles__oxvarselect->value ?? null;
+            if (strpos($variant, trim($this->_sMdSeparator)) !== false) {
                 return true;
             }
         }

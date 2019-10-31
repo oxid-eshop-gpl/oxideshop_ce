@@ -118,7 +118,8 @@ class ContactController extends \OxidEsales\Eshop\Application\Controller\Fronten
      */
     public function getUserData()
     {
-        if ($this->_oUserData === null) {
+        $userData = $this->_oUserData ?? null;
+        if ($userData === null) {
             $this->_oUserData = Registry::getConfig()->getRequestParameter('editval');
         }
 
@@ -204,9 +205,9 @@ class ContactController extends \OxidEsales\Eshop\Application\Controller\Fronten
 
         return [
             'email'         => $personData['oxuser__oxusername'],
-            'firstName'     => $personData['oxuser__oxfname'],
-            'lastName'      => $personData['oxuser__oxlname'],
-            'salutation'    => $personData['oxuser__oxsal'],
+            'firstName'     => $personData['oxuser__oxfname'] ?? null,
+            'lastName'      => $personData['oxuser__oxlname'] ?? null,
+            'salutation'    => $personData['oxuser__oxsal'] ?? null,
             'subject'       => $request->getRequestEscapedParameter('c_subject'),
             'message'       => $request->getRequestEscapedParameter('c_message'),
         ];

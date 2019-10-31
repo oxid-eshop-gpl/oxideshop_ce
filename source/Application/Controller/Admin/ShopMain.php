@@ -48,6 +48,7 @@ class ShopMain extends \OxidEsales\Eshop\Application\Controller\Admin\AdminDetai
         $user = $this->getUser();
         $shopId = $this->updateShopIdByUser($user, $shopId, true);
 
+        $shop = null;
         if (isset($shopId) && $shopId != self::NEW_SHOP_ID) {
             // load object
             $shop = oxNew(\OxidEsales\Eshop\Application\Model\Shop::class);
@@ -109,7 +110,7 @@ class ShopMain extends \OxidEsales\Eshop\Application\Controller\Admin\AdminDetai
             $parameters = $this->updateParameters($parameters);
         }
 
-        if ($parameters['oxshops__oxsmtp']) {
+        if (isset($parameters['oxshops__oxsmtp']) && $parameters['oxshops__oxsmtp']) {
             $parameters['oxshops__oxsmtp'] = trim($parameters['oxshops__oxsmtp']);
         }
 

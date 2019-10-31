@@ -196,7 +196,7 @@ class OrderArticle extends \OxidEsales\Eshop\Core\Model\BaseModel implements Art
             return $this->_aPersParam;
         }
 
-        if ($this->oxorderarticles__oxpersparam->value) {
+        if (isset($this->oxorderarticles__oxpersparam->value) && $this->oxorderarticles__oxpersparam->value) {
             $this->_aPersParam = unserialize($this->oxorderarticles__oxpersparam->value);
         }
 
@@ -262,7 +262,7 @@ class OrderArticle extends \OxidEsales\Eshop\Core\Model\BaseModel implements Art
      */
     public function getProductId()
     {
-        return $this->oxorderarticles__oxartid->value;
+        return $this->oxorderarticles__oxartid->value ?? null;
     }
 
     /**
@@ -393,7 +393,9 @@ class OrderArticle extends \OxidEsales\Eshop\Core\Model\BaseModel implements Art
     public function getOrderArticleSelectList($sArtId = null, $sOrderArtSelList = null)
     {
         if ($this->_aOrderArticleSelList === null) {
-            $sOrderArtSelList = $sOrderArtSelList ? $sOrderArtSelList : $this->oxorderarticles__oxselvariant->value;
+            $sOrderArtSelList = $sOrderArtSelList
+                ? $sOrderArtSelList
+                : $this->oxorderarticles__oxselvariant->value ?? null;
 
             $sOrderArtSelList = explode(' || ', $sOrderArtSelList)[0];
 
@@ -423,7 +425,7 @@ class OrderArticle extends \OxidEsales\Eshop\Core\Model\BaseModel implements Art
                                         //try to find matching select items value
                                         $iSelValueNum = 0;
                                         foreach ($aSelect as $oSel) {
-                                            if ($oStr->strtolower($oSel->name) == $sOrderArtSelValue) {
+                                            if ($oStr->strtolower($oSel->name ?? null) == $sOrderArtSelValue) {
                                                 // found, adding to return array
                                                 $aRet[$iSelListNum] = $iSelValueNum;
                                                 break;
@@ -565,7 +567,7 @@ class OrderArticle extends \OxidEsales\Eshop\Core\Model\BaseModel implements Art
         if ($iNewAmount >= 0) {
             // to update stock we must first check if it is possible - article exists?
             $oArticle = oxNew(\OxidEsales\Eshop\Application\Model\Article::class);
-            if ($oArticle->load($this->oxorderarticles__oxartid->value)) {
+            if ($oArticle->load($this->oxorderarticles__oxartid->value ?? null)) {
                 // updating stock info
                 $iStockChange = $iNewAmount - $this->oxorderarticles__oxamount->value;
                 if ($iStockChange > 0 && ($iOnStock = $oArticle->checkForStock($iStockChange)) !== false) {
@@ -621,7 +623,8 @@ class OrderArticle extends \OxidEsales\Eshop\Core\Model\BaseModel implements Art
     {
         if ($blDelete = parent::delete($sOXID)) {
             $myConfig = $this->getConfig();
-            if ($this->oxorderarticles__oxstorno->value != 1) {
+            $storNo = $this->oxorderarticles__oxstorno->value ?? null;
+            if ($storNo != 1) {
                 $this->updateArticleStock($this->oxorderarticles__oxamount->value, $myConfig->getConfigParam('blAllowNegativeStock'));
             }
         }
@@ -688,7 +691,7 @@ class OrderArticle extends \OxidEsales\Eshop\Core\Model\BaseModel implements Art
      */
     public function isBundle()
     {
-        return ( bool ) $this->oxorderarticles__oxisbundle->value;
+        return (bool) ($this->oxorderarticles__oxisbundle->value ?? null);
     }
 
     /**
@@ -807,7 +810,7 @@ class OrderArticle extends \OxidEsales\Eshop\Core\Model\BaseModel implements Art
     {
         $oArticle = $this->getArticle();
 
-        if ($oArticle->oxarticles__oxisdownloadable->value) {
+        if (isset($oArticle->oxarticles__oxisdownloadable->value) && $oArticle->oxarticles__oxisdownloadable->value) {
             $oConfig = $this->getConfig();
             $sOrderId = $this->oxorderarticles__oxorderid->value;
             $sOrderArticleId = $this->getId();

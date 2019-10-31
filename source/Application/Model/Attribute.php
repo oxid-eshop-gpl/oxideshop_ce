@@ -7,6 +7,7 @@
 namespace OxidEsales\EshopCommunity\Application\Model;
 
 use oxDb;
+use OxidEsales\Eshop\Core\Field;
 use oxRegistry;
 use oxField;
 
@@ -109,7 +110,7 @@ class Attribute extends \OxidEsales\Eshop\Core\Model\MultiLanguageModel
                     $oNewAssign->init("oxobject2attribute");
                     $sNewId = \OxidEsales\Eshop\Core\Registry::getUtilsObject()->generateUID();
                     if ($oNewAssign->load($sId)) {
-                        $oNewAssign->oxobject2attribute__oxobjectid = new \OxidEsales\Eshop\Core\Field($sVarId);
+                        $oNewAssign->oxobject2attribute__oxobjectid = new Field($sVarId);
                         $oNewAssign->setId($sNewId);
                         $oNewAssign->save();
                     }
@@ -118,11 +119,11 @@ class Attribute extends \OxidEsales\Eshop\Core\Model\MultiLanguageModel
                 $oNewAssign = oxNew(\OxidEsales\Eshop\Core\Model\MultiLanguageModel::class);
                 $oNewAssign->setEnableMultilang(false);
                 $oNewAssign->init("oxobject2attribute");
-                $oNewAssign->oxobject2attribute__oxobjectid = new \OxidEsales\Eshop\Core\Field($sVarId);
-                $oNewAssign->oxobject2attribute__oxattrid = new \OxidEsales\Eshop\Core\Field($sAttrId);
+                $oNewAssign->oxobject2attribute__oxobjectid = new Field($sVarId);
+                $oNewAssign->oxobject2attribute__oxattrid = new Field($sAttrId);
                 foreach ($aConfLanguages as $sKey => $sLang) {
                     $sPrefix = $myLang->getLanguageTag($sKey);
-                    $oNewAssign->{'oxobject2attribute__oxvalue' . $sPrefix} = new \OxidEsales\Eshop\Core\Field($oValue[$sKey]->name);
+                    $oNewAssign->{'oxobject2attribute__oxvalue' . $sPrefix} = new Field($oValue[$sKey]->name ?? null);
                 }
                 $oNewAssign->save();
             }
@@ -162,7 +163,7 @@ class Attribute extends \OxidEsales\Eshop\Core\Model\MultiLanguageModel
         $oAttr->init('oxattribute');
         foreach ($aConfLanguages as $sKey => $sLang) {
             $sPrefix = $myLang->getLanguageTag($sKey);
-            $oAttr->{'oxattribute__oxtitle' . $sPrefix} = new \OxidEsales\Eshop\Core\Field($aSelTitle[$sKey]);
+            $oAttr->{'oxattribute__oxtitle' . $sPrefix} = new Field($aSelTitle[$sKey]);
         }
         $oAttr->save();
 

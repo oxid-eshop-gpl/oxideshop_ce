@@ -760,11 +760,11 @@ class EmailAzureTplTest extends \OxidTestCase
         //set params for stock reminder
         $this->_oArticle->oxarticles__oxstock = new oxField('9', oxField::T_RAW);
         $this->_oArticle->oxarticles__oxremindamount = new oxField('9', oxField::T_RAW);
-        $this->_oArticle->save();
+        $articleId = $this->_oArticle->save();
 
         $oBasketItem = $this->getMock(\OxidEsales\Eshop\Application\Model\BasketItem::class, array('getArticle', 'getProductId'));
         $oBasketItem->expects($this->any())->method('getArticle')->will($this->returnValue($this->_oArticle));
-        $oBasketItem->expects($this->any())->method('getProductId')->will($this->returnValue('_testArticleId'));
+        $oBasketItem->expects($this->any())->method('getProductId')->will($this->returnValue($articleId));
 
         $aBasketContents[] = $oBasketItem;
 
@@ -954,7 +954,7 @@ class EmailAzureTplTest extends \OxidTestCase
             $this->assertEquals(strtolower($aFields['sRecipient']), strtolower($aRecipient[0][0]), 'Incorect mail recipient');
         }
 
-        if ($aFields['sRecipientName']) {
+        if ($aFields['sRecipientName'] ?? null) {
             $aRecipient = $oEmail->getRecipient();
             $this->assertEquals($aFields['sRecipientName'], $aRecipient[0][1], 'Incorect mail recipient name');
         }
@@ -968,22 +968,22 @@ class EmailAzureTplTest extends \OxidTestCase
             $this->assertEquals($aFields['sFrom'], $sFrom, 'Incorect mail from address');
         }
 
-        if ($aFields['sFromName']) {
+        if (isset($aFields['sFromName']) && $aFields['sFromName']) {
             $sFromName = $oEmail->getFromName();
             $this->assertEquals($aFields['sFromName'], $sFromName, 'Incorect mail from name');
         }
 
-        if ($aFields['sReplyTo']) {
+        if (isset($aFields['sReplyTo']) && $aFields['sReplyTo']) {
             $aReplyTo = $oEmail->getReplyTo();
             $this->assertEquals($aFields['sReplyTo'], $aReplyTo[0][0], 'Incorect mail reply to address');
         }
 
-        if ($aFields['sReplyToName']) {
+        if (isset($aFields['sReplyToName']) && $aFields['sReplyToName']) {
             $aReplyTo = $oEmail->getReplyTo();
             $this->assertEquals($aFields['sReplyToName'], $aReplyTo[0][1], 'Incorect mail reply to name');
         }
 
-        if ($aFields['sBody']) {
+        if (isset($aFields['sBody']) && $aFields['sBody']) {
             $this->assertEquals($aFields['sBody'], $oEmail->getBody(), 'Incorect mail body');
         }
     }

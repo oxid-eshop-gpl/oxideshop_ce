@@ -582,23 +582,23 @@ class PaymentTest extends \OxidTestCase
             $this->assertFalse($this->_checkInArrayRecursive($sTNumber, $_SERVER));
         }
 
-        $this->assertNull($_REQUEST["dynvalue[kknumber]"]);
-        $this->assertNull($_REQUEST["dynvalue[kkname]"]);
-        $this->assertNull($_REQUEST["dynvalue[kkmonth]"]);
-        $this->assertNull($_REQUEST["dynvalue[kkyear]"]);
-        $this->assertNull($_REQUEST["dynvalue[kkpruef]"]);
+        $this->assertNull($_REQUEST["dynvalue[kknumber]"] ?? null);
+        $this->assertNull($_REQUEST["dynvalue[kkname]"] ?? null);
+        $this->assertNull($_REQUEST["dynvalue[kkmonth]"] ?? null);
+        $this->assertNull($_REQUEST["dynvalue[kkyear]"] ?? null);
+        $this->assertNull($_REQUEST["dynvalue[kkpruef]"] ?? null);
 
-        $this->assertNull($_POST["dynvalue[kknumber]"]);
-        $this->assertNull($_POST["dynvalue[kkname]"]);
-        $this->assertNull($_POST["dynvalue[kkmonth]"]);
-        $this->assertNull($_POST["dynvalue[kkyear]"]);
-        $this->assertNull($_POST["dynvalue[kkpruef]"]);
+        $this->assertNull($_POST["dynvalue[kknumber]"] ?? null);
+        $this->assertNull($_POST["dynvalue[kkname]"] ?? null);
+        $this->assertNull($_POST["dynvalue[kkmonth]"] ?? null);
+        $this->assertNull($_POST["dynvalue[kkyear]"] ?? null);
+        $this->assertNull($_POST["dynvalue[kkpruef]"] ?? null);
 
-        $this->assertNull($_GET["dynvalue[kknumber]"]);
-        $this->assertNull($_GET["dynvalue[kkname]"]);
-        $this->assertNull($_GET["dynvalue[kkmonth]"]);
-        $this->assertNull($_GET["dynvalue[kkyear]"]);
-        $this->assertNull($_GET["dynvalue[kkpruef]"]);
+        $this->assertNull($_GET["dynvalue[kknumber]"] ?? null);
+        $this->assertNull($_GET["dynvalue[kkname]"] ?? null);
+        $this->assertNull($_GET["dynvalue[kkmonth]"] ?? null);
+        $this->assertNull($_GET["dynvalue[kkyear]"] ?? null);
+        $this->assertNull($_GET["dynvalue[kkpruef]"] ?? null);
     }
 
     protected function _checkInArrayRecursive($needle, $haystack)
@@ -758,6 +758,7 @@ class PaymentTest extends \OxidTestCase
      */
     public function testGetDynDataFilteredFalseInit()
     {
+        $this->setDynValues();
         $oPayment = oxNew('Payment');
         $this->setConfigParam("blStoreCreditCardInfo", 0);
         $oPayment->init();
@@ -770,6 +771,7 @@ class PaymentTest extends \OxidTestCase
      */
     public function testGetDynDataFilteredTrueSessDataInit()
     {
+        $this->setDynValues();
         $oPayment = oxNew('Payment');
         $this->setConfigParam("blStoreCreditCardInfo", 0);
         $sTNumber = "tstNumber";
@@ -819,14 +821,14 @@ class PaymentTest extends \OxidTestCase
         $_REQUEST["dynvalue"]["kkyear"] = $sTYear;
         $_REQUEST["dynvalue"]["kkpruef"] = $sTProof;
 
-        $_POST["dynvalue"]["testKey"] = $sTVal;
+        $_POST["dynvalue"]["testKey"] = null;
         $_POST["dynvalue"]["kknumber"] = $sTNumber;
         $_POST["dynvalue"]["kkname"] = $sTName;
         $_POST["dynvalue"]["kkmonth"] = $sTMonth;
         $_POST["dynvalue"]["kkyear"] = $sTYear;
         $_POST["dynvalue"]["kkpruef"] = $sTProof;
 
-        $_GET["dynvalue"]["testKey"] = $sTVal;
+        $_GET["dynvalue"]["testKey"] = null;
         $_GET["dynvalue"]["kknumber"] = $sTNumber;
         $_GET["dynvalue"]["kkname"] = $sTName;
         $_GET["dynvalue"]["kkmonth"] = $sTMonth;
@@ -845,6 +847,7 @@ class PaymentTest extends \OxidTestCase
      */
     public function testValidatePayment_NoStoreCardInfoSession()
     {
+        $this->setDynValues();
         $oUser = oxNew('oxUser');
         $oUser->load('oxdefaultadmin');
 
@@ -1008,5 +1011,12 @@ class PaymentTest extends \OxidTestCase
 
         $oPayment = oxNew('Payment');
         $this->assertTrue($oPayment->isPaymentVatSplitted());
+    }
+
+    private function setDynValues(): void
+    {
+        $_REQUEST["dynvalue"] = null;
+        $_POST["dynvalue"] = null;
+        $_GET["dynvalue"] = null;
     }
 }

@@ -53,6 +53,7 @@ class ArticleBundleAjax extends \OxidEsales\Eshop\Application\Controller\Admin\L
         $sSynchSelId = \OxidEsales\Eshop\Core\Registry::getConfig()->getRequestParameter('synchoxid');
 
         // category selected or not ?
+        $sQAdd = '';
         if (!$sSelId) {
             $sQAdd = " from $sArticleTable where 1 ";
             $sQAdd .= $myConfig->getConfigParam('blVariantsSelection') ? '' : " and $sArticleTable.oxparentid = '' ";

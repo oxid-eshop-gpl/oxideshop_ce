@@ -26,7 +26,8 @@ class VendorList extends \OxidEsales\Eshop\Application\Component\Widget\WidgetCo
      */
     public function getVendorlist()
     {
-        if ($this->_aVendorlist === null) {
+        $vendorList = $this->_aVendorlist ?? null;
+        if ($vendorList === null) {
             $oVendorTree = oxNew(\OxidEsales\Eshop\Application\Model\VendorList::class);
             $oVendorTree->buildVendorTree('vendorlist', null, $this->getConfig()->getShopHomeUrl());
             $this->_aVendorlist = $oVendorTree;

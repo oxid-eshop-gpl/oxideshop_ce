@@ -57,7 +57,7 @@ class RssFeed extends \OxidEsales\Eshop\Core\Base
             'oxnewest' => 'RSS_NewArts'
         ];
 
-        $sFileCacheName = $aOxActionToCacheIds[$sOxActionId];
+        $sFileCacheName = $aOxActionToCacheIds[$sOxActionId] ?? null;
 
         if (is_null($sFileCacheName)) {
             $sFileCacheName = '';
@@ -106,7 +106,9 @@ class RssFeed extends \OxidEsales\Eshop\Core\Base
         $this->_aChannel['language'] = $aLangIds[$oLang->getBaseLanguage()];
         $this->_aChannel['copyright'] = $oShop->oxshops__oxname->value;
         $this->_aChannel['selflink'] = '';
-        if (oxNew(\OxidEsales\Eshop\Core\MailValidator::class)->isValidEmail($oShop->oxshops__oxinfoemail->value)) {
+        if (oxNew(\OxidEsales\Eshop\Core\MailValidator::class)
+            ->isValidEmail($oShop->oxshops__oxinfoemail->value ?? null)
+        ) {
             $this->_aChannel['managingEditor'] = $oShop->oxshops__oxinfoemail->value;
             if ($oShop->oxshops__oxfname) {
                 $this->_aChannel['managingEditor'] .= " ({$oShop->oxshops__oxfname} {$oShop->oxshops__oxlname})";
@@ -242,11 +244,11 @@ class RssFeed extends \OxidEsales\Eshop\Core\Base
             if (Registry::getConfig()->getConfigParam('bl_perfParseLongDescinSmarty')) {
                 $oItem->description = $oArticle->getLongDesc();
             } else {
-                $oItem->description = $oArticle->getLongDescription()->value;
+                $oItem->description = $oArticle->getLongDescription()->value ?? null;
             }
 
             if (trim(str_replace('&nbsp;', '', (strip_tags($oItem->description)))) == '') {
-                $oItem->description = $oArticle->oxarticles__oxshortdesc->value;
+                $oItem->description = $oArticle->oxarticles__oxshortdesc->value ?? null;
             }
 
             $oItem->description = trim($oItem->description);
@@ -504,7 +506,8 @@ class RssFeed extends \OxidEsales\Eshop\Core\Base
         $sSep = '';
         while ($oCat) {
             // prepare oCat title part
-            $sCatPathString = $oCat->oxcategories__oxtitle->value . $sSep . $sCatPathString;
+            $title = $oCat->oxcategories__oxtitle->value ?? null;
+            $sCatPathString = $title . $sSep . $sCatPathString;
             $sSep = '/';
             // load parent
             $oCat = $oCat->getParentCategory();
@@ -528,7 +531,10 @@ class RssFeed extends \OxidEsales\Eshop\Core\Base
 
         return $this->_prepareUrl(
             "cl=rss&amp;fnc=catarts&amp;cat=" . urlencode($oCat->getId()),
-            sprintf($oLang->translateString('CATEGORY_PRODUCTS_S', $oLang->getBaseLanguage()), $oCat->oxcategories__oxtitle->value)
+            sprintf(
+                $oLang->translateString('CATEGORY_PRODUCTS_S', $oLang->getBaseLanguage()),
+                $oCat->oxcategories__oxtitle->value ?? null
+            )
         );
     }
 

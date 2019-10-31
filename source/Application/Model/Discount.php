@@ -100,9 +100,9 @@ class Discount extends \OxidEsales\Eshop\Core\Model\MultiLanguageModel
     public function save()
     {
         // Auto assign oxsort, if it is null
-        $oxsort = $this->oxdiscount__oxsort->value;
+        $oxsort = $this->oxdiscount__oxsort->value ?? null;
         if (is_null($oxsort)) {
-            $shopId = $this->oxdiscount__oxshopid->value;
+            $shopId = $this->oxdiscount__oxshopid->value ?? null;
             $newSort = $this->getNextOxsort($shopId);
             $this->oxdiscount__oxsort = new \oxField($newSort, \OxidEsales\Eshop\Core\Field::T_RAW);
         }
@@ -163,15 +163,18 @@ class Discount extends \OxidEsales\Eshop\Core\Model\MultiLanguageModel
     public function isForArticle($oArticle)
     {
         // item discounts may only be applied for basket
-        if ($this->oxdiscount__oxaddsumtype->value == 'itm') {
+        if (isset($this->oxdiscount__oxaddsumtype->value) && $this->oxdiscount__oxaddsumtype->value == 'itm') {
             return false;
         }
 
-        if ($this->oxdiscount__oxamount->value || $this->oxdiscount__oxprice->value) {
+        $discountAmount = $this->oxdiscount__oxamount->value ?? null;
+        $discountPrice = $this->oxdiscount__oxprice->value ?? null;
+        if ($discountAmount || $discountPrice) {
             return false;
         }
 
-        if ($this->oxdiscount__oxpriceto->value && ($this->oxdiscount__oxpriceto->value < $oArticle->getBasePrice())) {
+        $netoPrice = $this->oxdiscount__oxpriceto->value ?? null;
+        if ($netoPrice && ($this->oxdiscount__oxpriceto->value < $oArticle->getBasePrice())) {
             return false;
         }
 
@@ -457,8 +460,8 @@ class Discount extends \OxidEsales\Eshop\Core\Model\MultiLanguageModel
     {
         $oDiscount = new stdClass();
         $oDiscount->sOXID = $this->getId();
-        $oDiscount->sDiscount = $this->oxdiscount__oxtitle->value;
-        $oDiscount->sType = $this->oxdiscount__oxaddsumtype->value;
+        $oDiscount->sDiscount = $this->oxdiscount__oxtitle->value ?? null;
+        $oDiscount->sType = $this->oxdiscount__oxaddsumtype->value ?? null;
 
         return $oDiscount;
     }

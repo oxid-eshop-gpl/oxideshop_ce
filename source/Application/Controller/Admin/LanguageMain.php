@@ -144,8 +144,8 @@ class LanguageMain extends \OxidEsales\Eshop\Application\Controller\Admin\AdminD
 
         //updating language urls
         $iBaseId = $this->_aLangData['params'][$sOxId]['baseId'];
-        $this->_aLangData['urls'][$iBaseId] = $aParams['baseurl'];
-        $this->_aLangData['sslUrls'][$iBaseId] = $aParams['basesslurl'];
+        $this->_aLangData['urls'][$iBaseId] = $aParams['baseurl'] ?? null;
+        $this->_aLangData['sslUrls'][$iBaseId] = $aParams['basesslurl'] ?? null;
 
         //sort parameters, urls and languages arrays by language base id
         $this->_sortLangArraysByBaseId();
@@ -330,7 +330,8 @@ class LanguageMain extends \OxidEsales\Eshop\Application\Controller\Admin\AdminD
 
         //getting first available id
         while ($iNewId <= $iTotal) {
-            if ($iNewId !== $aBaseId[$iNewId]) {
+            $value = $aBaseId[$iNewId] ?? null;
+            if ($iNewId !== $value) {
                 break;
             }
             $iNewId++;

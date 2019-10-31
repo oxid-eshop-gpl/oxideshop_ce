@@ -131,7 +131,7 @@ class ContentController extends \OxidEsales\Eshop\Application\Controller\Fronten
         parent::render();
 
         $oContent = $this->getContent();
-        if ($oContent && !$this->_canShowContent($oContent->oxcontents__oxloadid->value)) {
+        if ($oContent && !$this->_canShowContent($oContent->oxcontents__oxloadid->value ?? null)) {
             Registry::getUtils()->redirect($this->getConfig()->getShopHomeUrl() . 'cl=account');
         }
 
@@ -220,7 +220,8 @@ class ContentController extends \OxidEsales\Eshop\Application\Controller\Fronten
         if ($this->_oContentCat === null) {
             // setting default status ..
             $this->_oContentCat = false;
-            if (($oContent = $this->getContent()) && $oContent->oxcontents__oxtype->value == 2) {
+            if (($oContent = $this->getContent())
+                && isset($oContent->oxcontents__oxtype->value) && $oContent->oxcontents__oxtype->value == 2) {
                 $this->_oContentCat = $oContent;
             }
         }
@@ -490,7 +491,8 @@ class ContentController extends \OxidEsales\Eshop\Application\Controller\Fronten
      */
     public function getDeliveryList()
     {
-        if ($this->_oDelList === null) {
+        $list = $this->_oDelList ?? null;
+        if ($list === null) {
             $this->_oDelList = oxNew(\OxidEsales\Eshop\Application\Model\DeliveryList::class);
             $this->_oDelList->getList();
         }

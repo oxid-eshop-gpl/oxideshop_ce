@@ -30,7 +30,7 @@ class ThankyouTest extends \OxidTestCase
 
     public function testGetBasket()
     {
-        oxTestModules::addFunction('oxUtilsServer', 'getServerVar', '{ if ( $aA[0] == "HTTP_HOST") { return "shop.com/"; } else { return "test.php";} }');
+        oxTestModules::addFunction('oxUtilsServer', 'getServerVar', '{ if ( isset($aA[0]) && $aA[0] == "HTTP_HOST") { return "shop.com/"; } else { return "test.php";} }');
 
         /** @var oxSession $mySession */
         $mySession = oxRegistry::getSession();

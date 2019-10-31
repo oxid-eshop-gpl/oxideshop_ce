@@ -63,7 +63,7 @@ class Request
     public function getRequestUrl($sParams = '', $blReturnUrl = false)
     {
         $requestUrl = '';
-        if ($_SERVER["REQUEST_METHOD"] != "POST") {
+        if (isset($_SERVER["REQUEST_METHOD"]) && $_SERVER["REQUEST_METHOD"] != "POST") {
             if (isset($_SERVER['REQUEST_URI']) && $_SERVER['REQUEST_URI']) {
                 $rawRequestUrl = $_SERVER['REQUEST_URI'];
             } else {

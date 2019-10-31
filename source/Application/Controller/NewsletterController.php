@@ -124,10 +124,10 @@ class NewsletterController extends \OxidEsales\Eshop\Application\Controller\Fron
                 $oUser->oxuser__oxactive = new Field(1, Field::T_RAW);
                 $oUser->oxuser__oxrights = new Field('user', Field::T_RAW);
                 $oUser->oxuser__oxshopid = new Field($this->getConfig()->getShopId(), Field::T_RAW);
-                $oUser->oxuser__oxfname = new Field($aParams['oxuser__oxfname'], Field::T_RAW);
-                $oUser->oxuser__oxlname = new Field($aParams['oxuser__oxlname'], Field::T_RAW);
-                $oUser->oxuser__oxsal = new Field($aParams['oxuser__oxsal'], Field::T_RAW);
-                $oUser->oxuser__oxcountryid = new Field($aParams['oxuser__oxcountryid'], Field::T_RAW);
+                $oUser->oxuser__oxfname = new Field($aParams['oxuser__oxfname'] ?? null, Field::T_RAW);
+                $oUser->oxuser__oxlname = new Field($aParams['oxuser__oxlname'] ?? null, Field::T_RAW);
+                $oUser->oxuser__oxsal = new Field($aParams['oxuser__oxsal'] ?? null, Field::T_RAW);
+                $oUser->oxuser__oxcountryid = new Field($aParams['oxuser__oxcountryid'] ?? null, Field::T_RAW);
                 $blUserLoaded = $oUser->save();
             }
         } else {

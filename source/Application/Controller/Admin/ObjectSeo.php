@@ -81,12 +81,12 @@ class ObjectSeo extends \OxidEsales\Eshop\Application\Controller\Admin\AdminDeta
                 $iShopId,
                 $iLang,
                 $this->_getStdUrl($sOxid),
-                $aSeoData['oxseourl'],
+                $aSeoData['oxseourl'] ?? null,
                 $this->_getSeoEntryType(),
                 $aSeoData['oxfixed'],
-                trim($aSeoData['oxkeywords']),
-                trim($aSeoData['oxdescription']),
-                $this->processParam($aSeoData['oxparams']),
+                trim($aSeoData['oxkeywords'] ?? null),
+                trim($aSeoData['oxdescription'] ?? null),
+                $this->processParam($aSeoData['oxparams'] ?? null),
                 true,
                 $this->_getAltSeoEntryId()
             );

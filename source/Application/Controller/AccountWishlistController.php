@@ -167,7 +167,8 @@ class AccountWishlistController extends \OxidEsales\Eshop\Application\Controller
      */
     public function getWishProductList()
     {
-        if ($this->_aWishProductList === null) {
+        $wishProductList = $this->_aWishProductList ?? null;
+        if ($wishProductList === null) {
             $this->_aWishProductList = false;
             if ($oWishList = $this->getWishList()) {
                 $this->_aWishProductList = $oWishList->getArticles();

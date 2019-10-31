@@ -80,6 +80,7 @@ class AttributeOrderAjaxTest extends \OxidTestCase
 
         $sViewTable = $this->getVieTableName();
 
+        $sOxid = null;
         $aData = array('startIndex' => 0, 'sort' => '_0', 'dir' => 'asc', 'countsql' => "select count( * )  from $sViewTable left join oxcategory2attribute on oxcategory2attribute.oxattrid = $sViewTable.oxid where oxobjectid = '$sOxid' ", 'records' => array(), 'totalRecords' => 0);
 
         $oView = $this->getMock(\OxidEsales\Eshop\Application\Controller\Admin\AttributeOrderAjax::class, array("_output"));

@@ -557,7 +557,7 @@ class Delivery extends \OxidEsales\Eshop\Core\Model\MultiLanguageModel
      */
     public function getCalculationRule()
     {
-        return $this->oxdelivery__oxfixed->value;
+        return $this->oxdelivery__oxfixed->value ?? null;
     }
 
     /**

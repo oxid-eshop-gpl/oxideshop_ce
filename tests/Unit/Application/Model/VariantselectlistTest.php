@@ -67,7 +67,7 @@ class VariantselectlistTest extends \OxidTestCase
         $this->assertEquals("0", $aSelections["test2"]->getName());
         $this->assertEquals("01", $aSelections["test3"]->getName());
 
-        $this->assertNotInstanceOf('oxSelection', $aSelections["test4"]);
-        $this->assertNotInstanceOf('oxSelection', $aSelections["test5"]);
+        $this->assertNotInstanceOf('oxSelection', $aSelections["test4"] ?? null);
+        $this->assertNotInstanceOf('oxSelection', $aSelections["test5"] ?? null);
     }
 }

@@ -138,8 +138,8 @@ class ActionsMainTest extends \OxidTestCase
         $aViewData = $oView->getViewData();
         $this->assertNotNull($aViewData["edit"]);
         $this->assertNotNull($aViewData["oxajax"]);
-        $this->assertNull($aViewData["actionarticle_artnum"]);
-        $this->assertNull($aViewData["actionarticle_title"]);
+        $this->assertNull($aViewData["actionarticle_artnum"] ?? null);
+        $this->assertNull($aViewData["actionarticle_title"] ?? null);
     }
 
     /**
@@ -166,7 +166,7 @@ class ActionsMainTest extends \OxidTestCase
         // testing view data
         $aViewData = $oView->getViewData();
         $this->assertNotNull($aViewData["edit"]);
-        $this->assertNull($aViewData["oxajax"]);
+        $this->assertNull($aViewData["oxajax"] ?? null);
         $this->assertEquals("sHtmlEditor", $aViewData["editor"]);
     }
 

@@ -47,8 +47,8 @@ class UBaseTest extends \OxidTestCase
         parent::setUp();
 
         // backup
-        $this->_sRequestMethod = $_SERVER["REQUEST_METHOD"];
-        $this->_sRequestUri = $_SERVER['REQUEST_URI'];
+        $this->_sRequestMethod = $_SERVER["REQUEST_METHOD"] ?? null;
+        $this->_sRequestUri = $_SERVER['REQUEST_URI'] ?? null;
     }
 
     /**
@@ -1363,7 +1363,7 @@ class UBaseTest extends \OxidTestCase
         $_SERVER["REQUEST_METHOD"] = 'GET';
         $_SERVER['REQUEST_URI'] = $sUri = 'index.php?cl=account_wishlist';
 
-        oxTestModules::addFunction("oxUtils", "redirect", "{ \$aArgs = func_get_args(); throw new exception( \$aArgs[0] ); }");
+        oxTestModules::addFunction("oxUtils", "redirect", "{ \$aArgs = func_get_args(); throw new exception( \$aArgs[0] ?? null ); }");
 
         $oUBase = $this->getMock(\OxidEsales\Eshop\Application\Controller\FrontendController::class, array('_canRedirect', 'isAdmin'));
         $oUBase->expects($this->any())->method('_canRedirect')->will($this->returnValue(true));
@@ -1392,7 +1392,7 @@ class UBaseTest extends \OxidTestCase
         $_SERVER["REQUEST_METHOD"] = 'GET';
         $_SERVER['REQUEST_URI'] = $sUri = 'index.php?param1=value1&param2=value2';
 
-        oxTestModules::addFunction("oxUtils", "redirect", "{ \$aArgs = func_get_args(); throw new exception( \$aArgs[0] ); }");
+        oxTestModules::addFunction("oxUtils", "redirect", "{ \$aArgs = func_get_args(); throw new exception( isset(\$aArgs[0]) && \$aArgs[0] ); }");
 
         $oUBase = $this->getMock(\OxidEsales\Eshop\Application\Controller\FrontendController::class, array('_canRedirect', 'getLink', 'isAdmin', '_forceNoIndex'));
         $oUBase->expects($this->any())->method('_canRedirect')->will($this->returnValue(false));
@@ -1421,7 +1421,7 @@ class UBaseTest extends \OxidTestCase
         $_SERVER["REQUEST_METHOD"] = 'GET';
         $_SERVER['REQUEST_URI'] = $sUri = 'index.php?param1=value1&param2=value2';
 
-        oxTestModules::addFunction("oxUtils", "redirect", "{ \$aArgs = func_get_args(); throw new exception( \$aArgs[0] ); }");
+        oxTestModules::addFunction("oxUtils", "redirect", "{ \$aArgs = func_get_args(); throw new exception( isset(\$aArgs[0]) && \$aArgs[0] ); }");
 
         $oUBase = $this->getMock(\OxidEsales\Eshop\Application\Controller\FrontendController::class, array('_canRedirect', 'getLink', 'isAdmin', '_forceNoIndex', 'noIndex'));
         $oUBase->expects($this->any())->method('_canRedirect')->will($this->returnValue(false));
@@ -2369,7 +2369,7 @@ class UBaseTest extends \OxidTestCase
         $_SERVER["REQUEST_METHOD"] = 'GET';
         $_SERVER['REQUEST_URI'] = $sUri = 'index.php?param1=value1&param2=value2';
 
-        oxTestModules::addFunction("oxUtils", "redirect", "{ \$aArgs = func_get_args(); throw new exception( \$aArgs[0] ); }");
+        oxTestModules::addFunction("oxUtils", "redirect", "{ \$aArgs = func_get_args(); throw new exception( isset(\$aArgs[0]) && \$aArgs[0] ); }");
 
         $this->setConfigParam('blSeoLogging', $blSeoLogging);
         $this->setConfigParam('blProductive', $blProductive);

@@ -188,7 +188,7 @@ class Database implements DatabaseInterface
         $this->addDriverOptions($pdoMysqlConnectionParameters);
         $this->addConnectionCharset(
             $pdoMysqlConnectionParameters,
-            $connectionParameters['connectionCharset']
+            $connectionParameters['connectionCharset'] ?? null
         );
 
         return $pdoMysqlConnectionParameters;
@@ -265,7 +265,7 @@ class Database implements DatabaseInterface
      */
     public function setFetchMode($fetchMode)
     {
-        $this->fetchMode = $this->fetchModeMap[$fetchMode];
+        $this->fetchMode = $this->fetchModeMap[$fetchMode] ?? null;
 
         try {
             $this->getConnection()->setFetchMode($this->fetchMode);

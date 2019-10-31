@@ -688,8 +688,8 @@ class UserComponent extends \OxidEsales\Eshop\Core\Controller\BaseController
         $aInvAdress = $this->cleanAddress($aInvAdress, oxNew(UserUpdatableFields::class));
         $aInvAdress = $this->trimAddress($aInvAdress);
 
-        $sUserName = $oUser->oxuser__oxusername->value;
-        $sPassword = $sPassword2 = $oUser->oxuser__oxpassword->value;
+        $sUserName = $oUser->oxuser__oxusername->value ?? null;
+        $sPassword = $sPassword2 = $oUser->oxuser__oxpassword->value ?? null;
 
         try { // testing user input
             // delete user if it is a guest user
@@ -705,7 +705,7 @@ class UserComponent extends \OxidEsales\Eshop\Core\Controller\BaseController
                 $blOptin = $oUser->getNewsSubscription()->getOptInStatus();
             }
             // check if email address changed, if so, force check newsletter subscription settings.
-            $sBillingUsername = $aInvAdress['oxuser__oxusername'];
+            $sBillingUsername = $aInvAdress['oxuser__oxusername'] ?? null;
             $blForceCheckOptIn = ($sBillingUsername !== null && $sBillingUsername !== $sUserName);
             $blEmailParam = $this->getConfig()->getConfigParam('blOrderOptInEmail');
             $this->_blNewsSubscriptionStatus = $oUser->setNewsSubscription($blOptin, $blEmailParam, $blForceCheckOptIn);

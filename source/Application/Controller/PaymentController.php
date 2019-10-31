@@ -539,6 +539,7 @@ class PaymentController extends \OxidEsales\Eshop\Application\Controller\Fronten
             if (!($sPaymentID = Registry::getConfig()->getRequestParameter('paymentid'))) {
                 $sPaymentID = Registry::getSession()->getVariable('paymentid');
             }
+            $sCheckedId = null;
             if ($sPaymentID) {
                 $sCheckedId = $sPaymentID;
             } elseif (($sSelectedPaymentID = Registry::getSession()->getVariable('_selected_paymentid'))) {

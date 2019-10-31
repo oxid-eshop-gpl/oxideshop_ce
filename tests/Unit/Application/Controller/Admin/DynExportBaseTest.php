@@ -554,6 +554,7 @@ class DynExportBaseTest extends \OxidTestCase
         $oArticle = oxNew('oxArticle');
         $sArticleTable = $oArticle->getViewName();
 
+        $iLanguage = null;
         $sQ = "select count(*) from ( select {$sArticleTable}.oxid from {$sArticleTable}, {$sO2CView} as oxobject2category
                where ( {$sArticleTable}.oxid = oxobject2category.oxobjectid or {$sArticleTable}.oxparentid = oxobject2category.oxobjectid )
                {$sCatAdd} and " . $oArticle->getSqlActiveSnippet() . " and {$sArticleTable}.oxstock >= 1

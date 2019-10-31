@@ -176,7 +176,8 @@ class PaymentMain extends \OxidEsales\Eshop\Application\Controller\Admin\AdminDe
             if (is_array($aDelFields) && count($aDelFields)) {
                 foreach ($aDelFields as $sDelField) {
                     foreach ($this->_aFieldArray as $sKey => $oField) {
-                        if ($oField->name == $sDelField) {
+                        $name = $oField->name ?? null;
+                        if ($name == $sDelField) {
                             unset($this->_aFieldArray[$sKey]);
                             break;
                         }

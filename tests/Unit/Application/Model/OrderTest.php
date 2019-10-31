@@ -834,7 +834,10 @@ class OrderTest extends \OxidTestCase
 
         $oOrder->recalculateOrder(); // $oOrderArticles );
 
-        $this->assertEquals(date('Y-m-d h', $sOrderDate), date('Y-m-d h', \OxidEsales\Eshop\Core\Registry::getUtilsDate()->formatDBDate($oOrder->oxorder__oxorderdate->value)));
+        $this->assertEquals(
+            date('Y-m-d h', $sOrderDate),
+            date('Y-m-d h', \OxidEsales\Eshop\Core\Registry::getUtilsDate()->formatDBDate($oOrder->oxorder__oxorderdate->value))
+        );
         $this->assertEquals($sOrderFolder, $oOrder->oxorder__oxfolder->value);
         $this->assertEquals($sOrderIp, $oOrder->oxorder__oxip->value);
         $this->assertEquals($sOrderRemark, $oOrder->oxorder__oxremark->value);
@@ -1981,7 +1984,7 @@ class OrderTest extends \OxidTestCase
         $this->assertEquals('oxdefaultadmin', $oOrder->oxorder__oxuserid->value);
         $this->assertEquals('John', $oOrder->oxorder__oxbillfname->value);
         $this->assertEquals('Doe', $oOrder->oxorder__oxbilllname->value);
-        $this->assertEquals(null, $oOrder->oxorder__oxdelfname->value);
+        $this->assertEquals(null, $oOrder->oxorder__oxdelfname->value ?? null);
     }
 
     public function testSetUserLoadsDeliveryAddress()

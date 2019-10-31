@@ -829,7 +829,7 @@ class ArticleDetails extends \OxidEsales\Eshop\Application\Component\Widget\Widg
         // finding parent
         $oProduct = $this->getProduct();
         $sParentIdField = 'oxarticles__oxparentid';
-        if (($oParent = $this->_getParentProduct($oProduct->$sParentIdField->value))) {
+        if (($oParent = $this->_getParentProduct($oProduct->$sParentIdField->value ?? null))) {
             $sVarSelId = \OxidEsales\Eshop\Core\Registry::getConfig()->getRequestParameter("varselid");
 
             return $oParent->getVariantSelections($sVarSelId, $oProduct->getId());

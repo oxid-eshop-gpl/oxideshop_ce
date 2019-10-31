@@ -161,8 +161,9 @@ class UtilsPic extends \OxidEsales\Eshop\Core\Base
     public function overwritePic($oObject, $sPicTable, $sPicField, $sPicType, $sPicDir, $aParams, $sAbsDynImageDir)
     {
         $sPic = $sPicTable . '__' . $sPicField;
-        if (isset($oObject->{$sPic}) &&
-            ($_FILES['myfile']['size'][$sPicType . '@' . $sPic] > 0 || $aParams[$sPic] != $oObject->{$sPic}->value)
+        if (isset($oObject->{$sPic})
+            && isset($_FILES['myfile'])
+            && ($_FILES['myfile']['size'][$sPicType . '@' . $sPic] > 0 || $aParams[$sPic] != $oObject->{$sPic}->value)
         ) {
             $sImgDir = $sAbsDynImageDir . \OxidEsales\Eshop\Core\Registry::getUtilsFile()->getImageDirByType($sPicType);
             return $this->safePictureDelete($oObject->{$sPic}->value, $sImgDir, $sPicTable, $sPicField);

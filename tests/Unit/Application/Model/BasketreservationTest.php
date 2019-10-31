@@ -383,8 +383,8 @@ class BasketreservationTest extends \OxidTestCase
 
         $oR->discardReservations();
 
-        $this->assertSame(null, $oR->UNIToReservations);
-        $this->assertSame(null, $oR->UNITaCurrentlyReserved);
+        $this->assertSame(null, $oR->UNIToReservations ?? null);
+        $this->assertSame(null, $oR->UNITaCurrentlyReserved ?? null);
     }
 
     /**

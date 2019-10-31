@@ -398,7 +398,7 @@ class ArticleDetailsTest extends \OxidTestCase
         $oExpVendor->load($sManId);
 
         $oVendor = $oDetails->getManufacturer();
-        $this->assertEquals($oExpVendor->oxvendors__oxtitle->value, $oVendor->oxvendors__oxtitle->value);
+        $this->assertEquals($oExpVendor->oxvendors__oxtitle->value ?? null, $oVendor->oxvendors__oxtitle->value ?? null);
     }
 
     /**
@@ -422,7 +422,10 @@ class ArticleDetailsTest extends \OxidTestCase
         $oExpVendor = oxNew('oxVendor');
         $oExpVendor->load($sVendId);
         $oVendor = $oDetails->getVendor();
-        $this->assertEquals($oExpVendor->oxvendors__oxtitle->value, $oVendor->oxvendors__oxtitle->value);
+        $this->assertEquals(
+            $oExpVendor->oxvendors__oxtitle->value ?? null,
+            $oVendor->oxvendors__oxtitle->value ?? null
+        );
     }
 
     /**

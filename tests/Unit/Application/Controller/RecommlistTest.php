@@ -31,10 +31,10 @@ class RecommlistTest extends \OxidTestCase
         $sQ = 'insert into oxrecommlists ( oxid, oxuserid, oxtitle, oxdesc, oxshopid ) values ( "testlist2", "oxdefaultadmin", "oxtest2", "oxtest2", "' . $sShopId . '" ) ';
         $myDB->Execute($sQ);
         $this->_sArticleID = '1651';
-        $sQ = 'insert into oxobject2list ( oxid, oxobjectid, oxlistid, oxdesc ) values ( "testlist", "' . $this->sArticleID . '", "testlist", "test" ) ';
+        $sQ = 'insert into oxobject2list ( oxid, oxobjectid, oxlistid, oxdesc ) values ( "testlist", "' . $this->_sArticleID . '", "testlist", "test" ) ';
         $myDB->Execute($sQ);
 
-        oxTestModules::addFunction("oxutilsserver", "getServerVar", "{ \$aArgs = func_get_args(); if ( \$aArgs[0] === 'HTTP_HOST' ) { return '" . $this->getConfig()->getShopUrl() . "'; } elseif ( \$aArgs[0] === 'SCRIPT_NAME' ) { return ''; } else { return \$_SERVER[\$aArgs[0]]; } }");
+        oxTestModules::addFunction("oxutilsserver", "getServerVar", "{ \$aArgs = func_get_args(); if ( isset(\$aArgs[0]) && \$aArgs[0] === 'HTTP_HOST' ) { return '" . $this->getConfig()->getShopUrl() . "'; } elseif ( isset(\$aArgs[0]) && \$aArgs[0] === 'SCRIPT_NAME' ) { return ''; } else { return \$_SERVER[\$aArgs[0]??null]??null; } }");
     }
 
     /**
@@ -350,7 +350,7 @@ class RecommlistTest extends \OxidTestCase
     public function testGetRecommLists()
     {
         $myDB = oxDb::getDB();
-        $sQ = 'insert into oxobject2list ( oxid, oxobjectid, oxlistid, oxdesc ) values ( "testlist2", "' . $this->sArticleID . '", "testlist2", "test" ) ';
+        $sQ = 'insert into oxobject2list ( oxid, oxobjectid, oxlistid, oxdesc ) values ( "testlist2", "' . $this->_sArticleID . '", "testlist2", "test" ) ';
         $myDB->Execute($sQ);
         $sQ = 'insert into oxobject2list ( oxid, oxobjectid, oxlistid, oxdesc ) values ( "testlist3", "2000", "testlist2", "test" ) ';
         $myDB->Execute($sQ);
@@ -435,7 +435,7 @@ class RecommlistTest extends \OxidTestCase
 
     public function testGetLinkActiveRecommListUnAvailable()
     {
-        oxTestModules::addFunction('oxUtilsServer', 'getServerVar', '{ if ( $aA[0] == "HTTP_HOST") { return "shop.com/"; } else { return "test.php";} }');
+        oxTestModules::addFunction('oxUtilsServer', 'getServerVar', '{ if ( isset($aA[0]) && $aA[0] == "HTTP_HOST") { return "shop.com/"; } else { return "test.php";} }');
         $this->setRequestParameter('searchrecomm', 'aaa');
 
         $oRecomm = $this->getMock(\OxidEsales\Eshop\Application\Controller\RecommListController::class, array("getActiveRecommList"));

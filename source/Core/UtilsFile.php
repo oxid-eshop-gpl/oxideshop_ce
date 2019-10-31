@@ -415,7 +415,7 @@ class UtilsFile extends \OxidEsales\Eshop\Core\Base
 
             $iNewFilesCounter = 0;
             $aSource = $aFiles['myfile']['tmp_name'];
-            $aError = $aFiles['myfile']['error'];
+            $aError = $aFiles['myfile']['error'] ?? null;
 
             $oEx = oxNew(\OxidEsales\Eshop\Core\Exception\ExceptionToDisplay::class);
             // process all files
@@ -423,8 +423,8 @@ class UtilsFile extends \OxidEsales\Eshop\Core\Base
                 $sSource = $aSource[$sKey];
                 $iError = $aError[$sKey];
                 $aFiletype = explode("@", $sKey);
-                $sKey = $aFiletype[1];
-                $sType = $aFiletype[0];
+                $sKey = $aFiletype[1] ?? null;
+                $sType = $aFiletype[0] ?? null;
 
                 $sValue = strtolower($sValue);
                 $sImagePath = $this->_getImagePath($sType);

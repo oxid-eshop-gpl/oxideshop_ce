@@ -1261,7 +1261,7 @@ class Utils extends \OxidEsales\Eshop\Core\Base
      */
     protected function _getArticleUser()
     {
-        if ($this->_oUser) {
+        if (isset($this->_oUser) && $this->_oUser) {
             return $this->_oUser;
         }
 

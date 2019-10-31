@@ -40,7 +40,8 @@ class VatSelector extends \OxidEsales\Eshop\Core\Base
      */
     public function getUserVat(\OxidEsales\Eshop\Application\Model\User $oUser, $blCacheReset = false)
     {
-        $cacheId = $oUser->getId() . '_' . $oUser->oxuser__oxcountryid->value;
+        $countryId = $oUser->oxuser__oxcountryid->value ?? null;
+        $cacheId = $oUser->getId() . '_' . $countryId;
 
         if (!$blCacheReset) {
             if (array_key_exists($cacheId, self::$_aUserVatCache) &&
@@ -213,6 +214,6 @@ class VatSelector extends \OxidEsales\Eshop\Core\Base
             }
         }
 
-        return $oUser->oxuser__oxcountryid->value;
+        return $oUser->oxuser__oxcountryid->value ?? null;
     }
 }

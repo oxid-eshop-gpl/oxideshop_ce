@@ -690,7 +690,7 @@ class CategoryListTest extends \OxidTestCase
             $this->assertEquals($sId, $oCat->getId());
             $this->assertTrue($oCat->getHasVisibleSubcats());
             $this->assertTrue($oCat->getIsVisible());
-            $oCat = $oCat->getSubCat($this->_aActPath[$sNr + 1]);
+            $oCat = $oCat->getSubCat($this->_aActPath[$sNr + 1] ?? null);
         }
     }
 
@@ -722,7 +722,7 @@ class CategoryListTest extends \OxidTestCase
                 $this->assertTrue($oCat->getIsVisible());
             }
 
-            $oCat = $oCat->getSubCat($this->_aActPath[$sNr + 1]);
+            $oCat = $oCat->getSubCat($this->_aActPath[$sNr + 1] ?? null);
         }
     }
 
@@ -801,6 +801,7 @@ class CategoryListTest extends \OxidTestCase
         $iDepth = 1;
         foreach ($this->_aActPath as $sId) {
             $sPrefixExp = ($iDepth > 1) ? str_repeat('*', $iDepth - 1) . ' ' : '';
+            $sPrefixStr = null;
             $iPrefixCur = substr($this->_oList[$sId]->oxcategories__oxtitle->value, 0, strlen($sPrefixStr));
             $this->assertEquals($sPrefixStr, $iPrefixCur);
             $iDepth++;
@@ -878,6 +879,7 @@ class CategoryListTest extends \OxidTestCase
         $iDepth = 1;
         foreach ($this->_aActPath as $sId) {
             $sPrefixExp = ($iDepth > 1) ? str_repeat('*', $iDepth - 1) . ' ' : '';
+            $sPrefixStr = null;
             $iPrefixCur = substr($this->_oList[$sId]->oxcategories__oxtitle->value, 0, strlen($sPrefixStr));
             $this->assertEquals($sPrefixStr, $iPrefixCur);
             $iDepth++;

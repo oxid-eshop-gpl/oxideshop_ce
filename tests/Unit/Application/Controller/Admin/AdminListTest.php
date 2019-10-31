@@ -567,7 +567,7 @@ class AdminListTest extends \OxidTestCase
         $oAdminList = $this->getProxyClass('oxAdminList');
         $oAdminList->setNonPublicVar('_oList', $oListItem);
         $aBuildWhere = $oAdminList->buildWhere();
-        $this->assertEquals('', $aBuildWhere['oxcontents.oxfolder']);
+        $this->assertEquals('', $aBuildWhere['oxcontents.oxfolder'] ?? null);
     }
 
     /**

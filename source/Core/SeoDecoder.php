@@ -148,7 +148,8 @@ class SeoDecoder extends \OxidEsales\Eshop\Core\Base
      */
     protected function _addQueryString($sUrl)
     {
-        if (($sQ = $_SERVER["QUERY_STRING"])) {
+        $sQ = $_SERVER["QUERY_STRING"] ?? null;
+        if ($sQ) {
             $sUrl = rtrim($sUrl, "&?");
             $sQ = ltrim($sQ, "&?");
 
@@ -214,7 +215,7 @@ class SeoDecoder extends \OxidEsales\Eshop\Core\Base
                 $sRequest = $_SERVER['REQUEST_URI'];
             } else {
                 // try something else
-                $sRequest = $_SERVER['SCRIPT_URI'];
+                $sRequest = $_SERVER['SCRIPT_URI'] ?? null;
             }
         }
 

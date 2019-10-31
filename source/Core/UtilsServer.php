@@ -333,7 +333,8 @@ class UtilsServer extends \OxidEsales\Eshop\Core\Base
         $sShopId = (!$sShopId) ? $myConfig->getShopId() : $sShopId;
         // check for SSL connection
         if (!$myConfig->isSsl() && $this->getOxCookie('oxid_' . $sShopId . '_autologin') == '1') {
-            $sSslUrl = rtrim($myConfig->getSslShopUrl(), '/') . $_SERVER['REQUEST_URI'];
+            $requestUri = $_SERVER['REQUEST_URI'] ?? null;
+            $sSslUrl = rtrim($myConfig->getSslShopUrl(), '/') . $requestUri;
             if (stripos($sSslUrl, 'https') === 0) {
                 \OxidEsales\Eshop\Core\Registry::getUtils()->redirect($sSslUrl, true, 302);
             }

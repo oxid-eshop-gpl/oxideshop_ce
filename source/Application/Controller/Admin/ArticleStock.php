@@ -191,7 +191,8 @@ class ArticleStock extends \OxidEsales\Eshop\Application\Controller\Admin\AdminD
         $oArticle = oxNew(\OxidEsales\Eshop\Application\Model\Article::class);
         $oArticle->loadInLang($this->_iEditLang, $sOxArtId);
         $sPriceField = 'oxarticles__oxprice';
-        if (($aParams['price'] >= $oArticle->$sPriceField->value) &&
+        $price = $oArticle->$sPriceField->value ?? null;
+        if (($aParams['price'] >= $price) &&
             ($aParams['pricetype'] == 'oxprice2article__oxaddabs')) {
             if (is_null($sOXID)) {
                 $sOXID = $oArticlePrice->getId();

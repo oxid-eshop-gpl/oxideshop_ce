@@ -47,7 +47,7 @@ class ListReview extends \OxidEsales\Eshop\Application\Controller\Admin\ArticleL
     {
         oxAdminList::render();
 
-        $this->_aViewData["menustructure"] = $this->getNavigation()->getDomXml()->documentElement->childNodes;
+        $this->_aViewData["menustructure"] = $this->getNavigation()->getDomXml()->documentElement->childNodes ?? null;
         $this->_aViewData["articleListTable"] = getViewName('oxarticles');
 
         return "list_review.tpl";
@@ -94,7 +94,7 @@ class ListReview extends \OxidEsales\Eshop\Application\Controller\Admin\ArticleL
         $sArtTitleField = "{$sArtTable}.oxtitle";
 
         // if searching in article title field, updating sql for this case
-        if ($this->_aWhere[$sArtTitleField]) {
+        if (isset($this->_aWhere[$sArtTitleField]) && $this->_aWhere[$sArtTitleField]) {
             $sSqlForTitle = " (CONCAT( {$sArtTable}.oxtitle, if(isnull(oxparentarticles.oxtitle), '', oxparentarticles.oxtitle), {$sArtTable}.oxvarselect)) ";
             $sSql = getStr()->preg_replace("/{$sArtTable}\.oxtitle\s+like/", "$sSqlForTitle like", $sSql);
         }

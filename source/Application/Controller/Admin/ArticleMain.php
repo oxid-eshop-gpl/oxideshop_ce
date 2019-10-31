@@ -188,7 +188,7 @@ class ArticleMain extends \OxidEsales\Eshop\Application\Controller\Admin\AdminDe
         }
 
         $oArticle->assign($aParams);
-        $oArticle->setArticleLongDesc($this->_processLongDesc($aParams['oxarticles__oxlongdesc']));
+        $oArticle->setArticleLongDesc($this->_processLongDesc($aParams['oxarticles__oxlongdesc'] ?? null));
         $oArticle->setLanguage($this->_iEditLang);
         $oArticle = \OxidEsales\Eshop\Core\Registry::getUtilsFile()->processFiles($oArticle);
         $oArticle->save();
@@ -446,7 +446,7 @@ class ArticleMain extends \OxidEsales\Eshop\Application\Controller\Admin\AdminDe
                 $oFile->setId($myUtilsObject->generateUID());
                 $oFile->oxfiles__oxartid = new \OxidEsales\Eshop\Core\Field($sNewId);
                 $oFile->oxfiles__oxfilename = new \OxidEsales\Eshop\Core\Field($oRs->fields['OXFILENAME']);
-                $oFile->oxfiles__oxfilesize = new \OxidEsales\Eshop\Core\Field($oRs->fields['OXFILESIZE']);
+                $oFile->oxfiles__oxfilesize = new \OxidEsales\Eshop\Core\Field($oRs->fields['OXFILESIZE'] ?? null);
                 $oFile->oxfiles__oxstorehash = new \OxidEsales\Eshop\Core\Field($oRs->fields['OXSTOREHASH']);
                 $oFile->oxfiles__oxpurchasedonly = new \OxidEsales\Eshop\Core\Field($oRs->fields['OXPURCHASEDONLY']);
                 $oFile->save();

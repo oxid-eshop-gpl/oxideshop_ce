@@ -68,7 +68,7 @@ class OrderNumberingTest extends BaseTestCase
      */
     public function testOrderNumberingForDifferentShops($testCase)
     {
-        if ($testCase['skipped'] == 1) {
+        if (isset($testCase['skipped']) && $testCase['skipped'] == 1) {
             $this->markTestSkipped("testcase is skipped");
         }
 
@@ -114,7 +114,7 @@ class OrderNumberingTest extends BaseTestCase
      */
     public function testOrderNumberingForDifferentShops2($testCase)
     {
-        if ($testCase['skipped'] == 1) {
+        if (isset($testCase['skipped']) && $testCase['skipped'] == 1) {
             $this->markTestSkipped("testcase is skipped");
         }
 
@@ -169,7 +169,7 @@ class OrderNumberingTest extends BaseTestCase
      */
     public function testOrderNumberingForDifferentShops3($testCase)
     {
-        if ($testCase['skipped'] == 1) {
+        if (isset($testCase['skipped']) && $testCase['skipped'] == 1) {
             $this->markTestSkipped("testcase is skipped");
         }
 

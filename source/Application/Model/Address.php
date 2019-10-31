@@ -70,11 +70,11 @@ class Address extends \OxidEsales\Eshop\Core\Model\BaseModel
      */
     public function toString()
     {
-        $sFirstName = $this->oxaddress__oxfname->value;
-        $sLastName = $this->oxaddress__oxlname->value;
-        $sStreet = $this->oxaddress__oxstreet->value;
-        $sStreetNr = $this->oxaddress__oxstreetnr->value;
-        $sCity = $this->oxaddress__oxcity->value;
+        $sFirstName = $this->oxaddress__oxfname->value ?? null;
+        $sLastName = $this->oxaddress__oxlname->value ?? null;
+        $sStreet = $this->oxaddress__oxstreet->value ?? null;
+        $sStreetNr = $this->oxaddress__oxstreetnr->value ?? null;
+        $sCity = $this->oxaddress__oxcity->value ?? null;
 
         //format it
         $sAddress = "";

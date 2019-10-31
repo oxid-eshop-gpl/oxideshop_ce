@@ -146,7 +146,7 @@ class Category extends \OxidEsales\Eshop\Core\Model\MultiLanguageModel implement
      */
     public function getDefaultSorting()
     {
-        return $this->oxcategories__oxdefsort->value;
+        return $this->oxcategories__oxdefsort->value ?? null;
     }
 
     /**
@@ -156,7 +156,7 @@ class Category extends \OxidEsales\Eshop\Core\Model\MultiLanguageModel implement
      */
     public function getDefaultSortingMode()
     {
-        return $this->oxcategories__oxdefsortmode->value;
+        return $this->oxcategories__oxdefsortmode->value ?? null;
     }
 
     /**
@@ -281,9 +281,9 @@ class Category extends \OxidEsales\Eshop\Core\Model\MultiLanguageModel implement
 
             // only delete empty categories
             // #1173M - not all pic are deleted, after article is removed
-            $myUtilsPic->safePictureDelete($this->oxcategories__oxthumb->value, $sDir . \OxidEsales\Eshop\Core\Registry::getUtilsFile()->getImageDirByType('TC'), 'oxcategories', 'oxthumb');
-            $myUtilsPic->safePictureDelete($this->oxcategories__oxicon->value, $sDir . \OxidEsales\Eshop\Core\Registry::getUtilsFile()->getImageDirByType('CICO'), 'oxcategories', 'oxicon');
-            $myUtilsPic->safePictureDelete($this->oxcategories__oxpromoicon->value, $sDir . \OxidEsales\Eshop\Core\Registry::getUtilsFile()->getImageDirByType('PICO'), 'oxcategories', 'oxpromoicon');
+            $myUtilsPic->safePictureDelete($this->oxcategories__oxthumb->value ?? null, $sDir . \OxidEsales\Eshop\Core\Registry::getUtilsFile()->getImageDirByType('TC'), 'oxcategories', 'oxthumb');
+            $myUtilsPic->safePictureDelete($this->oxcategories__oxicon->value ?? null, $sDir . \OxidEsales\Eshop\Core\Registry::getUtilsFile()->getImageDirByType('CICO'), 'oxcategories', 'oxicon');
+            $myUtilsPic->safePictureDelete($this->oxcategories__oxpromoicon->value ?? null, $sDir . \OxidEsales\Eshop\Core\Registry::getUtilsFile()->getImageDirByType('PICO'), 'oxcategories', 'oxpromoicon');
 
             $query = "UPDATE oxcategories SET OXLEFT = OXLEFT - 2
                       WHERE OXROOTID = :oxrootid AND
@@ -353,7 +353,7 @@ class Category extends \OxidEsales\Eshop\Core\Model\MultiLanguageModel implement
      */
     public function getSubCat($sKey)
     {
-        return $this->_aSubCats[$sKey];
+        return $this->_aSubCats[$sKey] ?? null;
     }
 
     /**
@@ -484,7 +484,8 @@ class Category extends \OxidEsales\Eshop\Core\Model\MultiLanguageModel implement
                 $blEmpty = false;
             }
 
-            $this->_blIsVisible = !($blEmpty || $this->oxcategories__oxhidden->value);
+            $isCategoryHidden = $this->oxcategories__oxhidden->value ?? null;
+            $this->_blIsVisible = !($blEmpty || $isCategoryHidden);
         }
 
         return $this->_blIsVisible;
@@ -508,7 +509,7 @@ class Category extends \OxidEsales\Eshop\Core\Model\MultiLanguageModel implement
     public function getPictureUrl()
     {
         if ($this->_sDynImageDir === null) {
-            $sThisShop = $this->oxcategories__oxshopid->value;
+            $sThisShop = $this->oxcategories__oxshopid->value ?? null;
             $this->_sDynImageDir = $this->getConfig()->getPictureUrl(null, false, null, null, $sThisShop);
         }
 
@@ -543,7 +544,10 @@ class Category extends \OxidEsales\Eshop\Core\Model\MultiLanguageModel implement
     public function getLink($iLang = null)
     {
         if (!\OxidEsales\Eshop\Core\Registry::getUtils()->seoIsActive() ||
-            (isset($this->oxcategories__oxextlink) && $this->oxcategories__oxextlink->value)
+            (
+                isset($this->oxcategories__oxextlink, $this->oxcategories__oxextlink->value)
+                && $this->oxcategories__oxextlink->value
+            )
         ) {
             return $this->getStdLink($iLang);
         }
@@ -614,7 +618,8 @@ class Category extends \OxidEsales\Eshop\Core\Model\MultiLanguageModel implement
      */
     public function getBaseStdLink($iLang, $blAddId = true, $blFull = true)
     {
-        if (isset($this->oxcategories__oxextlink) && $this->oxcategories__oxextlink->value) {
+        if (isset($this->oxcategories__oxextlink, $this->oxcategories__oxextlink->value)
+            && $this->oxcategories__oxextlink->value) {
             return $this->oxcategories__oxextlink->value;
         }
 
@@ -638,7 +643,10 @@ class Category extends \OxidEsales\Eshop\Core\Model\MultiLanguageModel implement
      */
     public function getStdLink($iLang = null, $aParams = [])
     {
-        if (isset($this->oxcategories__oxextlink) && $this->oxcategories__oxextlink->value) {
+        if (isset($this->oxcategories__oxextlink)
+            && isset($this->oxcategories__oxextlink->value)
+            && $this->oxcategories__oxextlink->value
+        ) {
             return \OxidEsales\Eshop\Core\Registry::getUtilsUrl()->processUrl($this->oxcategories__oxextlink->value, true);
         }
 
@@ -776,7 +784,9 @@ class Category extends \OxidEsales\Eshop\Core\Model\MultiLanguageModel implement
         $oCat = null;
 
         // loading only if parent id is not rootid
-        if ($this->oxcategories__oxparentid->value && $this->oxcategories__oxparentid->value != 'oxrootid') {
+        if (isset($this->oxcategories__oxparentid->value)
+            && $this->oxcategories__oxparentid->value
+            && $this->oxcategories__oxparentid->value != 'oxrootid') {
             // checking if object itself has ref to parent
             if ($this->_oParent) {
                 $oCat = $this->_oParent;
@@ -835,11 +845,12 @@ class Category extends \OxidEsales\Eshop\Core\Model\MultiLanguageModel implement
      */
     protected function _insert()
     {
-        if ($this->oxcategories__oxparentid->value != "oxrootid") {
+        $categoryParentId = $this->oxcategories__oxparentid->value ?? null;
+        if ($categoryParentId != "oxrootid") {
             // load parent
             $oParent = oxNew(\OxidEsales\Eshop\Application\Model\Category::class);
             //#M317 check if parent is loaded
-            if (!$oParent->load($this->oxcategories__oxparentid->value)) {
+            if (!$oParent->load($this->oxcategories__oxparentid->value ?? null)) {
                 return false;
             }
 
@@ -1118,7 +1129,9 @@ class Category extends \OxidEsales\Eshop\Core\Model\MultiLanguageModel implement
      */
     public function isPriceCategory()
     {
-        return (bool) ($this->oxcategories__oxpricefrom->value || $this->oxcategories__oxpriceto->value);
+        $priceFrom = $this->oxcategories__oxpricefrom->value ?? null;
+        $priceTo = $this->oxcategories__oxpriceto->value ?? null;
+        return (bool) ($priceFrom || $priceTo);
     }
 
     /**
@@ -1153,7 +1166,7 @@ class Category extends \OxidEsales\Eshop\Core\Model\MultiLanguageModel implement
      */
     public function getTitle()
     {
-        return $this->oxcategories__oxtitle->value;
+        return $this->oxcategories__oxtitle->value ?? null;
     }
 
     /**

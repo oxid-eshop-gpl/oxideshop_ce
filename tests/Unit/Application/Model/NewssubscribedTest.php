@@ -95,7 +95,7 @@ class NewssubscribedTest extends \OxidTestCase
     {
         $oNewsSubscribed = oxNew('oxnewssubscribed');
         $this->assertFalse($oNewsSubscribed->loadFromEmail('nosuchuser@useremail.nl'));
-        $this->assertNull($oNewsSubscribed->oxnewssubscribed__oxid->value);
+        $this->assertNull($oNewsSubscribed->oxnewssubscribed__oxid->value ?? null);
     }
 
     /**
@@ -115,7 +115,7 @@ class NewssubscribedTest extends \OxidTestCase
     {
         $oNewsSubscribed = oxNew('oxnewssubscribed');
         $this->assertFalse($oNewsSubscribed->loadFromUserId('noSuchUserId'));
-        $this->assertNull($oNewsSubscribed->oxnewssubscribed__oxid->value);
+        $this->assertNull($oNewsSubscribed->oxnewssubscribed__oxid->value ?? null);
     }
 
     /**

@@ -123,7 +123,8 @@ class AccountController extends \OxidEsales\Eshop\Application\Controller\Fronten
         // is logged in ?
         $user = $this->getUser();
         $passwordField = 'oxuser__oxpassword';
-        if (!$user || ($user && !$user->$passwordField->value) ||
+        $password = $user->$passwordField->value ?? null;
+        if (!$user || ($user && !$password) ||
             ($this->isEnabledPrivateSales() && $user && (!$user->isTermsAccepted() || $this->confirmTerms()))
         ) {
             $this->_sThisTemplate = $this->_getLoginTemplate();

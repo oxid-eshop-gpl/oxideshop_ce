@@ -137,7 +137,7 @@ class ArticleExtend extends \OxidEsales\Eshop\Application\Controller\Admin\Admin
         $oArticle->loadInLang($this->_iEditLang, $soxId);
         $sTPriceField = 'oxarticles__oxtprice';
         $sPriceField = 'oxarticles__oxprice';
-        $dTPrice = $aParams['oxarticles__oxtprice'];
+        $dTPrice = $aParams['oxarticles__oxtprice'] ?? null;
         if ($dTPrice && $dTPrice != $oArticle->$sTPriceField->value && $dTPrice <= $oArticle->$sPriceField->value) {
             $this->_aViewData["errorsavingtprice"] = 1;
         }
@@ -287,7 +287,7 @@ class ArticleExtend extends \OxidEsales\Eshop\Application\Controller\Admin\Admin
                 $resultFromDatabase->fetchRow();
             }
         }
-        $this->_aViewData['bundle_artnum'] = $articleNumber;
-        $this->_aViewData['bundle_title'] = $articleTitle;
+        $this->_aViewData['bundle_artnum'] = $articleNumber ?? null;
+        $this->_aViewData['bundle_title'] = $articleTitle ?? null;
     }
 }

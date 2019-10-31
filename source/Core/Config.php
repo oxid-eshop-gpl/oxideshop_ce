@@ -731,7 +731,7 @@ class Config extends \OxidEsales\Eshop\Core\Base
      */
     public function getUploadedFile($paramName)
     {
-        return $_FILES[$paramName];
+        return $_FILES[$paramName] ?? null;
     }
 
     /**

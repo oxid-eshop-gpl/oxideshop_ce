@@ -121,14 +121,15 @@ class ContentMain extends \OxidEsales\Eshop\Application\Controller\Admin\AdminDe
         }
 
         // special treatment
-        if ($aParams['oxcontents__oxtype'] == 0) {
+        $type = $aParams['oxcontents__oxtype'] ?? null;
+        if ($type == 0) {
             $aParams['oxcontents__oxsnippet'] = 1;
         } else {
             $aParams['oxcontents__oxsnippet'] = 0;
         }
 
         //Updates object folder parameters
-        if ($aParams['oxcontents__oxfolder'] == 'CMSFOLDER_NONE') {
+        if (isset($aParams['oxcontents__oxfolder']) && $aParams['oxcontents__oxfolder'] == 'CMSFOLDER_NONE') {
             $aParams['oxcontents__oxfolder'] = '';
         }
 

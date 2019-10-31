@@ -24,7 +24,7 @@ class ContentListTest extends \OxidTestCase
         $oView = oxNew('Content_List');
         $sTplName = $oView->render();
         $aViewData = $oView->getViewData();
-        $this->assertEquals($this->getConfig()->getConfigParam('afolder'), $aViewData["CMSFOLDER_EMAILS"]);
+        $this->assertEquals($this->getConfig()->getConfigParam('afolder'), $aViewData["CMSFOLDER_EMAILS"] ?? null);
         $this->assertEquals("sTestFolder", $aViewData["folder"]);
 
         $this->assertEquals('content_list.tpl', $sTplName);
