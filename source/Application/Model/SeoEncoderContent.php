@@ -61,7 +61,11 @@ class SeoEncoderContent extends \OxidEsales\Eshop\Core\SeoEncoder
                 }
             }
 
-            $sSeoUrl .= $this->_prepareTitle($oCont->oxcontents__oxtitle->value, false, $oCont->getLanguage()) . '/';
+            $sSeoUrl .= $this->_prepareTitle(
+                $oCont->oxcontents__oxtitle->value ?? null,
+                false,
+                $oCont->getLanguage()
+            ) . '/';
             $sSeoUrl = $this->_processSeoUrl($sSeoUrl, $oCont->getId(), $iLang);
 
             $this->_saveToDb('oxcontent', $oCont->getId(), $oCont->getBaseStdLink($iLang), $sSeoUrl, $iLang);

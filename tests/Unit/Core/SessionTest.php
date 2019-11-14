@@ -47,7 +47,7 @@ class UtilsServerHelper extends oxUtilsServer
             return $this->_aCookieVars;
         }
 
-        if ($this->_aCookieVars[$sVar]) {
+        if (isset($this->_aCookieVars[$sVar]) && $this->_aCookieVars[$sVar]) {
             return $this->_aCookieVars[$sVar];
         }
 
@@ -253,7 +253,7 @@ class SessionTest extends \OxidTestCase
         $oSession->setVar('actshop', null);
         $oSession->setVar('lang', null);
         $oSession->setVar('currency', null);
-        $oSession->setVar('language', $myConfig->sDefaultLang);
+        $oSession->setVar('language', $myConfig->sDefaultLang ?? null);
         $oSession->setVar('tpllanguage', null);
     }
 
@@ -814,7 +814,7 @@ class SessionTest extends \OxidTestCase
         $oSession->setVar('actshop', null);
         $oSession->setVar('lang', null);
         $oSession->setVar('currency', null);
-        $oSession->setVar('language', $myConfig->sDefaultLang);
+        $oSession->setVar('language', $myConfig->sDefaultLang ?? null);
         $oSession->setVar('tpllanguage', null);
     }
 
@@ -858,7 +858,7 @@ class SessionTest extends \OxidTestCase
         $oSession->setVar('actshop', null);
         $oSession->setVar('lang', null);
         $oSession->setVar('currency', null);
-        $oSession->setVar('language', $myConfig->sDefaultLang);
+        $oSession->setVar('language', $myConfig->sDefaultLang ?? null);
         $oSession->setVar('tpllanguage', null);
     }
 
@@ -1408,7 +1408,7 @@ class SessionTest extends \OxidTestCase
                 )
             );
 
-        $sInitial = $_SERVER['REQUEST_METHOD'];
+        $sInitial = $_SERVER['REQUEST_METHOD'] ?? null;
         try {
             $_SERVER['REQUEST_METHOD'] = 'GET';
             $this->assertEquals(false, $oSess->UNITisSessionRequiredAction());
@@ -1417,7 +1417,7 @@ class SessionTest extends \OxidTestCase
         } catch (Exception $e) {
         }
         $_SERVER['REQUEST_METHOD'] = $sInitial;
-        if ($e) {
+        if (isset($e)) {
             throw $e;
         };
     }
@@ -1520,7 +1520,7 @@ class SessionTest extends \OxidTestCase
 
     public function testIsActualSidInCookiePossitive()
     {
-        $sOriginalVal = $_COOKIE["sid"];
+        $sOriginalVal = $_COOKIE["sid"] ?? null;
         $_COOKIE["sid"] = "testIdDifferent";
         $oSession = $this->getMock(\OxidEsales\Eshop\Core\Session::class, array('getId'));
         $oSession->expects($this->any())->method('getId')->will($this->returnValue('testId'));
@@ -1533,7 +1533,7 @@ class SessionTest extends \OxidTestCase
 
     public function testIsActualSidInCookieNegative()
     {
-        $sOriginalVal = $_COOKIE["sid"];
+        $sOriginalVal = $_COOKIE["sid"] ?? null;
         $_COOKIE["sid"] = "testId";
         $oSession = $this->getMock(\OxidEsales\Eshop\Core\Session::class, array('getId'));
         $oSession->expects($this->any())->method('getId')->will($this->returnValue('testId'));
@@ -1547,7 +1547,7 @@ class SessionTest extends \OxidTestCase
 
     public function testIsActualSidInCookieNotSet()
     {
-        $sOriginalVal = $_COOKIE["sid"];
+        $sOriginalVal = $_COOKIE["sid"] ?? null;
         unset($_COOKIE["sid"]);
         $oSession = $this->getMock(\OxidEsales\Eshop\Core\Session::class, array('getId'));
         $oSession->expects($this->any())->method('getId')->will($this->returnValue('testId'));

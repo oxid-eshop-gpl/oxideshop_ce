@@ -676,7 +676,7 @@ class LangIntegrityTest extends \OxidTestCase
         foreach (glob($sMask) as $sFile) {
             if (is_readable($sFile)) {
                 include $sFile;
-                $aFileContent[$sFile] .= file_get_contents($sFile) . PHP_EOL . PHP_EOL;
+                $aFileContent[$sFile] = file_get_contents($sFile) . PHP_EOL . PHP_EOL;
             }
         }
 

@@ -29,7 +29,7 @@ class ApplicationServerExporterTest extends \OxidEsales\TestingLibrary\UnitTestC
 
         $this->assertCount($count, $appServers);
 
-        $this->assertEquals($expectedServerCollection, $appServers[0]);
+        $this->assertEquals($expectedServerCollection, $appServers[0] ?? null);
     }
 
     /**

@@ -301,7 +301,7 @@ class UtilsDate extends \OxidEsales\Eshop\Core\Base
             $oObject->fldmax_length = strlen($oObject->value);
 
             return;
-        } elseif ($blDefTimeFound) {
+        } elseif (isset($blDefTimeFound) && $blDefTimeFound) {
             // setting value
             $oObject->setValue(trim($aDFormats[$sLocalDateFormat][2] . " " . $aTFormats[$sLocalTimeFormat][2]));
             // increasing(decreasing) field length

@@ -18,7 +18,8 @@
 function smarty_prefilter_oxblock($sSource, &$oSmartyCompiler)
 {
     $blUseSmarty3 = false;
-    if (strpos($oSmartyCompiler->_version, 'Smarty3') === 0) {
+    $version = $oSmartyCompiler->_version ?? null;
+    if (strpos($version, 'Smarty3') === 0) {
         $blUseSmarty3 = true;
     }
     $blDebugTemplateBlocks = (bool)\OxidEsales\Eshop\Core\Registry::getConfig()->getConfigParam('blDebugTemplateBlocks');

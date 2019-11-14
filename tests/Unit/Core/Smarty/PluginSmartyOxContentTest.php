@@ -36,7 +36,9 @@ class PluginSmartyOxContentTest extends \OxidTestCase
 
     public function testGetContentNoParamsPassedShopIsProductive()
     {
-        $this->assertEquals("<b>content not found ! check ident() !</b>", smarty_function_oxcontent(array(), new stdClass()));
+        $object = new StdClass();
+        $result = smarty_function_oxcontent(array(), $object);
+        $this->assertEquals("<b>content not found ! check ident() !</b>", $result);
     }
 
     public function testGetContentLoadByIdent()

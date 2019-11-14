@@ -785,7 +785,7 @@ class Utils extends \OxidEsales\Eshop\Core\Base
             // try via fsockopen
             $aUrl = @parse_url($sRemote);
             if (!empty($aUrl["host"])) {
-                $sPath = $aUrl["path"];
+                $sPath = $aUrl["path"] ?? null;
                 if (empty($sPath)) {
                     $sPath = "/";
                 }
@@ -1299,7 +1299,7 @@ class Utils extends \OxidEsales\Eshop\Core\Base
             }
         }
 
-        return $sType;
+        return $sType ?? null;
     }
 
     /**

@@ -132,7 +132,7 @@ class UserReviewAndRatingBridge implements UserReviewAndRatingBridgeInterface
         $fieldName = $this->getObjectTitleFieldName($type);
         $field = $objectModel->$fieldName;
 
-        return $field->value;
+        return $field->value ?? null;
     }
 
     /**

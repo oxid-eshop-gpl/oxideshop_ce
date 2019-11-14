@@ -175,7 +175,7 @@ class Module extends \OxidEsales\Eshop\Core\Base
      */
     public function getId()
     {
-        return $this->_aModule['id'];
+        return $this->_aModule['id'] ?? null;
     }
 
     /**

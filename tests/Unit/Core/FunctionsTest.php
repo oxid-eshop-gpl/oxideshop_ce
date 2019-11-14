@@ -30,8 +30,8 @@ class FunctionsTest extends \OxidTestCase
     {
         parent::setUp();
         // backuping
-        $this->requestMethod = $_SERVER["REQUEST_METHOD"];
-        $this->requestUri = $_SERVER['REQUEST_URI'];
+        $this->requestMethod = $_SERVER["REQUEST_METHOD"] ?? null;
+        $this->requestUri = $_SERVER['REQUEST_URI'] ?? null;
     }
 
     /**

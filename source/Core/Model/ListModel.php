@@ -440,16 +440,17 @@ class ListModel extends \OxidEsales\Eshop\Core\Base implements \ArrayAccess, \It
     /**
      * Function checks if there is at least one object in the list which has the given value in the given field
      *
-     * @param mixed  $oVal       The searched value
+     * @param mixed  $searchedValue       The searched value
      * @param string $sFieldName The name of the field, give "oxid" will access the classname__oxid field
      *
      * @return boolean
      */
-    public function containsFieldValue($oVal, $sFieldName)
+    public function containsFieldValue($searchedValue, $sFieldName)
     {
         $sFieldName = $this->_getFieldLongName($sFieldName);
         foreach ($this->_aArray as $obj) {
-            if ($obj->{$sFieldName}->value == $oVal) {
+            $value = $obj->{$sFieldName}->value ?? null;
+            if ($value == $searchedValue) {
                 return true;
             }
         }

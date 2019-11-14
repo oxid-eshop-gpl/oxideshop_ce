@@ -47,7 +47,7 @@ class PictureHandler extends \OxidEsales\Eshop\Core\Base
             if ($iIndex == 1) {
                 // deleting generated main icon picture if custom main icon
                 // file name not equal with generated from master picture
-                if ($this->getMainIconName($sMasterImage) != basename($oObject->oxarticles__oxicon->value)) {
+                if ($this->getMainIconName($sMasterImage) != basename($oObject->oxarticles__oxicon->value ?? null)) {
                     $aDelPics[] = ["sField"    => "oxpic1",
                                         "sDir"      => $oUtilsFile->getImageDirByType("ICO", $blGeneratedImagesOnly),
                                         "sFileName" => $this->getMainIconName($sMasterImage)];
@@ -55,7 +55,7 @@ class PictureHandler extends \OxidEsales\Eshop\Core\Base
 
                 // deleting generated thumbnail picture if custom thumbnail
                 // file name not equal with generated from master picture
-                if ($this->getThumbName($sMasterImage) != basename($oObject->oxarticles__oxthumb->value)) {
+                if ($this->getThumbName($sMasterImage) != basename($oObject->oxarticles__oxthumb->value ?? null)) {
                     $aDelPics[] = ["sField"    => "oxpic1",
                                         "sDir"      => $oUtilsFile->getImageDirByType("TH", $blGeneratedImagesOnly),
                                         "sFileName" => $this->getThumbName($sMasterImage)];

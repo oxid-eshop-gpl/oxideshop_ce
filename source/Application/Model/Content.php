@@ -116,7 +116,7 @@ class Content extends \OxidEsales\Eshop\Core\Model\MultiLanguageModel implements
      */
     public function getCategoryId()
     {
-        return $this->oxcontents__oxcatid->value;
+        return $this->oxcontents__oxcatid->value ?? null;
     }
 
     /**

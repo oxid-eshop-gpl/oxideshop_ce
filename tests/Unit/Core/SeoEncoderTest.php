@@ -256,7 +256,7 @@ class SeoEncoderTest extends \OxidTestCase
 
         $iShopId = $this->getConfig()->getShopId();
         $iLang = 0;
-        $sStdUrl = "index.php?cl=details&amp;anid={$sOxid}";
+        $sStdUrl = "index.php?cl=details&amp;anid=";
         $sType = "oxarticle";
 
         $oArticle = oxNew('oxArticle');
@@ -1438,7 +1438,7 @@ class SeoEncoderTest extends \OxidTestCase
 
         $oDb->cleanup();
 
-        if ($e) {
+        if (isset($e)) {
             throw $e;
         }
     }

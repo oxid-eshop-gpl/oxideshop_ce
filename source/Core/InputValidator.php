@@ -434,7 +434,8 @@ class InputValidator extends \OxidEsales\Eshop\Core\Base
                 $validationResult = false;
 
                 $idAllCreditCardInformationSet = $this->_isAllBankInformationSet($this->_aRequiredCCFields, $dynamicValue);
-                $doesCreditCardTypeExist = in_array($dynamicValue['kktype'], $this->_aPossibleCCType);
+                $value = $dynamicValue['kktype'] ?? null;
+                $doesCreditCardTypeExist = in_array($value, $this->_aPossibleCCType);
 
                 if ($idAllCreditCardInformationSet && $doesCreditCardTypeExist) {
                     $cardValidator = oxNew(\OxidEsales\Eshop\Core\CreditCardValidator::class);

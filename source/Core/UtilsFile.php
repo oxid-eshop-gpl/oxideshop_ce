@@ -421,7 +421,7 @@ class UtilsFile extends \OxidEsales\Eshop\Core\Base
             // process all files
             foreach ($aFiles['myfile']['name'] as $sKey => $sValue) {
                 $sSource = $aSource[$sKey];
-                $iError = $aError[$sKey];
+                $iError = $aError[$sKey] ?? null;
                 $aFiletype = explode("@", $sKey);
                 $sKey = $aFiletype[1] ?? null;
                 $sType = $aFiletype[0] ?? null;
@@ -540,7 +540,7 @@ class UtilsFile extends \OxidEsales\Eshop\Core\Base
      */
     public function processFile($sFileName, $sUploadPath)
     {
-        $aFileInfo = $_FILES[$sFileName];
+        $aFileInfo = $_FILES[$sFileName] ?? null;
 
         $sBasePath = $this->getConfig()->getConfigParam('sShopDir');
 
@@ -561,8 +561,8 @@ class UtilsFile extends \OxidEsales\Eshop\Core\Base
 
         $aPathInfo = pathinfo($aFileInfo['name']);
 
-        $sExt = $aPathInfo['extension'];
-        $sFileName = $aPathInfo['filename'];
+        $sExt = $aPathInfo['extension'] ?? null;
+        $sFileName = $aPathInfo['filename'] ?? null;
 
         $aAllowedUploadTypes = (array) $this->getConfig()->getConfigParam('aAllowedUploadTypes');
         $aAllowedUploadTypes = array_map("strtolower", $aAllowedUploadTypes);

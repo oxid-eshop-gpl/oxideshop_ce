@@ -331,7 +331,7 @@ class UtilsServerTest extends \OxidTestCase
 
     public function testGetServerIp()
     {
-        $sOldServerIp = $_SERVER['SERVER_ADDR'];
+        $sOldServerIp = $_SERVER['SERVER_ADDR'] ?? null;
 
         $sExpectedIP = '192.168.0.9';
         $_SERVER['SERVER_ADDR'] = $sExpectedIP;
@@ -369,7 +369,7 @@ class UtilsServerTest extends \OxidTestCase
      */
     public function testGetServerNodeIdReturnDifferentValueIfDifferentIp($sServerId1)
     {
-        $sOldServerIp = $_SERVER['SERVER_ADDR'];
+        $sOldServerIp = $_SERVER['SERVER_ADDR'] ?? null;
 
         $sExpectedIP = '1.168.0.9';
         $_SERVER['SERVER_ADDR'] = $sExpectedIP;

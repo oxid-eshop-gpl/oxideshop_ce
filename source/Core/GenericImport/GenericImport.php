@@ -87,7 +87,8 @@ class GenericImport
         $user = oxNew(\OxidEsales\Eshop\Application\Model\User::class);
         $user->loadAdminUser();
 
-        if (($user->oxuser__oxrights->value == 'malladmin' || $user->oxuser__oxrights->value == $config->getShopId())) {
+        $rights = $user->oxuser__oxrights->value ?? null;
+        if (($rights == 'malladmin' || $rights == $config->getShopId())) {
             $this->isInitialized = true;
             $this->userId = $user->getId();
         } else {
