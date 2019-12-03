@@ -11,6 +11,7 @@ namespace OxidEsales\EshopCommunity\Tests\Unit\Internal\Transition\Smarty\Config
 
 use OxidEsales\EshopCommunity\Core\Registry;
 use OxidEsales\EshopCommunity\Internal\Framework\Smarty\Configuration\SmartySettingsDataProvider;
+use OxidEsales\EshopCommunity\Internal\Framework\Smarty\Extension\SmartyTemplateHandlerInterface;
 use OxidEsales\EshopCommunity\Internal\Framework\Smarty\SmartyContextInterface;
 
 class SmartySettingsDataProviderTest extends \PHPUnit\Framework\TestCase
@@ -18,8 +19,9 @@ class SmartySettingsDataProviderTest extends \PHPUnit\Framework\TestCase
     public function testGetSmartySettings()
     {
         $smartyContextMock = $this->getSmartyContextMock();
+        $templateHandlerMock = $this->getSmartyTemplateHandlerMock();
 
-        $dataProvider = new SmartySettingsDataProvider($smartyContextMock);
+        $dataProvider = new SmartySettingsDataProvider($smartyContextMock, $templateHandlerMock);
         $settings = [
             'caching' => false,
             'left_delimiter' => '[{',
@@ -28,7 +30,7 @@ class SmartySettingsDataProviderTest extends \PHPUnit\Framework\TestCase
             'cache_dir' => 'testCompileDir',
             'template_dir' => ['testTemplateDir'],
             'compile_id' => '7f96e0d92070fd4733296e5118fd5a01',
-            'default_template_handler_func' => [Registry::getUtilsView(), '_smartyDefaultTemplateHandler'],
+            'default_template_handler_func' => [$templateHandlerMock, 'handleTemplate'],
             'debugging' => true,
             'compile_check' => true,
             'php_handling' => 1,
@@ -70,8 +72,13 @@ class SmartySettingsDataProviderTest extends \PHPUnit\Framework\TestCase
 
         $smartyContextMock
             ->method('getSmartyPluginDirectories')
-            ->willReturn(['testModuleDir', 'testShopPath/Core/Smarty/Plugin']);
+            ->willReturn([]);
 
         return $smartyContextMock;
+    }
+
+    private function getSmartyTemplateHandlerMock()
+    {
+        return $this->prophesize(SmartyTemplateHandlerInterface::class)->reveal();
     }
 }

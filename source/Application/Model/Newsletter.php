@@ -7,6 +7,7 @@
 
 namespace OxidEsales\EshopCommunity\Application\Model;
 
+use OxidEsales\EshopCommunity\Core\Registry;
 use oxRegistry;
 use oxField;
 use oxDb;
@@ -202,12 +203,8 @@ class Newsletter extends \OxidEsales\Eshop\Core\Model\BaseModel
 
         $this->_assignProducts($oView, $blPerfLoadAktion);
 
-        $aInput[] = [$this->getId() . 'html', $this->oxnewsletter__oxtemplate->value];
-        $aInput[] = [$this->getId() . 'plain', $this->oxnewsletter__oxplaintemplate->value];
-        $aRes = \OxidEsales\Eshop\Core\Registry::getUtilsView()->parseThroughSmarty($aInput, null, $oView, true);
-
-        $this->_sHtmlText = $aRes[0];
-        $this->_sPlainText = $aRes[1];
+        $this->_sHtmlText = Registry::getUtilsView()->getRenderedContent($this->oxnewsletter__oxtemplate->value, $oView->getViewData());
+        $this->_sPlainText = Registry::getUtilsView()->getRenderedContent($this->oxnewsletter__oxplaintemplate->value, $oView->getViewData());
     }
 
     /**

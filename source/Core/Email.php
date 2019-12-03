@@ -259,15 +259,6 @@ class Email extends PHPMailer
     protected $_aAttachments = [];
 
     /**
-     * Smarty instance
-     *
-     * @deprecated since v6.4 (2019-10-10); Will be removed
-     *
-     * @var \Smarty
-     */
-    protected $_oSmarty = null;
-
-    /**
      * Email view data
      *
      * @var array
@@ -306,8 +297,6 @@ class Email extends PHPMailer
         $this->isHTML(true);
         $this->setLanguage("en", $myConfig->getConfigParam('sShopDir') . "/Core/phpmailer/language/");
 
-        $this->_getSmarty();
-
         //setting default view
         $this->setViewData('oEmailView', $this);
 
@@ -340,22 +329,6 @@ class Email extends PHPMailer
     }
 
     /**
-     * @deprecated since v6.4 (2019-10-10); Use TemplateRendererBridgeInterface
-     *
-     * Smarty instance getter, assigns this oxEmail instance to "oEmailView" variable
-     *
-     * @return \Smarty
-     */
-    protected function _getSmarty()
-    {
-        if ($this->_oSmarty === null) {
-            $this->_oSmarty = \OxidEsales\Eshop\Core\Registry::getUtilsView()->getSmarty();
-        }
-
-        return $this->_oSmarty;
-    }
-
-    /**
      * Templating instance getter
      *
      * @return TemplateRendererInterface
@@ -363,7 +336,6 @@ class Email extends PHPMailer
     private function getRenderer()
     {
         $bridge = $this->getContainer()->get(TemplateRendererBridgeInterface::class);
-        $bridge->setEngine($this->_getSmarty());
 
         return $bridge->getTemplateRenderer();
     }
@@ -2074,7 +2046,7 @@ class Email extends PHPMailer
     {
         $outputProcessor = oxNew(\OxidEsales\Eshop\Core\Output::class);
 
-        // processing assigned smarty variables
+        // processing assigned template engine variables
         $newArray = $outputProcessor->processViewArray($this->_aViewData, "oxemail");
 
         $this->_aViewData = array_merge($this->_aViewData, $newArray);

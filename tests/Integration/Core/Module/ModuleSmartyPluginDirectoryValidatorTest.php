@@ -21,7 +21,6 @@ class ModuleSmartyPluginDirectoryValidatorTest extends UnitTestCase
     {
         $directories = $this->getModuleSmartyPluginDirectories();
         $directories->add(['fakeDir'], 'id');
-        ;
 
         $validator = oxNew(ModuleSmartyPluginDirectoryValidator::class);
         $validator->validate($directories);

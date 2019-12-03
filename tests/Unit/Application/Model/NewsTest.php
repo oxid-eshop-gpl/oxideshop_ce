@@ -284,8 +284,6 @@ class NewsTest extends \OxidTestCase
         $oDB = oxDb::getDb(oxDB::FETCH_MODE_ASSOC);
         $oDB->execute($sSql);
 
-        oxTestModules::addFunction("oxutilsview", "parseThroughSmarty", "{return '<p>test text</p>';}");
-
         $oNews = oxNew('oxnews');
         $oNews->load($this->_oNews->getId());
 

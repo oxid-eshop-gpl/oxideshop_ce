@@ -51,12 +51,12 @@ class RssTest extends \OxidTestCase
 
     public function testRender()
     {
-        ContainerFactory::resetContainer();
-        $oSmarty = $this->getMock('Smarty', array('assign', 'fetch'));
-        $oSmarty->expects($this->any())->method('assign');
-        $oSmarty->expects($this->once())->method('fetch')->with($this->equalTo('widget/rss.tpl'), $this->equalTo('viewid'))->will($this->returnValue('smarty processed xml'));
-        $oUtilsView = $this->getMock(\OxidEsales\Eshop\Core\UtilsView::class, array('getSmarty'));
-        $oUtilsView->expects($this->once())->method('getSmarty')->will($this->returnValue($oSmarty));
+        $templating = $this->getContainer()->get(TemplateRendererBridgeInterface::class)->getTemplateRenderer();
+        $templateEngine = $this->getMockBuilder(TraditionalEngineInterface::class)
+            ->setMethods(['renderTemplate', 'getEngine', 'exists', 'renderFragment'])
+            ->disableOriginalConstructor()
+            ->getMock();
+        $templateEngine->expects($this->any())->method('renderTemplate')->with($this->equalTo("widget/rss.tpl"))->will($this->returnValue('smarty processed xml'));
 
         $oUtils = $this->getMock(\OxidEsales\Eshop\Core\Utils::class, array('setHeader', 'showMessageAndExit'));
         $oUtils->expects($this->once())->method('setHeader')->with($this->equalTo('Content-Type: text/xml; charset=XCHARSET'));
@@ -65,11 +65,11 @@ class RssTest extends \OxidTestCase
         $oLang = $this->getMock(\OxidEsales\Eshop\Core\Language::class, array('translateString'));
         $oLang->expects($this->once())->method('translateString')->with($this->equalTo('charset'))->will($this->returnValue('XCHARSET'));
 
-        $oRss = $this->getMock(\OxidEsales\Eshop\Application\Controller\RssController::class, array('getViewId'));
+        $oRss = $this->getMock(\OxidEsales\Eshop\Application\Controller\RssController::class, array('getViewId', 'getTemplating'));
         $oRss->expects($this->once())->method('getViewId')->will($this->returnValue('viewid'));
+        $oRss->expects($this->any())->method('getTemplating')->will($this->returnValue($templateEngine));
 
         oxTestModules::addModuleObject('oxUtils', $oUtils);
-        oxTestModules::addModuleObject('oxUtilsView', $oUtilsView);
         oxTestModules::addModuleObject('oxLang', $oLang);
 
         $this->assertSame(null, $oRss->render());

@@ -7,6 +7,7 @@
 
 namespace OxidEsales\EshopCommunity\Tests\Unit\Application\Controller\Admin;
 
+use OxidEsales\Eshop\Application\Controller\Admin\GenericExportDo;
 use OxidEsales\EshopCommunity\Internal\Framework\Templating\TemplateRendererBridgeInterface;
 use OxidEsales\EshopCommunity\Internal\Framework\Templating\TemplateRendererInterface;
 use Psr\Container\ContainerInterface;
@@ -45,22 +46,13 @@ class GenExportDoTest extends \OxidTestCase
             "encl" => $this->getConfigParam('sGiCsvFieldEncloser'),
             'oxEngineTemplateId' => 'dyn_interface'
         ];
-        $renderer = $this->getMockBuilder(TemplateRendererInterface::class)
-            ->setMethods(['renderTemplate', 'renderFragment', 'getTemplateEngine', 'exists'])
-            ->disableOriginalConstructor()
-            ->getMock();
-        $renderer->expects($this->any())->method('renderTemplate')->with(
-            $this->equalTo('genexport.tpl'),
-            $this->equalTo($parameters)
-        );
+        $renderer = $this->prophesize(TemplateRendererInterface::class);
+        $renderer->renderTemplate('genexport.tpl', $parameters);
 
-        $bridge = $this->getMockBuilder(TemplateRendererBridgeInterface::class)
-            ->setMethods(['setEngine', 'getEngine', 'getTemplateRenderer'])
-            ->disableOriginalConstructor()
-            ->getMock();
-        $bridge->expects($this->any())->method('getTemplateRenderer')->will($this->returnValue($renderer));
+        $bridge = $this->prophesize(TemplateRendererBridgeInterface::class);
+        $bridge->getTemplateRenderer()->willReturn($renderer->reveal());
 
-        $container = $this->getContainerMock('OxidEsales\EshopCommunity\Internal\Framework\Templating\TemplateRendererBridgeInterface', $bridge);
+        $container = $this->getContainerMock('OxidEsales\EshopCommunity\Internal\Framework\Templating\TemplateRendererBridgeInterface', $bridge->reveal());
 
         $oView = $this->getMock(\OxidEsales\Eshop\Application\Controller\Admin\GenericExportDo::class, array("getOneArticle", "write", "getViewId", "getContainer"));
         $oView->expects($this->once())->method('getOneArticle')->will($this->returnValue($article));

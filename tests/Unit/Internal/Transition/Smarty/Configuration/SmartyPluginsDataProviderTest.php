@@ -9,32 +9,63 @@ declare(strict_types=1);
 
 namespace OxidEsales\EshopCommunity\Tests\Unit\Internal\Transition\Smarty\Configuration;
 
+use OxidEsales\EshopCommunity\Internal\Framework\Module\Configuration\Bridge\ShopConfigurationDaoBridgeInterface;
+use OxidEsales\EshopCommunity\Internal\Framework\Module\Configuration\DataObject\ModuleConfiguration;
+use OxidEsales\EshopCommunity\Internal\Framework\Module\Configuration\DataObject\ShopConfiguration;
+use OxidEsales\EshopCommunity\Internal\Framework\Module\Path\ModulePathResolverInterface;
+use OxidEsales\EshopCommunity\Internal\Framework\Module\State\ModuleStateServiceInterface;
 use OxidEsales\EshopCommunity\Internal\Framework\Smarty\Configuration\SmartyPluginsDataProvider;
-use OxidEsales\EshopCommunity\Internal\Framework\Smarty\SmartyContextInterface;
+use OxidEsales\EshopCommunity\Internal\Transition\Utility\ContextInterface;
 
 class SmartyPluginsDataProviderTest extends \PHPUnit\Framework\TestCase
 {
     public function testGetConfigurationWithSecuritySettingsOff()
     {
-        $smartyContextMock = $this->getSmartyContextMock();
+        $contextMock = $this->getContextMock();
 
-        $dataProvider = new SmartyPluginsDataProvider($smartyContextMock);
+        $dataProvider = new SmartyPluginsDataProvider($contextMock, $this->getShopConfigurationDaoMock(), $this->getStateServiceMock(), $this->getPathResolverMock());
 
         $settings = ['testModuleDir', 'testShopPath/Core/Smarty/Plugin'];
 
         $this->assertEquals($settings, $dataProvider->getPlugins());
     }
 
-    private function getSmartyContextMock($securityMode = false): SmartyContextInterface
+    private function getContextMock(): ContextInterface
     {
-        $smartyContextMock = $this
-            ->getMockBuilder(SmartyContextInterface::class)
+        $contextMock = $this
+            ->getMockBuilder(ContextInterface::class)
             ->getMock();
 
-        $smartyContextMock
-            ->method('getSmartyPluginDirectories')
-            ->willReturn(['testModuleDir', 'testShopPath/Core/Smarty/Plugin']);
+        $contextMock
+            ->method('getCurrentShopId')
+            ->willReturn(1);
 
-        return $smartyContextMock;
+        return $contextMock;
+    }
+
+    private function getShopConfigurationDaoMock()
+    {
+        $moduleConfiguration = $this->prophesize(ModuleConfiguration::class);
+        $moduleConfiguration->getId()->willReturn('testId');
+        $moduleConfiguration->getSmartyPluginDirectories()->willReturn(['testModuleDir']);
+        $shopConfiguration = $this->prophesize(ShopConfiguration::class);
+        $shopConfiguration->getModuleConfigurations()->willReturn([$moduleConfiguration->reveal()]);
+        $dao = $this->prophesize(ShopConfigurationDaoBridgeInterface::class);
+        $dao->get()->willReturn($shopConfiguration->reveal());
+        return $dao->reveal();
+    }
+
+    private function getStateServiceMock()
+    {
+        $stateService = $this->prophesize(ModuleStateServiceInterface::class);
+        $stateService->isActive('testId', 1)->willReturn(true);
+        return $stateService->reveal();
+    }
+
+    private function getPathResolverMock()
+    {
+        $pathResolver = $this->prophesize(ModulePathResolverInterface::class);
+        $pathResolver->getFullModulePathFromConfiguration('testId', 1)->willReturn('testModuleDir');
+        return $pathResolver;
     }
 }

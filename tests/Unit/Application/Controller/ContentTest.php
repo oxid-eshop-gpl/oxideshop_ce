@@ -19,18 +19,6 @@ use \stdClass;
 use \oxDb;
 use \oxTestModules;
 
-/*
- * Dummy class for getParsedContent function test.
- *
- */
-class contentTest_oxUtilsView extends oxUtilsView
-{
-    public function parseThroughSmarty($sDesc, $sOxid = null, $oActView = null, $blRecompile = false)
-    {
-        return $sDesc;
-    }
-}
-
 /**
  * Tests for content class
  */

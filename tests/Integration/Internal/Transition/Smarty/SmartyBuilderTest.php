@@ -10,6 +10,7 @@ declare(strict_types=1);
 namespace OxidEsales\EshopCommunity\Tests\Integration\Internal\Smarty;
 
 use OxidEsales\EshopCommunity\Core\Registry;
+use OxidEsales\EshopCommunity\Internal\Framework\Smarty\Configuration\SmartyPluginsDataProviderInterface;
 use OxidEsales\EshopCommunity\Internal\Transition\Utility\BasicContext;
 use OxidEsales\EshopCommunity\Internal\Framework\Smarty\Configuration\SmartyConfigurationFactoryInterface;
 use OxidEsales\EshopCommunity\Internal\Framework\Smarty\SmartyBuilder;
@@ -21,6 +22,11 @@ use OxidEsales\EshopCommunity\Tests\Integration\Internal\TestContainerFactory;
 class SmartyBuilderTest extends \PHPUnit\Framework\TestCase
 {
     private $debugMode;
+
+    /**
+     * @var SmartyConfigurationFactory
+     */
+    private $configurationFactory;
 
     public function setUp()
     {
@@ -42,10 +48,9 @@ class SmartyBuilderTest extends \PHPUnit\Framework\TestCase
      */
     public function testSmartySettingsAreSetCorrect($securityMode, $smartySettings)
     {
-        /** @var SmartyConfigurationFactory $configurationFactory */
-        $configurationFactory = $this->setupAndConfigureContainer($securityMode)
+        $this->configurationFactory = $this->setupAndConfigureContainer($securityMode)
             ->get(SmartyConfigurationFactoryInterface::class);
-        $configuration = $configurationFactory->getConfiguration();
+        $configuration = $this->configurationFactory->getConfiguration();
         $smarty = (new SmartyBuilder())
             ->setSettings($configuration->getSettings())
             ->setSecuritySettings($configuration->getSecuritySettings())
@@ -146,7 +151,9 @@ class SmartyBuilderTest extends \PHPUnit\Framework\TestCase
 
     private function getSmartyPlugins()
     {
-        return array_merge(Registry::getUtilsView()->getSmartyPluginDirectories(), ['plugins']);
+        /** @var SmartyPluginsDataProviderInterface $pluginProvider */
+        $pluginProvider = $this->configurationFactory->get(SmartyPluginsDataProviderInterface::class);
+        return array_merge($pluginProvider->getPlugins(), ['plugins']);
     }
 
     private function getSmartyContext($securityMode = false): SmartyContext

@@ -1135,7 +1135,9 @@ class Category extends \OxidEsales\Eshop\Core\Model\MultiLanguageModel implement
         if (isset($this->oxcategories__oxlongdesc) && $this->oxcategories__oxlongdesc instanceof \OxidEsales\Eshop\Core\Field) {
             /** @var \OxidEsales\Eshop\Core\UtilsView $oUtilsView */
             $oUtilsView = \OxidEsales\Eshop\Core\Registry::getUtilsView();
-            return $oUtilsView->parseThroughSmarty($this->oxcategories__oxlongdesc->getRawValue(), $this->getId() . $this->getLanguage(), null, true);
+            $oActView = oxNew(\OxidEsales\Eshop\Application\Controller\FrontendController::class);
+            $oActView->addGlobalParams();
+            return $oUtilsView->getRenderedContent($this->oxcategories__oxlongdesc->getRawValue(), $oActView->getViewData(), $this->getId() . $this->getLanguage());
         }
     }
 

@@ -2596,7 +2596,9 @@ class Article extends \OxidEsales\Eshop\Core\Model\MultiLanguageModel implements
      */
     public function getLongDesc()
     {
-        return \OxidEsales\Eshop\Core\Registry::getUtilsView()->parseThroughSmarty($this->getLongDescription()->getRawValue(), $this->getId() . $this->getLanguage(), null, true);
+        $oActView = oxNew(\OxidEsales\Eshop\Application\Controller\FrontendController::class);
+        $oActView->addGlobalParams();
+        return \OxidEsales\Eshop\Core\Registry::getUtilsView()->getRenderedContent($this->getLongDescription()->getRawValue(), $oActView->getViewData(), $this->getId() . $this->getLanguage());
     }
 
     /**

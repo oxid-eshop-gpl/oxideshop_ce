@@ -16,19 +16,19 @@ use OxidEsales\EshopCommunity\Internal\Framework\Templating\Loader\TemplateLoade
  *
  * called when Smarty's file: resource is unable to load a requested file
  */
-class SmartyDefaultTemplateHandler
+class SmartyDefaultTemplateHandler implements SmartyTemplateHandlerInterface
 {
     /**
-     * @var TemplateLoaderInterface
+     * @var TemplateLoaderInterface[]
      */
-    private static $loader;
+    private $loaders;
 
     /**
-     * @param TemplateLoaderInterface $loader
+     * @param TemplateLoaderInterface[] $loaders
      */
-    public function __construct(TemplateLoaderInterface $loader)
+    public function __construct(array $loaders)
     {
-        self::$loader = $loader;
+        $this->loaders = $loaders;
     }
 
     /**
@@ -42,20 +42,31 @@ class SmartyDefaultTemplateHandler
      *
      * @return bool
      */
-    public function handleTemplate($resourceType, $resourceName, &$resourceContent, &$resourceTimestamp, $smarty)
+    public function handleTemplate($resourceType, $resourceName, &$resourceContent, &$resourceTimestamp, $smarty): bool
     {
-        $loader = self::$loader;
+        $fileLoaded = false;
         if ($resourceType === 'file' && !is_readable($resourceName)) {
-            $resourceName = $loader->getPath($resourceName);
-            $fileLoaded = is_file($resourceName) && is_readable($resourceName);
-            if ($fileLoaded) {
-                $resourceContent = $smarty->_read_file($resourceName);
-                $resourceTimestamp = filemtime($resourceName);
+            foreach ($this->loaders as $loader) {
+                $resourceName = $loader->getPath($resourceName);
+                $fileLoaded = $this->isFileLoadable($resourceName);
+                if ($fileLoaded) {
+                    $resourceContent = $smarty->_read_file($resourceName);
+                    $resourceTimestamp = filemtime($resourceName);
+                    break;
+                }
             }
-
-            return $fileLoaded;
         }
 
-        return false;
+        return $fileLoaded;
+    }
+
+    /**
+     * @param string $resourceName
+     *
+     * @return bool
+     */
+    private function isFileLoadable(string $resourceName): bool
+    {
+        return is_file($resourceName) && is_readable($resourceName);
     }
 }

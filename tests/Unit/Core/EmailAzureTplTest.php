@@ -8,7 +8,13 @@
 namespace OxidEsales\EshopCommunity\Tests\Unit\Core;
 
 use \oxField;
+use OxidEsales\Eshop\Core\Registry;
+use OxidEsales\Eshop\Core\UtilsView;
+use OxidEsales\EshopCommunity\Internal\Container\ContainerFactory;
+use OxidEsales\EshopCommunity\Internal\Framework\Templating\TemplateRendererBridgeInterface;
+use OxidEsales\EshopCommunity\Internal\Framework\Templating\TemplateRendererInterface;
 use \oxPrice;
+use Psr\Container\ContainerInterface;
 use \stdClass;
 use \oxDb;
 use \oxRegistry;
@@ -29,10 +35,11 @@ class EmailAzureTplTest extends \OxidTestCase
     {
         parent::setUp();
 
+        Registry::set(UtilsView::class, null);
         $this->getConfig()->setConfigParam('sTheme', 'azure');
 
-        // reload smarty
-        \OxidEsales\Eshop\Core\Registry::getUtilsView()->getSmarty(true);
+        // reload template engine
+        ContainerFactory::resetContainer();
 
         $this->_oEmail = oxNew("oxEmail");
 
@@ -96,8 +103,9 @@ class EmailAzureTplTest extends \OxidTestCase
      */
     protected function tearDown()
     {
-        // reload smarty
-        \OxidEsales\Eshop\Core\Registry::getUtilsView()->getSmarty(true);
+        // reload template engine
+        ContainerFactory::resetContainer();
+        Registry::set(UtilsView::class, null);
 
         $oActShop = $this->getConfig()->getActiveShop();
         $oActShop->setLanguage(0);
@@ -870,14 +878,20 @@ class EmailAzureTplTest extends \OxidTestCase
 
         oxTestModules::addModuleObject("oxShop", $this->_oShop);
 
-        $oSmarty = $this->getMock('Smarty', array("fetch"));
-        $oSmarty->expects($this->once())->method('fetch')->will($this->returnValue("body"));
+        $renderer = $this->prophesize(TemplateRendererInterface::class);
+        $renderer->renderTemplate('genexport.tpl', [])->willReturn('body');
 
-        $oEmail = $this->getMock(\OxidEsales\Eshop\Core\Email::class, array("_sendMail", "_getShop", "_getUseInlineImages", "_getSmarty"));
+        $bridge = $this->prophesize(TemplateRendererBridgeInterface::class);
+        $bridge->getTemplateRenderer()->willReturn($renderer->reveal());
+
+        $container = $this->prophesize(ContainerInterface::class);
+        $container->get('OxidEsales\EshopCommunity\Internal\Framework\Templating\TemplateRendererBridgeInterface')->willReturn($renderer->reveal());
+
+        $oEmail = $this->getMock(\OxidEsales\Eshop\Core\Email::class, array("_sendMail", "_getShop", "_getUseInlineImages", "getContainer"));
         $oEmail->expects($this->once())->method('_sendMail')->will($this->returnValue(true));
         $oEmail->expects($this->any())->method('_getShop')->will($this->returnValue($this->_oShop));
         $oEmail->expects($this->any())->method('_getUseInlineImages')->will($this->returnValue(true));
-        $oEmail->expects($this->any())->method('_getSmarty')->will($this->returnValue($oSmarty));
+        $oEmail->expects($this->any())->method('getContainer')->will($this->returnValue($container->reveal()));
 
         $blRet = $oEmail->sendPriceAlarmToCustomer('username@useremail.nl', $oAlarm);
         $config->setConfigParam('blAdmin', false);

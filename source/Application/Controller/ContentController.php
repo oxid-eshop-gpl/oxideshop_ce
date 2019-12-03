@@ -536,11 +536,12 @@ class ContentController extends \OxidEsales\Eshop\Application\Controller\Fronten
     {
         /** @var \OxidEsales\Eshop\Core\UtilsView $oUtilsView */
         $oUtilsView = Registry::getUtilsView();
-        return $oUtilsView->parseThroughSmarty(
+        $oActView = oxNew(\OxidEsales\Eshop\Application\Controller\FrontendController::class);
+        $oActView->addGlobalParams();
+        return $oUtilsView->getRenderedContent(
             $this->getContent()->oxcontents__oxcontent->value,
-            $this->getContent()->getId(),
-            null,
-            true
+            $oActView->getViewData(),
+            $this->getContent()->getId()
         );
     }
 

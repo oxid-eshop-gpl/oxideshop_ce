@@ -29,10 +29,14 @@ services:
   OxidEsales\EshopCommunity\Internal\Framework\Smarty\Bridge\SmartyEngineBridgeInterface:
     class: OxidEsales\EshopCommunity\Internal\Framework\Smarty\Bridge\SmartyEngineBridge
   smarty.smarty_engine_factory:
-    class: OxidEsales\EshopCommunity\Internal\Framework\Smarty\Legacy\LegacySmartyEngineFactory
+    class: OxidEsales\EshopCommunity\Internal\Framework\Smarty\SmartyEngineFactory
   OxidEsales\EshopCommunity\Internal\Framework\Templating\TemplateEngineInterface:
     class: OxidEsales\EshopCommunity\Internal\Framework\Smarty\Legacy\LegacySmartyEngine
     factory: 'smarty.smarty_engine_factory:getTemplateEngine'
   OxidEsales\EshopCommunity\Internal\Framework\Templating\TemplateRendererBridgeInterface:
     class: OxidEsales\EshopCommunity\Internal\Framework\Smarty\Bridge\SmartyTemplateRendererBridge
     public: true
+  OxidEsales\EshopCommunity\Internal\Framework\Smarty\Extension\SmartyTemplateHandlerInterface:
+    class: OxidEsales\EshopCommunity\Internal\Framework\Smarty\Extension\SmartyDefaultTemplateHandler
+    arguments:
+      - ['@oxid_esales.templating.template.loader', '@oxid_esales.templating.admin.template.loader']

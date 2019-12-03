@@ -132,18 +132,6 @@ class SmartyContextTest extends \PHPUnit\Framework\TestCase
         $this->assertSame(1, $smartyContext->getTemplatePhpHandlingMode());
     }
 
-    public function testGetSmartyPluginDirectories()
-    {
-        $config = $this->getConfigMock();
-
-        $utilsView = $this->getUtilsViewMock();
-        $utilsView->method('getSmartyPluginDirectories')
-            ->will($this->returnValue(['CoreDir/Smarty/Plugin']));
-
-        $smartyContext = new SmartyContext(new BasicContextStub(), $config, $utilsView);
-        $this->assertSame(['CoreDir/Smarty/Plugin'], $smartyContext->getSmartyPluginDirectories());
-    }
-
     public function testGetTemplatePath()
     {
         $config = $this->getConfigMock();

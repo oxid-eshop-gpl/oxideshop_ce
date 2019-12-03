@@ -11,6 +11,7 @@ namespace OxidEsales\EshopCommunity\Internal\Framework\Smarty;
 
 use OxidEsales\Eshop\Core\Config;
 use OxidEsales\Eshop\Core\UtilsView;
+use OxidEsales\EshopCommunity\Internal\Framework\Module\Configuration\Bridge\ShopConfigurationDaoBridgeInterface;
 use OxidEsales\EshopCommunity\Internal\Transition\Utility\BasicContextInterface;
 
 class SmartyContext implements SmartyContextInterface
@@ -29,6 +30,11 @@ class SmartyContext implements SmartyContextInterface
      * @var BasicContextInterface
      */
     private $basicContext;
+
+    /**
+     * @var ShopConfigurationDaoBridgeInterface
+     */
+    private $dao;
 
     /**
      * Context constructor.
@@ -108,11 +114,13 @@ class SmartyContext implements SmartyContextInterface
     }
 
     /**
+     * @deprecated
+     *
      * @return array
      */
     public function getSmartyPluginDirectories(): array
     {
-        return $this->utilsView->getSmartyPluginDirectories();
+        return [];
     }
 
     /**

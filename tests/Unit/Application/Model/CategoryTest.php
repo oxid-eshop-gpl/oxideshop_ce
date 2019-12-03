@@ -21,7 +21,7 @@ require_once TEST_LIBRARY_HELPERS_PATH . 'oxCategoryHelper.php';
 
 class oxcategoryTest_oxUtilsView extends oxUtilsView
 {
-    public function parseThroughSmarty($sDesc, $sOxid = null, $oActView = null, $blRecompile = false)
+    public function getRenderedContent(string $description, array $context, string $oxid = null): string
     {
         return 'aazz';
     }

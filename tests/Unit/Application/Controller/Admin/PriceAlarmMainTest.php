@@ -219,7 +219,7 @@ class PriceAlarmMainTest extends \OxidTestCase
      *
      * @return null
      */
-    public function testSend_parseThroughSmarty()
+    public function testSend_getRenderedContent()
     {
         $oDb = oxDb::getDb(oxDB::FETCH_MODE_ASSOC);
         $myConfig = $this->getConfig();
@@ -234,8 +234,8 @@ class PriceAlarmMainTest extends \OxidTestCase
 
         $oDb->execute($sInsert);
 
-        $oUtilsView = $this->getMock(\OxidEsales\Eshop\Core\UtilsView::class, array('parseThroughSmarty'));
-        $oUtilsView->expects($this->once())->method('parseThroughSmarty')->with($this->equalTo("test Mail Body"), $this->equalTo("_testAlarmId1"));
+        $oUtilsView = $this->getMock(\OxidEsales\Eshop\Core\UtilsView::class, array('getRenderedContent'));
+        $oUtilsView->expects($this->once())->method('getRenderedContent')->with($this->equalTo("test Mail Body"), $this->equalTo([]), $this->equalTo("_testAlarmId1"));
 
         oxTestModules::addModuleObject("oxUtilsView", $oUtilsView);
 

@@ -185,6 +185,8 @@ class News extends \OxidEsales\Eshop\Core\Model\MultiLanguageModel
     {
         /** @var \OxidEsales\Eshop\Core\UtilsView $oUtilsView */
         $oUtilsView = \OxidEsales\Eshop\Core\Registry::getUtilsView();
-        return $oUtilsView->parseThroughSmarty($this->oxnews__oxlongdesc->getRawValue(), $this->getId() . $this->getLanguage(), null, true);
+        $oActView = oxNew(\OxidEsales\Eshop\Application\Controller\FrontendController::class);
+        $oActView->addGlobalParams();
+        return $oUtilsView->getRenderedContent($this->oxnews__oxlongdesc->getRawValue(), $oActView->getViewData(), $this->getId() . $this->getLanguage());
     }
 }

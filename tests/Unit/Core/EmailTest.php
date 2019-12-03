@@ -14,9 +14,13 @@ use oxField;
 use OxidEsales\Eshop\Application\Model\BasketItem;
 use OxidEsales\Eshop\Application\Model\Shop;
 use OxidEsales\Eshop\Core\Price;
+use OxidEsales\EshopCommunity\Internal\Framework\Templating\TemplateRendererBridgeInterface;
+use OxidEsales\EshopCommunity\Internal\Framework\Templating\TemplateRendererInterface;
 use oxPrice;
 use oxRegistry;
 use oxTestModules;
+use Prophecy\Argument;
+use Psr\Container\ContainerInterface;
 
 class EmailTest extends \OxidTestCase
 {
@@ -1081,12 +1085,18 @@ class EmailTest extends \OxidTestCase
      */
     public function testSendOrderEmailToOwnerCorrectSenderReceiver()
     {
-        $oSmartyMock = $this->getMock("Smarty", array("fetch"));
-        $oSmartyMock->expects($this->any())->method("fetch")->will($this->returnValue(''));
+        $renderer = $this->prophesize(TemplateRendererInterface::class);
+        $renderer->renderTemplate(Argument::type('string'), [])->willReturn('');
 
-        $oEmail = $this->getMock(\OxidEsales\Eshop\Core\Email::class, array("_sendMail", "_getSmarty"));
+        $bridge = $this->prophesize(TemplateRendererBridgeInterface::class);
+        $bridge->getTemplateRenderer()->willReturn($renderer->reveal());
+
+        $container = $this->prophesize(ContainerInterface::class);
+        $container->get('OxidEsales\EshopCommunity\Internal\Framework\Templating\TemplateRendererBridgeInterface')->willReturn($renderer->reveal());
+
+        $oEmail = $this->getMock(\OxidEsales\Eshop\Core\Email::class, array("_sendMail", "getContainer"));
         $oEmail->expects($this->once())->method("_sendMail")->will($this->returnValue(true));
-        $oEmail->expects($this->any())->method("_getSmarty")->will($this->returnValue($oSmartyMock));
+        $oEmail->expects($this->any())->method("getContainer")->will($this->returnValue($container));
 
         $oUser = oxNew('oxUser');
         $oUser->load("oxdefaultadmin");
@@ -1110,12 +1120,18 @@ class EmailTest extends \OxidTestCase
      */
     public function testSendSuggestMailCorrectSender()
     {
-        $oSmartyMock = $this->getMock("Smarty", array("fetch"));
-        $oSmartyMock->expects($this->any())->method("fetch")->will($this->returnValue(''));
+        $renderer = $this->prophesize(TemplateRendererInterface::class);
+        $renderer->renderTemplate(Argument::type('string'), [])->willReturn('');
 
-        $oEmail = $this->getMock(\OxidEsales\Eshop\Core\Email::class, array("send", "_getSmarty"));
+        $bridge = $this->prophesize(TemplateRendererBridgeInterface::class);
+        $bridge->getTemplateRenderer()->willReturn($renderer->reveal());
+
+        $container = $this->prophesize(ContainerInterface::class);
+        $container->get('OxidEsales\EshopCommunity\Internal\Framework\Templating\TemplateRendererBridgeInterface')->willReturn($renderer->reveal());
+
+        $oEmail = $this->getMock(\OxidEsales\Eshop\Core\Email::class, array("send", "getContainer"));
         $oEmail->expects($this->once())->method("send")->will($this->returnValue(true));
-        $oEmail->expects($this->any())->method("_getSmarty")->will($this->returnValue($oSmartyMock));
+        $oEmail->expects($this->any())->method("getContainer")->will($this->returnValue($container));
 
         // oxParams mock
         $oParams = $this->getMock("oxParams");
