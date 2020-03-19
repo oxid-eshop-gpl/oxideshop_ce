@@ -328,7 +328,8 @@ class Session extends \OxidEsales\Eshop\Core\Base
 
         $config = \OxidEsales\Eshop\Core\Registry::getConfig();
         $this->_blStarted = session_start([
-            'use_cookies' => $config->getConfigParam('blSessionUseCookies')
+            'use_cookies' => $config->getConfigParam('blSessionUseCookies'),
+            'name' => $this->getName(),
         ]);
         if (!$this->getSessionChallengeToken()) {
             $this->_initNewSessionChallenge();
