@@ -9,19 +9,15 @@ declare(strict_types=1);
 
 namespace OxidEsales\EshopCommunity\Internal\Domain\Authentication\Service;
 
+use OxidEsales\EshopCommunity\Internal\Domain\Authentication\DataObject\PasswordHashInterface;
+
 interface PasswordHashServiceInterface
 {
-    /**
-     * @param string $password
-     *
-     * @return string
-     */
+    public function fromHash(string $passwordHash): PasswordHashInterface;
+
+    public function fromPassword(string $password): PasswordHashInterface;
+
     public function hash(string $password): string;
 
-    /**
-     * @param string $passwordHash
-     *
-     * @return bool
-     */
     public function passwordNeedsRehash(string $passwordHash): bool;
 }
