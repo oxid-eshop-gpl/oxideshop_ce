@@ -9,6 +9,8 @@ namespace OxidEsales\EshopCommunity\Application\Model;
 
 use oxDb;
 use oxField;
+use OxidEsales\Eshop\Core\Registry;
+use OxidEsales\EshopCommunity\Application\Controller\FrontendController;
 use oxRegistry;
 use oxUtilsUrl;
 use oxUtilsView;
@@ -200,9 +202,13 @@ class Actions extends \OxidEsales\Eshop\Core\Model\MultiLanguageModel
      */
     public function getLongDesc()
     {
-        /** @var \OxidEsales\Eshop\Core\UtilsView $oUtilsView */
-        $oUtilsView = \OxidEsales\Eshop\Core\Registry::getUtilsView();
-        return $oUtilsView->parseThroughSmarty($this->oxactions__oxlongdesc->getRawValue(), $this->getId() . $this->getLanguage(), null, true);
+        $activeView = oxNew(FrontendController::class);
+        $activeView->addGlobalParams();
+        $utilsView = Registry::getUtilsView();
+        return $utilsView->getRenderedContent(
+            $this->oxactions__oxlongdesc->getRawValue(),
+            $activeView->getViewData(),
+            $this->getId() . $this->getLanguage());
     }
 
     /**

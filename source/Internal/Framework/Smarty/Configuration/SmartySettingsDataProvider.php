@@ -9,7 +9,7 @@ declare(strict_types=1);
 
 namespace OxidEsales\EshopCommunity\Internal\Framework\Smarty\Configuration;
 
-use OxidEsales\EshopCommunity\Core\Registry;
+use OxidEsales\EshopCommunity\Internal\Framework\Smarty\Extension\SmartyTemplateHandlerInterface;
 use OxidEsales\EshopCommunity\Internal\Framework\Smarty\SmartyContextInterface;
 
 class SmartySettingsDataProvider implements SmartySettingsDataProviderInterface
@@ -20,13 +20,20 @@ class SmartySettingsDataProvider implements SmartySettingsDataProviderInterface
     private $context;
 
     /**
+     * @var SmartyTemplateHandlerInterface
+     */
+    private $smartyTemplateHandler;
+
+    /**
      * SmartySettingsDataProvider constructor.
      *
-     * @param SmartyContextInterface $context
+     * @param SmartyContextInterface         $context
+     * @param SmartyTemplateHandlerInterface $smartyTemplateHandler
      */
-    public function __construct(SmartyContextInterface $context)
+    public function __construct(SmartyContextInterface $context, SmartyTemplateHandlerInterface $smartyTemplateHandler)
     {
         $this->context = $context;
+        $this->smartyTemplateHandler = $smartyTemplateHandler;
     }
 
     /**
@@ -45,7 +52,7 @@ class SmartySettingsDataProvider implements SmartySettingsDataProviderInterface
             'cache_dir' => $compilePath,
             'template_dir' => $this->context->getTemplateDirectories(),
             'compile_id' => $this->getTemplateCompileId(),
-            'default_template_handler_func' => [Registry::getUtilsView(), '_smartyDefaultTemplateHandler'],
+            'default_template_handler_func' => [$this->smartyTemplateHandler, 'handleTemplate'],
             'debugging' => $this->context->getTemplateEngineDebugMode(),
             'compile_check' => $this->context->getTemplateCompileCheckMode(),
             'php_handling' => (int) $this->context->getTemplatePhpHandlingMode(),

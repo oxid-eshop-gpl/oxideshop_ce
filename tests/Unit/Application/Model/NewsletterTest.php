@@ -16,11 +16,6 @@ use \oxDb;
 
 class modOxNewsLetter extends oxNewsLetter
 {
-    public function getSmarty()
-    {
-        return $this->_oSmarty;
-    }
-
     public function getUser()
     {
         return $this->_oUser;

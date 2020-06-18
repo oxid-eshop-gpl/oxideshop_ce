@@ -499,10 +499,6 @@ class ShopControl extends \OxidEsales\Eshop\Core\Base
             \OxidEsales\Eshop\Core\Registry::getUtilsView()->passAllErrorsToView($viewData, $errors);
         }
 
-        // passing current view object to smarty
-        // TODO: remove it! Also in varnish module
-        $renderer->oxobject = $view;
-
         $viewData['oxEngineTemplateId'] = $view->getViewId();
         $output = $renderer->renderTemplate($templateName, $viewData);
 

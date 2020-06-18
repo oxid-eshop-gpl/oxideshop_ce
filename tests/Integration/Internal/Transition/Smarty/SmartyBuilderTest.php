@@ -7,20 +7,27 @@
 
 declare(strict_types=1);
 
-namespace OxidEsales\EshopCommunity\Tests\Integration\Internal\Smarty;
+namespace OxidEsales\EshopCommunity\Tests\Integration\Internal\Transition\Smarty;
 
 use OxidEsales\EshopCommunity\Core\Registry;
+use OxidEsales\EshopCommunity\Internal\Framework\Smarty\Configuration\SmartyPluginsDataProviderInterface;
 use OxidEsales\EshopCommunity\Internal\Transition\Utility\BasicContext;
 use OxidEsales\EshopCommunity\Internal\Framework\Smarty\Configuration\SmartyConfigurationFactoryInterface;
 use OxidEsales\EshopCommunity\Internal\Framework\Smarty\SmartyBuilder;
 use OxidEsales\EshopCommunity\Internal\Framework\Smarty\SmartyContext;
 use OxidEsales\EshopCommunity\Internal\Framework\Smarty\Configuration\SmartyConfigurationFactory;
-use OxidEsales\EshopCommunity\Internal\Framework\Smarty\SmartyContextInterface;
-use OxidEsales\EshopCommunity\Tests\Integration\Internal\TestContainerFactory;
+use OxidEsales\EshopCommunity\Tests\Integration\Internal\ContainerTrait;
 
 class SmartyBuilderTest extends \PHPUnit\Framework\TestCase
 {
+    use ContainerTrait;
+
     private $debugMode;
+
+    /**
+     * @var SmartyConfigurationFactory
+     */
+    private $configurationFactory;
 
     public function setup(): void
     {
@@ -42,10 +49,11 @@ class SmartyBuilderTest extends \PHPUnit\Framework\TestCase
      */
     public function testSmartySettingsAreSetCorrect($securityMode, $smartySettings)
     {
-        /** @var SmartyConfigurationFactory $configurationFactory */
-        $configurationFactory = $this->setupAndConfigureContainer($securityMode)
-            ->get(SmartyConfigurationFactoryInterface::class);
-        $configuration = $configurationFactory->getConfiguration();
+        $config = Registry::getConfig();
+        $config->setConfigParam('blDemoShop', $securityMode);
+        $config->setConfigParam('iDebug', 0);
+
+        $configuration = $this->get(SmartyConfigurationFactoryInterface::class)->getConfiguration();
         $smarty = (new SmartyBuilder())
             ->setSettings($configuration->getSettings())
             ->setSecuritySettings($configuration->getSecuritySettings())
@@ -146,7 +154,9 @@ class SmartyBuilderTest extends \PHPUnit\Framework\TestCase
 
     private function getSmartyPlugins()
     {
-        return array_merge(Registry::getUtilsView()->getSmartyPluginDirectories(), ['plugins']);
+        /** @var SmartyPluginsDataProviderInterface $pluginProvider */
+        $pluginProvider = $this->get(SmartyPluginsDataProviderInterface::class);
+        return array_merge($pluginProvider->getPlugins(), ['plugins']);
     }
 
     private function getSmartyContext($securityMode = false): SmartyContext
@@ -156,24 +166,5 @@ class SmartyBuilderTest extends \PHPUnit\Framework\TestCase
         $config->setConfigParam('iDebug', 0);
 
         return new SmartyContext(new BasicContext(), $config, Registry::getUtilsView());
-    }
-
-    /**
-     * We need to replace services in the container with a mock
-     *
-     * @param bool $securityMode
-     *
-     * @return \Symfony\Component\DependencyInjection\ContainerBuilder
-     */
-    private function setupAndConfigureContainer($securityMode = false)
-    {
-        $container = (new TestContainerFactory())->create();
-
-        $container->set(SmartyContextInterface::class, $this->getSmartyContext($securityMode));
-        $container->autowire(SmartyContextInterface::class, SmartyContext::class);
-
-        $container->compile();
-
-        return $container;
     }
 }

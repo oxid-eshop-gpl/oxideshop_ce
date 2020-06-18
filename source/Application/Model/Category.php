@@ -8,6 +8,8 @@
 namespace OxidEsales\EshopCommunity\Application\Model;
 
 use oxDb;
+use OxidEsales\Eshop\Core\Registry;
+use OxidEsales\EshopCommunity\Application\Controller\FrontendController;
 use oxRegistry;
 use oxField;
 
@@ -1136,9 +1138,13 @@ class Category extends \OxidEsales\Eshop\Core\Model\MultiLanguageModel implement
     public function getLongDesc()
     {
         if (isset($this->oxcategories__oxlongdesc) && $this->oxcategories__oxlongdesc instanceof \OxidEsales\Eshop\Core\Field) {
-            /** @var \OxidEsales\Eshop\Core\UtilsView $oUtilsView */
-            $oUtilsView = \OxidEsales\Eshop\Core\Registry::getUtilsView();
-            return $oUtilsView->parseThroughSmarty($this->oxcategories__oxlongdesc->getRawValue(), $this->getId() . $this->getLanguage(), null, true);
+            $activeView = oxNew(FrontendController::class);
+            $activeView->addGlobalParams();
+            $utilsView = Registry::getUtilsView();
+            return $utilsView->getRenderedContent(
+                $this->oxcategories__oxlongdesc->getRawValue(),
+                $activeView->getViewData(),
+                $this->getId() . $this->getLanguage());
         }
     }
 

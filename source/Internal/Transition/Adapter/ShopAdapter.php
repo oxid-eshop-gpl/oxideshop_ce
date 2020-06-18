@@ -103,7 +103,7 @@ class ShopAdapter implements ShopAdapterInterface
      */
     public function getSmartyInstance(): \Smarty
     {
-        return Registry::getUtilsView()->getSmarty();
+        return new \Smarty();
     }
 
     /**

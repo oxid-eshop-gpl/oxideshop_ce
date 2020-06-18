@@ -7,6 +7,8 @@
 
 namespace OxidEsales\EshopCommunity\Application\Controller\Admin;
 
+use OxidEsales\Eshop\Core\Registry;
+use OxidEsales\EshopCommunity\Application\Controller\FrontendController;
 use oxRegistry;
 use oxDb;
 use oxField;
@@ -95,10 +97,16 @@ class PriceAlarmMain extends \OxidEsales\Eshop\Application\Controller\Admin\Admi
             $oPricealarm = oxNew(\OxidEsales\Eshop\Application\Model\PriceAlarm::class);
             $oPricealarm->load($sOxid);
 
-            $aParams = \OxidEsales\Eshop\Core\Registry::getConfig()->getRequestParameter("editval");
+            $aParams =Registry::getConfig()->getRequestParameter("editval");
             $sMailBody = isset($aParams['oxpricealarm__oxlongdesc']) ? stripslashes($aParams['oxpricealarm__oxlongdesc']) : '';
             if ($sMailBody) {
-                $sMailBody = \OxidEsales\Eshop\Core\Registry::getUtilsView()->parseThroughSmarty($sMailBody, $oPricealarm->getId());
+                $activeView = oxNew(FrontendController::class);
+                $activeView->addGlobalParams();
+                $sMailBody = Registry::getUtilsView()->getRenderedContent(
+                    $sMailBody,
+                    $activeView->getViewData(),
+                    $oPricealarm->getId()
+                );
             }
 
             $sRecipient = $oPricealarm->oxpricealarm__oxemail->value;

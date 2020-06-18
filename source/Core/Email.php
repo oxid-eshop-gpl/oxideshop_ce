@@ -246,15 +246,6 @@ class Email extends PHPMailer
     protected $_aAttachments = [];
 
     /**
-     * Smarty instance
-     *
-     * @deprecated since v6.4 (2019-10-10); Will be removed
-     *
-     * @var \Smarty
-     */
-    protected $_oSmarty = null;
-
-    /**
      * Email view data
      *
      * @var array
@@ -293,8 +284,6 @@ class Email extends PHPMailer
         $this->isHTML(true);
         $this->setLanguage("en", $myConfig->getConfigParam('sShopDir') . "/Core/phpmailer/language/");
 
-        $this->_getSmarty();
-
         //setting default view
         $this->setViewData('oEmailView', $this);
 
@@ -324,35 +313,6 @@ class Email extends PHPMailer
         }
 
         throw new SystemComponentException("Function '$method' does not exist or is not accessible! (" . get_class($this) . ")" . PHP_EOL);
-    }
-
-    /**
-     * @deprecated since v6.4 (2019-10-10); Use TemplateRendererBridgeInterface
-     *
-     * Smarty instance getter, assigns this oxEmail instance to "oEmailView" variable
-     *
-     * @return \Smarty
-     */
-    protected function _getSmarty() // phpcs:ignore PSR2.Methods.MethodDeclaration.Underscore
-    {
-        if ($this->_oSmarty === null) {
-            $this->_oSmarty = \OxidEsales\Eshop\Core\Registry::getUtilsView()->getSmarty();
-        }
-
-        return $this->_oSmarty;
-    }
-
-    /**
-     * Templating instance getter
-     *
-     * @return TemplateRendererInterface
-     */
-    private function getRenderer()
-    {
-        $bridge = $this->getContainer()->get(TemplateRendererBridgeInterface::class);
-        $bridge->setEngine($this->_getSmarty());
-
-        return $bridge->getTemplateRenderer();
     }
 
     /**
@@ -533,7 +493,7 @@ class Email extends PHPMailer
         $this->setUser($user);
 
         // create messages
-        $renderer = $this->getRenderer();
+        $renderer = $this->getContainer()->get(TemplateRendererBridgeInterface::class)->getTemplateRenderer();
         $this->setViewData("order", $order);
 
         $this->setViewData("blShowReviewLink", $this->shouldProductReviewLinksBeIncluded());
@@ -603,7 +563,7 @@ class Email extends PHPMailer
         $this->setSmtp($shop);
 
         // create messages
-        $renderer = $this->getRenderer();
+        $renderer = $this->getContainer()->get(TemplateRendererBridgeInterface::class)->getTemplateRenderer();
         $this->setViewData("order", $order);
 
         // Process view data array through oxoutput processor
@@ -698,7 +658,7 @@ class Email extends PHPMailer
         $this->_setMailParams($shop);
 
         // create messages
-        $renderer = $this->getRenderer();
+        $renderer = $this->getContainer()->get(TemplateRendererBridgeInterface::class)->getTemplateRenderer();
         $this->setUser($user);
 
         // Process view data array through oxOutput processor
@@ -736,7 +696,7 @@ class Email extends PHPMailer
         $user = oxNew(\OxidEsales\Eshop\Application\Model\User::class);
         if ($oxid && $user->load($oxid)) {
             // create messages
-            $renderer = $this->getRenderer();
+            $renderer = $this->getContainer()->get(TemplateRendererBridgeInterface::class)->getTemplateRenderer();
             $this->setUser($user);
             $this->_processViewArray();
 
@@ -811,7 +771,7 @@ class Email extends PHPMailer
         $this->_setMailParams($shop);
 
         // create messages
-        $renderer = $this->getRenderer();
+        $renderer = $this->getContainer()->get(TemplateRendererBridgeInterface::class)->getTemplateRenderer();
         $confirmCode = md5($user->oxuser__oxusername->value . $user->oxuser__oxpasssalt->value);
         $this->setViewData("subscribeLink", $this->_getNewsSubsLink($user->oxuser__oxid->value, $confirmCode));
         $this->setUser($user);
@@ -977,7 +937,7 @@ class Email extends PHPMailer
 
         //create messages
         $lang = \OxidEsales\Eshop\Core\Registry::getLang();
-        $renderer = $this->getRenderer();
+        $renderer = $this->getContainer()->get(TemplateRendererBridgeInterface::class)->getTemplateRenderer();
         $this->setViewData("order", $order);
         $this->setViewData("shopTemplateDir", $myConfig->getTemplateDir(false));
 
@@ -1040,7 +1000,7 @@ class Email extends PHPMailer
 
         //create messages
         $lang = \OxidEsales\Eshop\Core\Registry::getLang();
-        $renderer = $this->getRenderer();
+        $renderer = $this->getContainer()->get(TemplateRendererBridgeInterface::class)->getTemplateRenderer();
         $this->setViewData("order", $order);
         $this->setViewData("shopTemplateDir", $myConfig->getTemplateDir(false));
 
@@ -1190,7 +1150,7 @@ class Email extends PHPMailer
             $this->_setMailParams($shop);
             $lang = \OxidEsales\Eshop\Core\Registry::getLang();
 
-            $renderer = $this->getRenderer();
+            $renderer = $this->getContainer()->get(TemplateRendererBridgeInterface::class)->getTemplateRenderer();
             $this->setViewData("articles", $articleList);
 
             // Process view data array through oxOutput processor
@@ -1225,7 +1185,7 @@ class Email extends PHPMailer
         $this->setSmtp();
 
         // create messages
-        $renderer = $this->getRenderer();
+        $renderer = $this->getContainer()->get(TemplateRendererBridgeInterface::class)->getTemplateRenderer();
         $this->setUser($params);
 
         // Process view data array through oxoutput processor
@@ -1267,7 +1227,7 @@ class Email extends PHPMailer
         $lang = \OxidEsales\Eshop\Core\Registry::getLang();
 
         // create messages
-        $renderer = $this->getRenderer();
+        $renderer = $this->getContainer()->get(TemplateRendererBridgeInterface::class)->getTemplateRenderer();
         $this->setViewData("product", $article);
         $this->setViewData("email", $params['email']);
         $this->setViewData("bidprice", $lang->formatCurrency($alarm->oxpricealarm__oxprice->value));
@@ -1311,7 +1271,7 @@ class Email extends PHPMailer
         $this->_setMailParams($shop);
 
         // create messages
-        $renderer = $this->getRenderer();
+        $renderer = $this->getContainer()->get(TemplateRendererBridgeInterface::class)->getTemplateRenderer();
 
         $this->setViewData("product", $alarm->getArticle());
         $this->setViewData("oPriceAlarm", $alarm);

@@ -58,9 +58,16 @@ final class ContainerTest extends TestCase
     {
         $testContainer = (new TestContainerFactory())->create();
         $testContainer->compile();
+        $testContainer->get('oxid_esales.module.install.service.launched_shop_project_configuration_generator')->generate();
         foreach ($testContainer->getDefinitions() as $key => $definition) {
-            $testContainer->get($key);
-        };
+            try {
+                $testContainer->get($key);
+            } catch (\Exception $exception) {
+                $message = 'Service was not configurated correctly:' . $key;
+                $message .= '. With exception message: ' . $exception;
+                $this->fail($message);
+            }
+        }
         $this->assertTrue(true);
     }
 

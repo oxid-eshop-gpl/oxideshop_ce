@@ -516,9 +516,9 @@ class ContentController extends \OxidEsales\Eshop\Application\Controller\Fronten
     }
 
     /**
-     * Returns rdfa VAT
+     * Returns rdfa price validation period
      *
-     * @return bool
+     * @return array
      */
     public function getRdfaPriceValidity()
     {
@@ -539,14 +539,13 @@ class ContentController extends \OxidEsales\Eshop\Application\Controller\Fronten
      */
     public function getParsedContent()
     {
-        /** @var \OxidEsales\Eshop\Core\UtilsView $oUtilsView */
-        $oUtilsView = Registry::getUtilsView();
-        return $oUtilsView->parseThroughSmarty(
+        $activeView = oxNew(FrontendController::class);
+        $activeView->addGlobalParams();
+        $utilsView = Registry::getUtilsView();
+        return $utilsView->getRenderedContent(
             $this->getContent()->oxcontents__oxcontent->value,
-            $this->getContent()->getId(),
-            null,
-            true
-        );
+            $activeView->getViewData(),
+            $this->getContent()->getId());
     }
 
     /**

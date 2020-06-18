@@ -19,14 +19,6 @@ use \oxTestModules;
 
 require_once TEST_LIBRARY_HELPERS_PATH . 'oxCategoryHelper.php';
 
-class oxcategoryTest_oxUtilsView extends oxUtilsView
-{
-    public function parseThroughSmarty($sDesc, $sOxid = null, $oActView = null, $blRecompile = false)
-    {
-        return 'aazz';
-    }
-}
-
 class CategoryTest extends \OxidTestCase
 {
     protected $_oCategoryA = null;
@@ -66,7 +58,6 @@ class CategoryTest extends \OxidTestCase
     protected function tearDown(): void
     {
         $this->removeTestData();
-        oxRemClassModule('oxcategoryTest_oxUtilsView');
         parent::tearDown();
     }
 
@@ -277,7 +268,6 @@ class CategoryTest extends \OxidTestCase
 
     public function testAssignParseLongDescInList()
     {
-        oxAddClassModule('oxcategoryTest_oxUtilsView', 'oxUtilsView');
         $this->getConfig()->setConfigParam('bl_perfParseLongDescinSmarty', true);
 
         $this->_oCategory->oxcategories__oxlongdesc = new oxField('aa[{* smarty comment *}]zz', oxField::T_RAW);

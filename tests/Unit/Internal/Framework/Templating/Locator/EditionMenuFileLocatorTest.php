@@ -68,7 +68,7 @@ class EditionMenuFileLocatorTest extends \PHPUnit\Framework\TestCase
     {
         $context = new BasicContextStub();
         $context->setEdition($edition);
-        $context->setSourcePath($this->vfsStreamDirectory->url() . '/testSourcePathCE');
+        $context->setCommunityEditionSourcePath($this->vfsStreamDirectory->url() . '/testSourcePathCE');
         $context->setProfessionalEditionRootPath($this->vfsStreamDirectory->url() . '/testSourcePathPE');
         $context->setEnterpriseEditionRootPath($this->vfsStreamDirectory->url() . '/testSourcePathEE');
 

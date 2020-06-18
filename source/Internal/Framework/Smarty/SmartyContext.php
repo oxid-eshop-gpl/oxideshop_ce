@@ -108,11 +108,13 @@ class SmartyContext implements SmartyContextInterface
     }
 
     /**
+     * @deprecated
+     *
      * @return array
      */
     public function getSmartyPluginDirectories(): array
     {
-        return $this->utilsView->getSmartyPluginDirectories();
+        return [];
     }
 
     /**

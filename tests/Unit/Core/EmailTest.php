@@ -14,12 +14,20 @@ use oxField;
 use OxidEsales\Eshop\Application\Model\BasketItem;
 use OxidEsales\Eshop\Application\Model\Shop;
 use OxidEsales\Eshop\Core\Price;
+use OxidEsales\EshopCommunity\Internal\Framework\Templating\TemplateRendererBridgeInterface;
+use OxidEsales\EshopCommunity\Internal\Framework\Templating\TemplateRendererInterface;
 use oxPrice;
 use oxRegistry;
 use oxTestModules;
+use Prophecy\Argument;
+use Prophecy\PhpUnit\ProphecyTrait;
+use Prophecy\Prophet;
+use Psr\Container\ContainerInterface;
 
 final class EmailTest extends \OxidTestCase
 {
+    use ProphecyTrait;
+
     protected $email = null;
     protected $user = null;
     protected $shop = null;
@@ -900,12 +908,19 @@ final class EmailTest extends \OxidTestCase
 
     public function testSendOrderEmailToOwnerCorrectSenderReceiver()
     {
-        $oSmartyMock = $this->getMock("Smarty", array("fetch"));
-        $oSmartyMock->expects($this->any())->method("fetch")->will($this->returnValue(''));
+        $renderer = $this->prophesize(TemplateRendererInterface::class);
+        $renderer->renderTemplate(Argument::type('string'), Argument::type('array'))->willReturn('');
+        $renderer->exists(Argument::type('string'))->willReturn(false);
 
-        $email = $this->getMock(\OxidEsales\Eshop\Core\Email::class, array("_sendMail", "_getSmarty"));
+        $bridge = $this->prophesize(TemplateRendererBridgeInterface::class);
+        $bridge->getTemplateRenderer()->willReturn($renderer->reveal());
+
+        $container = $this->prophesize(ContainerInterface::class);
+        $container->get('OxidEsales\EshopCommunity\Internal\Framework\Templating\TemplateRendererBridgeInterface')->willReturn($bridge->reveal());
+
+        $email = $this->getMock(\OxidEsales\Eshop\Core\Email::class, array("_sendMail", "getContainer"));
         $email->expects($this->once())->method("_sendMail")->will($this->returnValue(true));
-        $email->expects($this->any())->method("_getSmarty")->will($this->returnValue($oSmartyMock));
+        $email->expects($this->any())->method("getContainer")->will($this->returnValue($container->reveal()));
 
         $user = oxNew('oxUser');
         $user->load("oxdefaultadmin");

@@ -144,4 +144,20 @@ class SmartyEngine implements TemplateEngineInterface
     {
         return $this->engine->$name;
     }
+
+    /**
+     * @return \Smarty
+     */
+    public function getSmarty(): \Smarty
+    {
+        return $this->engine;
+    }
+
+    /**
+     * @param \Smarty $smarty
+     */
+    public function setSmarty(\Smarty $smarty)
+    {
+        $this->engine = $smarty;
+    }
 }

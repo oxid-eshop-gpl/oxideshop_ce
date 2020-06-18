@@ -52,6 +52,8 @@ interface ShopAdapterInterface
     public function isShopEditionNamespace(string $namespace): bool;
 
     /**
+     * @deprecated since v6.5.5 (2020-06-17)
+     *
      * @return \Smarty
      */
     public function getSmartyInstance(): \Smarty;

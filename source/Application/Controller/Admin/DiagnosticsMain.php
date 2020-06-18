@@ -11,6 +11,7 @@ use OxidEsales\Eshop\Core\Module\Module;
 use OxidEsales\EshopCommunity\Internal\Container\ContainerFactory;
 use OxidEsales\EshopCommunity\Internal\Framework\Module\Configuration\Bridge\ShopConfigurationDaoBridgeInterface;
 use OxidEsales\Eshop\Core\Registry;
+use OxidEsales\EshopCommunity\Internal\Framework\Templating\TemplateRendererBridgeInterface;
 
 /**
  * Checks Version of System files.
@@ -38,13 +39,6 @@ class DiagnosticsMain extends \OxidEsales\Eshop\Application\Controller\Admin\Adm
      * @var mixed
      */
     protected $_oDiagnostics = null;
-
-    /**
-     * Smarty renderer
-     *
-     * @var mixed
-     */
-    protected $_oRenderer = null;
 
     /**
      * Result output object
@@ -92,7 +86,6 @@ class DiagnosticsMain extends \OxidEsales\Eshop\Application\Controller\Admin\Adm
 
         $this->_sShopDir = \OxidEsales\Eshop\Core\Registry::getConfig()->getConfigParam('sShopDir');
         $this->_oOutput = oxNew(\OxidEsales\Eshop\Application\Model\DiagnosticsOutput::class);
-        $this->_oRenderer = oxNew(\OxidEsales\Eshop\Application\Model\SmartyRenderer::class);
     }
 
     /**
@@ -117,7 +110,12 @@ class DiagnosticsMain extends \OxidEsales\Eshop\Application\Controller\Admin\Adm
         $sReport = "";
 
         $aDiagnosticsResult = $this->_runBasicDiagnostics();
-        $sReport .= $this->_oRenderer->renderTemplate("diagnostics_main.tpl", $aDiagnosticsResult);
+
+        $renderer = $this->getContainer()
+            ->get(TemplateRendererBridgeInterface::class)
+            ->getTemplateRenderer();
+
+        $sReport .= $renderer->renderTemplate("diagnostics_main.tpl", $aDiagnosticsResult);
 
         $this->_oOutput->storeResult($sReport);
 

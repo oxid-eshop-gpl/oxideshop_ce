@@ -13,25 +13,6 @@ use OxidEsales\EshopCommunity\Application\Model\PriceAlarm;
 use \oxTestModules;
 
 /**
- * ext Smarty class for testing
- */
-class PriceAlarmMainTest_smarty
-{
-
-    /**
-     * Logging call data
-     *
-     * @param string $sName   called method
-     * @param array  $aParams parameters
-     *
-     * @return null
-     */
-    public function __call($sName, $aParams)
-    {
-    }
-}
-
-/**
  * Tests for PriceAlarm_Main class
  */
 class PriceAlarmMainTest extends \OxidTestCase
@@ -219,7 +200,7 @@ class PriceAlarmMainTest extends \OxidTestCase
      *
      * @return null
      */
-    public function testSend_parseThroughSmarty()
+    public function testSend_getRenderedContent()
     {
         $oDb = oxDb::getDb(oxDB::FETCH_MODE_ASSOC);
         $myConfig = $this->getConfig();
@@ -234,8 +215,9 @@ class PriceAlarmMainTest extends \OxidTestCase
 
         $oDb->execute($sInsert);
 
-        $oUtilsView = $this->getMock(\OxidEsales\Eshop\Core\UtilsView::class, array('parseThroughSmarty'));
-        $oUtilsView->expects($this->once())->method('parseThroughSmarty')->with($this->equalTo("test Mail Body"), $this->equalTo("_testAlarmId1"));
+        $oUtilsView = $this->getMock(\OxidEsales\Eshop\Core\UtilsView::class, array('getRenderedContent'));
+        $oUtilsView->expects($this->once())
+            ->method('getRenderedContent');
 
         oxTestModules::addModuleObject("oxUtilsView", $oUtilsView);
 

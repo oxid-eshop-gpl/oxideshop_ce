@@ -10,8 +10,9 @@ namespace OxidEsales\EshopCommunity\Tests\Unit\Core;
 use Exception;
 use modDB;
 use oxField;
-use OxidEsales\EshopCommunity\Core\DatabaseProvider;
 use OxidEsales\EshopCommunity\Core\Registry;
+use OxidEsales\EshopCommunity\Internal\Container\ContainerFactory;
+use OxidEsales\EshopCommunity\Internal\Framework\Templating\TemplateRendererBridgeInterface;
 use oxRegistry;
 use oxSystemComponentException;
 use oxTestModules;
@@ -741,18 +742,28 @@ class UtilsTest extends \OxidTestCase
         $this->assertEquals(1, count($aPaths));
     }
 
+    /**
+     * @internal
+     *
+     * @return \Psr\Container\ContainerInterface
+     */
+    protected function getContainer()
+    {
+        return \OxidEsales\EshopCommunity\Internal\Container\ContainerFactory::getInstance()->getContainer();
+    }
+
     public function testResetTemplateCache()
     {
         $config = $this->getConfig();
         $config->setConfigParam('sTheme', 'azure');
 
         $utils = oxRegistry::getUtils();
-        $smarty = \OxidEsales\Eshop\Core\Registry::getUtilsView()->getSmarty(true);
+        $renderer = ContainerFactory::getInstance()->getContainer()->get(TemplateRendererBridgeInterface::class)->getTemplateRenderer();
         $tmpDir = $config->getConfigParam('sCompileDir') . "/smarty/";
 
         $templates = array('message/success.tpl', 'message/notice.tpl', 'message/errors.tpl',);
         foreach ($templates as $template) {
-            $smarty->fetch($template);
+            $renderer->renderTemplate($template);
         }
 
         $removeTemplate = basename(reset($templates));
