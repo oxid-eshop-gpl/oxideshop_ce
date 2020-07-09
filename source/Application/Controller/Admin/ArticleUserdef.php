@@ -13,7 +13,7 @@ namespace OxidEsales\EshopCommunity\Application\Controller\Admin;
 class ArticleUserdef extends \OxidEsales\Eshop\Application\Controller\Admin\AdminDetailsController
 {
     /**
-     * Loads article data from DB, passes it to Smarty engine, returns name
+     * Loads article data from DB, passes it to template engine, returns name
      * of template file "article_userdef.tpl".
      *
      * @return string

@@ -19,7 +19,7 @@ class UserGroupMain extends \OxidEsales\Eshop\Application\Controller\Admin\Admin
 {
     /**
      * Executes parent method parent::render(), creates oxgroups object,
-     * passes data to Smarty engine and returns name of template file
+     * passes data to template engine and returns name of template file
      * "usergroup_main.tpl".
      *
      * @return string

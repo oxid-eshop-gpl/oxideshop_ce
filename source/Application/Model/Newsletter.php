@@ -57,7 +57,7 @@ class Newsletter extends \OxidEsales\Eshop\Core\Model\BaseModel
     protected $_sClassName = 'oxnewsletter';
 
     /**
-     * Class constructor, initiates Smarty engine object, parent constructor
+     * Class constructor, initiates template engine object, parent constructor
      * (parent::oxBase()).
      */
     public function __construct()
@@ -179,7 +179,7 @@ class Newsletter extends \OxidEsales\Eshop\Core\Model\BaseModel
     }
 
     /**
-     * Assigns to Smarty oxuser object, add newsletter products,
+     * Assigns to oxuser object, add newsletter products,
      * adds products which fit to the last order of
      * this user, generates HTML and plaintext format newsletters.
      *

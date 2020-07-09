@@ -35,7 +35,7 @@ class ListUser extends \OxidEsales\Eshop\Application\Controller\Admin\UserList
     }
 
     /**
-     * Executes parent method parent::render(), passes data to Smarty engine
+     * Executes parent method parent::render(), passes data to template engine
      * and returns name of template file "list_review.tpl".
      *
      * @return string

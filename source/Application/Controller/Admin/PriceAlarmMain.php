@@ -23,7 +23,7 @@ class PriceAlarmMain extends \OxidEsales\Eshop\Application\Controller\Admin\Admi
 {
     /**
      * Executes parent method parent::render(), creates oxpricealarm object
-     * and passes it's data to Smarty engine. Returns name of template file
+     * and passes it's data to template engine. Returns name of template file
      * "pricealarm_main.tpl".
      *
      * @return string

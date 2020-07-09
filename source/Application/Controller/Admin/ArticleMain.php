@@ -23,7 +23,7 @@ use OxidEsales\Eshop\Application\Model\Article;
 class ArticleMain extends \OxidEsales\Eshop\Application\Controller\Admin\AdminDetailsController
 {
     /**
-     * Loads article parameters and passes them to Smarty engine, returns
+     * Loads article parameters and passes them to template engine, returns
      * name of template file "article_main.tpl".
      *
      * @return string

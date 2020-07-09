@@ -18,7 +18,7 @@ use oxRegistry;
 class AttributeCategory extends \OxidEsales\Eshop\Application\Controller\Admin\AdminDetailsController
 {
     /**
-     * Loads Attribute categories info, passes it to Smarty engine and
+     * Loads Attribute categories info, passes it to template engine and
      * returns name of template file "attribute_main.tpl".
      *
      * @return string

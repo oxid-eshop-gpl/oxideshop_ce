@@ -19,7 +19,7 @@ class ArticleCrossselling extends \OxidEsales\Eshop\Application\Controller\Admin
 {
     /**
      * Collects article crosselling and attributes information, passes
-     * them to Smarty engine and returns name or template file
+     * them to Template engine and returns name or template file
      * "article_crossselling.tpl".
      *
      * @return string

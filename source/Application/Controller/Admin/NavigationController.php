@@ -25,7 +25,7 @@ class NavigationController extends \OxidEsales\Eshop\Application\Controller\Admi
 
     /**
      * Executes parent method parent::render(), generates menu HTML code,
-     * passes data to Smarty engine, returns name of template file "nav_frame.tpl".
+     * passes data to template engine, returns name of template file "nav_frame.tpl".
      *
      * @return string
      */

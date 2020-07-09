@@ -20,7 +20,7 @@ class OrderRemark extends \OxidEsales\Eshop\Application\Controller\Admin\AdminDe
 {
     /**
      * Executes parent method parent::render(), creates oxorder and
-     * oxlist objects, passes it's data to Smarty engine and returns
+     * oxlist objects, passes it's data to template engine and returns
      * name of template file "user_remark.tpl".
      *
      * @return string

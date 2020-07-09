@@ -26,7 +26,7 @@ class NewsletterSelection extends \OxidEsales\Eshop\Application\Controller\Admin
 
     /**
      * Executes parent method parent::render(), creates oxlist object and
-     * collects user groups information, passes it's data to Smarty engine
+     * collects user groups information, passes it's data to template engine
      * and returns name of template file "newsletter_selection.tpl".
      *
      * @return string

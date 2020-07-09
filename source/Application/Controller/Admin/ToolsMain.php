@@ -17,7 +17,7 @@ use oxRegistry;
 class ToolsMain extends \OxidEsales\Eshop\Application\Controller\Admin\AdminDetailsController
 {
     /**
-     * Executes parent method parent::render(), passes data to Smarty engine
+     * Executes parent method parent::render(), passes data to template engine
      * and returns name of template file "imex_export.tpl".
      *
      * @return string

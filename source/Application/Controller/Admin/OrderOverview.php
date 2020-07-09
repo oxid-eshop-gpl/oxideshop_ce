@@ -20,7 +20,7 @@ class OrderOverview extends \OxidEsales\Eshop\Application\Controller\Admin\Admin
 {
     /**
      * Executes parent method parent::render(), creates oxOrder, passes
-     * it's data to Smarty engine and returns name of template file
+     * it's data to template engine and returns name of template file
      * "order_overview.tpl".
      *
      * @return string

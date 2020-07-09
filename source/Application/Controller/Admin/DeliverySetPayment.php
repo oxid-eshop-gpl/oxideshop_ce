@@ -19,7 +19,7 @@ class DeliverySetPayment extends \OxidEsales\Eshop\Application\Controller\Admin\
 {
     /**
      * Executes parent method parent::render()
-     * passes data to Smarty engine and returns name of template file "deliveryset_payment.tpl".
+     * passes data to template engine and returns name of template file "deliveryset_payment.tpl".
      *
      * @return string
      */

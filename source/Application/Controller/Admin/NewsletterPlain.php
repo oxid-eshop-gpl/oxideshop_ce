@@ -18,7 +18,7 @@ class NewsletterPlain extends \OxidEsales\Eshop\Application\Controller\Admin\Adm
 {
     /**
      * Executes prent method parent::render(), creates oxnewsletter object
-     * and passes it's data to smarty. Returns name of template file
+     * and passes it's data to template. Returns name of template file
      * "newsletter_plain.tpl".
      *
      * @return string

@@ -1130,7 +1130,7 @@ class Category extends \OxidEsales\Eshop\Core\Model\MultiLanguageModel implement
     }
 
     /**
-     * Returns long description, parsed through smarty. should only be used by exports or so.
+     * Returns long description, parsed through renderer. should only be used by exports or so.
      * In templates use [{oxeval var=$oCategory->oxcategories__oxlongdesc->getRawValue()}]
      *
      * @return string

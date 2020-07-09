@@ -16,7 +16,7 @@ use oxSysRequirements;
 class SystemRequirementsMain extends \OxidEsales\Eshop\Application\Controller\Admin\AdminDetailsController
 {
     /**
-     * Loads article Mercators info, passes it to Smarty engine and
+     * Loads article Mercators info, passes it to template engine and
      * returns name of template file "Mercator_main.tpl".
      *
      * @return string

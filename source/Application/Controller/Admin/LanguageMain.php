@@ -51,7 +51,7 @@ class LanguageMain extends \OxidEsales\Eshop\Application\Controller\Admin\AdminD
 
     /**
      * Executes parent method parent::render(), creates oxCategoryList object,
-     * passes it's data to Smarty engine and returns name of template file
+     * passes it's data to template engine and returns name of template file
      * "selectlist_main.tpl".
      *
      * @return string

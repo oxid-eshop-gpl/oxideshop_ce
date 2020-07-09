@@ -15,7 +15,7 @@ namespace OxidEsales\EshopCommunity\Application\Controller\Admin;
 class CategoryPictures extends \OxidEsales\Eshop\Application\Controller\Admin\AdminDetailsController
 {
     /**
-     * Loads category object, passes it to Smarty engine and returns name
+     * Loads category object, passes it to template engine and returns name
      * of template file "category_pictures.tpl".
      *
      * @return string

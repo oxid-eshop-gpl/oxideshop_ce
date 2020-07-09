@@ -21,7 +21,7 @@ class DiscountMain extends \OxidEsales\Eshop\Application\Controller\Admin\AdminD
 {
     /**
      * Executes parent method parent::render(), creates article category tree, passes
-     * data to Smarty engine and returns name of template file "discount_main.tpl".
+     * data to template engine and returns name of template file "discount_main.tpl".
      *
      * @return string
      */

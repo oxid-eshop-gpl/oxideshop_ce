@@ -18,7 +18,7 @@ class OrderAddress extends \OxidEsales\Eshop\Application\Controller\Admin\AdminD
 {
     /**
      * Executes parent method parent::render(), creates oxorder object
-     * and passes it's data to Smarty engine. Returns name of template
+     * and passes it's data to template engine. Returns name of template
      * file "order_address.tpl".
      *
      * @return string

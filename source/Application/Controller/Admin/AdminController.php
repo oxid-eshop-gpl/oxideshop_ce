@@ -166,7 +166,7 @@ class AdminController extends \OxidEsales\Eshop\Core\Controller\BaseController
     }
 
     /**
-     * Sets some global parameters to Smarty engine (such as self link, etc.), returns
+     * Sets some global parameters to Template engine (such as self link, etc.), returns
      * modified shop object.
      *
      * @param object $oShop Object to modify some parameters
@@ -278,7 +278,7 @@ class AdminController extends \OxidEsales\Eshop\Core\Controller\BaseController
 
     /**
      * Executes parent method parent::render(), passes configuration data to
-     * Smarty engine.
+     * Template engine.
      *
      * @return string
      */

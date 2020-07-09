@@ -112,11 +112,11 @@ class Output extends \OxidEsales\Eshop\Core\Base
     }
 
     /**
-     * Abstract function for smarty tag processing
-     * This function is called from index.php
+     * Abstract function for template variables processing
+     * This function is called from ShopControl class
      *
-     * @param array  $aViewData  viewarray
-     * @param string $sClassName classname
+     * @param array  $aViewData  The view array
+     * @param string $sClassName The class name
      *
      * @return array
      */

@@ -18,7 +18,7 @@ class NewsletterPreview extends \OxidEsales\Eshop\Application\Controller\Admin\A
 {
     /**
      * Executes parent method parent::render(), creates oxnewsletter object
-     * and passes it's data to Smarty engine, returns name of template file
+     * and passes it's data to template engine, returns name of template file
      * "newsletter_preview.tpl".
      *
      * @return string

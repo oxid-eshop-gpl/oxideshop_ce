@@ -20,7 +20,7 @@ class PaymentCountry extends \OxidEsales\Eshop\Application\Controller\Admin\Admi
 {
     /**
      * Executes parent method parent::render(), creates oxlist object,
-     * passes it's data to Smarty engine and retutns name of template
+     * passes it's data to template engine and retutns name of template
      * file "payment_main.tpl".
      *
      * @return string

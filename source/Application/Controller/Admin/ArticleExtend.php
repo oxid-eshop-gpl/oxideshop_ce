@@ -31,7 +31,7 @@ class ArticleExtend extends \OxidEsales\Eshop\Application\Controller\Admin\Admin
 
     /**
      * Collects available article extended parameters, passes them to
-     * Smarty engine and returns template file name "article_extend.tpl".
+     * Template engine and returns template file name "article_extend.tpl".
      *
      * @return string
      */

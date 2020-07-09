@@ -17,7 +17,7 @@ use oxRegistry;
 class CategoryOrder extends \OxidEsales\Eshop\Application\Controller\Admin\AdminDetailsController
 {
     /**
-     * Loads article category ordering info, passes it to Smarty
+     * Loads article category ordering info, passes it to template
      * engine and returns name of template file "category_order.tpl".
      *
      * @return string

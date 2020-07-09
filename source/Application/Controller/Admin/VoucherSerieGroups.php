@@ -19,7 +19,7 @@ class VoucherSerieGroups extends \OxidEsales\Eshop\Application\Controller\Admin\
 {
     /**
      * Executes parent method parent::render(), creates oxlist and oxvoucherserie
-     * objects, passes it's data to Smarty engine and returns name of template
+     * objects, passes it's data to template engine and returns name of template
      * file "voucherserie_groups.tpl".
      *
      * @return string

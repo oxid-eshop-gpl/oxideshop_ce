@@ -25,7 +25,7 @@ class UserAddress extends \OxidEsales\Eshop\Application\Controller\Admin\AdminDe
 
     /**
      * Executes parent method parent::render(), creates oxuser and oxbase objects,
-     * passes data to Smarty engine and returns name of template file
+     * passes data to template engine and returns name of template file
      * "user_address.tpl".
      *
      * @return string

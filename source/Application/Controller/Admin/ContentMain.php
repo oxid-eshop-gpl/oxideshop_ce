@@ -21,7 +21,7 @@ use OxidEsales\Eshop\Core\Str;
 class ContentMain extends \OxidEsales\Eshop\Application\Controller\Admin\AdminDetailsController
 {
     /**
-     * Loads contents info, passes it to Smarty engine and
+     * Loads contents info, passes it to template engine and
      * returns name of template file "content_main.tpl".
      *
      * @return string

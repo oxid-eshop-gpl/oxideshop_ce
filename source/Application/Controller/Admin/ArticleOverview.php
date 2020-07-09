@@ -19,7 +19,7 @@ use oxDb;
 class ArticleOverview extends \OxidEsales\Eshop\Application\Controller\Admin\AdminDetailsController
 {
     /**
-     * Loads article overview data, passes to Smarty engine and returns name
+     * Loads article overview data, passes to template engine and returns name
      * of template file "article_overview.tpl".
      *
      * @return string

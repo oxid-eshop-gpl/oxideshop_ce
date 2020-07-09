@@ -19,7 +19,7 @@ class DeliveryArticles extends \OxidEsales\Eshop\Application\Controller\Admin\Ad
 {
     /**
      * Executes parent method parent::render(), creates delivery category tree,
-     * passes data to Smarty engine and returns name of template file "delivery_main.tpl".
+     * passes data to template engine and returns name of template file "delivery_main.tpl".
      *
      * @return string
      */

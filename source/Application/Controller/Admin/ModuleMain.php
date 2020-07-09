@@ -20,7 +20,7 @@ class ModuleMain extends \OxidEsales\Eshop\Application\Controller\Admin\AdminDet
 {
     /**
      * Executes parent method parent::render(), creates deliveryset category tree,
-     * passes data to Smarty engine and returns name of template file "deliveryset_main.tpl".
+     * passes data to template engine and returns name of template file "deliveryset_main.tpl".
      *
      * @return string
      */

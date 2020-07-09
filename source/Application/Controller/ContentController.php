@@ -533,7 +533,7 @@ class ContentController extends \OxidEsales\Eshop\Application\Controller\Fronten
     }
 
     /**
-     * Returns content parsed through smarty
+     * Returns content parsed through renderer
      *
      * @return string
      */
