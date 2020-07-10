@@ -72,7 +72,7 @@ class EditionPathProvider
      */
     public function getSmartyPluginsDirectory()
     {
-        return $this->getEditionRootPathProvider()->getDirectoryPath() . 'Core/Smarty/Plugin/';
+        return $this->getEditionRootPathProvider()->getDirectoryPath() . 'Internal/Framework/Smarty/Plugin/';
     }
 
     /**

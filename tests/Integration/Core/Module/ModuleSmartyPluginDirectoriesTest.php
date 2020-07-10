@@ -94,7 +94,7 @@ class ModuleSmartyPluginDirectoriesTest extends TestCase
     private function assertShopSmartyPluginDirectorySecond($directories)
     {
         $this->assertStringContainsString(
-            'Core/Smarty/Plugin',
+            'Internal/Framework/Smarty/Plugin',
             $directories[2]
         );
     }

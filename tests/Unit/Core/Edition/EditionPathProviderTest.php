@@ -35,7 +35,7 @@ class EditionPathProviderTest extends UnitTestCase
         $editionSelector = $this->getEditionPathSelectorMock();
         $editionPathSelector = new EditionPathProvider($editionSelector);
 
-        $this->assertSame('/Core/Smarty/Plugin/', $editionPathSelector->getSmartyPluginsDirectory());
+        $this->assertSame('/Internal/Framework/Smarty/Plugin/', $editionPathSelector->getSmartyPluginsDirectory());
     }
 
     /**
