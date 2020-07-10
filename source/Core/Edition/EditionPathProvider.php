@@ -66,16 +66,6 @@ class EditionPathProvider
     }
 
     /**
-     * Method forms path to corresponding smarty plugins directory.
-     *
-     * @return string
-     */
-    public function getSmartyPluginsDirectory()
-    {
-        return $this->getEditionRootPathProvider()->getDirectoryPath() . 'Internal/Framework/Smarty/Plugin/';
-    }
-
-    /**
      * @return EditionRootPathProvider
      */
     protected function getEditionRootPathProvider()

@@ -47,11 +47,6 @@ interface SmartyContextInterface
     public function getTemplateCompileCheckMode(): bool;
 
     /**
-     * @return array
-     */
-    public function getSmartyPluginDirectories(): array;
-
-    /**
      * @return int
      */
     public function getTemplatePhpHandlingMode(): int;

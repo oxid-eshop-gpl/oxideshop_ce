@@ -5,18 +5,18 @@
  * See LICENSE file for license details.
  */
 
-namespace OxidEsales\EshopCommunity\Tests\Unit\Core\Smarty;
+namespace OxidEsales\EshopCommunity\Tests\Integration\Internal\Transition\Smarty\Plugin;
 
 use \stdClass;
 use \oxException;
 use \oxRegistry;
 use \oxTestModules;
 
-$filePath = oxRegistry::getConfig()->getConfigParam('sShopDir') . 'Core/Smarty/Plugin/prefilter.oxblock.php';
+$filePath = oxRegistry::getConfig()->getConfigParam('sShopDir') . 'Internal/Framework/Smarty/Plugin/prefilter.oxblock.php';
 if (file_exists($filePath)) {
     require_once $filePath;
 } else {
-    require_once dirname(__FILE__) . '/../../../../source/Core/Smarty/Plugin/prefilter.oxblock.php';
+    require_once dirname(__FILE__) . '/../../../../source/Internal/Framework/Smarty/Plugin/prefilter.oxblock.php';
 }
 
 class PluginSmartyOxBlockTest extends \OxidTestCase
@@ -371,9 +371,9 @@ class PluginSmartyOxBlockTest extends \OxidTestCase
      */
     protected function getProfilterPluginPath()
     {
-        $filePath = $this->getConfig()->getConfigParam('sShopDir') . 'Core/Smarty/Plugin/prefilter.oxblock.php';
+        $filePath = $this->getConfig()->getConfigParam('sShopDir') . 'Internal/Framework/Smarty/Plugin/prefilter.oxblock.php';
         if (!file_exists($filePath)) {
-            $filePath = dirname(__FILE__) . '/../../../../source/Core/Smarty/Plugin/prefilter.oxblock.php';
+            $filePath = dirname(__FILE__) . '/../../../../source/Internal/Framework/Smarty/Plugin/prefilter.oxblock.php';
             return $filePath;
         }
         return $filePath;

@@ -40,7 +40,7 @@
  * $Id$
  */
 
-namespace OxidEsales\EshopCommunity\Core\Smarty\Plugin;
+namespace OxidEsales\EshopCommunity\Internal\Framework\Smarty\Plugin;
 
 use OxidEsales\Eshop\Core\Str;
 

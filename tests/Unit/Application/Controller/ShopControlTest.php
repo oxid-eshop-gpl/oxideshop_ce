@@ -27,9 +27,6 @@ use Prophecy\PhpUnit\ProphecyTrait;
 use Psr\Log\LoggerInterface;
 use Psr\Container\ContainerInterface;
 
-// Force autoloading of Smarty class, so that mocking would work correctly.
-class_exists('Smarty');
-
 class ShopControlTest extends \OxidTestCase
 {
     use ProphecyTrait;

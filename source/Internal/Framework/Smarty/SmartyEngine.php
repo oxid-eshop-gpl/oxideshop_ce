@@ -12,7 +12,7 @@ namespace OxidEsales\EshopCommunity\Internal\Framework\Smarty;
 use OxidEsales\EshopCommunity\Internal\Framework\Smarty\Bridge\SmartyEngineBridgeInterface;
 use OxidEsales\EshopCommunity\Internal\Framework\Templating\TemplateEngineInterface;
 
-class SmartyEngine implements TemplateEngineInterface
+class SmartyEngine implements TemplateEngineInterface, SmartyEngineInterface
 {
     /**
      * The template engine.

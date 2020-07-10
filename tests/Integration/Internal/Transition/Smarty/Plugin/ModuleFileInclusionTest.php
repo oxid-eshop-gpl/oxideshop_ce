@@ -5,7 +5,7 @@
  * See LICENSE file for license details.
  */
 
-namespace OxidEsales\EshopCommunity\Tests\Unit\Core\Smarty;
+namespace OxidEsales\EshopCommunity\Tests\Integration\Internal\Transition\Smarty\Plugin;
 
 use \testModuleInclusion_parent;
 use \oxRegistry;

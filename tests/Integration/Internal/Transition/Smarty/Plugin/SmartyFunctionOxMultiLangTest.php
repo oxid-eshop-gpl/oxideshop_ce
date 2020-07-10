@@ -5,17 +5,17 @@
  * See LICENSE file for license details.
  */
 
-namespace OxidEsales\EshopCommunity\Tests\Unit\Core\Smarty;
+namespace OxidEsales\EshopCommunity\Tests\Integration\Internal\Transition\Smarty\Plugin;
 
 use \Smarty;
 use \oxField;
 use \oxRegistry;
 
-$filePath = oxRegistry::getConfig()->getConfigParam('sShopDir') . 'Core/Smarty/Plugin/function.oxmultilang.php';
+$filePath = oxRegistry::getConfig()->getConfigParam('sShopDir') . 'Internal/Framework/Smarty/Plugin/function.oxmultilang.php';
 if (file_exists($filePath)) {
     require_once $filePath;
 } else {
-    require_once dirname(__FILE__) . '/../../../../source/Core/Smarty/Plugin/function.oxmultilang.php';
+    require_once dirname(__FILE__) . '/../../../../source/Internal/Framework/Smarty/Plugin/function.oxmultilang.php';
 }
 
 class SmartyFunctionOxMultiLangTest extends \OxidTestCase

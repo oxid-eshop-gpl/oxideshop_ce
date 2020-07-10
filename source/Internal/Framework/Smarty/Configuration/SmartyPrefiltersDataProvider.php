@@ -47,6 +47,6 @@ class SmartyPrefiltersDataProvider implements SmartyPrefiltersDataProviderInterf
      */
     private function getPrefilterPath(): string
     {
-        return $this->context->getSourcePath() . '/Core/Smarty/Plugin';
+        return $this->context->getSourcePath() . '/Internal/Framework/Smarty/Plugin';
     }
 }

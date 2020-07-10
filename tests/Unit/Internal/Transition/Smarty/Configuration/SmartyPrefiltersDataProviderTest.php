@@ -21,8 +21,8 @@ class SmartyPrefiltersDataProviderTest extends \PHPUnit\Framework\TestCase
         $dataProvider = new SmartyPrefiltersDataProvider($smartyContextMock);
 
         $settings = [
-            'smarty_prefilter_oxblock' => 'testShopPath/Core/Smarty/Plugin/prefilter.oxblock.php',
-            'smarty_prefilter_oxtpldebug' => 'testShopPath/Core/Smarty/Plugin/prefilter.oxtpldebug.php',
+            'smarty_prefilter_oxblock' => 'testShopPath/Internal/Framework/Smarty/Plugin/prefilter.oxblock.php',
+            'smarty_prefilter_oxtpldebug' => 'testShopPath/Internal/Framework/Smarty/Plugin/prefilter.oxtpldebug.php',
         ];
 
         $this->assertEquals($settings, $dataProvider->getPrefilterPlugins());

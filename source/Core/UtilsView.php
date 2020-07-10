@@ -73,9 +73,9 @@ class UtilsView extends \OxidEsales\Eshop\Core\Base
         // assign
         $viewData = $oObject->getViewData();
         if (is_array($viewData)) {
-            foreach (array_keys($viewData) as $viewName) {
+            if ($debugMode == 4) {
+                foreach (array_keys($viewData) as $viewName) {
                 // show debug information
-                if ($debugMode == 4) {
                     echo("TemplateData[$viewName] : \n");
                     var_export($viewData[$viewName]);
                 }
@@ -237,42 +237,6 @@ class UtilsView extends \OxidEsales\Eshop\Core\Base
         }
 
         return $this->_aTemplateDir;
-    }
-
-    /**
-     * Get template compile id.
-     *
-     * @return string
-     */
-    public function getTemplateCompileId()
-    {
-        $shopId = \OxidEsales\Eshop\Core\Registry::getConfig()->getShopId();
-        $templateDirectories = $this->getTemplateDirs();
-
-        return md5(reset($templateDirectories) . '__' . $shopId);
-    }
-
-    /**
-     * Returns a full path to Smarty compile dir
-     *
-     * @return string
-     */
-    public function getSmartyDir()
-    {
-        $config = \OxidEsales\Eshop\Core\Registry::getConfig();
-
-        //check for the Smarty dir
-        $compileDir = $config->getConfigParam('sCompileDir');
-        $smartyDir = $compileDir . "/smarty/";
-        if (!is_dir($smartyDir)) {
-            @mkdir($smartyDir);
-        }
-
-        if (!is_writable($smartyDir)) {
-            $smartyDir = $compileDir;
-        }
-
-        return $smartyDir;
     }
 
     /**

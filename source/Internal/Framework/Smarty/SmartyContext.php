@@ -11,7 +11,8 @@ namespace OxidEsales\EshopCommunity\Internal\Framework\Smarty;
 
 use OxidEsales\Eshop\Core\Config;
 use OxidEsales\Eshop\Core\UtilsView;
-use OxidEsales\EshopCommunity\Internal\Transition\Utility\BasicContextInterface;
+use OxidEsales\EshopCommunity\Internal\Transition\Utility\ContextInterface;
+use Webmozart\PathUtil\Path;
 
 class SmartyContext implements SmartyContextInterface
 {
@@ -26,18 +27,18 @@ class SmartyContext implements SmartyContextInterface
     private $utilsView;
 
     /**
-     * @var BasicContextInterface
+     * @var ContextInterface
      */
     private $basicContext;
 
     /**
      * Context constructor.
      *
-     * @param BasicContextInterface $basicContext
-     * @param Config                $config
-     * @param UtilsView             $utilsView
+     * @param ContextInterface $basicContext
+     * @param Config           $config
+     * @param UtilsView        $utilsView
      */
-    public function __construct(BasicContextInterface $basicContext, Config $config, UtilsView $utilsView)
+    public function __construct(ContextInterface $basicContext, Config $config, UtilsView $utilsView)
     {
         $this->config = $config;
         $this->utilsView = $utilsView;
@@ -75,7 +76,7 @@ class SmartyContext implements SmartyContextInterface
      */
     public function getTemplateCompileDirectory(): string
     {
-        return $this->utilsView->getSmartyDir();
+        return Path::join($this->getConfigParameter('sCompileDir'), 'smarty');
     }
 
     /**
@@ -91,7 +92,10 @@ class SmartyContext implements SmartyContextInterface
      */
     public function getTemplateCompileId(): string
     {
-        return $this->utilsView->getTemplateCompileId();
+        $shopId = $this->basicContext->getCurrentShopId();
+        $templateDirectories = $this->getTemplateDirectories();
+
+        return md5(reset($templateDirectories) . '__' . $shopId);
     }
 
     /**
@@ -105,16 +109,6 @@ class SmartyContext implements SmartyContextInterface
             $compileCheck = false;
         }
         return $compileCheck;
-    }
-
-    /**
-     * @deprecated
-     *
-     * @return array
-     */
-    public function getSmartyPluginDirectories(): array
-    {
-        return [];
     }
 
     /**

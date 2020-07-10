@@ -17,6 +17,10 @@ services:
     class: OxidEsales\EshopCommunity\Internal\Framework\Smarty\Configuration\SmartyConfigurationFactory
   OxidEsales\EshopCommunity\Internal\Framework\Smarty\Configuration\SmartySettingsDataProviderInterface:
     class: OxidEsales\EshopCommunity\Internal\Framework\Smarty\Configuration\SmartySettingsDataProvider
+    arguments:
+      - '@OxidEsales\EshopCommunity\Internal\Framework\Smarty\SmartyContextInterface'
+      - '@OxidEsales\EshopCommunity\Internal\Framework\Smarty\Extension\SmartyTemplateHandlerInterface'
+      - '@oxid_esales.symfony.file_system'
   OxidEsales\EshopCommunity\Internal\Framework\Smarty\Configuration\SmartySecuritySettingsDataProviderInterface:
     class: OxidEsales\EshopCommunity\Internal\Framework\Smarty\Configuration\SmartySecuritySettingsDataProvider
   OxidEsales\EshopCommunity\Internal\Framework\Smarty\Configuration\SmartyResourcesDataProviderInterface:
@@ -40,3 +44,20 @@ services:
     public: true
   OxidEsales\EshopCommunity\Internal\Framework\Smarty\Extension\SmartyTemplateHandlerInterface:
     class: OxidEsales\EshopCommunity\Internal\Framework\Smarty\Extension\SmartyDefaultTemplateHandler
+  OxidEsales\EshopCommunity\Internal\Framework\Smarty\Extension\ResourcePluginInterface:
+    class: OxidEsales\EshopCommunity\Internal\Framework\Smarty\Extension\CacheResourcePlugin
+  OxidEsales\EshopCommunity\Internal\Framework\Smarty\Configuration\ModuleSmartyPluginsDataProviderInterface:
+    class: OxidEsales\EshopCommunity\Internal\Framework\Smarty\Configuration\ModuleSmartyPluginsDataProvider
+    decorates: OxidEsales\EshopCommunity\Internal\Framework\Smarty\Configuration\SmartyPluginsDataProviderInterface
+    decoration_priority: 100
+    arguments:
+      - '@OxidEsales\EshopCommunity\Internal\Framework\Smarty\Configuration\ModuleSmartyPluginsDataProviderInterface.inner'
+      - '@OxidEsales\EshopCommunity\Internal\Transition\Utility\ContextInterface'
+      - '@OxidEsales\EshopCommunity\Internal\Framework\Module\Configuration\Bridge\ShopConfigurationDaoBridgeInterface'
+      - '@OxidEsales\EshopCommunity\Internal\Framework\Module\State\ModuleStateServiceInterface'
+      - '@OxidEsales\EshopCommunity\Internal\Framework\Module\Path\ModulePathResolverInterface'
+  OxidEsales\EshopCommunity\Internal\Framework\Smarty\Cache\CacheClearerInterface:
+    class: OxidEsales\EshopCommunity\Internal\Framework\Smarty\Cache\TemplateCacheClearer
+    arguments:
+      - '@OxidEsales\EshopCommunity\Internal\Framework\Templating\TemplateEngineInterface'
+    public: true

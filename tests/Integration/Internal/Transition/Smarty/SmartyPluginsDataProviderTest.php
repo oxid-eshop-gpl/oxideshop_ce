@@ -23,7 +23,7 @@ class SmartyPluginsDataProviderTest extends TestCase
         $dataProvider = $this->get(SmartyPluginsDataProviderInterface::class);
 
         $pluginDirectories = $dataProvider->getPlugins();
-        $shopPluginDirectory = (new Facts())->getCommunityEditionSourcePath() . '/Core/Smarty/Plugin';
+        $shopPluginDirectory = (new Facts())->getCommunityEditionSourcePath() . '/Internal/Framework/Smarty/Plugin';
 
         $this->assertContains($shopPluginDirectory, $pluginDirectories);
         $this->assertFileExists($shopPluginDirectory);

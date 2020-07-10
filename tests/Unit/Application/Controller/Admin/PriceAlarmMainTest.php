@@ -196,7 +196,7 @@ class PriceAlarmMainTest extends \OxidTestCase
     }
 
     /**
-     * PriceAlarm_Main::Send() test case - parse through smarty
+     * PriceAlarm_Main::Send() test case - parse through template engine
      *
      * @return null
      */

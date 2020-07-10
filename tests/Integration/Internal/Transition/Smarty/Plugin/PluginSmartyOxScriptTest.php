@@ -5,16 +5,16 @@
  * See LICENSE file for license details.
  */
 
-namespace OxidEsales\EshopCommunity\Tests\Unit\Core\Smarty;
+namespace OxidEsales\EshopCommunity\Tests\Integration\Internal\Transition\Smarty\Plugin;
 
 use \Smarty;
 use \oxRegistry;
 
-$filePath = oxRegistry::getConfig()->getConfigParam('sShopDir') . 'Core/Smarty/Plugin/function.oxscript.php';
+$filePath = oxRegistry::getConfig()->getConfigParam('sShopDir') . 'Internal/Framework/Smarty/Plugin/function.oxscript.php';
 if (file_exists($filePath)) {
     require_once $filePath;
 } else {
-    require_once dirname(__FILE__) . '/../../../../source/Core/Smarty/Plugin/function.oxscript.php';
+    require_once dirname(__FILE__) . '/../../../../source/Internal/Framework/Smarty/Plugin/function.oxscript.php';
 }
 
 class PluginSmartyOxScriptTest extends \OxidTestCase

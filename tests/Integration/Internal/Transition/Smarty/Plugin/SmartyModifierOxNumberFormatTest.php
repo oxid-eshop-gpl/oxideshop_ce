@@ -5,15 +5,15 @@
  * See LICENSE file for license details.
  */
 
-namespace OxidEsales\EshopCommunity\Tests\Unit\Core\Smarty;
+namespace OxidEsales\EshopCommunity\Tests\Integration\Internal\Transition\Smarty\Plugin;
 
 use \oxRegistry;
 
-$filePath = oxRegistry::getConfig()->getConfigParam('sShopDir') . 'Core/Smarty/Plugin/modifier.oxnumberformat.php';
+$filePath = oxRegistry::getConfig()->getConfigParam('sShopDir') . 'Internal/Framework/Smarty/Plugin/modifier.oxnumberformat.php';
 if (file_exists($filePath)) {
     require_once $filePath;
 } else {
-    require_once dirname(__FILE__) . '/../../../../source/Core/Smarty/Plugin/modifier.oxnumberformat.php';
+    require_once dirname(__FILE__) . '/../../../../source/Internal/Framework/Smarty/Plugin/modifier.oxnumberformat.php';
 }
 
 class SmartyModifierOxNumberFormatTest extends \OxidTestCase

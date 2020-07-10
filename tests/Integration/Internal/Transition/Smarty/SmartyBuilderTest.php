@@ -82,17 +82,18 @@ class SmartyBuilderTest extends \PHPUnit\Framework\TestCase
     private function getSmartySettingsWithSecurityOn(): array
     {
         $config = Registry::getConfig();
-        $templateDirs = Registry::getUtilsView()->getTemplateDirs();
+        $templateDirectories = Registry::getUtilsView()->getTemplateDirs();
+        $shopId = $config->getShopId();
         return [
             'security' => true,
             'php_handling' => SMARTY_PHP_REMOVE,
             'left_delimiter' => '[{',
             'right_delimiter' => '}]',
             'caching' => false,
-            'compile_dir' => $config->getConfigParam('sCompileDir') . "/smarty/",
-            'cache_dir' => $config->getConfigParam('sCompileDir') . "/smarty/",
-            'compile_id' => Registry::getUtilsView()->getTemplateCompileId(),
-            'template_dir' => $templateDirs,
+            'compile_dir' => $config->getConfigParam('sCompileDir') . "smarty",
+            'cache_dir' => $config->getConfigParam('sCompileDir') . "smarty",
+            'compile_id' => md5(reset($templateDirectories) . '__' . $shopId),
+            'template_dir' => $templateDirectories,
             'debugging' => false,
             'compile_check' => $config->getConfigParam('blCheckTemplates'),
             'security_settings' => [
@@ -135,17 +136,18 @@ class SmartyBuilderTest extends \PHPUnit\Framework\TestCase
     private function getSmartySettingsWithSecurityOff(): array
     {
         $config = Registry::getConfig();
-        $templateDirs = Registry::getUtilsView()->getTemplateDirs();
+        $templateDirectories = Registry::getUtilsView()->getTemplateDirs();
+        $shopId = $config->getShopId();
         return [
             'security' => false,
             'php_handling' => $config->getConfigParam('iSmartyPhpHandling'),
             'left_delimiter' => '[{',
             'right_delimiter' => '}]',
             'caching' => false,
-            'compile_dir' => $config->getConfigParam('sCompileDir') . "/smarty/",
-            'cache_dir' => $config->getConfigParam('sCompileDir') . "/smarty/",
-            'compile_id' => Registry::getUtilsView()->getTemplateCompileId(),
-            'template_dir' => $templateDirs,
+            'compile_dir' => $config->getConfigParam('sCompileDir') . "smarty",
+            'cache_dir' => $config->getConfigParam('sCompileDir') . "smarty",
+            'compile_id' => md5(reset($templateDirectories) . '__' . $shopId),
+            'template_dir' => $templateDirectories,
             'debugging' => false,
             'compile_check' => $config->getConfigParam('blCheckTemplates'),
             'plugins_dir' => $this->getSmartyPlugins(),
@@ -157,14 +159,5 @@ class SmartyBuilderTest extends \PHPUnit\Framework\TestCase
         /** @var SmartyPluginsDataProviderInterface $pluginProvider */
         $pluginProvider = $this->get(SmartyPluginsDataProviderInterface::class);
         return array_merge($pluginProvider->getPlugins(), ['plugins']);
-    }
-
-    private function getSmartyContext($securityMode = false): SmartyContext
-    {
-        $config = Registry::getConfig();
-        $config->setConfigParam('blDemoShop', $securityMode);
-        $config->setConfigParam('iDebug', 0);
-
-        return new SmartyContext(new BasicContext(), $config, Registry::getUtilsView());
     }
 }

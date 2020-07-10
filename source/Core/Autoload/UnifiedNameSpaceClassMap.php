@@ -3118,20 +3118,20 @@ return [
         'isInterface'      => false,
         'isDeprecated'     => false
     ],
-    'OxidEsales\Eshop\Core\Smarty\Plugin\Emos'                                   => [
-        'editionClassName' => \OxidEsales\EshopCommunity\Core\Smarty\Plugin\Emos::class,
+    'OxidEsales\Eshop\Internal\Framework\Smarty\Plugin\Emos'                                   => [
+        'editionClassName' => \OxidEsales\EshopCommunity\Internal\Framework\Smarty\Plugin\Emos::class,
         'isAbstract'       => false,
         'isInterface'      => false,
         'isDeprecated'     => false
     ],
-    'OxidEsales\Eshop\Core\Smarty\Plugin\EmosAdapter'                            => [
-        'editionClassName' => \OxidEsales\EshopCommunity\Core\Smarty\Plugin\EmosAdapter::class,
+    'OxidEsales\Eshop\Internal\Framework\Smarty\Plugin\EmosAdapter'                            => [
+        'editionClassName' => \OxidEsales\EshopCommunity\Internal\Framework\Smarty\Plugin\EmosAdapter::class,
         'isAbstract'       => false,
         'isInterface'      => false,
         'isDeprecated'     => false
     ],
-    'OxidEsales\Eshop\Core\Smarty\Plugin\EmosItem'                               => [
-        'editionClassName' => \OxidEsales\EshopCommunity\Core\Smarty\Plugin\EmosItem::class,
+    'OxidEsales\Eshop\Internal\Framework\Smarty\Plugin\EmosItem'                               => [
+        'editionClassName' => \OxidEsales\EshopCommunity\Internal\Framework\Smarty\Plugin\EmosItem::class,
         'isAbstract'       => false,
         'isInterface'      => false,
         'isDeprecated'     => false
@@ -3297,23 +3297,5 @@ return [
         'isAbstract'       => false,
         'isInterface'      => false,
         'isDeprecated'     => false
-    ],
-    'OxidEsales\Eshop\Core\Module\ModuleSmartyPluginDirectories'                 => [
-        'editionClassName' => \OxidEsales\EshopCommunity\Core\Module\ModuleSmartyPluginDirectories::class,
-        'isAbstract'       => false,
-        'isInterface'      => false,
-        'isDeprecated'     => true
-    ],
-    'OxidEsales\Eshop\Core\Module\ModuleSmartyPluginDirectoryRepository'         => [
-        'editionClassName' => \OxidEsales\EshopCommunity\Core\Module\ModuleSmartyPluginDirectoryRepository::class,
-        'isAbstract'       => false,
-        'isInterface'      => false,
-        'isDeprecated'     => true
-    ],
-    'OxidEsales\Eshop\Core\Module\ModuleSmartyPluginDirectoryValidator'          => [
-        'editionClassName' => \OxidEsales\EshopCommunity\Core\Module\ModuleSmartyPluginDirectoryValidator::class,
-        'isAbstract'       => false,
-        'isInterface'      => false,
-        'isDeprecated'     => true
     ],
 ];

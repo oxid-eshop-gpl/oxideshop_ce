@@ -38,7 +38,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-namespace OxidEsales\EshopCommunity\Core\Smarty\Plugin;
+namespace OxidEsales\EshopCommunity\Internal\Framework\Smarty\Plugin;
 
 /**
  * A Class to hold products as well a basket items

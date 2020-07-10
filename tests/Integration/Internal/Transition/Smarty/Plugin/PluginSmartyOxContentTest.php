@@ -5,7 +5,7 @@
  * See LICENSE file for license details.
  */
 
-namespace OxidEsales\EshopCommunity\Tests\Unit\Core\Smarty;
+namespace OxidEsales\EshopCommunity\Tests\Integration\Internal\Transition\Smarty\Plugin;
 
 use \oxField;
 use OxidEsales\EshopCommunity\Core\ShopIdCalculator;
@@ -14,11 +14,11 @@ use \stdClass;
 use \oxRegistry;
 use \oxTestModules;
 
-$filePath = oxRegistry::getConfig()->getConfigParam('sShopDir') . 'Core/Smarty/Plugin/function.oxcontent.php';
+$filePath = oxRegistry::getConfig()->getConfigParam('sShopDir') . 'Internal/Framework/Smarty/Plugin/function.oxcontent.php';
 if (file_exists($filePath)) {
     require_once $filePath;
 } else {
-    require_once dirname(__FILE__) . '/../../../../source/Core/Smarty/Plugin/function.oxcontent.php';
+    require_once dirname(__FILE__) . '/../../../../source/Internal/Framework/Smarty/Plugin/function.oxcontent.php';
 }
 
 class PluginSmartyOxContentTest extends \OxidTestCase

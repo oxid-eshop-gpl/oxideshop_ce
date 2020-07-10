@@ -30,14 +30,6 @@ class EditionPathProviderTest extends UnitTestCase
         $this->assertSame('/Setup/Sql/', $editionPathSelector->getDatabaseSqlDirectory());
     }
 
-    public function testReturnsSmartyPluginsDirectory()
-    {
-        $editionSelector = $this->getEditionPathSelectorMock();
-        $editionPathSelector = new EditionPathProvider($editionSelector);
-
-        $this->assertSame('/Internal/Framework/Smarty/Plugin/', $editionPathSelector->getSmartyPluginsDirectory());
-    }
-
     /**
      * @return PHPUnit\Framework\MockObject\MockObject|EditionRootPathProvider
      */

@@ -7,21 +7,24 @@
 
 declare(strict_types=1);
 
-namespace OxidEsales\EshopCommunity\Tests\Unit\Internal\Smarty\Configuration;
+namespace OxidEsales\EshopCommunity\Tests\Unit\Internal\Transition\Smarty\Configuration;
 
 use OxidEsales\EshopCommunity\Internal\Framework\Smarty\Configuration\SmartyResourcesDataProvider;
+use OxidEsales\EshopCommunity\Internal\Framework\Smarty\Extension\ResourcePluginInterface;
 
 class SmartyResourcesDataProviderTest extends \PHPUnit\Framework\TestCase
 {
     public function testGetSmartyResources()
     {
-        $datProvider = new SmartyResourcesDataProvider();
+        $pluginMock = $this->getMockBuilder(ResourcePluginInterface::class)->getMock();
+        $datProvider = new SmartyResourcesDataProvider($pluginMock);
 
         $settings = ['ox' => [
-            'ox_get_template',
-            'ox_get_timestamp',
-            'ox_get_secure',
-            'ox_get_trusted'
+            $pluginMock,
+            'getTemplate',
+            'getTimestamp',
+            'getSecure',
+            'getTrusted'
         ]
         ];
 

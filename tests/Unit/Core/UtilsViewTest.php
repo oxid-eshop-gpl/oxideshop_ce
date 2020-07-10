@@ -330,24 +330,6 @@ class UtilsViewTest extends \OxidTestCase
         $this->assertTrue($oUV->UNITgetActiveModuleInfo());
     }
 
-    /**
-     * tests oxutilsView::getSmartyDir()
-     */
-    public function testGetSmartyDir()
-    {
-        $config = oxNew('oxConfig');
-
-        $oUV = oxNew('oxUtilsView');
-        Registry::set(Config::class, $config);
-
-        $compileDirectory = $this->getCompileDirectory();
-        $config->setConfigParam('sCompileDir', $compileDirectory);
-
-        $sExp = $compileDirectory . "/smarty/";
-
-        $this->assertSame($sExp, $oUV->getSmartyDir());
-    }
-
     private function assertArraySubset(array $subset, array $array): void
     {
         if ($array !== \array_replace_recursive($array, $subset)) {

@@ -11,6 +11,7 @@ namespace OxidEsales\EshopCommunity\Internal\Framework\Smarty\Configuration;
 
 use OxidEsales\EshopCommunity\Internal\Framework\Smarty\Extension\SmartyTemplateHandlerInterface;
 use OxidEsales\EshopCommunity\Internal\Framework\Smarty\SmartyContextInterface;
+use Symfony\Component\Filesystem\Filesystem;
 
 class SmartySettingsDataProvider implements SmartySettingsDataProviderInterface
 {
@@ -25,15 +26,25 @@ class SmartySettingsDataProvider implements SmartySettingsDataProviderInterface
     private $smartyTemplateHandler;
 
     /**
+     * @var Filesystem
+     */
+    private $filesystem;
+
+    /**
      * SmartySettingsDataProvider constructor.
      *
      * @param SmartyContextInterface         $context
      * @param SmartyTemplateHandlerInterface $smartyTemplateHandler
+     * @param Filesystem                     $filesystem
      */
-    public function __construct(SmartyContextInterface $context, SmartyTemplateHandlerInterface $smartyTemplateHandler)
-    {
+    public function __construct(
+        SmartyContextInterface $context,
+        SmartyTemplateHandlerInterface $smartyTemplateHandler,
+        Filesystem $filesystem
+    ) {
         $this->context = $context;
         $this->smartyTemplateHandler = $smartyTemplateHandler;
+        $this->filesystem = $filesystem;
     }
 
     /**
@@ -67,7 +78,11 @@ class SmartySettingsDataProvider implements SmartySettingsDataProviderInterface
      */
     private function getTemplateCompilePath(): string
     {
-        return $this->context->getTemplateCompileDirectory();
+        $compileDirectory = $this->context->getTemplateCompileDirectory();
+        if (!$this->filesystem->exists($compileDirectory)) {
+            $this->filesystem->mkdir($compileDirectory);
+        }
+        return $compileDirectory;
     }
 
     /**

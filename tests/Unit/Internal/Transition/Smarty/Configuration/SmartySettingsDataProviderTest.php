@@ -14,6 +14,7 @@ use OxidEsales\EshopCommunity\Internal\Framework\Smarty\Configuration\SmartySett
 use OxidEsales\EshopCommunity\Internal\Framework\Smarty\Extension\SmartyDefaultTemplateHandler;
 use OxidEsales\EshopCommunity\Internal\Framework\Smarty\SmartyContextInterface;
 use PHPUnit\Framework\TestCase;
+use Symfony\Component\Filesystem\Filesystem;
 
 class SmartySettingsDataProviderTest extends TestCase
 {
@@ -21,7 +22,7 @@ class SmartySettingsDataProviderTest extends TestCase
     {
         $smartyContextMock = $this->getSmartyContextMock();
 
-        $dataProvider = new SmartySettingsDataProvider($smartyContextMock, new SmartyDefaultTemplateHandler($smartyContextMock));
+        $dataProvider = new SmartySettingsDataProvider($smartyContextMock, new SmartyDefaultTemplateHandler($smartyContextMock), new Filesystem());
         $settings = [
             'caching' => false,
             'left_delimiter' => '[{',
@@ -69,10 +70,6 @@ class SmartySettingsDataProviderTest extends TestCase
         $smartyContextMock
             ->method('getTemplateCompileId')
             ->willReturn('7f96e0d92070fd4733296e5118fd5a01');
-
-        $smartyContextMock
-            ->method('getSmartyPluginDirectories')
-            ->willReturn(['testModuleDir', 'testShopPath/Core/Smarty/Plugin']);
 
         return $smartyContextMock;
     }

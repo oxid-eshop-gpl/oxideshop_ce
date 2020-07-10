@@ -1982,7 +1982,7 @@ class Email extends PHPMailer
     {
         $outputProcessor = oxNew(\OxidEsales\Eshop\Core\Output::class);
 
-        // processing assigned smarty variables
+        // processing assigned template variables
         $newArray = $outputProcessor->processViewArray($this->_aViewData, "oxemail");
 
         $this->_aViewData = array_merge($this->_aViewData, $newArray);
