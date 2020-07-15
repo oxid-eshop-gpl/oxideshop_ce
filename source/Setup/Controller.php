@@ -448,7 +448,6 @@ class Controller extends Core
             $oTheme = oxNew(\OxidEsales\Eshop\Core\Theme::class);
             $oTheme->load("flow");
             $oTheme->activate();
-
         } catch (CommandExecutionFailedException $exception) {
             $this->handleCommandExecutionFailedException($exception);
 
