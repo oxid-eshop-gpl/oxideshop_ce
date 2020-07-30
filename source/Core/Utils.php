@@ -9,7 +9,7 @@ namespace OxidEsales\EshopCommunity\Core;
 
 use Exception;
 use OxidEsales\Eshop\Core\Str;
-use OxidEsales\EshopCommunity\Internal\Framework\Smarty\Cache\CacheClearerInterface;
+use OxidEsales\EshopCommunity\Internal\Framework\Templating\Cache\CacheClearerInterface;
 use stdClass;
 
 /**
@@ -711,8 +711,6 @@ class Utils extends \OxidEsales\Eshop\Core\Base
      */
     public function resetTemplateCache($aTemplates)
     {
-        $clearer = $this->getContainer()->get(CacheClearerInterface::class);
-        $clearer->clear($aTemplates);
     }
 
     /**

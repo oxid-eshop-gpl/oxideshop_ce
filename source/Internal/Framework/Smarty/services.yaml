@@ -56,7 +56,7 @@ services:
       - '@OxidEsales\EshopCommunity\Internal\Framework\Module\Configuration\Bridge\ShopConfigurationDaoBridgeInterface'
       - '@OxidEsales\EshopCommunity\Internal\Framework\Module\State\ModuleStateServiceInterface'
       - '@OxidEsales\EshopCommunity\Internal\Framework\Module\Path\ModulePathResolverInterface'
-  OxidEsales\EshopCommunity\Internal\Framework\Smarty\Cache\CacheClearerInterface:
+  OxidEsales\EshopCommunity\Internal\Framework\Templating\Cache\CacheClearerInterface:
     class: OxidEsales\EshopCommunity\Internal\Framework\Smarty\Cache\TemplateCacheClearer
     arguments:
       - '@OxidEsales\EshopCommunity\Internal\Framework\Templating\TemplateEngineInterface'

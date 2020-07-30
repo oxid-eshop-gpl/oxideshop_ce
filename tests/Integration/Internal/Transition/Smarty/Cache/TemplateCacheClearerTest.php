@@ -9,7 +9,7 @@ declare(strict_types=1);
 
 namespace OxidEsales\EshopCommunity\Tests\Integration\Internal\Transition\Smarty\Cache;
 
-use OxidEsales\EshopCommunity\Internal\Framework\Smarty\Cache\CacheClearerInterface;
+use OxidEsales\EshopCommunity\Internal\Framework\Templating\Cache\CacheClearerInterface;
 use OxidEsales\EshopCommunity\Internal\Framework\Templating\TemplateRendererBridgeInterface;
 use OxidEsales\EshopCommunity\Internal\Framework\Templating\TemplateRendererInterface;
 use OxidEsales\EshopCommunity\Tests\Integration\Internal\ContainerTrait;

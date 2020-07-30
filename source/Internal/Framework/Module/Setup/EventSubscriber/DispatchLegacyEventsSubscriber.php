@@ -9,6 +9,9 @@ declare(strict_types=1);
 
 namespace OxidEsales\EshopCommunity\Internal\Framework\Module\Setup\EventSubscriber;
 
+use OxidEsales\EshopCommunity\Internal\Framework\Module\Configuration\Bridge\ModuleConfigurationDaoBridgeInterface;
+use OxidEsales\EshopCommunity\Internal\Framework\Module\Configuration\DataObject\ModuleConfiguration;
+use OxidEsales\EshopCommunity\Internal\Framework\Templating\Cache\CacheClearerInterface;
 use OxidEsales\EshopCommunity\Internal\Transition\Adapter\ShopAdapterInterface;
 use OxidEsales\EshopCommunity\Internal\Framework\Module\Configuration\Dao\ModuleConfigurationDaoInterface;
 use OxidEsales\EshopCommunity\Internal\Framework\Module\Setup\Event\BeforeModuleDeactivationEvent;
@@ -27,14 +30,22 @@ class DispatchLegacyEventsSubscriber implements EventSubscriberInterface
     private $shopAdapter;
 
     /**
+     * @var CacheClearerInterface
+     */
+    private $cacheClearer;
+
+    /**
      * @param ModuleConfigurationDaoInterface $ModuleConfigurationDao
+     * @param CacheClearerInterface                 $cacheClearer
      * @param ShopAdapterInterface            $shopAdapter
      */
     public function __construct(
         ModuleConfigurationDaoInterface $ModuleConfigurationDao,
+        CacheClearerInterface $cacheClearer,
         ShopAdapterInterface $shopAdapter
     ) {
         $this->moduleConfigurationDao = $ModuleConfigurationDao;
+        $this->cacheClearer = $cacheClearer;
         $this->shopAdapter = $shopAdapter;
     }
 
@@ -105,5 +116,34 @@ class DispatchLegacyEventsSubscriber implements EventSubscriberInterface
     private function invalidateModuleCache(FinalizingModuleActivationEvent $event)
     {
         $this->shopAdapter->invalidateModuleCache($event->getModuleId());
+        $this->invalidateTemplateCache($event->getModuleId(), $event->getShopId());
+    }
+
+    /**
+     * @param string $moduleId
+     * @param int    $shopId
+     */
+    private function invalidateTemplateCache(string $moduleId, int $shopId): void
+    {
+        $moduleConfiguration = $this->moduleConfigurationDao->get($moduleId, $shopId);
+        if ($moduleConfiguration->hasTemplates()) {
+            $this->cacheClearer->clear($this->getTemplates($moduleConfiguration));
+        }
+    }
+
+    /**
+     * @param ModuleConfiguration $configuration
+     *
+     * @return array
+     */
+    private function getTemplates(ModuleConfiguration $configuration): array
+    {
+        $templates = [];
+
+        foreach ($configuration->getTemplates() as $template) {
+            $templates[$template->getTemplateKey()] = $template->getTemplateKey();
+        }
+
+        return $templates;
     }
 }

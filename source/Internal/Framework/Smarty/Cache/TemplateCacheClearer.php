@@ -4,6 +4,7 @@
 namespace OxidEsales\EshopCommunity\Internal\Framework\Smarty\Cache;
 
 use OxidEsales\EshopCommunity\Internal\Framework\Smarty\SmartyEngineInterface;
+use OxidEsales\EshopCommunity\Internal\Framework\Templating\Cache\CacheClearerInterface;
 
 /**
  * TemplateCacheClearer.
@@ -22,10 +23,8 @@ class TemplateCacheClearer implements CacheClearerInterface
 
     /**
      * @param array $cache
-     *
-     * @return mixed
      */
-    public function clear(array $cache)
+    public function clear(array $cache): void
     {
         $engine = $this->engine->getSmarty();
         foreach ($cache as $template) {
