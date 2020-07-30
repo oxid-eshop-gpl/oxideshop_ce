@@ -58,7 +58,9 @@ class ModuleCache extends \OxidEsales\Eshop\Core\Base
      */
     public function resetCache()
     {
+        $aTemplates = $this->getModule()->getTemplates();
         $oUtils = Registry::getUtils();
+        $oUtils->resetTemplateCache($aTemplates);
         $oUtils->resetLanguageCache();
         $oUtils->resetMenuCache();
 

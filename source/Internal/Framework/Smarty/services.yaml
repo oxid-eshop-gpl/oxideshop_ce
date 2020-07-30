@@ -52,10 +52,7 @@ services:
     decoration_priority: 100
     arguments:
       - '@OxidEsales\EshopCommunity\Internal\Framework\Smarty\Configuration\ModuleSmartyPluginsDataProviderInterface.inner'
-      - '@OxidEsales\EshopCommunity\Internal\Transition\Utility\ContextInterface'
-      - '@OxidEsales\EshopCommunity\Internal\Framework\Module\Configuration\Bridge\ShopConfigurationDaoBridgeInterface'
-      - '@OxidEsales\EshopCommunity\Internal\Framework\Module\State\ModuleStateServiceInterface'
-      - '@OxidEsales\EshopCommunity\Internal\Framework\Module\Path\ModulePathResolverInterface'
+      - '@OxidEsales\EshopCommunity\Internal\Transition\Adapter\ShopAdapterInterface'
   OxidEsales\EshopCommunity\Internal\Framework\Templating\Cache\CacheClearerInterface:
     class: OxidEsales\EshopCommunity\Internal\Framework\Smarty\Cache\TemplateCacheClearer
     arguments:

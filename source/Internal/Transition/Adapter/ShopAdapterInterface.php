@@ -56,4 +56,9 @@ interface ShopAdapterInterface
      * @return bool
      */
     public function validateShopId(int $shopId): bool;
+
+    /**
+     * @return array
+     */
+    public function getSmartyPluginDirectoriesFromCache(): array;
 }
