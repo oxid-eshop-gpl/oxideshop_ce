@@ -7,9 +7,7 @@
 
 namespace OxidEsales\EshopCommunity\Core;
 
-use Exception;
 use OxidEsales\Eshop\Core\Str;
-use OxidEsales\EshopCommunity\Internal\Framework\Templating\Cache\CacheClearerInterface;
 use stdClass;
 
 /**

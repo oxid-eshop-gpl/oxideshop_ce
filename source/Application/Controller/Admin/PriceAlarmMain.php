@@ -7,11 +7,12 @@
 
 namespace OxidEsales\EshopCommunity\Application\Controller\Admin;
 
+use OxidEsales\Eshop\Application\Model\PriceAlarm;
+use OxidEsales\Eshop\Application\Model\User;
+use OxidEsales\Eshop\Core\Email;
+use OxidEsales\Eshop\Core\Field;
 use OxidEsales\Eshop\Core\Registry;
 use OxidEsales\EshopCommunity\Application\Controller\FrontendController;
-use oxRegistry;
-use oxDb;
-use oxField;
 use stdClass;
 
 /**
@@ -30,53 +31,52 @@ class PriceAlarmMain extends \OxidEsales\Eshop\Application\Controller\Admin\Admi
      */
     public function render()
     {
-        $config = \OxidEsales\Eshop\Core\Registry::getConfig();
+        $config = Registry::getConfig();
 
         $this->_aViewData['iAllCnt'] = $this->getActivePriceAlarmsCount();
 
-        $soxId = $this->_aViewData["oxid"] = $this->getEditObjectId();
-        if (isset($soxId) && $soxId != "-1") {
+        $oxid = $this->_aViewData["oxid"] = $this->getEditObjectId();
+        if (isset($oxid) && $oxid != "-1") {
             // load object
-            $oPricealarm = oxNew(\OxidEsales\Eshop\Application\Model\PriceAlarm::class);
-            $oPricealarm->load($soxId);
+            $priceAlarm = oxNew(PriceAlarm::class);
+            $priceAlarm->load($oxid);
 
             // customer info
-            $oUser = null;
-            if ($oPricealarm->oxpricealarm__oxuserid->value) {
-                $oUser = oxNew(\OxidEsales\Eshop\Application\Model\User::class);
-                $oUser->load($oPricealarm->oxpricealarm__oxuserid->value);
-                $oPricealarm->oUser = $oUser;
+            $user = null;
+            if ($priceAlarm->oxpricealarm__oxuserid->value) {
+                $user = oxNew(User::class);
+                $user->load($priceAlarm->oxpricealarm__oxuserid->value);
+                $priceAlarm->oUser = $user;
             }
 
-            //
-            $oShop = oxNew(\OxidEsales\Eshop\Application\Model\Shop::class);
-            $oShop->load($config->getShopId());
-            $this->addGlobalParams($oShop);
+            $shop = oxNew(\OxidEsales\Eshop\Application\Model\Shop::class);
+            $shop->load($config->getShopId());
+            $this->addGlobalParams($shop);
 
-            if (!($iLang = $oPricealarm->oxpricealarm__oxlang->value)) {
-                $iLang = 0;
+            if (!($lang = $priceAlarm->oxpricealarm__oxlang->value)) {
+                $lang = 0;
             }
 
-            $oLang = \OxidEsales\Eshop\Core\Registry::getLang();
-            $aLanguages = $oLang->getLanguageNames();
-            $this->_aViewData["edit_lang"] = $aLanguages[$iLang];
+            $language = Registry::getLang();
+            $languageNames = $language->getLanguageNames();
+            $this->_aViewData["edit_lang"] = $languageNames[$lang];
             // rendering mail message text
-            $oLetter = new stdClass();
-            $aParams = \OxidEsales\Eshop\Core\Registry::getConfig()->getRequestParameter("editval");
-            if (isset($aParams['oxpricealarm__oxlongdesc']) && $aParams['oxpricealarm__oxlongdesc']) {
-                $oLetter->oxpricealarm__oxlongdesc = new \OxidEsales\Eshop\Core\Field(stripslashes($aParams['oxpricealarm__oxlongdesc']), \OxidEsales\Eshop\Core\Field::T_RAW);
+            $letter = new stdClass();
+            $parameter = Registry::getConfig()->getRequestParameter("editval");
+            if (isset($parameter['oxpricealarm__oxlongdesc']) && $parameter['oxpricealarm__oxlongdesc']) {
+                $letter->oxpricealarm__oxlongdesc = new Field(stripslashes($parameter['oxpricealarm__oxlongdesc']), Field::T_RAW);
             } else {
-                $oEmail = oxNew(\OxidEsales\Eshop\Core\Email::class);
-                $sDesc = $oEmail->sendPricealarmToCustomer($oPricealarm->oxpricealarm__oxemail->value, $oPricealarm, null, true);
+                $email = oxNew(\OxidEsales\Eshop\Core\Email::class);
+                $description = $email->sendPricealarmToCustomer($priceAlarm->oxpricealarm__oxemail->value, $priceAlarm, null, true);
 
-                $iOldLang = $oLang->getTplLanguage();
-                $oLang->setTplLanguage($iLang);
-                $oLetter->oxpricealarm__oxlongdesc = new \OxidEsales\Eshop\Core\Field($sDesc, \OxidEsales\Eshop\Core\Field::T_RAW);
-                $oLang->setTplLanguage($iOldLang);
+                $tplLanguage = $language->getTplLanguage();
+                $language->setTplLanguage($lang);
+                $letter->oxpricealarm__oxlongdesc = new Field($description, Field::T_RAW);
+                $language->setTplLanguage($tplLanguage);
             }
 
-            $this->_aViewData["editor"] = $this->_generateTextEditor("100%", 300, $oLetter, "oxpricealarm__oxlongdesc", "details.tpl.css");
-            $this->_aViewData["edit"] = $oPricealarm;
+            $this->_aViewData["editor"] = $this->_generateTextEditor("100%", 300, $letter, "oxpricealarm__oxlongdesc", "details.tpl.css");
+            $this->_aViewData["edit"] = $priceAlarm;
             $this->_aViewData["actshop"] = $config->getShopId();
         }
 
@@ -90,39 +90,28 @@ class PriceAlarmMain extends \OxidEsales\Eshop\Application\Controller\Admin\Admi
      */
     public function send()
     {
-        $blError = true;
+        $errorOccur = true;
 
-        // error
-        if (($sOxid = $this->getEditObjectId())) {
-            $oPricealarm = oxNew(\OxidEsales\Eshop\Application\Model\PriceAlarm::class);
-            $oPricealarm->load($sOxid);
+        if (($oxid = $this->getEditObjectId())) {
+            $priceAlarm = oxNew(PriceAlarm::class);
+            $priceAlarm->load($oxid);
 
-            $aParams =Registry::getConfig()->getRequestParameter("editval");
-            $sMailBody = isset($aParams['oxpricealarm__oxlongdesc']) ? stripslashes($aParams['oxpricealarm__oxlongdesc']) : '';
-            if ($sMailBody) {
-                $activeView = oxNew(FrontendController::class);
-                $activeView->addGlobalParams();
-                $sMailBody = Registry::getUtilsView()->getRenderedContent(
-                    $sMailBody,
-                    $activeView->getViewData(),
-                    $oPricealarm->getId()
-                );
-            }
+            $mailBody = $this->getMailBody($priceAlarm);
 
-            $sRecipient = $oPricealarm->oxpricealarm__oxemail->value;
+            $recipient = $priceAlarm->oxpricealarm__oxemail->value;
 
-            $oEmail = oxNew(\OxidEsales\Eshop\Core\Email::class);
-            $blSuccess = (int) $oEmail->sendPricealarmToCustomer($sRecipient, $oPricealarm, $sMailBody);
+            $email = oxNew(Email::class);
+            $sendSuccessful = (int) $email->sendPricealarmToCustomer($recipient, $priceAlarm, $mailBody);
 
             // setting result message
-            if ($blSuccess) {
-                $oPricealarm->oxpricealarm__oxsended->setValue(date("Y-m-d H:i:s"));
-                $oPricealarm->save();
-                $blError = false;
+            if ($sendSuccessful) {
+                $priceAlarm->oxpricealarm__oxsended->setValue(date("Y-m-d H:i:s"));
+                $priceAlarm->save();
+                $errorOccur = false;
             }
         }
 
-        if (!$blError) {
+        if (!$errorOccur) {
             $this->_aViewData["mail_succ"] = 1;
         } else {
             $this->_aViewData["mail_err"] = 1;
@@ -156,5 +145,25 @@ class PriceAlarmMain extends \OxidEsales\Eshop\Application\Controller\Admin\Admi
         }
 
         return $count;
+    }
+
+    /**
+     * @param PriceAlarm $priceAlarm
+     * @return string
+     */
+    private function getMailBody(PriceAlarm $priceAlarm): string
+    {
+        $parameter = Registry::getConfig()->getRequestParameter("editval");
+        $mailBody = isset($parameter['oxpricealarm__oxlongdesc']) ? stripslashes($parameter['oxpricealarm__oxlongdesc']) : '';
+        if ($mailBody) {
+            $activeView = oxNew(FrontendController::class);
+            $activeView->addGlobalParams();
+            $mailBody = Registry::getUtilsView()->getRenderedContent(
+                $mailBody,
+                $activeView->getViewData(),
+                $priceAlarm->getId()
+            );
+        }
+        return $mailBody;
     }
 }

@@ -107,20 +107,13 @@ class DiagnosticsMain extends \OxidEsales\Eshop\Application\Controller\Admin\Adm
      */
     public function startDiagnostics()
     {
-        $sReport = "";
+        $this->_oOutput->storeResult(
+            $this->getRenderedReport(
+                $this->_runBasicDiagnostics()
+            )
+        );
 
-        $aDiagnosticsResult = $this->_runBasicDiagnostics();
-
-        $renderer = $this->getContainer()
-            ->get(TemplateRendererBridgeInterface::class)
-            ->getTemplateRenderer();
-
-        $sReport .= $renderer->renderTemplate("diagnostics_main.tpl", $aDiagnosticsResult);
-
-        $this->_oOutput->storeResult($sReport);
-
-        $sResult = $this->_oOutput->readResultFile();
-        $this->_aViewData['sResult'] = $sResult;
+        $this->_aViewData['sResult'] = $this->_oOutput->readResultFile();
     }
 
     /**
@@ -253,5 +246,19 @@ class DiagnosticsMain extends \OxidEsales\Eshop\Application\Controller\Admin\Adm
         }
 
         return $modules;
+    }
+
+    /**
+     * @param array $diagnosticsResult
+     *
+     * @return string
+     */
+    private function getRenderedReport(array $diagnosticsResult): string
+    {
+        $renderer = $this->getContainer()
+            ->get(TemplateRendererBridgeInterface::class)
+            ->getTemplateRenderer();
+
+        return $renderer->renderTemplate("diagnostics_main.tpl", $diagnosticsResult);
     }
 }

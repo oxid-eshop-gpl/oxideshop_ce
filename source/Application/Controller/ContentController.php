@@ -9,7 +9,6 @@ namespace OxidEsales\EshopCommunity\Application\Controller;
 
 use OxidEsales\Eshop\Core\Registry;
 use OxidEsales\Eshop\Core\Str;
-use oxRegistry;
 
 /**
  * CMS - loads pages and displays it
@@ -541,8 +540,7 @@ class ContentController extends \OxidEsales\Eshop\Application\Controller\Fronten
     {
         $activeView = oxNew(FrontendController::class);
         $activeView->addGlobalParams();
-        $utilsView = Registry::getUtilsView();
-        return $utilsView->getRenderedContent(
+        return Registry::getUtilsView()->getRenderedContent(
             $this->getContent()->oxcontents__oxcontent->value,
             $activeView->getViewData(),
             $this->getContent()->getId());
