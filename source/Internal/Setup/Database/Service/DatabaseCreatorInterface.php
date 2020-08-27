@@ -10,6 +10,7 @@ declare(strict_types=1);
 namespace OxidEsales\EshopCommunity\Internal\Setup\Database\Service;
 
 use OxidEsales\EshopCommunity\Internal\Setup\Database\Exception\DatabaseConnectionException;
+use OxidEsales\EshopCommunity\Internal\Setup\Database\Exception\DatabaseExistsException;
 
 interface DatabaseCreatorInterface
 {
@@ -20,6 +21,7 @@ interface DatabaseCreatorInterface
      * @param string $password
      * @param string $name
      *
+     * @throws DatabaseExistsException
      * @throws DatabaseConnectionException
      */
     public function createDatabase(string $host, int $port, string $username, string $password, string $name): void;
