@@ -1,3 +1,6 @@
+parameters:
+  oxid_esales.templating.engine_template_extension: 'tpl'
+
 services:
   _defaults:
     autowire: true
@@ -16,6 +19,8 @@ services:
       - '@OxidEsales\EshopCommunity\Internal\Framework\Templating\Resolver\TemplateNameResolver'
   OxidEsales\EshopCommunity\Internal\Framework\Templating\Resolver\TemplateNameResolver:
     class: OxidEsales\EshopCommunity\Internal\Framework\Templating\Resolver\TemplateNameResolver
+    arguments:
+      - '%oxid_esales.templating.engine_template_extension%'
   OxidEsales\EshopCommunity\Internal\Framework\Templating\Locator\TemplateFileLocator:
     class: OxidEsales\EshopCommunity\Internal\Framework\Templating\Locator\TemplateFileLocator
     arguments:
