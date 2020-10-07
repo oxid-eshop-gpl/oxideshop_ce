@@ -1080,7 +1080,7 @@ class SystemRequirements
     protected function _checkTemplateBlock($sTemplate, $sBlockName) // phpcs:ignore PSR2.Methods.MethodDeclaration.Underscore
     {
         /** @var TemplateLoaderInterface $templateLoader */
-        $templateLoader = $this->getContainer()->get('oxid_esales.templating.template.loader');
+        $templateLoader = $this->getContainer()->get('oxid_esales.templating.frontend.template.loader');
         if (!$templateLoader->exists($sTemplate)) {
             $templateLoader = $this->getContainer()->get('oxid_esales.templating.admin.template.loader');
             if (!$templateLoader->exists($sTemplate)) {

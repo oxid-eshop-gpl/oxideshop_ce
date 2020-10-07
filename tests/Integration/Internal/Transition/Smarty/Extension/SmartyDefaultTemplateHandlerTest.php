@@ -7,7 +7,7 @@
 namespace OxidEsales\EshopCommunity\Tests\Integration\Internal\Transition\Smarty\Extension;
 
 use OxidEsales\EshopCommunity\Internal\Framework\Smarty\Extension\SmartyDefaultTemplateHandler;
-use OxidEsales\EshopCommunity\Internal\Framework\Templating\Loader\TemplateLoaderInterface;
+use OxidEsales\EshopCommunity\Internal\Framework\Smarty\SmartyContextInterface;
 
 class SmartyDefaultTemplateHandlerTest extends \PHPUnit\Framework\TestCase
 {
@@ -86,15 +86,15 @@ class SmartyDefaultTemplateHandlerTest extends \PHPUnit\Framework\TestCase
 
     private function getSmartyDefaultTemplateHandler($template)
     {
-        $templateLoaderMock = $this
-        ->getMockBuilder(TemplateLoaderInterface::class)
+        $context = $this
+        ->getMockBuilder(SmartyContextInterface::class)
         ->getMock();
 
-        $templateLoaderMock
-            ->method('getPath')
+        $context
+            ->method('getTemplatePath')
             ->willReturn($template);
 
-        return new SmartyDefaultTemplateHandler($templateLoaderMock);
+        return new SmartyDefaultTemplateHandler($context);
     }
 
     private function getTemplateDirectory()
