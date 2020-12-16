@@ -29,6 +29,12 @@ class SmartyPluginDirectoriesModuleSettingValidatorTest extends TestCase
         $this->modulePathResolver = $this->getMockBuilder(ModulePathResolverInterface::class)->getMock();
     }
 
+    /**
+     * @throws \OxidEsales\EshopCommunity\Internal\Framework\FileSystem\DirectoryNotExistentException
+     * @throws \OxidEsales\EshopCommunity\Internal\Framework\FileSystem\DirectoryNotReadableException
+     * @throws \OxidEsales\EshopCommunity\Internal\Framework\Module\Setup\Exception\ModuleSettingNotValidException
+     * @doesNotPerformAssertions
+     */
     public function testValidate()
     {
         $this->createModuleStructure();

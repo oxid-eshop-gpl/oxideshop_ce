@@ -16,7 +16,10 @@ use PHPUnit\Framework\TestCase;
  */
 class ModuleIdValidatorTest extends TestCase
 {
-
+    /**
+     * @throws ModuleIdNotValidException
+     * @doesNotPerformAssertions
+     */
     public function testValidateWhenValid(): void
     {
         $metaData = [

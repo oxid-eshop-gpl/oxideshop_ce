@@ -75,6 +75,7 @@ class MetaDataSchemaValidatorTest extends TestCase
 
     /**
      * This test covers metaData sections like 'extend', or 'templates', which have their custom subKeys
+     * @doesNotPerformAssertions
      */
     public function testExcludedSectionItemValidation()
     {
@@ -148,6 +149,11 @@ class MetaDataSchemaValidatorTest extends TestCase
         $validator->validate('path/to/metadata.php', '2.0', $metaDataToValidate);
     }
 
+    /**
+     * @throws UnsupportedMetaDataKeyException
+     * @throws \OxidEsales\EshopCommunity\Internal\Framework\Module\MetaData\Exception\UnsupportedMetaDataValueTypeException
+     * @doesNotPerformAssertions
+     */
     public function testValidateThrowsNoExceptionOnIncompleteFirstLevel()
     {
         $metaDataToValidate = [
@@ -166,6 +172,11 @@ class MetaDataSchemaValidatorTest extends TestCase
         $validator->validate('path/to/metadata.php', '2.0', $metaDataToValidate);
     }
 
+    /**
+     * @throws UnsupportedMetaDataKeyException
+     * @throws \OxidEsales\EshopCommunity\Internal\Framework\Module\MetaData\Exception\UnsupportedMetaDataValueTypeException
+     * @doesNotPerformAssertions
+     */
     public function testValidateThrowsNoExceptionOnIncompleteSecondLevel()
     {
         $metaDataToValidate = [
