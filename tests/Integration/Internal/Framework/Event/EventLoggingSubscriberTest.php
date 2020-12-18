@@ -10,12 +10,12 @@ namespace OxidEsales\EshopCommunity\Tests\Integration\Internal\Framework\Event;
 use OxidEsales\EshopCommunity\Internal\Framework\DIContainer\ContainerBuilder;
 use OxidEsales\EshopCommunity\Internal\Framework\Module\Setup\Event\ServicesYamlConfigurationErrorEvent;
 use OxidEsales\EshopCommunity\Internal\Transition\Utility\ContextInterface;
+use OxidEsales\EshopCommunity\Tests\Integration\IntegrationTestCase;
 use OxidEsales\EshopCommunity\Tests\Unit\Internal\BasicContextStub;
 use OxidEsales\EshopCommunity\Tests\Unit\Internal\ContextStub;
-use OxidEsales\TestingLibrary\UnitTestCase;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
-class EventLoggingSubscriberTest extends UnitTestCase
+class EventLoggingSubscriberTest extends IntegrationTestCase
 {
     /** @var \Symfony\Component\DependencyInjection\ContainerBuilder $container */
     private $container;

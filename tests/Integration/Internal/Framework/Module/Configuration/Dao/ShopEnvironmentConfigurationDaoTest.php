@@ -47,6 +47,9 @@ final class ShopEnvironmentConfigurationDaoTest extends TestCase
         $this->assertEquals([], $environmentConfiguration);
     }
 
+    /**
+     * @doesNotPerformAssertions
+     */
     public function testRemoveOverwriteAlreadyBackupEnvironmentFile(): void
     {
         $this->prepareTestEnvironmentShopConfigurationFile();
@@ -56,6 +59,9 @@ final class ShopEnvironmentConfigurationDaoTest extends TestCase
         $this->get(ShopEnvironmentConfigurationDaoInterface::class)->remove(1);
     }
 
+    /**
+     * @doesNotPerformAssertions
+     */
     public function testRemoveWithNonExistingEnvironmentFile(): void
     {
         $this->get(ShopEnvironmentConfigurationDaoInterface::class)->remove(1);

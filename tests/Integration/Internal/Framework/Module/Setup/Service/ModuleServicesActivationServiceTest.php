@@ -234,6 +234,10 @@ class ModuleServicesActivationServiceTest extends TestCase
         $this->shopActivationService->activateModuleServices($this->testModuleId, 1);
     }
 
+    /**
+     * @throws \OxidEsales\EshopCommunity\Internal\Framework\DIContainer\Exception\MissingServiceException
+     * @doesNotPerformAssertions
+     */
     public function testDeactivationWorksIfModuleServiceIsNotInProjectConfiguration(): void
     {
         $shopAwareService = TestEventSubscriber::class;

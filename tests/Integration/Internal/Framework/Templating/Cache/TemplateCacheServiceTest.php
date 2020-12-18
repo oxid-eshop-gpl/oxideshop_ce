@@ -18,7 +18,7 @@ final class TemplateCacheServiceTest extends TestCase
     /** @var Filesystem */
     private $filesystem;
 
-    protected function setUp(): void
+    public function setUp(): void
     {
         $this->filesystem = new Filesystem();
         $this->templateCacheDirectory = __DIR__ . '/Fixtures/tmp/smarty';

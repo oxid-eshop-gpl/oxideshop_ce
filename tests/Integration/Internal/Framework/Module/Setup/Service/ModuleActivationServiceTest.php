@@ -23,12 +23,10 @@ use OxidEsales\EshopCommunity\Internal\Framework\Module\Path\ModulePathResolverI
 use OxidEsales\EshopCommunity\Internal\Framework\Module\Setting\Setting;
 use OxidEsales\EshopCommunity\Internal\Framework\Module\Setup\Service\ModuleActivationServiceInterface;
 use OxidEsales\EshopCommunity\Internal\Framework\Module\State\ModuleStateServiceInterface;
-use OxidEsales\EshopCommunity\Tests\Integration\Internal\ContainerTrait;
+use OxidEsales\EshopCommunity\Tests\Integration\IntegrationTestCase;
 use OxidEsales\EshopCommunity\Tests\Integration\Internal\Framework\Module\TestData\TestModule\SomeModuleService;
 use OxidEsales\EshopCommunity\Tests\Integration\Internal\Module\TestData\TestModule\TestEvent;
 use OxidEsales\EshopCommunity\Tests\Integration\Internal\TestContainerFactory;
-use OxidEsales\TestingLibrary\Services\Library\DatabaseRestorer\DatabaseRestorer;
-use PHPUnit\Framework\TestCase;
 use Psr\Container\ContainerInterface;
 use OxidEsales\EshopCommunity\Internal\Framework\Module\Configuration\DataObject\ModuleConfiguration\ClassExtension;
 use OxidEsales\EshopCommunity\Internal\Framework\Module\Configuration\DataObject\ModuleConfiguration\Controller;
@@ -40,7 +38,7 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 /**
  * @internal
  */
-class ModuleActivationServiceTest extends TestCase
+class ModuleActivationServiceTest extends IntegrationTestCase
 {
     /**
      * @var ContainerInterface
@@ -48,26 +46,13 @@ class ModuleActivationServiceTest extends TestCase
     private $container;
     private $shopId = 1;
     private $testModuleId = 'testModuleId';
-    private $databaseRestorer;
     private $testContainerFactory = null;
-
-    use ContainerTrait;
 
     public function setUp()
     {
         $this->container = $this->setupAndConfigureContainer();
 
-        $this->databaseRestorer = new DatabaseRestorer();
-        $this->databaseRestorer->dumpDB(__CLASS__);
-
         parent::setUp();
-    }
-
-    protected function tearDown()
-    {
-        $this->databaseRestorer->restoreDB(__CLASS__);
-
-        parent::tearDown();
     }
 
     public function testActivation()

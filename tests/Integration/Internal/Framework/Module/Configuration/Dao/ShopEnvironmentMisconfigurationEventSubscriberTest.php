@@ -24,7 +24,7 @@ class ShopEnvironmentMisconfigurationEventSubscriberTest extends TestCase
 
     private $testLog;
 
-    protected function setUp(): void
+    public function setUp(): void
     {
         parent::setUp();
         $this->prepareLogger();
