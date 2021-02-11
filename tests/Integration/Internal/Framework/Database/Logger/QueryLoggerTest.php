@@ -1,18 +1,21 @@
-<?php declare(strict_types=1);
+<?php
+
 /**
  * Copyright © OXID eSales AG. All rights reserved.
  * See LICENSE file for license details.
  */
 
-namespace OxidEsales\EshopCommunity\Tests\Unit\Internal\Framework\Database\Logger;
+declare(strict_types=1);
+
+namespace OxidEsales\EshopCommunity\Tests\Integration\Internal\Framework\Database\Logger;
 
 use OxidEsales\EshopCommunity\Tests\Unit\Internal\ContextStub;
 use OxidEsales\EshopCommunity\Internal\Framework\Database\Logger\QueryLogger;
 use OxidEsales\EshopCommunity\Internal\Framework\Database\Logger\QueryFilter;
+use PHPUnit\Framework\TestCase;
 use Psr\Log\LoggerInterface;
-use OxidEsales\Eshop\Core\Registry;
 
-class QueryLoggerTest extends \PHPUnit\Framework\TestCase
+class QueryLoggerTest extends TestCase
 {
     public function providerTestLogging()
     {

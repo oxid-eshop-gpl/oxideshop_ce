@@ -4,20 +4,26 @@
  * See LICENSE file for license details.
  */
 
-namespace OxidEsales\EshopCommunity\Tests\Unit\Internal\Smarty\Configuration;
+namespace OxidEsales\EshopCommunity\Tests\Unit\Internal\Transition\Smarty\Configuration;
 
 use OxidEsales\EshopCommunity\Internal\Framework\Smarty\Configuration\SmartySecuritySettingsDataProvider;
 use OxidEsales\EshopCommunity\Internal\Framework\Smarty\SmartyContextInterface;
 
 class SmartySecuritySettingsDataProviderTest extends \PHPUnit\Framework\TestCase
 {
+    public function setUp(): void
+    {
+        parent::setUp();
+        new \Smarty(); // Initalize constants
+    }
+
     public function testGetSecuritySettings()
     {
         $smartyContextMock = $this->getSmartyContextMock();
 
         $dataProvider = new SmartySecuritySettingsDataProvider($smartyContextMock);
         $settings = [
-            'php_handling' => SMARTY_PHP_REMOVE,
+            'php_handling' => 2,
             'security' => true,
             'secure_dir' => ['testTemplateDir'],
             'security_settings' => [

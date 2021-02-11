@@ -7,14 +7,18 @@ setupShopDatabase();
 function setupShopDatabase()
 {
     $facts = new \OxidEsales\Facts\Facts();
-    exec(
-        $facts->getCommunityEditionRootPath() .
-        '/bin/oe-console oe:database:reset' .
-        ' --db-host=' . $facts->getDatabaseHost() .
-        ' --db-port=' . $facts->getDatabasePort() .
-        ' --db-name=' . $facts->getDatabaseName() .
-        ' --db-user=' . $facts->getDatabaseUserName() .
-        ' --db-password=' . $facts->getDatabasePassword() .
-        ' --force'
+    $resetDatabaseService = new \OxidEsales\DeveloperTools\Framework\Database\Service\ResetDatabaseService(
+        new \OxidEsales\DeveloperTools\Framework\Database\Service\DatabaseChecker(),
+        new \OxidEsales\DeveloperTools\Framework\Database\Service\DatabaseCreator(),
+        new \OxidEsales\DeveloperTools\Framework\Database\Service\DatabaseInitiator(new \OxidEsales\EshopCommunity\Internal\Transition\Utility\BasicContext()),
+        new \OxidEsales\DeveloperTools\Framework\Database\Service\DropDatabaseService(),
+        new \OxidEsales\DatabaseViewsGenerator\ViewsGenerator()
+    );
+    $resetDatabaseService->resetDatabase(
+        $facts->getDatabaseHost(),
+        $facts->getDatabasePort(),
+        $facts->getDatabaseUserName(),
+        $facts->getDatabasePassword(),
+        $facts->getDatabaseName()
     );
 }

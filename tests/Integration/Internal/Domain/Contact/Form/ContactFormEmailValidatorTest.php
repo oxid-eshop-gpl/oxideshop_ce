@@ -4,7 +4,7 @@
  * See LICENSE file for license details.
  */
 
-namespace OxidEsales\EshopCommunity\Tests\Unit\Internal\Domain\Contact\Form;
+namespace OxidEsales\EshopCommunity\Tests\Integration\Internal\Domain\Contact\Form;
 
 use OxidEsales\EshopCommunity\Internal\Framework\Form\Form;
 use OxidEsales\EshopCommunity\Internal\Framework\Form\FormField;
