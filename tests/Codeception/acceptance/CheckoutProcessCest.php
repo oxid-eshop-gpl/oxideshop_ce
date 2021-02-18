@@ -79,7 +79,7 @@ final class CheckoutProcessCest
     public function createOrder(AcceptanceTester $I)
     {
         $I->wantToTest('simple order steps (without any special cases)');
-        
+
         $I->retry(3, 2000);
 
         $I->updateConfigInDatabase('blShowVATForDelivery', false, 'bool');
@@ -336,6 +336,7 @@ final class CheckoutProcessCest
     public function checkGuestUserNameSwitching(AcceptanceTester $I): void
     {
         $I->wantToTest('guest checkout with username switching');
+        $I->updateConfigInDatabase('blShowBirthdayFields', true, 'bool');
 
         $basket = new Basket($I);
         $userRegistration = new UserRegistrationInCheckout($I);
@@ -418,6 +419,7 @@ final class CheckoutProcessCest
     public function checkForceIdDisabledDuringCheckout(AcceptanceTester $I): void
     {
         $I->wantToTest('Change session during payment');
+        $I->updateConfigInDatabase('blShowBirthdayFields', true, 'bool');
 
         $basket = new Basket($I);
         $userRegistration = new UserRegistrationInCheckout($I);
@@ -439,7 +441,8 @@ final class CheckoutProcessCest
     public function checkNoSessionCookiesCheckout(AcceptanceTester $I): void
     {
         $I->wantToTest('Check if checkout is possible without cookies');
-       
+        $I->updateConfigInDatabase('blShowBirthdayFields', true, 'bool');
+
         file_put_contents(
             (new Facts())->getShopRootPath() . '/cust_config.inc.php',
             '<?php $this->blSessionUseCookies = false;'

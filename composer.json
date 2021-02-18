@@ -34,11 +34,22 @@
         "oxid-esales/oxideshop-facts": "^2.3.1"
     },
     "require-dev": {
+        "phpunit/phpunit": "~6",
+        "mikey179/vfsstream": "~1.4.0",
         "oxid-esales/testing-library": "dev-b-6.2.x",
+        "oxid-esales/testing-library": "dev-b-6.2.x-extract-traditional-tests",
         "incenteev/composer-parameter-handler": "~v2.0",
         "oxid-esales/oxideshop-ide-helper": "^4.0",
         "oxid-esales/azure-theme": "^v1.4.1",
-        "squizlabs/php_codesniffer": "^3.5.4"
+        "squizlabs/php_codesniffer": "^3.5.4",
+        "codeception/codeception": "^4",
+        "codeception/module-asserts": "^1.3",
+        "codeception/module-webdriver": "^1.1",
+        "codeception/module-db": "^1.0",
+        "codeception/module-filesystem": "^1.0",
+        "oxid-esales/codeception-modules": "dev-b-6.2.x-extract_traditional_tests",
+        "oxid-esales/codeception-page-objects": "dev-b-6.2.x",
+        "oxid-esales/developer-tools": "dev-b-6.2.x-add-shop-reset-service"
     },
     "autoload": {
         "psr-4": {
@@ -47,7 +58,7 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "OxidEsales\\EshopCommunity\\Tests\\": "./tests"
+            "OxidEsales\\EshopCommunity\\Tests\\": ["./tests", "./tests_traditional/"]
         }
     },
     "minimum-stability": "dev",
@@ -85,6 +96,24 @@
                 "shop_tests_path": "SHOP_TESTS_PATH",
                 "partial_module_paths": "PARTIAL_MODULE_PATHS"
             }
+        }
+    },
+    "repositories": {
+        "oxid-esales/oxideshop-ee": {
+            "type": "vcs",
+            "url": "https://github.com/OXID-eSales/oxideshop_ee"
+        },
+        "oxid-esales/oxideshop-pe": {
+            "type": "vcs",
+            "url": "https://github.com/OXID-eSales/oxideshop_pe"
+        },
+        "ddoe/visualcms-module": {
+            "type": "vcs",
+            "url": "https://github.com/OXID-eSales/visual_cms_module.git"
+        },
+        "ddoe/wysiwyg-editor-module": {
+            "type": "vcs",
+            "url": "https://github.com/OXID-eSales/ddoe-wysiwyg-editor-module.git"
         }
     }
 }

@@ -143,3 +143,116 @@ REPLACE INTO `oxselectlist` (`OXID`,          `OXSHOPID`,   `OXTITLE`,          
 #Article2SelectList
 REPLACE INTO `oxobject2selectlist` (`OXID`,                       `OXOBJECTID`, `OXSELNID`,   `OXSORT`) VALUES
                                   ('testsellist.1001', '1001',       'testsellist', 0);
+
+
+#
+# Data for table `oxdel2delset`
+#
+INSERT INTO `oxdel2delset` (`OXID`, `OXDELID`, `OXDELSETID`) VALUES
+  ('5be44bc9261862fc4.78617917', '1b842e734b62a4775.45738618', 'oxidstandard'),
+  ('4ba44c7251a587071.83952129', '1b842e73470578914.54719298', 'oxidstandard'),
+  ('4ba44c72528a26008.03376396', '1b842e7352422a708.01472527', 'oxidstandard'),
+  ('4ba44c7252d6d5785.89997750', '1b842e738970d31e3.71258327', '1b842e732a23255b1.91207750'),
+  ('4ba44c7252d6d5785.89997751', '1b842e738970d31e3.71258328', '1b842e732a23255b1.91207751');
+
+#
+# Data for table `oxdelivery`
+#
+INSERT INTO `oxdelivery` (`OXID`, `OXSHOPID`, `OXACTIVE`, `OXACTIVEFROM`, `OXACTIVETO`, `OXTITLE`, `OXTITLE_1`, `OXTITLE_2`, `OXTITLE_3`, `OXADDSUMTYPE`, `OXADDSUM`, `OXDELTYPE`, `OXPARAM`, `OXPARAMEND`, `OXFIXED`, `OXSORT`, `OXFINALIZE`) VALUES
+  ('1b842e734b62a4775.45738618', 1, 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'Versandkosten für Standard: Versandkostenfrei ab 80,-', 'Shipping costs for Standard: Free shipping for orders over $80', '', '', 'abs', 0, 'p', 80, 999999, 0, 1000, 1),
+  ('1b842e73470578914.54719298', 1, 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'Versandkosten für Standard: 3,90 Euro innerhalb Deutschland', 'Shipping costs for Standard: $3.90 for domestic shipping', '', '', 'abs', 3.9, 'p', 0, 79.99, 0, 2000, 1),
+  ('1b842e7352422a708.01472527', 1, 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'Versandkosten für Standard: 6,90 Rest EU', 'Shipping costs for Standard: $6.90 to ship in the rest of the EU', '', '', 'abs', 6.9, 'p', 0, 999999, 0, 3000, 1),
+  ('1b842e738970d31e3.71258327', 1, 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'Versandkosten für Beispiel Set1: UPS 48 Std.: 9,90.-', 'Shipping costs for Example Set1: UPS 48 hrs: $9.90', '', '', 'abs', 9.9, 'p', 0, 99999, 0, 4000, 1),
+  ('1b842e738970d31e3.71258328', 1, 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'Versandkosten für Beispiel Set2: UPS 24 Std. Express: 12,90.-', 'Shipping costs for Example Set2: UPS 24 hrs Express: $12.90', '', '', 'abs', 12.9, 'p', 0, 99999, 0, 5000, 1);
+
+#
+# Data for table `oxdeliveryset`
+#
+INSERT INTO `oxdeliveryset` (`OXID`, `OXSHOPID`, `OXACTIVE`, `OXACTIVEFROM`, `OXACTIVETO`, `OXTITLE`, `OXTITLE_1`, `OXTITLE_2`, `OXTITLE_3`, `OXPOS`) VALUES
+  ('1b842e732a23255b1.91207750', 1, 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'Beispiel Set1: UPS 48 Std.', 'Example Set1: UPS 48 hours', '', '', 30),
+  ('1b842e732a23255b1.91207751', 1, 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'Beispiel Set1: UPS 24 Std. Express', 'Example Set2: UPS Express 24 hours', '', '', 30);
+
+#
+# Data for table `oxobject2group`
+#
+INSERT INTO `oxobject2group` (`OXID`, `OXSHOPID`, `OXOBJECTID`, `OXGROUPSID`) VALUES
+  ('f1d3fdd845d646ce0.54037160', 1, 'oxidcashondel', 'oxidsmallcust'),
+  ('f1d3fdd845d64f368.38782882', 1, 'oxidcashondel', 'oxidmiddlecust'),
+  ('f1d3fdd845d655500.24044370', 1, 'oxidcashondel', 'oxidgoodcust'),
+  ('f1d3fdd845d664a36.22008654', 1, 'oxidcashondel', 'oxidforeigncustomer'),
+  ('f1d3fdd845d66bfa6.86175113', 1, 'oxidcashondel', 'oxidnewcustomer'),
+  ('f1d3fdd845d671e32.96237048', 1, 'oxidcashondel', 'oxidpowershopper'),
+  ('f1d3fdd845d67e7c5.10668991', 1, 'oxidcashondel', 'oxiddealer'),
+  ('f1d3fdd845d6896c1.03162238', 1, 'oxidcashondel', 'oxidnewsletter'),
+  ('f1d3fdd845d691ec8.81166485', 1, 'oxidcashondel', 'oxidadmin'),
+  ('f1d3fdd845d69e885.91443232', 1, 'oxidcashondel', 'oxidpriceb'),
+  ('f1d3fdd845d6a67e0.02859671', 1, 'oxidcashondel', 'oxidpricea'),
+  ('f1d3fdd845d6ad995.44313456', 1, 'oxidcashondel', 'oxidpricec'),
+  ('c193fddd471979db5.85262084', 1, 'oxiddebitnote', 'oxidsmallcust'),
+  ('c193fddd471987391.56507198', 1, 'oxiddebitnote', 'oxidnewcustomer'),
+  ('c193fddd4719915f1.10073644', 1, 'oxiddebitnote', 'oxidnewsletter'),
+  ('c193fddd4719996f2.77898155', 1, 'oxiddebitnote', 'oxidadmin'),
+  ('c193fddd4831e2713.21232210', 1, 'oxidcreditcard', 'oxidsmallcust'),
+  ('c193fddd4831f6f46.50917349', 1, 'oxidcreditcard', 'oxidmiddlecust'),
+  ('c193fddd4831ff385.99230154', 1, 'oxidcreditcard', 'oxidgoodcust'),
+  ('c193fddd483207c10.92807988', 1, 'oxidcreditcard', 'oxidforeigncustomer'),
+  ('c193fddd483215d21.77186691', 1, 'oxidcreditcard', 'oxidnewcustomer'),
+  ('c193fddd48321e633.40782090', 1, 'oxidcreditcard', 'oxidpowershopper'),
+  ('c193fddd483225762.33412275', 1, 'oxidcreditcard', 'oxiddealer'),
+  ('c193fddd483233a87.07118337', 1, 'oxidcreditcard', 'oxidnewsletter'),
+  ('c193fddd48323bcb8.16273041', 1, 'oxidcreditcard', 'oxidadmin'),
+  ('c193fddd483242bc6.72020207', 1, 'oxidcreditcard', 'oxidpriceb'),
+  ('c193fddd483251c35.30210206', 1, 'oxidcreditcard', 'oxidpricea'),
+  ('c193fddd48325a223.07587162', 1, 'oxidcreditcard', 'oxidpricec'),
+  ('c193fddd4939c95b3.22730175', 1, 'oxidinvoice', 'oxidnewcustomer'),
+  ('c193fddd49772de88.87420931', 1, 'oxidinvoice', 'oxidgoodcust'),
+  ('c193fddd49b560bf7.83973615', 1, 'oxidpayadvance', 'oxidblacklist'),
+  ('c193fddd49b578c58.17144323', 1, 'oxidpayadvance', 'oxidsmallcust'),
+  ('c193fddd49b581dd2.00588439', 1, 'oxidpayadvance', 'oxidmiddlecust'),
+  ('c193fddd49b591ad7.64823006', 1, 'oxidpayadvance', 'oxidgoodcust'),
+  ('c193fddd49b599565.04338675', 1, 'oxidpayadvance', 'oxidforeigncustomer'),
+  ('c193fddd49b5a06b3.75268916', 1, 'oxidpayadvance', 'oxidnewcustomer'),
+  ('c193fddd49b5b5021.38970407', 1, 'oxidpayadvance', 'oxidpowershopper'),
+  ('c193fddd49b5bd575.90280311', 1, 'oxidpayadvance', 'oxiddealer'),
+  ('c193fddd49b5cc515.90816240', 1, 'oxidpayadvance', 'oxidnewsletter'),
+  ('c193fddd49b5d43e6.35256824', 1, 'oxidpayadvance', 'oxidadmin'),
+  ('c193fddd49b5db4e8.17741481', 1, 'oxidpayadvance', 'oxidpriceb'),
+  ('c193fddd49b5ed246.01214326', 1, 'oxidpayadvance', 'oxidpricea'),
+  ('c193fddd49b5f65d4.60703125', 1, 'oxidpayadvance', 'oxidpricec'),
+  ('dfc42e744180bf4a9.98598495', 1, 'dfc42e74417f07347.45624764', 'oxidnewcustomer'),
+  ('92044c0db9271e5b8.58103839', 1, '92044c0db9220e842.85595739', 'oxidnewcustomer'),
+  ('e7a7197c7cf8e878e8ff2c18645788ab', 1, 'e7af1c3b786fd02906ccd75698f4e6b9', 'oxidnewcustomer'),
+  ('e7a3bc0ffde37901c6c1be9bdd43b9a5', 1, 'e7af1c3b786fd02906ccd75698f4e6b9', 'oxidcustomer'),
+  ('e7a50c8a8a31cb82b8ae4b38c64a78ba', 1, 'e7af1c3b786fd02906ccd75698f4e6b9', 'oxidgoodcust'),
+  ('e5d1d2defe53c30aeca0f86bde4ae531', 1, 'e7af1c3b786fd02906ccd75698f4e6b9', 'oxidmiddlecust'),
+  ('515d07c92d6f3178601adb83ab50d747', 1, '5158381d9da5cc40384c50600991c74f', 'oxidnewcustomer'),
+  ('515eeb3573a79d8ff8dd90dcf9a3ac3e', 1, '5158381d9da5cc40384c50600991c74f', 'oxidnotyetordered');
+
+
+#
+# Data for table `oxobject2payment`
+#
+INSERT INTO `oxobject2payment` (`OXID`, `OXPAYMENTID`, `OXOBJECTID`, `OXTYPE`) VALUES
+  ('92d4214bf673df592.85542338', 'oxidpayadvance', 'a434214960877b879.20979568', 'oxdelset'),
+  ('1b842e7375676dd84.15824521', 'oxidinvoice', 'oxidstandard', 'oxdelset'),
+  ('1b842e737567681b7.32408586', 'oxidpayadvance', 'oxidstandard', 'oxdelset'),
+  ('1b842e73756761653.33874589', 'oxiddebitnote', 'oxidstandard', 'oxdelset'),
+  ('1b842e7375675b807.24061946', 'oxidcreditcard', 'oxidstandard', 'oxdelset'),
+  ('f324215af5c89b870.26091752', 'oxidcreditcard', 'f324215af31591936.94392085', 'oxdelset'),
+  ('f324215af5c8be899.90598822', 'oxiddebitnote', 'f324215af31591936.94392085', 'oxdelset'),
+  ('1b842e737567541b1.16932982', 'oxidcashondel', 'oxidstandard', 'oxdelset'),
+  ('0f941664de07fe713.78180932', 'oxiddebitnote', 'a7c40f631fc920687.20179984', 'oxcountry'),
+  ('0f941664de081d815.03693723', 'oxiddebitnote', 'a7c40f6320aeb2ec2.72885259', 'oxcountry'),
+  ('0f941664de082a1b0.85265324', 'oxiddebitnote', 'a7c40f6321c6f6109.43859248', 'oxcountry'),
+  ('0f941664e70744a73.85113769', 'oxidcreditcard', 'a7c40f631fc920687.20179984', 'oxcountry'),
+  ('0f941664e70758467.23169947', 'oxidcreditcard', 'a7c40f6320aeb2ec2.72885259', 'oxcountry'),
+  ('0f941664e707657e4.30674465', 'oxidcreditcard', 'a7c40f6321c6f6109.43859248', 'oxcountry'),
+  ('0f941664e9e60f698.58333517', 'oxidcashondel', 'a7c40f631fc920687.20179984', 'oxcountry'),
+  ('0f941664ee2448a22.44967166', 'oxidinvoice', 'a7c40f631fc920687.20179984', 'oxcountry'),
+  ('0f941664ee245e458.07911799', 'oxidinvoice', 'a7c40f6320aeb2ec2.72885259', 'oxcountry'),
+  ('0f941664ee246ac84.39868591', 'oxidinvoice', 'a7c40f6321c6f6109.43859248', 'oxcountry'),
+  ('0f941664efa30a021.06837665', 'oxidpayadvance', 'a7c40f631fc920687.20179984', 'oxcountry'),
+  ('0f941664efa320ca8.35650805', 'oxidpayadvance', 'a7c40f6320aeb2ec2.72885259', 'oxcountry'),
+  ('0f941664efa32d4e5.28625433', 'oxidpayadvance', 'a7c40f6321c6f6109.43859248', 'oxcountry'),
+  ('1b842e738b3f1ca46.72529947', 'oxidcreditcard', '1b842e732a23255b1.91207750', 'oxdelset'),
+  ('1b842e738b3f1ca46.72529948', 'oxidcreditcard', '1b842e732a23255b1.91207751', 'oxdelset');
