@@ -1,7 +1,7 @@
 <IfModule mod_rewrite.c>
     Options +FollowSymLinks
     RewriteEngine On
-    RewriteBase /oxideshop/source
+    RewriteBase /
 
     RewriteRule ^graphql/?$    widget.php?cl=graphql&skipSession=1   [QSA,NC,L]
 
