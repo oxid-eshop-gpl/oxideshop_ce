@@ -19,6 +19,18 @@ final class PrivateSalesBasketCest
         $I->wantToTest('Test if blBasketExcludeEnabled blocks rootCatChange and continue shopping clears basket.');
 
         $I->updateConfigInDatabase('blBasketExcludeEnabled', 'true', 'bool');
+
+        $I->updateInDatabase('oxcategories', ['OXACTIVE' => 1], ['OXID' => 'testcategory2']);
+        $I->haveInDatabase(
+            'oxobject2category',
+            [
+                'OXID' => 'testobject2category1002',
+                'OXOBJECTID' => '1002',
+                'OXCATNID' => 'testcategory2',
+                'OXPOS' => 0,
+            ]
+        );
+
         $I->clearShopCache();
 
         $homePage = $I->openShop();
@@ -40,7 +52,7 @@ final class PrivateSalesBasketCest
         $homePage->openCategoryPage('Test category 0 [EN] šÄßüл');
         $I->dontSeeElement('#scRootCatChanged');
 
-        $homePage->openCategoryPage('Kiteboarding');
+        $homePage->openCategoryPage('Test category 2 [EN] šÄßüл');
         $I->waitForElementVisible('#scRootCatChanged', 5);
 
         $I->click(Translator::translate('CONTINUE_SHOPPING'));
@@ -53,6 +65,18 @@ final class PrivateSalesBasketCest
         $I->wantToTest('Test if blBasketExcludeEnabled rootCatChange is no longer blocked by an empty basket.');
 
         $I->updateConfigInDatabase('blBasketExcludeEnabled', 'true', 'bool');
+
+        $I->updateInDatabase('oxcategories', ['OXACTIVE' => 1], ['OXID' => 'testcategory2']);
+        $I->haveInDatabase(
+            'oxobject2category',
+            [
+                'OXID' => 'testobject2category1002',
+                'OXOBJECTID' => '1002',
+                'OXCATNID' => 'testcategory2',
+                'OXPOS' => 0,
+            ]
+        );
+
         $I->clearShopCache();
 
         $homePage = $I->openShop();
@@ -62,13 +86,13 @@ final class PrivateSalesBasketCest
             ->addProductToBasket(1)
             ->openBasket();
 
-        $homePage->openCategoryPage('Kiteboarding');
+        $homePage->openCategoryPage('Test category 2 [EN] šÄßüл');
         $I->waitForElementVisible('#scRootCatChanged', 5);
 
         $basket = $homePage->openBasket();
         $basket->updateProductAmount(0);
 
-        $homePage->openCategoryPage('Kiteboarding');
+        $homePage->openCategoryPage('Test category 2 [EN] šÄßüл');
         $I->dontSeeElement('#scRootCatChanged');
     }
 

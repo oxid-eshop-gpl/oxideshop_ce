@@ -473,7 +473,7 @@ final class CheckoutProcessCest
     {
         $I->wantToTest('Check if attributes are visible in basket');
 
-        $I->updateInDatabase('oxattribute', ['OXDISPLAYINBASKET' => 1], ['OXID' => '9438ac75bac3e344628b14bf7ed82c15']);
+        $I->updateInDatabase('oxattribute', ['OXDISPLAYINBASKET' => 1], ['OXID' => 'testattribute1']);
         $I->haveInDatabase(
             'oxobject2attribute',
             [
@@ -500,7 +500,7 @@ final class CheckoutProcessCest
 
         $homePage->openMiniBasket()->openBasketDisplay();
 
-        $I->see('Black', "#table_cartItem_1");
+        $I->see('attr value 11 [EN] šÄßüл', "#table_cartItem_1");
     }
 
     /**
