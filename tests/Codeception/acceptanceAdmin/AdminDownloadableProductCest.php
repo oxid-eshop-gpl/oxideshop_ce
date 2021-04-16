@@ -54,7 +54,9 @@ final class AdminDownloadableProductCest
         );
     }
 
-    /** @param AcceptanceAdminTester $I */
+    /**
+     * @skip Skip message
+     */
     public function downloadableFiles(AcceptanceAdminTester $I): void
     {
         $I->wantToTest('Product downloadable files');

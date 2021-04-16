@@ -4,7 +4,7 @@
  * See LICENSE file for license details.
  */
 
-namespace OxidEsales\DoctrineMigrationWrapper;
+declare(strict_types=1);
 
 use OxidEsales\Facts\Config\ConfigFile;
 use OxidEsales\Facts\Facts;
@@ -45,7 +45,7 @@ function getTestDataDumpFilePath()
 
 function getTestFixtureSqlFilePath()
 {
-    return getShopTestPath() . '/Codeception/_data/dump.sql';
+    return getShopTestPath() . '/Codeception/_data/fixtures.sql';
 }
 
 function getShopSuitePath($facts)

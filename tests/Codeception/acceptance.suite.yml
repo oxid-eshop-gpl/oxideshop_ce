@@ -5,20 +5,21 @@
 # If you need both WebDriver and PHPBrowser tests - create a separate suite.
 
 actor: AcceptanceTester
+path: Acceptance
 bootstrap: _bootstrap.php
 modules:
     enabled:
         - Asserts
-        - \OxidEsales\EshopCommunity\Tests\Codeception\Helper\Acceptance
+        - OxidEsales\B2BModule\Basket\Tests\Codeception\Helper\Acceptance
         - WebDriver:
             url: '%SHOP_URL%'
             browser: firefox
             port: '%SELENIUM_SERVER_PORT%'
-            host: '%SELENIUM_SERVER_HOST%'
+            host: '%SELENIUM_SERVER_IP%'
             window_size: 1600x1000
             clear_cookies: true
         - \OxidEsales\Codeception\Module\ShopSetup:
-            shop_dump: '%DUMP_PATH%'
+            dump: '%DUMP_PATH%'
             fixtures: '%FIXTURES_PATH%'
         - Db:
             dsn: 'mysql:host=%DB_HOST%;dbname=%DB_NAME%;charset=utf8'
@@ -37,6 +38,10 @@ modules:
             depends:
               - WebDriver
               - Db
+        - \OxidEsales\Codeception\Module\OxideshopAdmin:
+              depends:
+                  - WebDriver
+                  - \OxidEsales\Codeception\Module\Oxideshop
         - \OxidEsales\Codeception\Module\Database:
             config_key: 'fq45QS09_fqyx09239QQ'
             depends: Db
@@ -45,5 +50,8 @@ modules:
             paths: 'Application/views/flow'
         - \OxidEsales\Codeception\Module\FlowTheme:
             depends: \OxidEsales\Codeception\Module\Database
+        - \OxidProfessionalServices\Usercentrics\Tests\Codeception\Module\Config:
+              shop_path: '%SHOP_SOURCE_PATH%'
+              config_file: '../var/configuration/usercentrics.yaml'
 step_decorators:
     - \Codeception\Step\Retry

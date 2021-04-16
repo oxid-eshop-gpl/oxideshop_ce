@@ -43,7 +43,6 @@ final class DownloadableProductCest
         $I->deleteFromDatabase('oxorderarticles', ['OXORDERID' => $this->orderId]);
     }
 
-    /** @param AcceptanceTester $I */
     public function downloadableFiles(AcceptanceTester $I): void
     {
         $I->wantToTest('Product downloadable files');

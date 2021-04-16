@@ -12,7 +12,7 @@ modules:
             window_size: 1600x1000
             clear_cookies: true
         - \OxidEsales\Codeception\Module\ShopSetup:
-            shop_dump: '%DUMP_PATH%'
+            dump: '%DUMP_PATH%'
             fixtures: '%FIXTURES_PATH%'
         - Db:
             dsn: 'mysql:host=%DB_HOST%;dbname=%DB_NAME%;charset=utf8'

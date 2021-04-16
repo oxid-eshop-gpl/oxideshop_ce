@@ -1,8 +1,11 @@
-<?php declare(strict_types=1);
+<?php
+
 /**
  * Copyright © OXID eSales AG. All rights reserved.
  * See LICENSE file for license details.
  */
+
+declare(strict_types=1);
 
 namespace OxidEsales\EshopCommunity\Tests;
 
@@ -21,27 +24,27 @@ trait CachingTrait
      * The registry is complicated, because it needs the ConfigFile
      * set. So just cleaning the $instances cache does not work.
      */
-    public function resetRegistry()
+    public function resetRegistry(): void
     {
         $configFile = Registry::get(ConfigFile::class);
         $this->removeClassCache(Registry::class, 'instances', []);
         Registry::set(ConfigFile::class, $configFile);
     }
 
-    public function cleanupCaching()
+    public function cleanupCaching(): void
     {
         $this->cleanUpCompilationDirectory();
         $this->resetRegistry();
         $this->removeClassCaches();
     }
 
-    private function cleanUpCompilationDirectory()
+    private function cleanUpCompilationDirectory(): void
     {
         $basicContext = new BasicContext();
         $this->cleanUpDirectory($basicContext->getCacheDirectory());
     }
 
-    private function removeClassCaches()
+    private function removeClassCaches(): void
     {
         // Probably there are a lot more caches that need to be removed
         // Add them here when you find them
@@ -49,7 +52,7 @@ trait CachingTrait
         $this->removeClassCache(DatabaseProvider::class, 'db', null);
     }
 
-    private function removeClassCache(string $class, string $property, $default)
+    private function removeClassCache(string $class, string $property, $default): void
     {
         $reflectionClass = new \ReflectionClass($class);
         $reflectionProperty = $reflectionClass->getProperty($property);
@@ -57,7 +60,7 @@ trait CachingTrait
         $reflectionProperty->setValue($default);
     }
 
-    private function cleanUpDirectory($directory)
+    private function cleanUpDirectory($directory): void
     {
         $fileSystem = new Filesystem();
         if ($fileSystem->exists($directory)) {
