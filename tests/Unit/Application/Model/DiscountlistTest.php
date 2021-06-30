@@ -110,14 +110,14 @@ class DiscountlistTest extends \OxidTestCase
         $oList = $this->getMock(\OxidEsales\Eshop\Application\Model\DiscountList::class, array('selectString', '_getFilterSelect'));
         $oList->expects($this->once())->method('selectString');
         $oList->expects($this->once())->method('_getFilterSelect');
-        $oList->_getList($oUser);
+        $oList->getDiscountList($oUser);
     }
 
     // testing returned data
     public function testGetListDataCheckNoUser()
     {
         $oList = oxNew('oxdiscountlist');
-        $oList->_getList();
+        $oList->getDiscountList();
 
         // checking using demo data
         $this->assertEquals(1, $oList->count());
@@ -133,7 +133,7 @@ class DiscountlistTest extends \OxidTestCase
         $oUser->load('oxdefaultadmin');
 
         $oList = oxNew('oxdiscountlist');
-        $oList->_getList($oUser);
+        $oList->getDiscountList($oUser);
 
         // checking using demo data
         $this->assertEquals(1, $oList->count());
@@ -186,6 +186,7 @@ class DiscountlistTest extends \OxidTestCase
         // default oxConfig country check.
         $sTable = $tableViewNameGenerator->getViewName('oxdiscount');
         $sQ = "select " . $oList->getBaseObject()->getSelectFields() . " from $sTable where ( ( $sTable.oxactive = 1 or ( $sTable.oxactivefrom < '" . date('Y-m-d H:i:s', $iCurrTime) . "' and $sTable.oxactiveto > '" . date('Y-m-d H:i:s', $iCurrTime) . "')) ) and (
+            select
                 if(EXISTS(select 1 from oxobject2discount, $sCountryTable where $sCountryTable.oxid=oxobject2discount.oxobjectid and oxobject2discount.OXDISCOUNTID=$sTable.OXID and oxobject2discount.oxtype='oxcountry' LIMIT 1),
                         0,
                         1) &&
@@ -270,8 +271,8 @@ class DiscountlistTest extends \OxidTestCase
         $oDList = $this->getMock(\OxidEsales\Eshop\Core\Model\ListModel::class, array('getArray'));
         $oDList->expects($this->once())->method('getArray')->will($this->returnValue($aDiscounts));
 
-        $oList = $this->getMock(\OxidEsales\Eshop\Application\Model\DiscountList::class, array('_getList'));
-        $oList->expects($this->once())->method('_getList')->will($this->returnValue($oDList));
+        $oList = $this->getMock(\OxidEsales\Eshop\Application\Model\DiscountList::class, array('getDiscountList'));
+        $oList->expects($this->once())->method('getDiscountList')->will($this->returnValue($oDList));
 
         // now proceeding to disocunt id check
         $this->assertEquals(array('xxx' => $aDiscounts[0], 'yyy' => $aDiscounts[1]), $oList->getArticleDiscounts($oArticle));
@@ -317,8 +318,8 @@ class DiscountlistTest extends \OxidTestCase
         $oDList = $this->getMock(\OxidEsales\Eshop\Core\Model\ListModel::class, array('getArray'));
         $oDList->expects($this->once())->method('getArray')->will($this->returnValue($aDiscounts));
 
-        $oList = $this->getMock(\OxidEsales\Eshop\Application\Model\DiscountList::class, array('_getList'));
-        $oList->expects($this->once())->method('_getList')->will($this->returnValue($oDList));
+        $oList = $this->getMock(\OxidEsales\Eshop\Application\Model\DiscountList::class, array('getDiscountList'));
+        $oList->expects($this->once())->method('getDiscountList')->will($this->returnValue($oDList));
 
         // now proceeding to disocunt id check
         $this->assertEquals(array('xxx' => $aDiscounts[0], 'yyy' => $aDiscounts[1]), $oList->getBasketItemDiscounts($oArticle, $oBasket));
@@ -350,8 +351,8 @@ class DiscountlistTest extends \OxidTestCase
         $oDList = $this->getMock(\OxidEsales\Eshop\Core\Model\ListModel::class, array('getArray'));
         $oDList->expects($this->once())->method('getArray')->will($this->returnValue($aDiscounts));
 
-        $oList = $this->getMock(\OxidEsales\Eshop\Application\Model\DiscountList::class, array('_getList'));
-        $oList->expects($this->once())->method('_getList')->will($this->returnValue($oDList));
+        $oList = $this->getMock(\OxidEsales\Eshop\Application\Model\DiscountList::class, array('getDiscountList'));
+        $oList->expects($this->once())->method('getDiscountList')->will($this->returnValue($oDList));
 
         // now proceeding to disocunt id check
         $this->assertEquals(array('xxx' => $aDiscounts[0], 'yyy' => $aDiscounts[1]), $oList->getBasketDiscounts($oBasket));
@@ -391,8 +392,8 @@ class DiscountlistTest extends \OxidTestCase
         $oDList = $this->getMock(\OxidEsales\Eshop\Core\Model\ListModel::class, array('getArray'));
         $oDList->expects($this->once())->method('getArray')->will($this->returnValue($aDiscounts));
 
-        $oList = $this->getMock(\OxidEsales\Eshop\Application\Model\DiscountList::class, array('_getList'));
-        $oList->expects($this->once())->method('_getList')->will($this->returnValue($oDList));
+        $oList = $this->getMock(\OxidEsales\Eshop\Application\Model\DiscountList::class, array('getDiscountList'));
+        $oList->expects($this->once())->method('getDiscountList')->will($this->returnValue($oDList));
 
         // now proceeding to disocunt id check
         $this->assertEquals(array('yyy' => $aDiscounts[1]), $oList->getBasketItemBundleDiscounts($oArticle, $oBasket));
@@ -424,8 +425,8 @@ class DiscountlistTest extends \OxidTestCase
         $oDList = $this->getMock(\OxidEsales\Eshop\Core\Model\ListModel::class, array('getArray'));
         $oDList->expects($this->once())->method('getArray')->will($this->returnValue($aDiscounts));
 
-        $oList = $this->getMock(\OxidEsales\Eshop\Application\Model\DiscountList::class, array('_getList'));
-        $oList->expects($this->once())->method('_getList')->will($this->returnValue($oDList));
+        $oList = $this->getMock(\OxidEsales\Eshop\Application\Model\DiscountList::class, array('getDiscountList'));
+        $oList->expects($this->once())->method('getDiscountList')->will($this->returnValue($oDList));
 
         // now proceeding to disocunt id check
         $this->assertEquals(array('xxx' => $aDiscounts[0], 'yyy' => $aDiscounts[1]), $oList->getBasketBundleDiscounts($oBasket));
