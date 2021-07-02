@@ -184,7 +184,7 @@ class ArticleDetailsController extends \OxidEsales\Eshop\Application\Controller\
      *
      * @return string|null
      */
-    public function getAddUrlParams()
+    protected function getAddDynUrlParams()
     {
         if ($this->getListType() == "search") {
             return $this->getDynUrlParams();
@@ -234,7 +234,7 @@ class ArticleDetailsController extends \OxidEsales\Eshop\Application\Controller\
     protected function _processProduct($article) // phpcs:ignore PSR2.Methods.MethodDeclaration.Underscore
     {
         $article->setLinkType($this->getLinkType());
-        if ($dynamicParameters = $this->getAddUrlParams()) {
+        if ($dynamicParameters = $this->getAddDynUrlParams()) {
             $article->appendLink($dynamicParameters);
         }
     }
