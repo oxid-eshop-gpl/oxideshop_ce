@@ -12,12 +12,12 @@ namespace OxidEsales\EshopCommunity\Tests\Integration\Internal\Framework\Event;
 use OxidEsales\EshopCommunity\Internal\Framework\DIContainer\ContainerBuilder;
 use OxidEsales\EshopCommunity\Internal\Framework\Module\Setup\Event\ServicesYamlConfigurationErrorEvent;
 use OxidEsales\EshopCommunity\Internal\Transition\Utility\ContextInterface;
+use OxidEsales\EshopCommunity\Tests\Integration\IntegrationTestCase;
 use OxidEsales\EshopCommunity\Tests\Unit\Internal\BasicContextStub;
 use OxidEsales\EshopCommunity\Tests\Unit\Internal\ContextStub;
-use PHPUnit\Framework\TestCase;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
-class EventLoggingSubscriberTest extends TestCase
+class EventLoggingSubscriberTest extends IntegrationTestCase
 {
     /** @var \Symfony\Component\DependencyInjection\ContainerBuilder $container */
     private $container;
@@ -26,6 +26,7 @@ class EventLoggingSubscriberTest extends TestCase
 
     public function setup(): void
     {
+        parent::setUp();
         $containerBuilder = new ContainerBuilder(new BasicContextStub());
         $this->container = $containerBuilder->getContainer();
         $contextDefinition = $this->container->getDefinition(ContextInterface::class);
@@ -38,6 +39,7 @@ class EventLoggingSubscriberTest extends TestCase
         if (file_exists($this->testlog)) {
             unlink($this->testlog);
         }
+        parent::tearDown();
     }
 
     public function testLoggingOnConfigurationErrorEvent(): void

@@ -21,14 +21,12 @@ use OxidEsales\EshopCommunity\Internal\Framework\Module\Configuration\Exception\
 use OxidEsales\EshopCommunity\Internal\Framework\Module\Setting\Setting;
 use OxidEsales\EshopCommunity\Internal\Transition\Utility\ContextInterface;
 use OxidEsales\EshopCommunity\Tests\Integration\Internal\ContainerTrait;
-use PHPUnit\Framework\TestCase;
+use OxidEsales\EshopCommunity\Tests\Integration\IntegrationTestCase;
 use Symfony\Component\Config\Definition\Exception\InvalidConfigurationException;
 use Webmozart\PathUtil\Path;
 
-final class ShopConfigurationDaoTest extends TestCase
+final class ShopConfigurationDaoTest extends IntegrationTestCase
 {
-    use ContainerTrait;
-
     private $testModuleId = 'testModuleId';
     private $testedSetting = 'settingToOverwrite';
     private $originalValue = 'some-original-value';

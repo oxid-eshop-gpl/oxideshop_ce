@@ -23,10 +23,10 @@ final class NewLanguageNavigationCest
 
     /** @var array */
     private $productData = [
-        'id'          => '3503',
-        'title'       => 'Kuyichi leather belt JEVER',
-        'description' => 'Leather belt, unisex',
-        'price'       => '29,90 €'
+        'id'          => '1000',
+        'title'       => 'Test product 0 [EN] šÄßüл',
+        'description' => 'Test product 0 short desc [EN] šÄßüл',
+        'price'       => '50,00 €'
     ];
 
     /** @param AcceptanceTester $I */

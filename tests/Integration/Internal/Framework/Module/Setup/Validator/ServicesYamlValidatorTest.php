@@ -1,6 +1,6 @@
 <?php
 
-namespace OxidEsales\EshopCommunity\Tests\Unit\Internal\Framework\Module\Setup\Validator;
+namespace OxidEsales\EshopCommunity\Tests\Integration\Internal\Framework\Module\Setup\Validator;
 
 use OxidEsales\EshopCommunity\Internal\Framework\DIContainer\Dao\ProjectYamlDao;
 use OxidEsales\EshopCommunity\Internal\Framework\Module\Configuration\DataObject\ModuleConfiguration;
@@ -47,6 +47,9 @@ class ServicesYamlValidatorTest extends TestCase
         );
     }
 
+    /**
+     * @doesNotPerformAssertions
+     */
     public function testValidateNoServicesYaml(): void
     {
         $this->moduleConfiguration->setModuleSource('.');
@@ -57,6 +60,9 @@ class ServicesYamlValidatorTest extends TestCase
         $this->validator->validate($this->moduleConfiguration, 1);
     }
 
+    /**
+     * @doesNotPerformAssertions
+     */
     public function testWithCorrectServiceYaml(): void
     {
         $this->moduleConfiguration->setModuleSource('Working');

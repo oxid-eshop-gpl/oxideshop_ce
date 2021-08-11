@@ -13,19 +13,47 @@ use OxidEsales\Eshop\Core\Registry;
 use OxidEsales\EshopCommunity\Internal\Framework\Config\Utility\ShopSettingEncoderInterface;
 use OxidEsales\EshopCommunity\Internal\Framework\Dao\EntryDoesNotExistDaoException;
 use OxidEsales\EshopCommunity\Internal\Framework\Database\QueryBuilderFactoryInterface;
+use OxidEsales\EshopCommunity\Internal\Framework\Database\TransactionServiceInterface;
+use OxidEsales\EshopCommunity\Internal\Framework\Module\Setting\Event\SettingChangedEvent;
+use OxidEsales\EshopCommunity\Internal\Framework\Module\Setting\SettingDao;
 use OxidEsales\EshopCommunity\Internal\Framework\Module\Setting\SettingDaoInterface;
 use OxidEsales\EshopCommunity\Internal\Framework\Module\Setting\Setting;
 use OxidEsales\EshopCommunity\Internal\Transition\Adapter\ShopAdapterInterface;
 use OxidEsales\EshopCommunity\Internal\Transition\Utility\ContextInterface;
-use OxidEsales\EshopCommunity\Tests\Integration\Internal\ContainerTrait;
-use PHPUnit\Framework\TestCase;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use OxidEsales\EshopCommunity\Tests\Integration\IntegrationTestCase;
 
 /**
  * @internal
  */
-class SettingDaoTest extends TestCase
+class SettingDaoTest extends IntegrationTestCase
 {
-    use ContainerTrait;
+    public function testDispatchEventOnSave()
+    {
+        $eventDispatcher = $this->getMockBuilder(EventDispatcherInterface::class)->getMock();
+        $eventDispatcher
+            ->expects($this->once())
+            ->method('dispatch')
+            ->with(
+            //In the new version of EventDispatcher the entries have to be flipped.
+                $this->isInstanceOf(SettingChangedEvent::class),
+                $this->stringContains(SettingChangedEvent::NAME)
+            );
+
+        $shopModuleSettingDao = new SettingDao(
+            $this->get(QueryBuilderFactoryInterface::class),
+            $this->get(ContextInterface::class),
+            $this->get(ShopSettingEncoderInterface::class),
+            $this->get(ShopAdapterInterface::class),
+            $this->getMockBuilder(TransactionServiceInterface::class)->getMock(),
+            $eventDispatcher
+        );
+
+        $moduleSetting = new Setting();
+        $moduleSetting->setName('module_param')->setType('str')->setValue('module_value');
+
+        $shopModuleSettingDao->save($moduleSetting, 'phpunit_module_id', 0);
+    }
 
     /**
      * @dataProvider settingValueDataProvider

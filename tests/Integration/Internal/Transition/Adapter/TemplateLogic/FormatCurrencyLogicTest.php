@@ -5,21 +5,21 @@
  * See LICENSE file for license details.
  */
 
-namespace OxidEsales\EshopCommunity\Tests\Unit\Internal\Transition\Adapter\TemplateLogic;
+namespace OxidEsales\EshopCommunity\Tests\Integration\Internal\Transition\Adapter\TemplateLogic;
 
 use OxidEsales\EshopCommunity\Internal\Transition\Adapter\TemplateLogic\FormatCurrencyLogic;
-use OxidEsales\TestingLibrary\UnitTestCase;
+use OxidEsales\EshopCommunity\Tests\Integration\IntegrationTestCase;
 
 /**
  * Class FormatCurrencyLogicTest
  */
-class FormatCurrencyLogicTest extends UnitTestCase
+class FormatCurrencyLogicTest extends IntegrationTestCase
 {
 
     /** @var FormatCurrencyLogic */
     private $numberFormatLogic;
 
-    protected function setUp(): void
+    public function setUp(): void
     {
         $this->numberFormatLogic = new FormatCurrencyLogic();
         parent::setUp();

@@ -59,31 +59,4 @@ class SettingDaoTest extends TestCase
 
         $shopModuleSettingDao->save(new Setting(), '', 0);
     }
-
-    public function testDispatchEventOnSave()
-    {
-        $eventDispatcher = $this->getMockBuilder(EventDispatcherInterface::class)->getMock();
-        $eventDispatcher
-            ->expects($this->once())
-            ->method('dispatch')
-            ->with(
-                //In the new version of EventDispatcher the entries have to be flipped.
-                $this->isInstanceOf(SettingChangedEvent::class),
-                $this->stringContains(SettingChangedEvent::NAME)
-            );
-
-        $shopModuleSettingDao = new SettingDao(
-            $this->get(QueryBuilderFactoryInterface::class),
-            $this->get(ContextInterface::class),
-            $this->get(ShopSettingEncoderInterface::class),
-            $this->get(ShopAdapterInterface::class),
-            $this->getMockBuilder(TransactionServiceInterface::class)->getMock(),
-            $eventDispatcher
-        );
-
-        $moduleSetting = new Setting();
-        $moduleSetting->setName('module_param')->setType('str')->setValue('module_value');
-
-        $shopModuleSettingDao->save($moduleSetting, 'phpunit_module_id', 0);
-    }
 }
