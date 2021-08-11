@@ -30,7 +30,7 @@
         "oxid-esales/oxideshop-db-views-generator": "^v1.2.0",
         "oxid-esales/oxideshop-demodata-installer": "dev-b-6.3.x",
         "oxid-esales/oxideshop-composer-plugin": "dev-b-6.x",
-        "oxid-esales/oxideshop-unified-namespace-generator": "dev-b-6.3.x",
+        "oxid-esales/oxideshop-unified-namespace-generator": "^v2.2.0",
         "oxid-esales/oxideshop-facts": "dev-b-6.3.x"
     },
     "require-dev": {
