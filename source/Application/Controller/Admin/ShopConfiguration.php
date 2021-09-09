@@ -15,6 +15,7 @@ use OxidEsales\EshopCommunity\Internal\Domain\Contact\Form\ContactFormBridgeInte
 use Exception;
 use OxidEsales\EshopCommunity\Internal\Framework\Module\Configuration\Exception\ModuleSettingNotFountException;
 use OxidEsales\EshopCommunity\Internal\Framework\Module\Configuration\Bridge\ModuleSettingBridgeInterface;
+use Symfony\Component\Yaml\Yaml;
 
 /**
  * Admin shop config manager.
@@ -427,17 +428,7 @@ class ShopConfiguration extends \OxidEsales\Eshop\Application\Controller\Admin\A
      */
     protected function aarrayToMultiline($input)
     {
-        if (is_array($input)) {
-            $multiline = '';
-            foreach ($input as $key => $value) {
-                if ($multiline) {
-                    $multiline .= "\n";
-                }
-                $multiline .= $key . " => " . $value;
-            }
-
-            return $multiline;
-        }
+        return Yaml::dump($input);
     }
 
     /**
@@ -449,21 +440,7 @@ class ShopConfiguration extends \OxidEsales\Eshop\Application\Controller\Admin\A
      */
     protected function multilineToAarray($multiline)
     {
-        $string = Str::getStr();
-        $array = [];
-        $lines = explode("\n", $multiline);
-        foreach ($lines as $line) {
-            $line = trim($line);
-            if ($line != "" && $string->preg_match("/(.+)=>(.+)/", $line, $regs)) {
-                $key = trim($regs[1]);
-                $value = trim($regs[2]);
-                if ($key != "" && $value != "") {
-                    $array[$key] = $value;
-                }
-            }
-        }
-
-        return $array;
+        return Yaml::parse($multiline);
     }
 
     /**
