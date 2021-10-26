@@ -43,6 +43,7 @@ final class ReviewAndRatingCest
 
     /**
      * @group myAccount
+     * @group myAccountInstable
      * @group reviewAndRatings
      *
      * @param AcceptanceTester $I
