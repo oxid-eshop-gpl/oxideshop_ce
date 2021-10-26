@@ -70,6 +70,8 @@ final class ReviewAndRatingCest
 
         $detailsPage = $productNavigation->openProductDetailsPage('1002');
         $I->see(Translator::translate('MESSAGE_LOGIN_TO_WRITE_REVIEW'));
+        $I->makeScreenshot();
+        $I->makeHtmlSnapshot();
         $detailsPage->seeUserProductReviewAndRating(
             1,
             $userData['userName'],
