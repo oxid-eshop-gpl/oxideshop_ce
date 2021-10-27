@@ -75,7 +75,7 @@ final class ReviewAndRatingCest
         $I->resizeWindow(1200, 1900);
         $I->makeScreenshot();
         $I->makeHtmlSnapshot();
-        sleep(3);
+        $I->wait(2);
         $I->makeScreenshot();
         $I->makeHtmlSnapshot();
 
