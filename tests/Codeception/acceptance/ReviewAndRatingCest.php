@@ -43,7 +43,7 @@ final class ReviewAndRatingCest
 
     /**
      * @group myAccount
-     * @group myAccountInstable
+     * @group myAccountUnstable
      * @group reviewAndRatings
      *
      * @param AcceptanceTester $I
@@ -73,6 +73,9 @@ final class ReviewAndRatingCest
         $I->see(Translator::translate('MESSAGE_LOGIN_TO_WRITE_REVIEW'));
 
         $I->resizeWindow(1200, 1900);
+        $I->makeScreenshot();
+        $I->makeHtmlSnapshot();
+        sleep(3);
         $I->makeScreenshot();
         $I->makeHtmlSnapshot();
 
