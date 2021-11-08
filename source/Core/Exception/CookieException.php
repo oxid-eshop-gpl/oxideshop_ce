@@ -19,6 +19,14 @@ class CookieException extends \OxidEsales\Eshop\Core\Exception\StandardException
      */
     protected $type = 'oxCookieException';
 
+    public function __construct(
+        $sMessage = "LOGIN_NO_COOKIE_SUPPORT",
+        $iCode = 0,
+        \Exception $previous = null
+    ) {
+        parent::__construct($sMessage, $iCode, $previous);
+    }
+
     /**
      * Get string dump
      * Overrides oxException::getString()
