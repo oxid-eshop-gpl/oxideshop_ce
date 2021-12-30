@@ -427,7 +427,7 @@ class Language extends \OxidEsales\Eshop\Core\Base
      * @param int    $iLang              optional language number
      * @param bool   $blAdminMode        on special case you can force mode, to load language constant from admin/shops language file
      *
-     * @return string|array
+     * @return string
      */
     public function translateString($sStringToTranslate, $iLang = null, $blAdminMode = null)
     {
