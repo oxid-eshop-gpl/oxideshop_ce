@@ -26,7 +26,7 @@
         "symfony/finder": "^3.4",
         "symfony/filesystem": "^4.4.17",
         "oxid-esales/flow-theme": "^v3.8.0",
-        "oxid-esales/oxideshop-doctrine-migration-wrapper": "^v3.3.0",
+        "oxid-esales/oxideshop-doctrine-migration-wrapper": "*",
         "oxid-esales/oxideshop-db-views-generator": "^v1.3.0",
         "oxid-esales/oxideshop-demodata-installer": "^v1.3.0",
         "oxid-esales/oxideshop-composer-plugin": "^v5.2.0",
@@ -85,6 +85,12 @@
                 "shop_tests_path": "SHOP_TESTS_PATH",
                 "partial_module_paths": "PARTIAL_MODULE_PATHS"
             }
+        }
+    },
+    "repositories": {
+        "oxid-esales/oxideshop-doctrine-migration-wrapper": {
+            "type": "git",
+            "url": "https://github.com/OXID-eSales/oxideshop-doctrine-migration-wrapper"
         }
     }
 }
