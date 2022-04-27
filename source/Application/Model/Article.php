@@ -42,7 +42,7 @@ class Article extends \OxidEsales\Eshop\Core\Model\MultiLanguageModel implements
      *
      * @var bool
      */
-    protected $_blUseLazyLoading = true;
+    protected $_blUseLazyLoading = false;
 
     /**
      * item key the usage with oxuserbasketitem
