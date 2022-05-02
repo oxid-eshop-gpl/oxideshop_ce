@@ -59,6 +59,9 @@ jobs:
             -e 's#<sCompileDir>#/var/www/source/tmp/#g;'\
             source/source/config.inc.php
 
+      - name: Create logs directory
+        run: mkdir logs
+
       - name: Start containers
         run: |
           make up
@@ -116,15 +119,7 @@ jobs:
           docker-compose run -T --rm \
             -e XDEBUG_MODE=coverage \
             -e TEST_DIRS=unit,Unit \
-            php php vendor/bin/runtests | tee unit_phpunit_log.txt
-
-      - name: Upload PHPUnit Log
-        uses: actions/upload-artifact@v3
-        with:
-          name: unit-phpunit-log
-          path: unit_phpunit_log.txt
-          if-no-files-found: error
-          retention-days: 7
+            php php vendor/bin/runtests | tee logs/unit_phpunit_log.txt
           
   integration_tests:
     strategy:
@@ -154,15 +149,7 @@ jobs:
           docker-compose run -T --rm \
             -e XDEBUG_MODE=coverage \
             -e TEST_DIRS=integration,Integration \
-            php php vendor/bin/runtests | tee integration_phpunit_log.txt
-
-      - name: Upload PHPUnit Log
-        uses: actions/upload-artifact@v3
-        with:
-          name: integration-phpunit-log
-          path: integration_phpunit_log.txt
-          if-no-files-found: error
-          retention-days: 7
+            php php vendor/bin/runtests | tee logs/integration_phpunit_log.txt
 
   codeception_tests:
     strategy:
@@ -204,23 +191,7 @@ jobs:
             -e TMP_PATH=/var/www/tmp_codeception \
             -e SCREEN_SHOTS_PATH=/var/www/codeception_screens \
             -e CC_SCREEN_SHOTS_PATH=/var/www/codeception_screens \
-            php php vendor/bin/runtests-codeception | tee codeception_phpunit_log.txt
-
-      - name: Upload PHPUnit Log
-        uses: actions/upload-artifact@v3
-        with:
-          name: codeception-phpunit-log
-          path: codeception_phpunit_log.txt
-          if-no-files-found: error
-          retention-days: 7
-
-      - name: Upload Screenshots
-        uses: actions/upload-artifact@v3
-        with:
-          name: codeception-screenshots
-          path: source/codeception_screens
-          if-no-files-found: ignore
-          retention-days: 7
+            php php vendor/bin/runtests-codeception | tee logs/codeception_phpunit_log.txt
 
   selenium_tests:
     strategy:
@@ -249,12 +220,26 @@ jobs:
         run: |
           docker-compose exec -T \
             -e SELENIUM_SERVER_IP=seleniumfirefox \
-            php php vendor/bin/runtests-selenium | tee selenium_phpunit_log.txt
+            php php vendor/bin/runtests-selenium | tee logs/selenium_phpunit_log.txt
 
+  save_artifacts:
+    needs: [ unit_tests, integration_tests, codeception_tests, selenium_tests ]
+    runs-on: ubuntu-latest
+    steps:
       - name: Upload PHPUnit Log
         uses: actions/upload-artifact@v3
         with:
-          name: selenium-phpunit-log
-          path: selenium_phpunit_log.txt
+          name: phpunit-logs
+          path: logs/*
           if-no-files-found: error
           retention-days: 7
+
+      - name: Upload Codeception Screenshots
+        uses: actions/upload-artifact@v3
+        with:
+          name: codeception-screenshots
+          path: source/codeception_screens
+          if-no-files-found: ignore
+          retention-days: 7
+
+
