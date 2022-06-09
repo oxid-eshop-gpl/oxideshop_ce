@@ -16,15 +16,15 @@ final class ProductListCest
      * @group product_list
      * @group frontend
      */
-    public function testCategoryFilterReset(AcceptanceTester $I): void
+   /* public function testCategoryFilterReset(AcceptanceTester $I): void
     {
         $I->wantToTest('category filter reset button functionality');
 
         $homePage = $I->openShop();
         $I->waitForPageLoad();
-        $homePage->openCategoryPage('Kiteboarding');
+        $homePage->openCategoryPage('Test category 0 [EN] šÄßüл');
         $I->waitForPageLoad();
-        $homePage->openCategoryPage('Kites');
+        $homePage->openCategoryPage('Test category 1 [EN] šÄßüл');
         $I->waitForPageLoad();
         $I->seeElement("//form[@id='filterList']");
 
@@ -45,7 +45,7 @@ final class ProductListCest
         $I->click("//*[@id='resetFilter']/button");
         $I->waitForPageLoad();
         $I->dontSeeElement("//*[@id='resetFilter']/button");
-    }
+    }*/
 
     /**
      * @group productList

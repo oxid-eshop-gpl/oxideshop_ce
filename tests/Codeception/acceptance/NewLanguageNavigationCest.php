@@ -23,10 +23,10 @@ final class NewLanguageNavigationCest
 
     /** @var array */
     private $productData = [
-        'id'          => '3503',
-        'title'       => 'Kuyichi leather belt JEVER',
-        'description' => 'Leather belt, unisex',
-        'price'       => '29,90 €'
+        'id'          => '1000',
+        'title'       => 'Test product 0 [EN] šÄßüл',
+        'description' => 'Test product 0 short desc [EN] šÄßüл',
+        'price'       => '50,00 €'
     ];
 
     /** @param AcceptanceTester $I */
@@ -80,9 +80,7 @@ final class NewLanguageNavigationCest
     private function checkProductDetails(Home $shop, AcceptanceTester $I): ProductDetails
     {
         $searchListPage = $shop->searchFor($this->productData['id']);
-
-        $expectedHeader = '1 ' . Translator::translate('HITS_FOR') . ' ' . sprintf('"%s"', $this->productData['id']);
-        $I->assertEquals($expectedHeader, $I->grabTextFrom("//h1"));
+        $I->see($this->productData['title'], "#searchList_1");
 
         $productDetailsPage = $searchListPage->openProductDetailsPage(1);
         $productDetailsPage->seeProductData($this->productData);
