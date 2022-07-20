@@ -46,7 +46,13 @@ class PictureHandler extends Base
             "sFileName" => $sMasterImage
         ];
 
-        $blDeleted = $myUtilsPic->safePictureDelete($aPic["sFileName"], $sAbsDynImageDir . $aPic["sDir"], "oxarticles", $aPic["sField"]);
+        $blDeleted = $myUtilsPic->safePictureDelete(
+            $aPic["sFileName"],
+            $sAbsDynImageDir . $aPic["sDir"],
+            "oxarticles",
+            $aPic["sField"]
+        );
+
         if ($blDeleted) {
             $this->deleteZoomPicture($oObject, $iIndex);
 
@@ -74,13 +80,77 @@ class PictureHandler extends Base
             }
 
             foreach ($aDelPics as $aPic) {
-                $myUtilsPic->safePictureDelete($aPic["sFileName"], $sAbsDynImageDir . $aPic["sDir"], "oxarticles", $aPic["sField"]);
+                $myUtilsPic->safePictureDelete(
+                    $aPic["sFileName"],
+                    $sAbsDynImageDir . $aPic["sDir"],
+                    "oxarticles",
+                    $aPic["sField"]);
             }
         }
 
         //deleting custom zoom pic (compatibility mode)
         if ($oObject->{"oxarticles__oxzoom" . $iIndex}->value) {
             if (basename($oObject->{"oxarticles__oxzoom" . $iIndex}->value) !== $this->getNopicFilename()) {
+                // deleting old zoom picture
+                $this->deleteZoomPicture($oObject, $iIndex);
+            }
+        }
+    }
+
+    /**
+     * Deletes master picture and all images generated from it.
+     * If third parameter is false, skips master image delete, only
+     * all generated images will be deleted.
+     *
+     * @param \OxidEsales\Eshop\Application\Model\Manufacturer $oObject               manufacturer object
+     * @param int                                              $iIndex                master picture index
+     * @param bool                                             $blDeleteMasterPicture delete master picture, default is true
+     *
+     * @return null
+     */
+    public function deleteManufacturerMasterPicture($oObject, $iIndex, $blDeleteMasterPicture = true)
+    {
+        $myConfig = \OxidEsales\Eshop\Core\Registry::getConfig();
+        $myUtilsPic = \OxidEsales\Eshop\Core\Registry::getUtilsPic();
+        $oUtilsFile = \OxidEsales\Eshop\Core\Registry::getUtilsFile();
+        $blGeneratedImagesOnly = !$blDeleteMasterPicture;
+
+        $sAbsDynImageDir = $myConfig->getPictureDir(false);
+        $sMasterImage = basename($oObject->{"oxmanufacturers__oxpic" . $iIndex}->value);
+        if (!$sMasterImage || $sMasterImage == "nopic.jpg") {
+            return;
+        }
+
+        $aPic = [
+            "sField"    => "oxpic" . $iIndex,
+            "sDir"      => $oUtilsFile->getImageDirByType("MPIC" . $iIndex, $blGeneratedImagesOnly),
+            "sFileName" => $sMasterImage
+        ];
+
+        $blDeleted = $myUtilsPic->safePictureDelete(
+            $aPic["sFileName"],
+            $sAbsDynImageDir . $aPic["sDir"],
+            "oxmanufacturers",
+            $aPic["sField"]
+        );
+
+        if ($blDeleted) {
+            $this->deleteZoomPicture($oObject, $iIndex);
+
+            $aDelPics = [];
+
+            foreach ($aDelPics as $aPic) {
+                $myUtilsPic->safePictureDelete(
+                    $aPic["sFileName"],
+                    $sAbsDynImageDir . $aPic["sDir"],
+                    "oxmanufacturers",
+                    $aPic["sField"]);
+            }
+        }
+
+        //deleting custom zoom pic (compatibility mode)
+        if ($oObject->{"oxmanufacturers__oxzoom" . $iIndex}->value) {
+            if (basename($oObject->{"oxmanufacturers__oxzoom" . $iIndex}->value) !== "nopic.jpg") {
                 // deleting old zoom picture
                 $this->deleteZoomPicture($oObject, $iIndex);
             }

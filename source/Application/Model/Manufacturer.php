@@ -7,14 +7,19 @@
 
 namespace OxidEsales\EshopCommunity\Application\Model;
 
-use oxRegistry;
-use oxField;
+use OxidEsales\Eshop\Core\Registry;
 
 /**
  * Manufacturer manager
  */
 class Manufacturer extends \OxidEsales\Eshop\Core\Model\MultiLanguageModel implements \OxidEsales\Eshop\Core\Contract\IUrl
 {
+    public $picturesIdens = [
+        1 => 'MANUFACTURER_PICTURE',
+        2 => 'GENERAL_THUMB',
+        3 => 'MANUFACTURER_PROMOTIONS_PICTURE'
+    ];
+
     protected static $_aRootManufacturer = [];
 
     /**
@@ -125,6 +130,8 @@ class Manufacturer extends \OxidEsales\Eshop\Core\Model\MultiLanguageModel imple
     {
         parent::assign($dbRecord);
 
+        $this->assignDynImageDir();
+
         // manufacturer article count is stored in cache
         if ($this->_blShowArticleCnt && !$this->isAdmin()) {
             $this->_iNrOfArticles = \OxidEsales\Eshop\Core\Registry::getUtilsCount()->getManufacturerArticleCount($this->getId());
@@ -205,6 +212,21 @@ class Manufacturer extends \OxidEsales\Eshop\Core\Model\MultiLanguageModel imple
         }
 
         return $this->_aSeoUrls[$iLang];
+    }
+
+    /**
+     * assigns dynimagedir to article
+     */
+    protected function assignDynImageDir()
+    {
+        $myConfig = Registry::getConfig();
+
+        $sThisShop = $this->oxarticles__oxshopid->value;
+
+        $this->_sDynImageDir = $myConfig->getPictureUrl(null, false);
+        $this->dabsimagedir = $myConfig->getPictureDir(false); //$sThisShop
+        $this->nossl_dimagedir = $myConfig->getPictureUrl(null, false, false, null, $sThisShop); //$sThisShop
+        $this->ssl_dimagedir = $myConfig->getPictureUrl(null, false, true, null, $sThisShop); //$sThisShop
     }
 
     /**
@@ -359,13 +381,68 @@ class Manufacturer extends \OxidEsales\Eshop\Core\Model\MultiLanguageModel imple
     }
 
     /**
-     * Returns false, becouse manufacturer has not thumbnail
+     * Returns manufacturer thumbnail picture url
      *
-     * @return false
+     * @param bool $bSsl to force SSL
+     *
+     * @return string
      */
-    public function getThumbUrl()
+    public function getThumbnailUrl($bSsl = null)
     {
-        return false;
+        $sImgName = false;
+        $sDirname = "manufacturer/1/";
+        if (!$this->isFieldEmpty("oxmanufacturers__oxthumb")) {
+            $sImgName = basename($this->oxmanufacturers__oxthumb->value);
+            $sDirname = "manufacturer/thumb/";
+        } elseif (!$this->isFieldEmpty("oxmanufacturers__oxpic1")) {
+            $sImgName = basename($this->oxmanufacturers__oxpic1->value);
+        }
+
+        $sSize = \OxidEsales\Eshop\Core\Registry::getConfig()->getConfigParam('sThumbnailsize');
+
+        return \OxidEsales\Eshop\Core\Registry::getPictureHandler()->getProductPicUrl($sDirname, $sImgName, $sSize, 0, $bSsl);
+    }
+
+    /**
+     * Returns manufacturer picture
+     *
+     * @param int $iIndex picture index
+     *
+     * @return string
+     */
+    public function getPictureUrl($iIndex = 1)
+    {
+        if ($iIndex) {
+            $sImgName = false;
+            if (!$this->isFieldEmpty("oxmanufacturers__oxpic" . $iIndex)) {
+                $sImgName = basename($this->{"oxmanufacturers__oxpic$iIndex"}->value);
+            }
+
+            $imgGenerator = oxNew(\OxidEsales\Eshop\Core\DynamicImageGenerator::class);
+            $imgGenerator->getImagePath();
+
+            $sSize = \OxidEsales\Eshop\Core\Registry::getConfig()->getConfigParam('aDetailImageSizes');
+
+            return \OxidEsales\Eshop\Core\Registry::getPictureHandler()
+                ->getProductPicUrl("manufacturer/{$iIndex}/", $sImgName, $sSize, 'oxpic' . $iIndex);
+        }
+    }
+
+    /**
+     * Return manufacturer picture file name
+     *
+     * @param string $sFieldName manufacturer picture field name
+     * @param int    $iIndex     manufacturer picture index
+     *
+     * @return string
+     */
+    public function getPictureFieldValue($sFieldName, $iIndex = null)
+    {
+        if ($sFieldName) {
+            $sFieldName = "oxmanufacturers__" . $sFieldName . $iIndex;
+
+            return $this->$sFieldName->value;
+        }
     }
 
     /**
@@ -386,5 +463,42 @@ class Manufacturer extends \OxidEsales\Eshop\Core\Model\MultiLanguageModel imple
     public function getShortDescription()
     {
         return $this->oxmanufacturers__oxshortdesc->value;
+    }
+
+    /**
+     * Returns image ident to the template based on image index.
+     * 
+     * @param int $index index from 1 to 3
+     * @return string|null
+     */
+    public function getImgIdentByIndex(int $index): string
+    {
+        return isset($this->picturesIdens[$index]) ? $this->picturesIdens[$index] : null;
+    }
+
+    /**
+     * Detects if field is empty.
+     *
+     * @param string $sFieldName Field name
+     *
+     * @return bool
+     */
+    protected function isFieldEmpty($sFieldName)
+    {
+        $mValue = $this->$sFieldName->value;
+
+        if (is_null($mValue)) {
+            return true;
+        }
+
+        if ($mValue === '') {
+            return true;
+        }
+
+        if (!strcmp($mValue, '0000-00-00 00:00:00') || !strcmp($mValue, '0000-00-00')) {
+            return true;
+        }
+
+        return false;
     }
 }
