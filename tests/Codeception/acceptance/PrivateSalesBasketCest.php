@@ -17,7 +17,7 @@ final class PrivateSalesBasketCest
 {
     public function testIfblBasketExcludeEnabledBlocksRootCatChange(AcceptanceTester $I): void
     {
-        $I->wantToTest('Test if blBasketExcludeEnabled blocks rootCatChange and continue shopping clears basket.');
+        $I->wantToTest('if blBasketExcludeEnabled blocks rootCatChange and continue shopping clears basket.');
 
         $I->updateConfigInDatabase('blBasketExcludeEnabled', 'true', 'bool');
         $I->clearShopCache();
@@ -51,7 +51,7 @@ final class PrivateSalesBasketCest
 
     public function checkIfblBasketExcludeEnabledAlsoClearsByEmptyBasket(AcceptanceTester $I): void
     {
-        $I->wantToTest('Test if blBasketExcludeEnabled rootCatChange is no longer blocked by an empty basket.');
+        $I->wantToTest('if blBasketExcludeEnabled rootCatChange is no longer blocked by an empty basket.');
 
         $I->updateConfigInDatabase('blBasketExcludeEnabled', 'true', 'bool');
         $I->clearShopCache();
@@ -76,7 +76,7 @@ final class PrivateSalesBasketCest
     /** @group private_shopping_basket_expiration */
     public function testPrivateShoppingBasketExpiration(AcceptanceTester $I): void
     {
-        $I->wantToTest('Test private basket reservation expiration');
+        $I->wantToTest('private basket reservation expiration');
 
         $I->updateInDatabase('oxarticles', ['oxstock' => '2', 'oxstockflag' => '2'], ['oxid' => '1000']);
         $I->updateConfigInDatabase('blPsBasketReservationEnabled', 'true', 'bool');
