@@ -87,10 +87,6 @@ final class ActivateConfiguredModulesCommandTest extends ModuleCommandsTestCase
         $this->assertTrue(
             $this->get(ModuleStateServiceInterface::class)->isActive($this->moduleId, 1)
         );
-
-        $settingsDao = $this->get(SettingDaoInterface::class);
-        $settingValue = $settingsDao->get('testSetting', $this->moduleId, 1)->getValue();
-        $this->assertSame('1', $settingValue);
     }
 
     public function testModuleActivationInAllShops(): void
