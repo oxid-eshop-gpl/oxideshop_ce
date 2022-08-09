@@ -39,6 +39,7 @@
         "oxid-esales/oxideshop-facts": "^v3.0.0"
     },
     "require-dev": {
+        "oxid-esales/testing-library": "dev-b-7.0-remove_testing_library",
         "phpunit/phpunit": "^9.2.6",
         "mikey179/vfsstream": "~1.6.8",
         "phpspec/prophecy-phpunit": "^2.0",
@@ -63,7 +64,7 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "OxidEsales\\EshopCommunity\\Tests\\": ["./tests", "./tests_traditional/"]
+            "OxidEsales\\EshopCommunity\\Tests\\": ["./tests", "./traditional_tests/"]
         }
     },
     "minimum-stability": "dev",
