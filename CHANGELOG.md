@@ -21,6 +21,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Change type of default value for iIndex parameter in ``OxidProfessionalServices\Bergspezl\Model\Article::getZoomPictureUrl`` [PR-893](https://github.com/OXID-eSales/oxideshop_ce/pull/893)
 - Switched to templating-engine agnostic names in Controller templates (e.g. `Controller::$_sThisTemplate = 'page/content'` instead of `'page/content.tpl'`)
 - Store information about active modules state in the module configuration (yml files), not in the database (`activeModules` config option is completely removed)
+- Read module class extensions chain direct from the shop configuration (yml files). Don't store active module chain in the database (`aModules` config option is completely removed)
 
 ### Fixed
 - Ensure \OxidEsales\EshopCommunity\Application\Model\NewsSubscribed::getOptInStatus int result type
@@ -47,6 +48,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
   - `OxidEsales\EshopCommunity\Core\Module\ModuleCache`
   - `OxidEsales\EshopCommunity\Core\Module\ModuleInstaller`
   - `Internal\Framework\Templating\Resolver\LegacyTemplateNameResolver`
+  - `OxidEsales\EshopCommunity\Internal\Framework\Module\Setup\Bridge\ClassExtensionChainBridgeInterface`
+  - `OxidEsales\EshopCommunity\Internal\Framework\Module\Setup\Bridge\ClassExtensionChainBridge`
+  - `OxidEsales\EshopCommunity\Internal\Framework\Module\Setup\Service\ClassExtensionChainServiceInterface`
+  - `OxidEsales\EshopCommunity\Internal\Framework\Module\Setup\Service\ClassExtensionChainService`
 - Methods:
   - `Application\Model\User::getUtilsObjectInstance()`
   - `Internal\Framework\Templating\TemplateEngineInterface::getDefaultFileExtension()`
@@ -101,12 +106,14 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
   - `oxid_esales.module.setup.version_module_setting_handler`
   - `oxid_esales.module.setup.shop_configuration_class_extension_handler`
   - `oxid_esales.module.setup.events_module_setting_handler`
+  - `oxid_esales.module.setup.class_extension_chain_service`
 - Config options:
   - `aModuleExtensions`
   - `aModuleVersions`
   - `aModulePaths`
   - `aModuleEvents`
   - `activeModules`
+  - `aModules`
 - Constants:
   - `OxidEsales\EshopCommunity\Internal\Framework\Config\DataObject\ShopConfigurationSetting`
     - `MODULE_CLASS_EXTENSIONS`
@@ -115,6 +122,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
     - `MODULE_EVENTS`
     - `MODULE_CONTROLLERS`
     - `ACTIVE_MODULES`
+    - `MODULE_CLASS_EXTENSIONS_CHAIN`
   - `OxidEsales\EshopCommunity\Core\Module\ModuleList`
     - `MODULE_KEY_PATHS`
     - `MODULE_KEY_EVENTS`
