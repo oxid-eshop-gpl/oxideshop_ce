@@ -156,6 +156,7 @@ class PictureHandler extends Base
             }
         }
     }
+    }
 
     /**
      * Deletes custom main icon, which name is specified in oxicon field.
