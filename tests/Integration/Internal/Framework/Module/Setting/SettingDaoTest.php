@@ -16,13 +16,10 @@ use OxidEsales\EshopCommunity\Internal\Framework\Database\QueryBuilderFactoryInt
 use OxidEsales\EshopCommunity\Internal\Framework\Module\Setting\SettingDaoInterface;
 use OxidEsales\EshopCommunity\Internal\Framework\Module\Setting\Setting;
 use OxidEsales\EshopCommunity\Internal\Transition\Adapter\ShopAdapterInterface;
-use OxidEsales\EshopCommunity\Tests\Integration\Internal\ContainerTrait;
-use PHPUnit\Framework\TestCase;
+use OxidEsales\EshopCommunity\Tests\Integration\IntegrationTestCase;
 
-class SettingDaoTest extends TestCase
+class SettingDaoTest extends IntegrationTestCase
 {
-    use ContainerTrait;
-
     /**
      * @dataProvider settingValueDataProvider
      *

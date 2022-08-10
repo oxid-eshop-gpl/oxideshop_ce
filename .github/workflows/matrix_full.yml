@@ -129,8 +129,7 @@ jobs:
       - name: Run tests
         run: |
           docker-compose run -T \
-            -e TEST_DIRS=unit,Unit \
-            php php vendor/bin/runtests | tee unit_PHP${{ matrix.php }}_MYSQL${{ matrix.mysql }}_phpunit_log.txt 2>&1 || true
+            php php vendor/bin/phpunit -c phpunit.xml tests/Unit | tee unit_PHP${{ matrix.php }}_MYSQL${{ matrix.mysql }}_phpunit_log.txt 2>&1 || true
           if grep -q -Ei 'fail|\\.\\=\\=|Warning|Notice|Deprecated|Fatal|Error' unit_PHP${{ matrix.php }}_MYSQL${{ matrix.mysql }}_phpunit_log.txt; then exit 1; fi
 
       - name: Ensure that tests have been run
@@ -171,8 +170,7 @@ jobs:
       - name: Run tests
         run: |
           docker-compose run -T \
-            -e TEST_DIRS=integration,Integration \
-            php php vendor/bin/runtests | tee integration_PHP${{ matrix.php }}_MYSQL${{ matrix.mysql }}_phpunit_log.txt 2>&1 || true
+            php php vendor/bin/phpunit -c phpunit.xml tests/Integration | tee integration_PHP${{ matrix.php }}_MYSQL${{ matrix.mysql }}_phpunit_log.txt 2>&1 || true
           if grep -q -Ei 'fail|\\.\\=\\=|Warning|Notice|Deprecated|Fatal|Error' integration_PHP${{ matrix.php }}_MYSQL${{ matrix.mysql }}_phpunit_log.txt; then exit 1; fi
 
       - name: Ensure that tests have been run

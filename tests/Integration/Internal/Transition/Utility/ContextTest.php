@@ -10,15 +10,12 @@ declare(strict_types=1);
 namespace OxidEsales\EshopCommunity\Tests\Integration\Internal\Transition\Utility;
 
 use OxidEsales\EshopCommunity\Internal\Transition\Utility\ContextInterface;
-use OxidEsales\EshopCommunity\Tests\Integration\Internal\ContainerTrait;
 use OxidEsales\Facts\Config\ConfigFile;
-use PHPUnit\Framework\TestCase;
+use OxidEsales\EshopCommunity\Tests\Integration\IntegrationTestCase;
 use Psr\Log\LogLevel;
 
-final class ContextTest extends TestCase
+final class ContextTest extends IntegrationTestCase
 {
-    use ContainerTrait;
-
     public function testGetLogLevelWithConfigSetWillReturnValue(): void
     {
         $configValue = (new ConfigFile())->getVar('sLogLevel');

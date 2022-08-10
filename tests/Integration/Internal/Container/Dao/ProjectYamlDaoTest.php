@@ -17,14 +17,11 @@ use OxidEsales\EshopCommunity\Internal\Framework\DIContainer\DataObject\DIConfig
 use OxidEsales\EshopCommunity\Internal\Transition\Utility\BasicContext;
 use OxidEsales\EshopCommunity\Internal\Transition\Utility\BasicContextInterface;
 use OxidEsales\EshopCommunity\Tests\Integration\Internal\Container\Fixtures\CE\DummyExecutor;
-use OxidEsales\EshopCommunity\Tests\Integration\Internal\ContainerTrait;
-use PHPUnit\Framework\TestCase;
+use OxidEsales\EshopCommunity\Tests\Integration\IntegrationTestCase;
 use Webmozart\PathUtil\Path;
 
-final class ProjectYamlDaoTest extends TestCase
+class ProjectYamlDaoTest extends IntegrationTestCase
 {
-    use ContainerTrait;
-
     /**
      * @var ProjectYamlDaoInterface $dao
      */
@@ -32,6 +29,8 @@ final class ProjectYamlDaoTest extends TestCase
 
     public function setup(): void
     {
+        parent::setUp();
+
         $contextStub = $this->getMockBuilder(BasicContext::class)
             ->disableOriginalConstructor()
             ->setMethods(['getGeneratedServicesFilePath'])->getMock();
@@ -45,7 +44,7 @@ final class ProjectYamlDaoTest extends TestCase
         );
     }
 
-    protected function tearDown(): void
+    public function tearDown(): void
     {
         parent::tearDown();
         $projectFilePath = $this->getTestGeneratedServicesFilePath();

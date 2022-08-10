@@ -5,7 +5,7 @@
  * See LICENSE file for license details.
  */
 
-namespace OxidEsales\EshopCommunity\Tests\Unit\Internal\Transition\Adapter\TemplateLogic;
+namespace OxidEsales\EshopCommunity\Tests\Integration\Internal\Transition\Adapter\TemplateLogic;
 
 use OxidEsales\EshopCommunity\Internal\Transition\Adapter\TemplateLogic\WordwrapLogic;
 use PHPUnit\Framework\TestCase;
@@ -15,6 +15,7 @@ use PHPUnit\Framework\TestCase;
  */
 class WordwrapLogicTest extends TestCase
 {
+
     /** @var WordwrapLogic */
     private $wordWrapLogic;
 
