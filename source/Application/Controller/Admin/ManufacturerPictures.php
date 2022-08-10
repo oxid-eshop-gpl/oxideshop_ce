@@ -19,7 +19,7 @@ class ManufacturerPictures extends \OxidEsales\Eshop\Application\Controller\Admi
 {
     /**
      * Loads Manufacturer information - pictures, passes data to Smarty
-     * engine, returns name of template file "manufacturer_pictures.tpl".
+     * engine, returns name of template file "manufacturer_pictures".
      *
      * @return string
      */
@@ -56,7 +56,7 @@ class ManufacturerPictures extends \OxidEsales\Eshop\Application\Controller\Admi
             }
         }
 
-        return "manufacturer_pictures.tpl";
+        return "manufacturer_pictures";
     }
 
     /**
