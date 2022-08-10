@@ -60,7 +60,7 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "OxidEsales\\EshopCommunity\\Tests\\": "./tests"
+            "OxidEsales\\EshopCommunity\\Tests\\": ["./tests", "./traditional_tests/"]
         }
     },
     "bin": [
