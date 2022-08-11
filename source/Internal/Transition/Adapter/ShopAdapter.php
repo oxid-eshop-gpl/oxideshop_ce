@@ -9,7 +9,6 @@ declare(strict_types=1);
 
 namespace OxidEsales\EshopCommunity\Internal\Transition\Adapter;
 
-use OxidEsales\Eshop\Core\Module\Module;
 use OxidEsales\Eshop\Core\Module\ModuleVariablesLocator;
 use OxidEsales\Eshop\Core\NamespaceInformationProvider;
 use OxidEsales\Eshop\Core\Registry;
@@ -39,9 +38,15 @@ class ShopAdapter implements ShopAdapterInterface
          * @TODO we have to implement it in ModuleCacheServiceInterface or use ModuleCache::resetCache() method.
          */
 
+        $this->invalidateModulesCache();
+    }
+
+    public function invalidateModulesCache(): void
+    {
         $utils = Registry::getUtils();
         $utils->resetLanguageCache();
         $utils->resetMenuCache();
+        $utils->oxResetFileCache(true);
 
         ModuleVariablesLocator::resetModuleVariables();
 
