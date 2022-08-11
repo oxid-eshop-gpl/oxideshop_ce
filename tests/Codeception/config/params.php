@@ -20,8 +20,8 @@ $selenium_server_host = ($selenium_server_host) ? : '127.0.0.1';
 $php = (getenv('PHPBIN')) ? : 'php';
 $cc_screen_shot_url = getenv('CC_SCREEN_SHOTS_URL');
 $cc_screen_shot_url = ($cc_screen_shot_url) ? : '';
-$selenium_browser = getenv('SELENIUM_BROWSER');
-$selenium_browser = ($selenium_browser) ? : 'firefox';
+$browser = getenv('BROWSER_NAME');
+$browser = ($browser) ? : 'firefox';
 
 return [
     'SHOP_URL' => $facts->getShopUrl(),
@@ -39,7 +39,7 @@ return [
     'SELENIUM_SERVER_HOST' => $selenium_server_host,
     'PHP_BIN' => $php,
     'SCREEN_SHOT_URL' => $cc_screen_shot_url,
-    'BROWSER' => $selenium_browser
+    'BROWSER' => $browser
 ];
 
 function getTestDataDumpFilePath()
